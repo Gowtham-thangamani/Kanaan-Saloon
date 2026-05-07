@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /thank-you.html
+Disallow: /ar/thank-you.html
+
+Sitemap: https://kanaanspa.ae/sitemap.xml

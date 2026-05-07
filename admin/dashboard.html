@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Dashboard · Kanaan Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+<div class="admin-shell">
+  <aside class="admin-side">
+    <div class="admin-side__brand">KANAAN<span>.</span></div>
+    <nav class="admin-side__nav">
+      <a href="dashboard.html" class="active">Dashboard</a>
+      <a href="leads.html">Leads · CRM</a>
+      <a href="offers.html">Offers</a>
+      <a href="branches.html">Branches</a>
+      <a href="banners.html">Banners</a>
+      <a href="integrations.html">Integrations</a>
+      <a href="settings.html">Settings</a>
+    </nav>
+    <div class="admin-side__user">Signed in as admin · <button type="button" onclick="KANAAN_ADMIN.logout()">Sign out</button></div>
+  </aside>
+
+  <main class="admin-main">
+    <h1 class="admin-h">Dashboard</h1>
+    <p class="admin-sub">Overview of bookings, leads, and content.</p>
+
+    <div class="stats">
+      <div class="stat"><span class="stat__num" id="s-total">—</span><span class="stat__lbl">Leads (all-time)</span></div>
+      <div class="stat"><span class="stat__num" id="s-week">—</span><span class="stat__lbl">This week</span></div>
+      <div class="stat"><span class="stat__num" id="s-today">—</span><span class="stat__lbl">Today</span></div>
+      <div class="stat"><span class="stat__num" id="s-rate">—</span><span class="stat__lbl">Top branch</span></div>
+    </div>
+
+    <!-- Supabase capacity monitor -->
+    <div class="card" id="usageCard" style="display:none; margin-top: 24px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
+        <div>
+          <strong id="usageRows">—</strong> bookings stored
+          <span style="color: var(--muted); font-size: 13px;"> · ~<span id="usageMB">—</span> MB / <span id="usageMax">500</span> MB</span>
+        </div>
+        <span id="usagePct" style="font-size: 13px; font-weight: 600;">—</span>
+      </div>
+      <div style="height: 8px; background: rgba(255,255,255,0.08); border-radius: 0; overflow: hidden;">
+        <div id="usageBar" style="height: 100%; width: 0%; background: var(--gold); transition: width 400ms ease, background 400ms ease;"></div>
+      </div>
+      <p id="usageNote" style="font-size: 12px; color: var(--muted); margin: 10px 0 0;">Supabase free tier — auto-cleanup after 2 years keeps this safe.</p>
+    </div>
+
+    <div class="row">
+      <div class="card">
+        <h3>Recent leads</h3>
+        <table id="recentLeads">
+          <thead><tr><th>Date</th><th>Name</th><th>Branch</th><th>Service</th><th>Source</th></tr></thead>
+          <tbody><tr><td colspan="5" style="color: var(--muted);">Connect a Google Sheet in Settings to see leads.</td></tr></tbody>
+        </table>
+        <div style="margin-top: 16px;"><a href="leads.html" class="btn btn--ghost btn--sm">View all leads →</a></div>
+      </div>
+
+      <div class="card">
+        <h3>Quick actions</h3>
+        <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 12px;">
+          <a href="offers.html" class="btn btn--ghost">Edit offers</a>
+          <a href="branches.html" class="btn btn--ghost">Edit branch info</a>
+          <a href="banners.html" class="btn btn--ghost">Edit homepage banner</a>
+          <a href="integrations.html" class="btn btn--ghost">Configure CRM &amp; pixels</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>System health</h3>
+      <div id="health" style="font-size: 13px;">
+        <div style="display:flex; justify-content:space-between; padding: 8px 0; border-bottom: 1px solid var(--line);">
+          <span>Booking webhook</span><span id="h-webhook" class="pill">—</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; padding: 8px 0; border-bottom: 1px solid var(--line);">
+          <span>GA4 / GTM</span><span id="h-gtm" class="pill">—</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; padding: 8px 0; border-bottom: 1px solid var(--line);">
+          <span>Meta Pixel</span><span id="h-meta" class="pill">—</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; padding: 8px 0; border-bottom: 1px solid var(--line);">
+          <span>TikTok Pixel</span><span id="h-tt" class="pill">—</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; padding: 8px 0; border-bottom: 1px solid var(--line);">
+          <span>Snapchat Pixel</span><span id="h-snap" class="pill">—</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; padding: 8px 0;">
+          <span>Leads Sheet</span><span id="h-sheet" class="pill">—</span>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="admin.js"></script>
+<script src="../assets/js/config.js"></script>
+<script>
+  if (!KANAAN_ADMIN.requireAuth()) { /* redirected */ } else {
+    (async function () {
+      const leads = await KANAAN_ADMIN.loadLeads();
+      const today = new Date(); today.setHours(0,0,0,0);
+      const weekAgo = new Date(); weekAgo.setDate(weekAgo.getDate() - 7);
+      const todayN = leads.filter(l => new Date(l.timestamp || l.Date || 0) >= today).length;
+      const weekN = leads.filter(l => new Date(l.timestamp || l.Date || 0) >= weekAgo).length;
+      document.getElementById('s-total').textContent = leads.length;
+      document.getElementById('s-week').textContent = weekN;
+      document.getElementById('s-today').textContent = todayN;
+
+      // Supabase usage monitor (only renders if supabase is configured)
+      const usage = await KANAAN_ADMIN.loadSupabaseUsage();
+      if (usage) {
+        const card = document.getElementById('usageCard');
+        const bar  = document.getElementById('usageBar');
+        const note = document.getElementById('usageNote');
+        const pctEl = document.getElementById('usagePct');
+        card.style.display = 'block';
+        document.getElementById('usageRows').textContent = usage.count.toLocaleString();
+        document.getElementById('usageMB').textContent   = usage.mb.toFixed(2);
+        document.getElementById('usageMax').textContent  = usage.maxMB;
+        const pct = Math.min(100, usage.pct);
+        bar.style.width = pct.toFixed(1) + '%';
+        pctEl.textContent = pct.toFixed(1) + '%';
+        // Threshold colours
+        let color = 'var(--gold)', msg = 'Plenty of room — Supabase free tier (500 MB).';
+        if (pct >= 95)      { color = '#D14B3A'; msg = '⚠ At capacity. Run cleanup or upgrade Supabase plan.'; }
+        else if (pct >= 80) { color = '#E0A04B'; msg = '⚠ Approaching limit. Consider running the 2-year cleanup script.'; }
+        else if (pct >= 50) { color = '#C8A04A'; msg = 'Steady growth — auto-cleanup at 2 years keeps you safe.'; }
+        bar.style.background = color;
+        pctEl.style.color = color;
+        note.textContent = msg;
+      }
+
+      // Top branch
+      const counts = {};
+      leads.forEach(l => { const b = l.branch || l.Branch || ''; if (b) counts[b] = (counts[b]||0)+1; });
+      const top = Object.entries(counts).sort((a,b)=>b[1]-a[1])[0];
+      document.getElementById('s-rate').textContent = top ? top[0] : '—';
+
+      // Recent
+      if (leads.length) {
+        const recent = leads.slice(-5).reverse();
+        const tb = document.querySelector('#recentLeads tbody');
+        tb.innerHTML = recent.map(l => `<tr>
+          <td>${(l.timestamp || l.Date || '').slice(0,16).replace('T',' ')}</td>
+          <td>${l.name || l.Name || '—'}</td>
+          <td>${l.branch || l.Branch || '—'}</td>
+          <td>${l.service || l.Service || '—'}</td>
+          <td><span class="pill pill--gold">${l.utm_source || l.Source || 'direct'}</span></td>
+        </tr>`).join('');
+      }
+
+      // Health
+      const cfg = window.KANAAN_CONFIG || { tracking: {}, booking: {} };
+      const ok = (v) => v ? '<span class="pill pill--sage">configured</span>' : '<span class="pill pill--rust">not set</span>';
+      document.getElementById('h-webhook').outerHTML = ok(cfg.booking && cfg.booking.webhookUrl);
+      document.getElementById('h-gtm').outerHTML = ok(cfg.tracking.gtmId || cfg.tracking.ga4Id);
+      document.getElementById('h-meta').outerHTML = ok(cfg.tracking.metaPixelId);
+      document.getElementById('h-tt').outerHTML = ok(cfg.tracking.tiktokPixelId);
+      document.getElementById('h-snap').outerHTML = ok(cfg.tracking.snapPixelId);
+      document.getElementById('h-sheet').outerHTML = ok(localStorage.getItem('kanaan_leads_csv_url'));
+    })();
+  }
+</script>
+  <script src="../assets/js/tracking.js"></script>
+  <script src="../assets/js/consent.js" defer></script>
+</body>
+</html>

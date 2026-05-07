@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Leads · Kanaan Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+<div class="admin-shell">
+  <aside class="admin-side">
+    <div class="admin-side__brand">KANAAN<span>.</span></div>
+    <nav class="admin-side__nav">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="leads.html" class="active">Leads · CRM</a>
+      <a href="offers.html">Offers</a>
+      <a href="branches.html">Branches</a>
+      <a href="banners.html">Banners</a>
+      <a href="integrations.html">Integrations</a>
+      <a href="settings.html">Settings</a>
+    </nav>
+    <div class="admin-side__user">Signed in as admin · <button type="button" onclick="KANAAN_ADMIN.logout()">Sign out</button></div>
+  </aside>
+
+  <main class="admin-main">
+    <h1 class="admin-h">Leads &amp; Bookings</h1>
+    <p class="admin-sub">Every booking submitted on the site appears here automatically. For cross-device sync (bookings made on customer phones), publish a Google Sheet (see Settings).</p>
+
+    <div class="bar">
+      <select class="sel" id="f-branch" style="width: auto;"><option value="">All branches</option></select>
+      <select class="sel" id="f-source" style="width: auto;"><option value="">All sources</option></select>
+      <input class="input" id="f-search" placeholder="Search name / phone…" style="width: 240px;" />
+      <span class="spacer"></span>
+      <button type="button" class="btn btn--ghost btn--sm" id="refresh">↻ Refresh</button>
+      <button type="button" class="btn btn--sm" id="export">Export CSV</button>
+    </div>
+
+    <div class="card" id="empty" style="display: none;">
+      <h3>No bookings yet</h3>
+      <p style="color: var(--muted);">When a customer submits the booking form on the site, the booking will appear here instantly and a WhatsApp message will be sent to <strong>+971 50 555 6795</strong>.</p>
+      <p style="color: var(--muted); font-size: 13px;"><strong>Note:</strong> bookings made on a customer's phone won't show up here unless you also configure a shared Google Sheet (Settings → Leads CSV URL). For local testing, submit a booking from this same browser to see it appear.</p>
+    </div>
+
+    <div class="card" id="data" style="display: none;">
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th><th>Name</th><th>Phone</th><th>Branch</th><th>Service</th>
+            <th>When</th><th>Source</th><th>Booking ID</th><th>State</th><th>Update</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <p id="count" style="color: var(--muted); font-size: 12px; margin-top: 16px;"></p>
+    </div>
+  </main>
+</div>
+
+<script src="admin.js"></script>
+<script>
+  if (KANAAN_ADMIN.requireAuth()) (async function () {
+    let allLeads = [];
+
+    async function load() {
+      allLeads = await KANAAN_ADMIN.loadLeads();
+      if (!allLeads.length) {
+        document.getElementById('empty').style.display = 'block';
+        document.getElementById('data').style.display = 'none';
+        return;
+      }
+      document.getElementById('empty').style.display = 'none';
+      document.getElementById('data').style.display = 'block';
+      // Populate filters
+      const bSet = new Set(), sSet = new Set();
+      allLeads.forEach(l => {
+        if (l.branch || l.Branch) bSet.add(l.branch || l.Branch);
+        if (l.utm_source || l.Source) sSet.add(l.utm_source || l.Source);
+      });
+      const bSel = document.getElementById('f-branch'), sSel = document.getElementById('f-source');
+      Array.from(bSet).sort().forEach(b => bSel.insertAdjacentHTML('beforeend', `<option>${b}</option>`));
+      Array.from(sSet).sort().forEach(s => sSel.insertAdjacentHTML('beforeend', `<option>${s}</option>`));
+      render();
+    }
+    function render() {
+      const fb = document.getElementById('f-branch').value;
+      const fs = document.getElementById('f-source').value;
+      const fq = document.getElementById('f-search').value.toLowerCase();
+      const rows = allLeads.filter(l => {
+        if (fb && (l.branch || l.Branch) !== fb) return false;
+        if (fs && (l.utm_source || l.Source) !== fs) return false;
+        if (fq) {
+          const hay = ((l.name||l.Name||'') + ' ' + (l.phone||l.Phone||'')).toLowerCase();
+          if (!hay.includes(fq)) return false;
+        }
+        return true;
+      }).reverse();
+      document.getElementById('rows').innerHTML = rows.map(l => {
+        const id = l.bookingId||l.BookingID||'';
+        const stateMap = JSON.parse(localStorage.getItem('kanaan_lead_states') || '{}');
+        const state = stateMap[id] || 'new';
+        const stateColor = { new:'gold', confirmed:'sage', completed:'sage', no_show:'rust', cancelled:'rust' }[state] || 'gold';
+        const stateLabel = { new:'New', confirmed:'Confirmed', completed:'Completed', no_show:'No-show', cancelled:'Cancelled' }[state];
+        const phone = l.phone||l.Phone||'';
+        const wa = phone ? phone.replace(/\D/g,'') : '';
+        return `<tr>
+        <td>${(l.timestamp||l.Date||'').slice(0,16).replace('T',' ')}</td>
+        <td>${l.name||l.Name||'—'}</td>
+        <td>${phone ? `<a href="tel:${phone}">${phone}</a> ${wa ? `· <a href="https://wa.me/${wa}" target="_blank" rel="noopener">WA</a>` : ''}` : '—'}</td>
+        <td>${l.branch||l.Branch||'—'}</td>
+        <td>${l.service||l.Service||'—'}</td>
+        <td>${(l.date||l.Date||'')+' '+(l.time||l.Time||'')}</td>
+        <td><span class="pill pill--gold">${l.utm_source||l.Source||'direct'}</span></td>
+        <td style="font-family: monospace; font-size: 11px;">${id||'—'}</td>
+        <td><span class="pill pill--${stateColor}" data-state-pill="${id}">${stateLabel}</span></td>
+        <td>
+          <select class="sel" data-state-select="${id}" style="width: 130px; height: 32px; padding: 0 8px; font-size: 12px;">
+            <option value="new" ${state==='new'?'selected':''}>New</option>
+            <option value="confirmed" ${state==='confirmed'?'selected':''}>Confirmed</option>
+            <option value="completed" ${state==='completed'?'selected':''}>Completed</option>
+            <option value="no_show" ${state==='no_show'?'selected':''}>No-show</option>
+            <option value="cancelled" ${state==='cancelled'?'selected':''}>Cancelled</option>
+          </select>
+        </td>
+      </tr>`;
+      }).join('');
+      // Wire state changes
+      document.querySelectorAll('[data-state-select]').forEach(sel => {
+        sel.addEventListener('change', () => {
+          const id = sel.dataset.stateSelect;
+          const stateMap = JSON.parse(localStorage.getItem('kanaan_lead_states') || '{}');
+          stateMap[id] = sel.value;
+          localStorage.setItem('kanaan_lead_states', JSON.stringify(stateMap));
+          KANAAN_ADMIN.toast('Marked as ' + sel.value);
+          render();
+        });
+      });
+      document.getElementById('count').textContent = `${rows.length} of ${allLeads.length} leads`;
+    }
+    document.getElementById('f-branch').addEventListener('change', render);
+    document.getElementById('f-source').addEventListener('change', render);
+    document.getElementById('f-search').addEventListener('input', render);
+    document.getElementById('refresh').addEventListener('click', load);
+    document.getElementById('export').addEventListener('click', () => {
+      if (!allLeads.length) return;
+      const headers = Object.keys(allLeads[0]);
+      const csv = [headers.join(',')].concat(allLeads.map(r => headers.map(h => `"${(r[h]||'').replace(/"/g,'""')}"`).join(','))).join('\n');
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob); a.download = 'kanaan-leads-' + new Date().toISOString().slice(0,10) + '.csv';
+      a.click();
+    });
+    load();
+  })();
+</script>
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/tracking.js"></script>
+  <script src="../assets/js/consent.js" defer></script>
+</body>
+</html>

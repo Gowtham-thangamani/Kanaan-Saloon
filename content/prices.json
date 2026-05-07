@@ -1,0 +1,752 @@
+{
+  "_NOTE": "Per-branch price lists transcribed from official Kanaan Gents Saloon menus. All prices in AED, VAT inclusive. Hair Removal pricing columns: 'cream' = waxing cream, 'wax' = sugar wax. Massage pricing columns: minutes/duration in minutes.",
+  "currency": "AED",
+  "vat_inclusive": true,
+  "footer_note_en": "All prices include VAT.",
+  "footer_note_ar": "الأسعار تشمل الضريبة.",
+  "branches": {
+    "al-ain": {
+      "name_en": "Al Ain",
+      "name_ar": "العين",
+      "categories": [
+        {
+          "id": "cuts-coloring",
+          "name_en": "Cuts & Colouring",
+          "name_ar": "الحلاقة والصبغ",
+          "items": [
+            { "name_en": "Hair Cutting", "name_ar": "حلاقة شعر الرأس", "price": 40 },
+            { "name_en": "Hair Colouring (Normal)", "name_ar": "صبغ شعر الرأس عادي", "price": 50 },
+            { "name_en": "Hair Colouring (Special)", "name_ar": "صبغ شعر الرأس خاص", "price": 80 },
+            { "name_en": "Beard Cutting / Shaping", "name_ar": "حلاقة اللحية أو تربيتها", "price": 50 },
+            { "name_en": "Beard Colouring (Normal)", "name_ar": "صبغ اللحية عادي", "price": 40 },
+            { "name_en": "Beard Colouring (Special)", "name_ar": "صبغ اللحية خاص", "price": 60 }
+          ]
+        },
+        {
+          "id": "face-care",
+          "name_en": "Face & Head Care",
+          "name_ar": "العناية بالوجه والرأس",
+          "items": [
+            { "name_en": "Steam Facial", "name_ar": "بخار للوجه مع كريم تنظيف", "price": 50 },
+            { "name_en": "Facial Wash (Sand Cream)", "name_ar": "كريم رمل لتنظيف الوجه", "price": 30 },
+            { "name_en": "Facial Wash with Wax", "name_ar": "تنظيف الوجه بالشمع", "price": 40 },
+            { "name_en": "Nose & Ears Wax Cleaning", "name_ar": "تنظيف الأنف والأذن بالشمع", "price": 40 },
+            { "name_en": "Facial Cleansing Course", "name_ar": "كورس تنظيف خاص بالوجه", "price": 150 },
+            { "name_en": "Head Oil Massage", "name_ar": "مساج الرأس بالزيت", "price": 50 },
+            { "name_en": "Oil Bath for the Head", "name_ar": "حمام زيت للرأس", "price": 50 },
+            { "name_en": "Face Mask", "name_ar": "ماسك للوجه", "price": 30 },
+            { "name_en": "Nose Cleaning Adhesive", "name_ar": "لاصق تنظيف الأنف", "price": 10 }
+          ]
+        },
+        {
+          "id": "nails-keratin",
+          "name_en": "Nails, Legs & Keratin",
+          "name_ar": "الأظافر والأرجل والكيراتين",
+          "items": [
+            { "name_en": "Trim Hand Nails", "name_ar": "تقليم أظافر اليدين", "price": 50 },
+            { "name_en": "Trim Foot Nails", "name_ar": "تقليم أظافر الأرجل", "price": 50 },
+            { "name_en": "Leg Cleaning Services", "name_ar": "خدمات تنظيف الأرجل", "price": 100 },
+            { "name_en": "Keratin (Short Hair)", "name_ar": "كيراتين للشعر القصير", "price": 300 },
+            { "name_en": "Keratin (Long Hair)", "name_ar": "كيراتين للشعر الطويل", "price": 500 }
+          ]
+        },
+        {
+          "id": "massage",
+          "name_en": "Massage",
+          "name_ar": "المساج",
+          "columns": [
+            { "key": "min20", "label_en": "20 min", "label_ar": "20 دقيقة" },
+            { "key": "min60", "label_en": "60 min", "label_ar": "60 دقيقة" }
+          ],
+          "items": [
+            { "name_en": "Thai Massage", "name_ar": "مساج تايلاندي", "prices": { "min20": 100, "min60": 150 } },
+            { "name_en": "Sports Massage", "name_ar": "مساج رياضي", "prices": { "min20": 100, "min60": 150 } },
+            { "name_en": "Swedish Massage", "name_ar": "مساج سويدي", "prices": { "min20": 100, "min60": 150 } },
+            { "name_en": "Hot Stone Massage", "name_ar": "مساج الحجر الساخن", "prices": { "min20": 100, "min60": 150 } },
+            { "name_en": "Hot Herbal Massage", "name_ar": "مساج الأعشاب الساخنة", "prices": { "min20": 100, "min60": 150 } }
+          ]
+        },
+        {
+          "id": "moroccan-bath",
+          "name_en": "Moroccan Bath",
+          "name_ar": "الحمام المغربي",
+          "items": [
+            { "name_en": "Moroccan Bath", "name_ar": "حمام مغربي", "price": 150 },
+            { "name_en": "Private Moroccan Bath", "name_ar": "حمام خاص", "price": 200 },
+            { "name_en": "Royal Moroccan Bath", "name_ar": "حمام ملكي", "price": 300 }
+          ]
+        },
+        {
+          "id": "hair-removal",
+          "name_en": "Hair Removal",
+          "name_ar": "إزالة الشعر",
+          "columns": [
+            { "key": "cream", "label_en": "Cream", "label_ar": "كريم" },
+            { "key": "wax", "label_en": "Wax", "label_ar": "شمع" }
+          ],
+          "items": [
+            { "name_en": "Under Arms", "name_ar": "تحت الإبط", "prices": { "cream": 30, "wax": 50 } },
+            { "name_en": "Upper Back", "name_ar": "أعلى الظهر", "prices": { "cream": 60, "wax": 80 } },
+            { "name_en": "Chest", "name_ar": "الصدر", "prices": { "cream": 60, "wax": 80 } },
+            { "name_en": "Full Leg", "name_ar": "أرجل كاملة", "prices": { "cream": 70, "wax": 100 } },
+            { "name_en": "Full Back", "name_ar": "ظهر كامل", "prices": { "cream": 70, "wax": 100 } },
+            { "name_en": "Full Body", "name_ar": "جسم كامل", "prices": { "cream": 200, "wax": 350 } }
+          ]
+        }
+      ]
+    },
+    "khalidiya": {
+      "name_en": "Khalidiya",
+      "name_ar": "الخالدية",
+      "categories": [
+        {
+          "id": "cuts-coloring",
+          "name_en": "Cuts & Colouring",
+          "name_ar": "الحلاقة والصبغ",
+          "items": [
+            { "name_en": "Hair Cutting", "name_ar": "حلاقة شعر الرأس", "price": 40 },
+            { "name_en": "Hair Colouring (Normal)", "name_ar": "صبغ شعر الرأس عادي", "price": 50 },
+            { "name_en": "Hair Colouring (Special)", "name_ar": "صبغ شعر الرأس خاص", "price": 80 },
+            { "name_en": "Beard Cutting / Shaping", "name_ar": "حلاقة اللحية أو تربيتها", "price": 40 },
+            { "name_en": "Beard Colouring (Normal)", "name_ar": "صبغ اللحية عادي", "price": 40 },
+            { "name_en": "Beard Colouring (Special)", "name_ar": "صبغ اللحية خاص", "price": 60 }
+          ]
+        },
+        {
+          "id": "face-care",
+          "name_en": "Face & Head Care",
+          "name_ar": "العناية بالوجه والرأس",
+          "items": [
+            { "name_en": "Steam Facial", "name_ar": "بخار للوجه مع كريم تنظيف", "price": 50 },
+            { "name_en": "Facial Wash (Sand Cream)", "name_ar": "كريم رمل لتنظيف الوجه", "price": 30 },
+            { "name_en": "Facial Wash with Wax", "name_ar": "تنظيف الوجه بالشمع", "price": 40 },
+            { "name_en": "Nose & Ears Wax Cleaning", "name_ar": "تنظيف الأنف والأذن بالشمع", "price": 40 },
+            { "name_en": "Facial Cleansing Course", "name_ar": "كورس تنظيف خاص بالوجه", "price": 150 },
+            { "name_en": "Head Oil Massage", "name_ar": "مساج الرأس بالزيت", "price": 50 },
+            { "name_en": "Oil Bath for the Head", "name_ar": "حمام زيت للرأس", "price": 50 },
+            { "name_en": "Face Mask", "name_ar": "ماسك للوجه", "price": 30 },
+            { "name_en": "Nose Cleaning Adhesive", "name_ar": "لاصق تنظيف الأنف", "price": 10 }
+          ]
+        },
+        {
+          "id": "nails-keratin",
+          "name_en": "Nails, Legs & Keratin",
+          "name_ar": "الأظافر والأرجل والكيراتين",
+          "items": [
+            { "name_en": "Trim Hand Nails", "name_ar": "تقليم أظافر اليدين", "price": 40 },
+            { "name_en": "Trim Foot Nails", "name_ar": "تقليم أظافر الأرجل", "price": 40 },
+            { "name_en": "Leg Cleaning Services", "name_ar": "خدمات تنظيف الأرجل", "price": 80 },
+            { "name_en": "Keratin (Short Hair)", "name_ar": "كيراتين للشعر القصير", "price": 300 },
+            { "name_en": "Keratin (Long Hair)", "name_ar": "كيراتين للشعر الطويل", "price": 500 }
+          ]
+        },
+        {
+          "id": "massage",
+          "name_en": "Massage",
+          "name_ar": "المساج",
+          "columns": [
+            { "key": "min20", "label_en": "20 min", "label_ar": "20 دقيقة" },
+            { "key": "min60", "label_en": "60 min", "label_ar": "60 دقيقة" }
+          ],
+          "items": [
+            { "name_en": "Thai Massage", "name_ar": "مساج تايلاندي", "prices": { "min20": 100, "min60": 150 } },
+            { "name_en": "Sports Massage", "name_ar": "مساج رياضي", "prices": { "min20": 100, "min60": 150 } },
+            { "name_en": "Swedish Massage", "name_ar": "مساج سويدي", "prices": { "min20": 100, "min60": 150 } },
+            { "name_en": "Hot Stone Massage", "name_ar": "مساج الحجر الساخن", "prices": { "min20": 100, "min60": 150 } },
+            { "name_en": "Hot Herbal Massage", "name_ar": "مساج الأعشاب الساخنة", "prices": { "min20": 100, "min60": 150 } }
+          ]
+        },
+        {
+          "id": "moroccan-bath",
+          "name_en": "Moroccan Bath",
+          "name_ar": "الحمام المغربي",
+          "items": [
+            { "name_en": "Moroccan Bath", "name_ar": "حمام مغربي", "price": 130 },
+            { "name_en": "Private Moroccan Bath", "name_ar": "حمام خاص", "price": 180 },
+            { "name_en": "Royal Moroccan Bath", "name_ar": "حمام ملكي", "price": 300 }
+          ]
+        },
+        {
+          "id": "hair-removal",
+          "name_en": "Hair Removal",
+          "name_ar": "إزالة الشعر",
+          "columns": [
+            { "key": "cream", "label_en": "Cream", "label_ar": "كريم" },
+            { "key": "wax", "label_en": "Wax", "label_ar": "شمع" }
+          ],
+          "items": [
+            { "name_en": "Under Arms", "name_ar": "تحت الإبط", "prices": { "cream": 30, "wax": 50 } },
+            { "name_en": "Upper Back", "name_ar": "أعلى الظهر", "prices": { "cream": 60, "wax": 80 } },
+            { "name_en": "Chest", "name_ar": "الصدر", "prices": { "cream": 60, "wax": 80 } },
+            { "name_en": "Full Leg", "name_ar": "أرجل كاملة", "prices": { "cream": 70, "wax": 100 } },
+            { "name_en": "Full Arms", "name_ar": "ذراع كامل", "prices": { "cream": 70, "wax": 100 } },
+            { "name_en": "Full Body", "name_ar": "جسم كامل", "prices": { "cream": 200, "wax": 350 } }
+          ]
+        }
+      ]
+    },
+    "old-shahamah": {
+      "name_en": "Old Shahamah",
+      "name_ar": "الشهامة القديمة",
+      "categories": [
+        {
+          "id": "cuts-coloring",
+          "name_en": "Cuts & Colouring",
+          "name_ar": "الحلاقة والصبغ",
+          "items": [
+            { "name_en": "Hair Cutting", "name_ar": "حلاقة شعر الرأس", "price": 30 },
+            { "name_en": "Hair Colouring (Normal)", "name_ar": "صبغ شعر الرأس عادي", "price": 50 },
+            { "name_en": "Hair Colouring (Special)", "name_ar": "صبغ شعر الرأس خاص", "price": 70 },
+            { "name_en": "Beard Cutting / Shaping", "name_ar": "حلاقة اللحية أو تربيتها", "price": 35 },
+            { "name_en": "Beard Colouring (Normal)", "name_ar": "صبغ اللحية عادي", "price": 40 },
+            { "name_en": "Beard Colouring (Special)", "name_ar": "صبغ اللحية خاص", "price": 60 }
+          ]
+        },
+        {
+          "id": "face-care",
+          "name_en": "Face & Head Care",
+          "name_ar": "العناية بالوجه والرأس",
+          "items": [
+            { "name_en": "Steam Facial", "name_ar": "بخار للوجه مع كريم تنظيف", "price": 50 },
+            { "name_en": "Facial Wash (Sand Cream)", "name_ar": "كريم رمل لتنظيف الوجه", "price": 30 },
+            { "name_en": "Facial Wash with Wax", "name_ar": "تنظيف الوجه بالشمع", "price": 40 },
+            { "name_en": "Nose & Ears Wax Cleaning", "name_ar": "تنظيف الأنف والأذن بالشمع", "price": 40 },
+            { "name_en": "Facial Cleansing Course", "name_ar": "كورس تنظيف خاص بالوجه", "price": 150 },
+            { "name_en": "Head Oil Massage", "name_ar": "مساج الرأس بالزيت", "price": 20 },
+            { "name_en": "Oil Bath for the Head", "name_ar": "حمام زيت للرأس", "price": 50 },
+            { "name_en": "Nose Cleaning Adhesive", "name_ar": "لاصق تنظيف الأنف", "price": 10 }
+          ]
+        },
+        {
+          "id": "nails-keratin",
+          "name_en": "Nails, Legs & Keratin",
+          "name_ar": "الأظافر والأرجل والكيراتين",
+          "items": [
+            { "name_en": "Trim Hand Nails", "name_ar": "تقليم أظافر اليدين", "price": 40 },
+            { "name_en": "Trim Foot Nails", "name_ar": "تقليم أظافر الأرجل", "price": 40 },
+            { "name_en": "Leg Cleaning Services", "name_ar": "خدمات تنظيف الأرجل", "price": 80 },
+            { "name_en": "Keratin (Short Hair)", "name_ar": "كيراتين للشعر القصير", "price": 300 },
+            { "name_en": "Keratin (Long Hair)", "name_ar": "كيراتين للشعر الطويل", "price": 500 }
+          ]
+        },
+        {
+          "id": "massage",
+          "name_en": "Massage",
+          "name_ar": "المساج",
+          "columns": [
+            { "key": "min20", "label_en": "20 min", "label_ar": "20 دقيقة" },
+            { "key": "min60", "label_en": "60 min", "label_ar": "60 دقيقة" }
+          ],
+          "items": [
+            { "name_en": "Thai Massage", "name_ar": "مساج تايلاندي", "prices": { "min20": 100, "min60": 150 } },
+            { "name_en": "Sports Massage", "name_ar": "مساج رياضي", "prices": { "min20": 100, "min60": 150 } },
+            { "name_en": "Swedish Massage", "name_ar": "مساج سويدي", "prices": { "min20": 100, "min60": 150 } },
+            { "name_en": "Hot Stone Massage", "name_ar": "مساج الحجر الساخن", "prices": { "min20": 100, "min60": 150 } },
+            { "name_en": "Hot Herbal Massage", "name_ar": "مساج الأعشاب الساخنة", "prices": { "min20": 100, "min60": 150 } }
+          ]
+        },
+        {
+          "id": "moroccan-bath",
+          "name_en": "Moroccan Bath",
+          "name_ar": "الحمام المغربي",
+          "items": [
+            { "name_en": "Moroccan Bath", "name_ar": "حمام مغربي", "price": 100 },
+            { "name_en": "Private Moroccan Bath", "name_ar": "حمام خاص", "price": 180 },
+            { "name_en": "Royal Moroccan Bath", "name_ar": "حمام ملكي", "price": 300 }
+          ]
+        },
+        {
+          "id": "hair-removal",
+          "name_en": "Hair Removal",
+          "name_ar": "إزالة الشعر",
+          "columns": [
+            { "key": "cream", "label_en": "Cream", "label_ar": "كريم" },
+            { "key": "wax", "label_en": "Wax", "label_ar": "شمع" }
+          ],
+          "items": [
+            { "name_en": "Under Arms", "name_ar": "تحت الإبط", "prices": { "cream": 30, "wax": 50 } },
+            { "name_en": "Upper Back", "name_ar": "أعلى الظهر", "prices": { "cream": 60, "wax": 80 } },
+            { "name_en": "Chest", "name_ar": "الصدر", "prices": { "cream": 60, "wax": 80 } },
+            { "name_en": "Full Leg", "name_ar": "أرجل كاملة", "prices": { "cream": 70, "wax": 100 } },
+            { "name_en": "Full Back", "name_ar": "ظهر كامل", "prices": { "cream": 70, "wax": 100 } },
+            { "name_en": "Full Body", "name_ar": "جسم كامل", "prices": { "cream": 200, "wax": 350 } }
+          ]
+        }
+      ]
+    },
+    "new-shahamah": {
+      "name_en": "New Shahamah",
+      "name_ar": "الشهامة الجديدة",
+      "categories": [
+        {
+          "id": "cuts-coloring",
+          "name_en": "Cuts & Colouring",
+          "name_ar": "الحلاقة والصبغ",
+          "items": [
+            { "name_en": "Hair Cutting", "name_ar": "حلاقة شعر الرأس", "price": 30 },
+            { "name_en": "Hair Colouring (Normal)", "name_ar": "صبغ شعر الرأس عادي", "price": 50 },
+            { "name_en": "Hair Colouring (Special)", "name_ar": "صبغ شعر الرأس خاص", "price": 70 },
+            { "name_en": "Beard Cutting / Shaping", "name_ar": "حلاقة اللحية أو تربيتها", "price": 30 },
+            { "name_en": "Beard Colouring (Normal)", "name_ar": "صبغ اللحية عادي", "price": 40 },
+            { "name_en": "Beard Colouring (Special)", "name_ar": "صبغ اللحية خاص", "price": 60 }
+          ]
+        },
+        {
+          "id": "face-care",
+          "name_en": "Face & Head Care",
+          "name_ar": "العناية بالوجه والرأس",
+          "items": [
+            { "name_en": "Steam Facial", "name_ar": "بخار للوجه مع كريم تنظيف", "price": 50 },
+            { "name_en": "Facial Wash (Sand Cream)", "name_ar": "كريم رمل لتنظيف الوجه", "price": 30 },
+            { "name_en": "Facial Wash with Wax", "name_ar": "تنظيف الوجه بالشمع", "price": 40 },
+            { "name_en": "Nose & Ears Wax Cleaning", "name_ar": "تنظيف الأنف والأذن بالشمع", "price": 40 },
+            { "name_en": "Facial Cleansing Course", "name_ar": "كورس تنظيف خاص بالوجه", "price": 150 },
+            { "name_en": "Head Oil Massage", "name_ar": "مساج الرأس بالزيت", "price": 20 },
+            { "name_en": "Oil Bath for the Head", "name_ar": "حمام زيت للرأس", "price": 50 },
+            { "name_en": "Nose Cleaning Adhesive", "name_ar": "لاصق تنظيف الأنف", "price": 10 }
+          ]
+        },
+        {
+          "id": "nails-keratin",
+          "name_en": "Nails, Legs & Keratin",
+          "name_ar": "الأظافر والأرجل والكيراتين",
+          "items": [
+            { "name_en": "Trim Hand Nails", "name_ar": "تقليم أظافر اليدين", "price": 40 },
+            { "name_en": "Trim Foot Nails", "name_ar": "تقليم أظافر الأرجل", "price": 40 },
+            { "name_en": "Leg Cleaning Services", "name_ar": "خدمات تنظيف الأرجل", "price": 80 },
+            { "name_en": "Keratin (Short Hair)", "name_ar": "كيراتين للشعر القصير", "price": 300 },
+            { "name_en": "Keratin (Long Hair)", "name_ar": "كيراتين للشعر الطويل", "price": 500 }
+          ]
+        }
+      ]
+    },
+    "rabdan": {
+      "name_en": "Rabdan",
+      "name_ar": "ربدان",
+      "categories": [
+        {
+          "id": "cuts-coloring",
+          "name_en": "Cuts & Colouring",
+          "name_ar": "الحلاقة والصبغ",
+          "items": [
+            { "name_en": "Hair Cutting", "name_ar": "حلاقة شعر الرأس", "price": 30 },
+            { "name_en": "Hair Colouring (Normal)", "name_ar": "صبغ شعر الرأس عادي", "price": 40 },
+            { "name_en": "Hair Colouring (Special)", "name_ar": "صبغ شعر الرأس خاص", "price": 80 },
+            { "name_en": "Beard Cutting / Shaping", "name_ar": "حلاقة اللحية أو تربيتها", "price": 40 },
+            { "name_en": "Beard Colouring (Normal)", "name_ar": "صبغ اللحية عادي", "price": 40 },
+            { "name_en": "Beard Colouring (Special)", "name_ar": "صبغ اللحية خاص", "price": 60 }
+          ]
+        },
+        {
+          "id": "face-care",
+          "name_en": "Face & Head Care",
+          "name_ar": "العناية بالوجه والرأس",
+          "items": [
+            { "name_en": "Steam Facial", "name_ar": "بخار للوجه مع كريم تنظيف", "price": 50 },
+            { "name_en": "Facial Wash (Sand Cream)", "name_ar": "كريم رمل لتنظيف الوجه", "price": 30 },
+            { "name_en": "Facial Wash with Wax", "name_ar": "تنظيف الوجه بالشمع", "price": 40 },
+            { "name_en": "Nose & Ears Wax Cleaning", "name_ar": "تنظيف الأنف والأذن بالشمع", "price": 40 },
+            { "name_en": "Facial Cleansing Course", "name_ar": "كورس تنظيف خاص بالوجه", "price": 150 },
+            { "name_en": "Head Oil Massage", "name_ar": "مساج الرأس بالزيت", "price": 50 },
+            { "name_en": "Oil Bath for the Head", "name_ar": "حمام زيت للرأس", "price": 50 },
+            { "name_en": "Nose Cleaning Adhesive", "name_ar": "لاصق تنظيف الأنف", "price": 10 }
+          ]
+        },
+        {
+          "id": "nails-keratin",
+          "name_en": "Nails, Legs & Keratin",
+          "name_ar": "الأظافر والأرجل والكيراتين",
+          "items": [
+            { "name_en": "Trim Hand Nails", "name_ar": "تقليم أظافر اليدين", "price": 50 },
+            { "name_en": "Trim Foot Nails", "name_ar": "تقليم أظافر الأرجل", "price": 50 },
+            { "name_en": "Leg Cleaning Services", "name_ar": "خدمات تنظيف الأرجل", "price": 100 },
+            { "name_en": "Keratin (Short Hair)", "name_ar": "كيراتين للشعر القصير", "price": 300 },
+            { "name_en": "Keratin (Long Hair)", "name_ar": "كيراتين للشعر الطويل", "price": 500 }
+          ]
+        },
+        {
+          "id": "massage",
+          "name_en": "Massage",
+          "name_ar": "المساج",
+          "columns": [
+            { "key": "min30", "label_en": "30 min", "label_ar": "30 دقيقة" },
+            { "key": "min60", "label_en": "60 min", "label_ar": "60 دقيقة" }
+          ],
+          "items": [
+            { "name_en": "Thai Massage", "name_ar": "مساج تايلاندي", "prices": { "min30": 100, "min60": 150 } },
+            { "name_en": "Sports Massage", "name_ar": "مساج رياضي", "prices": { "min30": 100, "min60": 150 } },
+            { "name_en": "Swedish Massage", "name_ar": "مساج سويدي", "prices": { "min30": 100, "min60": 150 } },
+            { "name_en": "Hot Stone Massage", "name_ar": "مساج الحجر الساخن", "prices": { "min30": 100, "min60": 150 } },
+            { "name_en": "Hot Herbal Massage", "name_ar": "مساج الأعشاب الساخنة", "prices": { "min30": 100, "min60": 150 } }
+          ]
+        },
+        {
+          "id": "hair-removal",
+          "name_en": "Hair Removal",
+          "name_ar": "إزالة الشعر",
+          "columns": [
+            { "key": "cream", "label_en": "Cream", "label_ar": "كريم" },
+            { "key": "wax", "label_en": "Wax", "label_ar": "شمع" }
+          ],
+          "items": [
+            { "name_en": "Under Arms", "name_ar": "تحت الإبط", "prices": { "cream": 30, "wax": 50 } },
+            { "name_en": "Upper Back", "name_ar": "أعلى الظهر", "prices": { "cream": 60, "wax": 80 } },
+            { "name_en": "Chest", "name_ar": "الصدر", "prices": { "cream": 60, "wax": 80 } },
+            { "name_en": "Full Leg", "name_ar": "أرجل كاملة", "prices": { "cream": 70, "wax": 100 } },
+            { "name_en": "Full Back", "name_ar": "ظهر كامل", "prices": { "cream": 70, "wax": 100 } },
+            { "name_en": "Full Body", "name_ar": "جسم كامل", "prices": { "cream": 200, "wax": 350 } }
+          ]
+        }
+      ]
+    },
+    "muroor": {
+      "name_en": "Muroor",
+      "name_ar": "المرور",
+      "categories": [
+        {
+          "id": "cuts-coloring",
+          "name_en": "Cuts & Colouring",
+          "name_ar": "الحلاقة والصبغ",
+          "items": [
+            { "name_en": "Hair Cutting", "name_ar": "حلاقة شعر الرأس", "price": 35 },
+            { "name_en": "Hair Colouring (Normal)", "name_ar": "صبغ شعر الرأس عادي", "price": 50 },
+            { "name_en": "Hair Colouring (Special)", "name_ar": "صبغ شعر الرأس خاص", "price": 80 },
+            { "name_en": "Beard Cutting / Shaping", "name_ar": "حلاقة اللحية أو تربيتها", "price": 35 },
+            { "name_en": "Beard Colouring (Normal)", "name_ar": "صبغ اللحية عادي", "price": 40 },
+            { "name_en": "Beard Colouring (Special)", "name_ar": "صبغ اللحية خاص", "price": 60 }
+          ]
+        },
+        {
+          "id": "face-care",
+          "name_en": "Face & Head Care",
+          "name_ar": "العناية بالوجه والرأس",
+          "items": [
+            { "name_en": "Facial Wash (Sand Cream)", "name_ar": "كريم رمل لتنظيف الوجه", "price": 30 },
+            { "name_en": "Facial Wash + Steam Facial", "name_ar": "كريم رمل لتنظيف الوجه + بخار للوجه", "price": 50 },
+            { "name_en": "Oil Bath for the Head", "name_ar": "حمام زيت للرأس", "price": 40 },
+            { "name_en": "Face Mask", "name_ar": "ماسك الوجه", "price": 40 },
+            { "name_en": "Head Oil Massage", "name_ar": "مساج الرأس بالزيت", "price": 40 },
+            { "name_en": "Facial Wash with Wax", "name_ar": "تنظيف الوجه بالشمع", "price": 10 },
+            { "name_en": "Nose & Ears Wax Cleaning", "name_ar": "تنظيف الأنف والأذن بالشمع", "price": 30 },
+            { "name_en": "Nose Cleaning Adhesive", "name_ar": "لاصق تنظيف الأنف", "price": 50 }
+          ]
+        }
+      ]
+    },
+    "vip-muroor": {
+      "name_en": "VIP Muroor",
+      "name_ar": "VIP المرور",
+      "categories": [
+        {
+          "id": "cuts-coloring",
+          "name_en": "Cuts & Colouring",
+          "name_ar": "الحلاقة والصبغ",
+          "items": [
+            { "name_en": "Hair Cutting", "name_ar": "حلاقة شعر الرأس", "price": 50 },
+            { "name_en": "Hair Colouring (Normal)", "name_ar": "صبغ شعر الرأس عادي", "price": 50 },
+            { "name_en": "Hair Colouring (Special)", "name_ar": "صبغ شعر الرأس خاص", "price": 70 },
+            { "name_en": "Beard Cutting / Shaping", "name_ar": "حلاقة اللحية أو تربيتها", "price": 50 },
+            { "name_en": "Beard Colouring (Normal)", "name_ar": "صبغ اللحية عادي", "price": 45 },
+            { "name_en": "Beard Colouring (Special)", "name_ar": "صبغ اللحية خاص", "price": 60 }
+          ]
+        },
+        {
+          "id": "face-care",
+          "name_en": "Face & Head Care",
+          "name_ar": "العناية بالوجه والرأس",
+          "items": [
+            { "name_en": "Steam Facial", "name_ar": "بخار للوجه مع كريم تنظيف", "price": 35 },
+            { "name_en": "Facial Wash (Sand Cream)", "name_ar": "كريم رمل لتنظيف الوجه", "price": 35 },
+            { "name_en": "Facial Wash with Wax", "name_ar": "تنظيف الوجه بالشمع", "price": 40 },
+            { "name_en": "Nose & Ears Wax Cleaning", "name_ar": "تنظيف الأنف والأذن بالشمع", "price": 20 },
+            { "name_en": "Facial Cleansing Course", "name_ar": "كورس تنظيف خاص بالوجه", "price": 200 },
+            { "name_en": "Head Oil Massage", "name_ar": "مساج الرأس بالزيت", "price": 20 },
+            { "name_en": "Oil Bath for the Head", "name_ar": "حمام زيت للرأس", "price": 50 },
+            { "name_en": "Nose Cleaning Adhesive", "name_ar": "لاصق تنظيف الأنف", "price": 20 }
+          ]
+        },
+        {
+          "id": "nails-keratin",
+          "name_en": "Nails, Legs & Keratin",
+          "name_ar": "الأظافر والأرجل والكيراتين",
+          "items": [
+            { "name_en": "Trim Hand Nails", "name_ar": "تقليم أظافر اليدين", "price": 50 },
+            { "name_en": "Trim Foot Nails", "name_ar": "تقليم أظافر الأرجل", "price": 50 },
+            { "name_en": "Leg Cleaning Services", "name_ar": "خدمات تنظيف الأرجل", "price": 100 },
+            { "name_en": "Keratin (Short Hair)", "name_ar": "كيراتين للشعر القصير", "price": 300 },
+            { "name_en": "Keratin (Long Hair)", "name_ar": "كيراتين للشعر الطويل", "price": 500 }
+          ]
+        },
+        {
+          "id": "massage",
+          "name_en": "Massage",
+          "name_ar": "المساج",
+          "columns": [
+            { "key": "min30", "label_en": "30 min", "label_ar": "30 دقيقة" },
+            { "key": "min60", "label_en": "60 min", "label_ar": "60 دقيقة" }
+          ],
+          "items": [
+            { "name_en": "Thai Massage", "name_ar": "مساج تايلاندي", "prices": { "min30": 100, "min60": 150 } },
+            { "name_en": "Sports Massage", "name_ar": "مساج رياضي", "prices": { "min30": 100, "min60": 150 } },
+            { "name_en": "Swedish Massage", "name_ar": "مساج سويدي", "prices": { "min30": 100, "min60": 150 } },
+            { "name_en": "Hot Stone Massage", "name_ar": "مساج الحجر الساخن", "prices": { "min30": 100, "min60": 150 } },
+            { "name_en": "Hot Herbal Massage", "name_ar": "مساج الأعشاب الساخنة", "prices": { "min30": 100, "min60": 150 } }
+          ]
+        },
+        {
+          "id": "moroccan-bath",
+          "name_en": "Moroccan Bath",
+          "name_ar": "الحمام المغربي",
+          "items": [
+            { "name_en": "Moroccan Bath", "name_ar": "حمام مغربي", "price": 130 },
+            { "name_en": "Private Moroccan Bath", "name_ar": "حمام خاص", "price": 180 },
+            { "name_en": "Royal Moroccan Bath", "name_ar": "حمام ملكي", "price": 300 }
+          ]
+        },
+        {
+          "id": "hair-removal",
+          "name_en": "Hair Removal",
+          "name_ar": "إزالة الشعر",
+          "columns": [
+            { "key": "cream", "label_en": "Cream", "label_ar": "كريم" },
+            { "key": "wax", "label_en": "Wax", "label_ar": "شمع" }
+          ],
+          "items": [
+            { "name_en": "Under Arms", "name_ar": "تحت الإبط", "prices": { "cream": 30, "wax": 50 } },
+            { "name_en": "Upper Back", "name_ar": "أعلى الظهر", "prices": { "cream": 60, "wax": 80 } },
+            { "name_en": "Chest", "name_ar": "الصدر", "prices": { "cream": 60, "wax": 80 } },
+            { "name_en": "Full Leg", "name_ar": "أرجل كاملة", "prices": { "cream": 70, "wax": 100 } },
+            { "name_en": "Full Back", "name_ar": "ظهر كامل", "prices": { "cream": 70, "wax": 100 } },
+            { "name_en": "Full Body", "name_ar": "جسم كامل", "prices": { "cream": 200, "wax": 350 } }
+          ]
+        }
+      ]
+    },
+    "baniyas-barber": {
+      "name_en": "Baniyas Barber",
+      "name_ar": "بنياس باربر",
+      "categories": [
+        {
+          "id": "cuts-coloring",
+          "name_en": "Cuts & Colouring",
+          "name_ar": "الحلاقة والصبغ",
+          "items": [
+            { "name_en": "Hair Cutting", "name_ar": "حلاقة شعر الرأس", "price": 25 },
+            { "name_en": "Hair Colouring (Normal)", "name_ar": "صبغ شعر الرأس عادي", "price": 40 },
+            { "name_en": "Hair Colouring (Special)", "name_ar": "صبغ شعر الرأس خاص", "price": 80 },
+            { "name_en": "Beard Cutting / Shaping", "name_ar": "حلاقة اللحية أو تربيتها", "price": 30 },
+            { "name_en": "Beard Colouring (Normal)", "name_ar": "صبغ اللحية عادي", "price": 30 },
+            { "name_en": "Beard Colouring (Special)", "name_ar": "صبغ اللحية خاص", "price": 60 }
+          ]
+        },
+        {
+          "id": "face-care",
+          "name_en": "Face & Head Care",
+          "name_ar": "العناية بالوجه والرأس",
+          "items": [
+            { "name_en": "Facial Wash (Sand Cream)", "name_ar": "كريم رمل لتنظيف الوجه", "price": 30 },
+            { "name_en": "Facial Wash + Steam Facial", "name_ar": "كريم رمل لتنظيف الوجه + بخار للوجه", "price": 50 },
+            { "name_en": "Oil Bath for the Head", "name_ar": "حمام زيت للرأس", "price": 50 },
+            { "name_en": "Nose Cleaning Adhesive", "name_ar": "لاصق تنظيف الأنف", "price": 10 },
+            { "name_en": "Special Face Mask", "name_ar": "ماسك خاص للوجه", "price": 30 },
+            { "name_en": "Head Oil Massage", "name_ar": "مساج الرأس بالزيت", "price": 50 },
+            { "name_en": "Facial Wash with Wax", "name_ar": "تنظيف الوجه بالشمع", "price": 40 },
+            { "name_en": "Nose & Ears Wax Cleaning", "name_ar": "تنظيف الأنف والأذن بالشمع", "price": 40 }
+          ]
+        },
+        {
+          "id": "nails-keratin",
+          "name_en": "Nails, Legs & Keratin",
+          "name_ar": "الأظافر والأرجل والكيراتين",
+          "items": [
+            { "name_en": "Trim Hand Nails", "name_ar": "تقليم أظافر اليدين", "price": 40 },
+            { "name_en": "Trim Foot Nails", "name_ar": "تقليم أظافر الأرجل", "price": 40 },
+            { "name_en": "Leg Cleaning Services", "name_ar": "خدمات تنظيف الأرجل", "price": 80 },
+            { "name_en": "Keratin (Short Hair)", "name_ar": "كيراتين للشعر القصير", "price": 300 },
+            { "name_en": "Keratin (Long Hair)", "name_ar": "كيراتين للشعر الطويل", "price": 500 }
+          ]
+        }
+      ]
+    },
+    "khalifa-city": {
+      "name_en": "Khalifa City",
+      "name_ar": "مدينة خليفة",
+      "categories": [
+        {
+          "id": "nail-care",
+          "name_en": "Nail Care",
+          "name_ar": "العناية بالأظافر",
+          "items": [
+            { "name_en": "Manicure", "name_ar": "مانيكير", "price": 50 },
+            { "name_en": "Pedicure", "name_ar": "بيديكير", "price": 50 },
+            { "name_en": "Foot Spa", "name_ar": "سبا للقدمين", "price": 100 }
+          ]
+        },
+        {
+          "id": "hair-removal",
+          "name_en": "Hair Removal",
+          "name_ar": "إزالة الشعر",
+          "columns": [
+            { "key": "cream", "label_en": "Waxing Cream", "label_ar": "كريم إزالة" },
+            { "key": "wax", "label_en": "Sugar Wax", "label_ar": "شمع سكر" }
+          ],
+          "items": [
+            { "name_en": "Underarm", "name_ar": "تحت الإبط", "prices": { "cream": 50, "wax": 30 } },
+            { "name_en": "Under-Stomach / Bikini", "name_ar": "تحت البطن / البيكيني", "prices": { "cream": 100, "wax": 80 } },
+            { "name_en": "Back & Shoulder", "name_ar": "الظهر والكتف", "prices": { "cream": 100, "wax": 80 } },
+            { "name_en": "Chest & Stomach", "name_ar": "الصدر والبطن", "prices": { "cream": 100, "wax": 80 } },
+            { "name_en": "Full Legs", "name_ar": "كامل الساقين", "prices": { "cream": 150, "wax": 100 } },
+            { "name_en": "Full Arms", "name_ar": "كامل الذراعين", "prices": { "cream": 80, "wax": 60 } },
+            { "name_en": "Full Body", "name_ar": "كامل الجسم", "prices": { "cream": 400, "wax": 250 } }
+          ]
+        },
+        {
+          "id": "massage",
+          "name_en": "Massage",
+          "name_ar": "المساج",
+          "columns": [
+            { "key": "min30", "label_en": "30 min", "label_ar": "30 دقيقة" },
+            { "key": "min60", "label_en": "60 min", "label_ar": "60 دقيقة" },
+            { "key": "min90", "label_en": "90 min", "label_ar": "90 دقيقة" }
+          ],
+          "items": [
+            { "name_en": "Relaxing Swedish Massage", "name_ar": "مساج سويدي مريح", "prices": { "min30": 100, "min60": 180, "min90": 250 } },
+            { "name_en": "Thai Massage", "name_ar": "مساج تايلاندي", "prices": { "min30": 100, "min60": 180, "min90": 250 } },
+            { "name_en": "Sport Deep Tissue Massage", "name_ar": "مساج رياضي عميق للأنسجة", "prices": { "min30": 150, "min60": 230, "min90": 300 } },
+            { "name_en": "Heated Bamboo with Hot Stone Massage", "name_ar": "مساج الخيزران الساخن مع الأحجار الساخنة", "prices": { "min60": 280, "min90": 350 } },
+            { "name_en": "Foot Reflex Massage", "name_ar": "مساج القدمين الانعكاسي", "prices": { "min30": 100 } },
+            { "name_en": "Head & Shoulder Massage", "name_ar": "مساج الرأس والكتفين", "prices": { "min30": 100 } },
+            { "name_en": "Face Massage", "name_ar": "مساج الوجه", "prices": { "min30": 130 } }
+          ]
+        },
+        {
+          "id": "face-care",
+          "name_en": "Face Care",
+          "name_ar": "العناية بالوجه",
+          "items": [
+            { "name_en": "Steam Facial", "name_ar": "بخار للوجه مع كريم تنظيف", "price": 50 },
+            { "name_en": "Facial Wash with Wax", "name_ar": "تنظيف الوجه بالشمع", "price": 40 },
+            { "name_en": "Nose & Ears Wax Cleaning", "name_ar": "تنظيف الأنف والأذن بالشمع", "price": 40 },
+            { "name_en": "Facial Cleansing Course", "name_ar": "كورس تنظيف خاص بالوجه", "price": 150 },
+            { "name_en": "Total Deep Cleaning", "name_ar": "تنظيف عميق شامل", "price": 150 },
+            { "name_en": "Deluxe Facial with Treatment", "name_ar": "عناية فاخرة بالوجه مع علاج", "price": 250 },
+            { "name_en": "Special Facial with Treatment", "name_ar": "عناية خاصة بالوجه مع علاج", "price": 400 },
+            { "name_en": "Oil Bath for the Head", "name_ar": "حمام زيت للرأس", "price": 50 },
+            { "name_en": "Back Facial Treatment", "name_ar": "علاج الظهر والوجه", "price": 250 },
+            { "name_en": "Body Facial Treatment", "name_ar": "علاج الجسم", "price": 300 }
+          ]
+        },
+        {
+          "id": "body-rituals",
+          "name_en": "Body Rituals",
+          "name_ar": "طقوس الجسم",
+          "items": [
+            { "name_en": "Detoxifying", "name_ar": "إزالة السموم", "price": 180 },
+            { "name_en": "Brightening", "name_ar": "تفتيح البشرة", "price": 180 },
+            { "name_en": "Hydrating", "name_ar": "ترطيب", "price": 180 }
+          ]
+        },
+        {
+          "id": "moroccan-bath",
+          "name_en": "Moroccan Bath",
+          "name_ar": "الحمام المغربي",
+          "items": [
+            { "name_en": "Normal Moroccan Bath", "name_ar": "حمام مغربي عادي", "price": 130 },
+            { "name_en": "Special Moroccan Bath", "name_ar": "حمام مغربي خاص", "price": 180 },
+            { "name_en": "Royal Moroccan Bath", "name_ar": "حمام مغربي ملكي", "price": 300 }
+          ]
+        }
+      ]
+    },
+    "baniyas-spa": {
+      "name_en": "Baniyas Spa",
+      "name_ar": "بنياس سبا",
+      "categories": [
+        {
+          "id": "nail-care",
+          "name_en": "Nail Care",
+          "name_ar": "العناية بالأظافر",
+          "items": [
+            { "name_en": "Manicure", "name_ar": "مانيكير", "price": 50 },
+            { "name_en": "Pedicure", "name_ar": "بيديكير", "price": 50 },
+            { "name_en": "Foot Spa", "name_ar": "سبا للقدمين", "price": 100 }
+          ]
+        },
+        {
+          "id": "hair-removal",
+          "name_en": "Hair Removal",
+          "name_ar": "إزالة الشعر",
+          "columns": [
+            { "key": "cream", "label_en": "Waxing Cream", "label_ar": "كريم إزالة" },
+            { "key": "wax", "label_en": "Sugar Wax", "label_ar": "شمع سكر" }
+          ],
+          "items": [
+            { "name_en": "Underarm", "name_ar": "تحت الإبط", "prices": { "cream": 50, "wax": 30 } },
+            { "name_en": "Under-Stomach / Bikini", "name_ar": "تحت البطن / البيكيني", "prices": { "cream": 100, "wax": 80 } },
+            { "name_en": "Back & Shoulder", "name_ar": "الظهر والكتف", "prices": { "cream": 100, "wax": 80 } },
+            { "name_en": "Chest & Stomach", "name_ar": "الصدر والبطن", "prices": { "cream": 100, "wax": 80 } },
+            { "name_en": "Full Legs", "name_ar": "كامل الساقين", "prices": { "cream": 150, "wax": 100 } },
+            { "name_en": "Full Arms", "name_ar": "كامل الذراعين", "prices": { "cream": 80, "wax": 60 } },
+            { "name_en": "Full Body", "name_ar": "كامل الجسم", "prices": { "cream": 400, "wax": 250 } }
+          ]
+        },
+        {
+          "id": "massage",
+          "name_en": "Massage",
+          "name_ar": "المساج",
+          "columns": [
+            { "key": "min30", "label_en": "30 min", "label_ar": "30 دقيقة" },
+            { "key": "min60", "label_en": "60 min", "label_ar": "60 دقيقة" },
+            { "key": "min90", "label_en": "90 min", "label_ar": "90 دقيقة" }
+          ],
+          "items": [
+            { "name_en": "Relaxing Swedish Massage", "name_ar": "مساج سويدي مريح", "prices": { "min30": 100, "min60": 180, "min90": 250 } },
+            { "name_en": "Thai Massage", "name_ar": "مساج تايلاندي", "prices": { "min30": 100, "min60": 180, "min90": 250 } },
+            { "name_en": "Sport Deep Tissue Massage", "name_ar": "مساج رياضي عميق للأنسجة", "prices": { "min30": 150, "min60": 230, "min90": 300 } },
+            { "name_en": "Heated Bamboo with Hot Stone Massage", "name_ar": "مساج الخيزران الساخن مع الأحجار الساخنة", "prices": { "min60": 280, "min90": 350 } },
+            { "name_en": "Foot Reflex Massage", "name_ar": "مساج القدمين الانعكاسي", "prices": { "min30": 100 } },
+            { "name_en": "Head & Shoulder Massage", "name_ar": "مساج الرأس والكتفين", "prices": { "min30": 100 } },
+            { "name_en": "Face Massage", "name_ar": "مساج الوجه", "prices": { "min30": 130 } }
+          ]
+        },
+        {
+          "id": "face-care",
+          "name_en": "Face Care",
+          "name_ar": "العناية بالوجه",
+          "items": [
+            { "name_en": "Steam Facial", "name_ar": "بخار للوجه مع كريم تنظيف", "price": 50 },
+            { "name_en": "Facial Wash with Wax", "name_ar": "تنظيف الوجه بالشمع", "price": 40 },
+            { "name_en": "Nose & Ears Wax Cleaning", "name_ar": "تنظيف الأنف والأذن بالشمع", "price": 40 },
+            { "name_en": "Facial Cleansing Course", "name_ar": "كورس تنظيف خاص بالوجه", "price": 150 },
+            { "name_en": "Total Deep Cleaning", "name_ar": "تنظيف عميق شامل", "price": 150 },
+            { "name_en": "Deluxe Facial with Treatment", "name_ar": "عناية فاخرة بالوجه مع علاج", "price": 250 },
+            { "name_en": "Special Facial with Treatment", "name_ar": "عناية خاصة بالوجه مع علاج", "price": 400 },
+            { "name_en": "Oil Bath for the Head", "name_ar": "حمام زيت للرأس", "price": 50 },
+            { "name_en": "Back Facial Treatment", "name_ar": "علاج الظهر والوجه", "price": 250 },
+            { "name_en": "Body Facial Treatment", "name_ar": "علاج الجسم", "price": 300 }
+          ]
+        },
+        {
+          "id": "body-rituals",
+          "name_en": "Body Rituals",
+          "name_ar": "طقوس الجسم",
+          "items": [
+            { "name_en": "Detoxifying", "name_ar": "إزالة السموم", "price": 180 },
+            { "name_en": "Brightening", "name_ar": "تفتيح البشرة", "price": 180 },
+            { "name_en": "Hydrating", "name_ar": "ترطيب", "price": 180 }
+          ]
+        },
+        {
+          "id": "moroccan-bath",
+          "name_en": "Moroccan Bath",
+          "name_ar": "الحمام المغربي",
+          "items": [
+            { "name_en": "Normal Moroccan Bath", "name_ar": "حمام مغربي عادي", "price": 130 },
+            { "name_en": "Special Moroccan Bath", "name_ar": "حمام مغربي خاص", "price": 180 },
+            { "name_en": "Royal Moroccan Bath", "name_ar": "حمام مغربي ملكي", "price": 300 }
+          ]
+        }
+      ]
+    }
+  }
+}

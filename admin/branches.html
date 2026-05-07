@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Branches · Kanaan Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+<div class="admin-shell">
+  <aside class="admin-side">
+    <div class="admin-side__brand">KANAAN<span>.</span></div>
+    <nav class="admin-side__nav">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="leads.html">Leads · CRM</a>
+      <a href="offers.html">Offers</a>
+      <a href="branches.html" class="active">Branches</a>
+      <a href="banners.html">Banners</a>
+      <a href="integrations.html">Integrations</a>
+      <a href="settings.html">Settings</a>
+    </nav>
+    <div class="admin-side__user">Signed in as admin · <button type="button" onclick="KANAAN_ADMIN.logout()">Sign out</button></div>
+  </aside>
+
+  <main class="admin-main">
+    <h1 class="admin-h">Branches</h1>
+    <p class="admin-sub">Edit address, phone, WhatsApp, and working hours for each Kanaan house.</p>
+
+    <div class="bar">
+      <span class="spacer"></span>
+      <button type="button" class="btn btn--ghost btn--sm" id="reload">Reset from file</button>
+      <button type="button" class="btn btn--sm" id="save">💾 Save locally</button>
+      <button type="button" class="btn btn--sm" id="download">⬇ Download branches.json</button>
+    </div>
+
+    <div id="list"></div>
+
+    <p style="color: var(--muted); font-size: 12px; margin-top: 24px;">
+      <strong>After download:</strong> overwrite <code>content/branches.json</code> on your server, then run <code>node generate-branches.js</code> to rebuild the 10 branch detail HTML pages with the new data.
+    </p>
+  </main>
+</div>
+
+<script src="admin.js"></script>
+<script>
+if (KANAAN_ADMIN.requireAuth()) (async function () {
+  let data;
+  async function load(reset = false) {
+    if (reset) localStorage.removeItem('kanaan_content_content/branches.json');
+    data = await KANAAN_ADMIN.loadJSON('content/branches.json');
+    render();
+  }
+  function render() {
+    const list = document.getElementById('list');
+    list.innerHTML = data.branches.map((b, i) => `
+      <div class="card">
+        <div class="bar">
+          <span class="pill pill--gold">${b.id}</span>
+          <span class="pill">${b.type}</span>
+          ${b.active ? '<span class="pill pill--sage">active</span>' : '<span class="pill pill--rust">hidden</span>'}
+          <span class="spacer"></span>
+          <button type="button" class="btn btn--ghost btn--sm" data-toggle="${i}">${b.active ? 'Hide' : 'Show'}</button>
+        </div>
+        <div class="row">
+          <div><label>Name (EN)</label><input class="input" value="${b.name_en||''}" data-i="${i}" data-k="name_en" /></div>
+          <div><label>Name (AR)</label><input class="input" value="${b.name_ar||''}" data-i="${i}" data-k="name_ar" dir="rtl" /></div>
+          <div><label>Area (EN)</label><input class="input" value="${b.area_en||''}" data-i="${i}" data-k="area_en" /></div>
+          <div><label>Area (AR)</label><input class="input" value="${b.area_ar||''}" data-i="${i}" data-k="area_ar" dir="rtl" /></div>
+          <div><label>Address (EN)</label><input class="input" value="${b.address_en||''}" data-i="${i}" data-k="address_en" /></div>
+          <div><label>Address (AR)</label><input class="input" value="${b.address_ar||''}" data-i="${i}" data-k="address_ar" dir="rtl" /></div>
+          <div><label>Phone</label><input class="input" value="${b.phone||''}" data-i="${i}" data-k="phone" /></div>
+          <div><label>WhatsApp (no +)</label><input class="input" value="${b.whatsapp||''}" data-i="${i}" data-k="whatsapp" /></div>
+          <div><label>Type</label><select class="sel" data-i="${i}" data-k="type"><option ${b.type==='Standard'?'selected':''}>Standard</option><option ${b.type==='Spa'?'selected':''}>Spa</option><option ${b.type==='Barber'?'selected':''}>Barber</option><option ${b.type==='VIP'?'selected':''}>VIP</option></select></div>
+          <div><label>Maps query</label><input class="input" value="${b.maps_query||''}" data-i="${i}" data-k="maps_query" /></div>
+          <div style="grid-column: 1/-1;"><label>Hero image URL</label><input class="input" value="${b.image||''}" data-i="${i}" data-k="image" /></div>
+        </div>
+        <details style="margin-top: 16px;">
+          <summary style="cursor: pointer; color: var(--gold); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;">Working hours</summary>
+          <div class="row" style="margin-top: 12px;">
+            ${['sun','mon','tue','wed','thu','fri','sat'].map(d => `<div><label>${d.toUpperCase()}</label><input class="input" value="${(b.hours&&b.hours[d])||''}" placeholder="10:00-23:00 or closed" data-i="${i}" data-k="hours.${d}" /></div>`).join('')}
+          </div>
+        </details>
+      </div>
+    `).join('');
+
+    list.querySelectorAll('[data-k]').forEach(el => {
+      el.addEventListener('input', () => {
+        const i = +el.dataset.i, k = el.dataset.k;
+        if (k.startsWith('hours.')) {
+          const day = k.split('.')[1];
+          data.branches[i].hours = data.branches[i].hours || {};
+          data.branches[i].hours[day] = el.value;
+        } else {
+          data.branches[i][k] = el.value;
+        }
+      });
+    });
+    list.querySelectorAll('[data-toggle]').forEach(b => b.addEventListener('click', () => {
+      const i = +b.dataset.toggle; data.branches[i].active = !data.branches[i].active; render();
+    }));
+  }
+  document.getElementById('save').addEventListener('click', () => KANAAN_ADMIN.saveJSON('content/branches.json', data));
+  document.getElementById('download').addEventListener('click', () => KANAAN_ADMIN.download('content/branches.json', data));
+  document.getElementById('reload').addEventListener('click', () => { if (confirm('Discard unsaved changes?')) load(true); });
+  load();
+})();
+</script>
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/tracking.js"></script>
+  <script src="../assets/js/consent.js" defer></script>
+</body>
+</html>

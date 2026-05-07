@@ -1,0 +1,10 @@
+{
+  "testimonials": [
+    { "id": "t1", "quote_en": "Best haircut I've had in Abu Dhabi. They treat it like a craft, not a transaction.", "quote_ar": "أفضل قصّة شعر حصلت عليها في أبوظبي. يتعاملون معها كحرفة، لا كصفقة.", "name": "Khalid A.", "branch": "khalifa-city", "rating": 5, "active": true },
+    { "id": "t2", "quote_en": "The Moroccan bath at Baniyas Spa is the real thing. I leave new every time.", "quote_ar": "الحمّام المغربي في بنياس سبا حقيقي. أخرج جديداً في كل مرّة.", "name": "Ahmed R.", "branch": "baniyas-spa", "rating": 5, "active": true },
+    { "id": "t3", "quote_en": "VIP Muroor is the only place I take my closest clients. Discreet, immaculate, expert.", "quote_ar": "VIP المرور هو المكان الوحيد الذي آخذ إليه أهم عملائي. خصوصية، نظافة، احترافية.", "name": "Saif M.", "branch": "vip-muroor", "rating": 5, "active": true },
+    { "id": "t4", "quote_en": "I've been a regular at Kanaan Khalidiya for two years. Quality never drops.", "quote_ar": "زبون منتظم في كنعان الخالدية منذ عامين. الجودة لا تنخفض أبداً.", "name": "Hassan T.", "branch": "khalidiya", "rating": 5, "active": true },
+    { "id": "t5", "quote_en": "Took my son for his first proper haircut here. He still asks to come back.", "quote_ar": "أخذت ابني لأول قصّة شعر حقيقية هنا. لا يزال يطلب العودة.", "name": "Mohammed K.", "branch": "rabdan", "rating": 5, "active": true },
+    { "id": "t6", "quote_en": "Hot-towel shave + facial = my Friday morning ritual.", "quote_ar": "حلاقة بالمنشفة الساخنة وجلسة وجه = طقسي صباح الجمعة.", "name": "Yousef N.", "branch": "muroor", "rating": 5, "active": true }
+  ]
+}

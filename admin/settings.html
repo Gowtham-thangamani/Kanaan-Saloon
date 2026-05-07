@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Settings · Kanaan Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+<div class="admin-shell">
+  <aside class="admin-side">
+    <div class="admin-side__brand">KANAAN<span>.</span></div>
+    <nav class="admin-side__nav">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="leads.html">Leads · CRM</a>
+      <a href="offers.html">Offers</a>
+      <a href="branches.html">Branches</a>
+      <a href="banners.html">Banners</a>
+      <a href="integrations.html">Integrations</a>
+      <a href="settings.html" class="active">Settings</a>
+    </nav>
+    <div class="admin-side__user">Signed in as admin · <button type="button" onclick="KANAAN_ADMIN.logout()">Sign out</button></div>
+  </aside>
+
+  <main class="admin-main">
+    <h1 class="admin-h">Settings</h1>
+    <p class="admin-sub">Admin password and Google Sheet connection.</p>
+
+    <div class="card">
+      <h3>Change password</h3>
+      <div class="row">
+        <div><label>New password</label><input type="password" class="input" id="pw1" /></div>
+        <div><label>Confirm</label><input type="password" class="input" id="pw2" /></div>
+      </div>
+      <div style="margin-top: 16px;"><button type="button" class="btn" id="savePw">Update password</button></div>
+    </div>
+
+    <div class="card">
+      <h3>Google Sheet — leads CSV URL</h3>
+      <p style="color: var(--muted); font-size: 13px; margin-bottom: 12px;">In Google Sheets: <strong>File → Share → Publish to web → CSV → Copy URL</strong>. Paste here.</p>
+      <input class="input" id="csvUrl" placeholder="https://docs.google.com/spreadsheets/d/.../pub?output=csv" />
+      <div style="margin-top: 16px;"><button type="button" class="btn" id="saveCsv">Save URL</button></div>
+    </div>
+
+    <div class="card">
+      <h3>Maintenance</h3>
+      <p style="color: var(--muted); font-size: 13px;">Local edits are kept in this browser until you download &amp; deploy the JSON files. Use the buttons below if you need a clean slate.</p>
+      <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px;">
+        <button type="button" class="btn btn--ghost btn--sm" id="clearOffers">Clear offers draft</button>
+        <button type="button" class="btn btn--ghost btn--sm" id="clearBranches">Clear branches draft</button>
+        <button type="button" class="btn btn--ghost btn--sm" id="clearSite">Clear site.json draft</button>
+        <button type="button" class="btn btn--danger btn--sm" id="clearAll">Clear everything</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="admin.js"></script>
+<script>
+if (KANAAN_ADMIN.requireAuth()) (function () {
+  document.getElementById('csvUrl').value = localStorage.getItem('kanaan_leads_csv_url') || '';
+
+  document.getElementById('savePw').addEventListener('click', async () => {
+    const a = document.getElementById('pw1').value, b = document.getElementById('pw2').value;
+    if (!a || a.length < 8) return KANAAN_ADMIN.toast('Use at least 8 characters');
+    if (a !== b) return KANAAN_ADMIN.toast('Passwords do not match');
+    await KANAAN_ADMIN.setPassword(a);
+    KANAAN_ADMIN.toast('Password updated');
+    document.getElementById('pw1').value = ''; document.getElementById('pw2').value = '';
+  });
+  document.getElementById('saveCsv').addEventListener('click', () => {
+    localStorage.setItem('kanaan_leads_csv_url', document.getElementById('csvUrl').value.trim());
+    KANAAN_ADMIN.toast('Sheet URL saved');
+  });
+
+  function clear(k, l) { localStorage.removeItem('kanaan_content_' + k); KANAAN_ADMIN.toast(l + ' cleared'); }
+  document.getElementById('clearOffers').addEventListener('click', () => clear('content/offers.json', 'Offers draft'));
+  document.getElementById('clearBranches').addEventListener('click', () => clear('content/branches.json', 'Branches draft'));
+  document.getElementById('clearSite').addEventListener('click', () => clear('content/site.json', 'Site draft'));
+  document.getElementById('clearAll').addEventListener('click', () => {
+    if (!confirm('Clear all admin data including login? You will need the default password again.')) return;
+    Object.keys(localStorage).filter(k => k.startsWith('kanaan_')).forEach(k => localStorage.removeItem(k));
+    KANAAN_ADMIN.logout();
+  });
+})();
+</script>
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/tracking.js"></script>
+  <script src="../assets/js/consent.js" defer></script>
+</body>
+</html>

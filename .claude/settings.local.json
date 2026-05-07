@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node patch-logo-motion.js)",
+      "Bash(node patch-self-host-fonts.js)"
+    ]
+  }
+}

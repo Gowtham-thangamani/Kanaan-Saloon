@@ -1,0 +1,166 @@
+{
+  "_DESCRIPTION": "Make.com scenario blueprint for Kanaan booking webhook. Import to Make.com and connect: Google Sheets, Gmail (or any SMTP), WhatsApp Cloud API, and (optionally) your CRM.",
+
+  "name": "Kanaan — Booking webhook fan-out",
+  "trigger": {
+    "type": "webhook",
+    "method": "POST",
+    "expects_payload": {
+      "name": "string",
+      "phone": "string",
+      "branch": "string (e.g. 'Khalifa City')",
+      "service": "string",
+      "date": "ISO yyyy-mm-dd",
+      "time": "HH:MM",
+      "message": "string (optional)",
+      "bookingId": "string (e.g. KNN-KHA-LK3M9X)",
+      "timestamp": "ISO 8601",
+      "locale": "en|ar",
+      "utm_source": "string",
+      "utm_medium": "string",
+      "utm_campaign": "string",
+      "utm_content": "string",
+      "utm_term": "string",
+      "gclid": "string",
+      "fbclid": "string",
+      "ttclid": "string",
+      "sc_click_id": "string",
+      "userAgent": "string"
+    }
+  },
+
+  "steps": [
+    {
+      "id": 1,
+      "module": "googlesheets:addRow",
+      "description": "Append lead to the master Google Sheet (this is what the admin Leads dashboard reads)",
+      "config": {
+        "spreadsheetId": "REPLACE_WITH_YOUR_SHEET_ID",
+        "sheetName": "Leads",
+        "values": {
+          "timestamp": "{{1.timestamp}}",
+          "name": "{{1.name}}",
+          "phone": "{{1.phone}}",
+          "branch": "{{1.branch}}",
+          "service": "{{1.service}}",
+          "date": "{{1.date}}",
+          "time": "{{1.time}}",
+          "message": "{{1.message}}",
+          "bookingId": "{{1.bookingId}}",
+          "utm_source": "{{1.utm_source}}",
+          "utm_medium": "{{1.utm_medium}}",
+          "utm_campaign": "{{1.utm_campaign}}",
+          "gclid": "{{1.gclid}}",
+          "fbclid": "{{1.fbclid}}",
+          "ttclid": "{{1.ttclid}}",
+          "locale": "{{1.locale}}"
+        }
+      }
+    },
+    {
+      "id": 2,
+      "module": "router",
+      "description": "Send notifications to the right branch",
+      "routes": [
+        {
+          "filter": "{{1.branch}} = 'Khalifa City'",
+          "next": "branch_notify_khalifa"
+        },
+        {
+          "filter": "{{1.branch}} = 'Baniyas Spa'",
+          "next": "branch_notify_baniyas_spa"
+        },
+        {
+          "filter": "(default fallback)",
+          "next": "central_notify"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "module": "gmail:sendEmail",
+      "description": "Email admin + branch manager",
+      "config": {
+        "to": ["bookings@kanaan.ae", "{{branch_email_lookup_from_step_4}}"],
+        "subject": "New booking — {{1.name}} at {{1.branch}}",
+        "body": "Booking ID: {{1.bookingId}}\\nName: {{1.name}}\\nPhone: {{1.phone}}\\nBranch: {{1.branch}}\\nService: {{1.service}}\\nDate: {{1.date}} {{1.time}}\\nMessage: {{1.message}}\\nSource: {{1.utm_source}} / {{1.utm_campaign}}\\n"
+      }
+    },
+    {
+      "id": 4,
+      "module": "whatsappCloud:sendMessage",
+      "description": "Send WhatsApp template message to branch manager",
+      "config": {
+        "to": "{{branch_whatsapp_lookup}}",
+        "template": "kanaan_new_booking",
+        "language": "ar",
+        "variables": {
+          "1": "{{1.name}}",
+          "2": "{{1.service}}",
+          "3": "{{1.date}}",
+          "4": "{{1.time}}",
+          "5": "{{1.phone}}"
+        }
+      }
+    },
+    {
+      "id": 5,
+      "module": "whatsappCloud:sendMessage",
+      "description": "Send WhatsApp confirmation to client (template approved with Meta)",
+      "config": {
+        "to": "{{1.phone}}",
+        "template": "kanaan_booking_received",
+        "language": "{{1.locale === 'ar' ? 'ar' : 'en'}}",
+        "variables": {
+          "1": "{{1.name}}",
+          "2": "{{1.branch}}",
+          "3": "{{1.date}}",
+          "4": "{{1.time}}",
+          "5": "{{1.bookingId}}"
+        }
+      }
+    },
+    {
+      "id": 6,
+      "module": "(optional) crmAdapter",
+      "description": "Adapter to forward to a CRM. Pick ONE of the three sub-modules below in production.",
+      "subModules": {
+        "fresha": {
+          "module": "http:POST",
+          "url": "https://api.fresha.com/v1/appointments",
+          "headers": { "Authorization": "Bearer {{FRESHA_API_KEY}}" },
+          "body": { "client": { "name": "{{1.name}}", "phone": "{{1.phone}}" }, "service": "{{1.service}}", "scheduledFor": "{{1.date}}T{{1.time}}" }
+        },
+        "salonist": {
+          "module": "http:POST",
+          "url": "https://api.salonist.app/v1/appointments",
+          "headers": { "X-API-Key": "{{SALONIST_API_KEY}}" },
+          "body": { "name": "{{1.name}}", "phone": "{{1.phone}}", "service": "{{1.service}}", "branch": "{{1.branch}}", "datetime": "{{1.date}}T{{1.time}}" }
+        },
+        "zoho": {
+          "module": "zohoCrm:createLead",
+          "module_alt": "zohoBookings:createAppointment",
+          "fields": { "First_Name": "{{1.name}}", "Phone": "{{1.phone}}", "Lead_Source": "{{1.utm_source || 'Website'}}", "Branch__c": "{{1.branch}}", "Service__c": "{{1.service}}" }
+        }
+      }
+    }
+  ],
+
+  "_DEPLOY_INSTRUCTIONS": [
+    "1. Sign up at make.com (free tier supports this scenario).",
+    "2. Create a new scenario, click Webhooks → Custom webhook → copy the generated URL.",
+    "3. Paste the webhook URL into Kanaan Admin → Integrations → Booking webhook.",
+    "4. Add Google Sheets module — connect Google account, point at your master sheet (columns above).",
+    "5. Add Gmail module — connect, configure recipients per the template above.",
+    "6. (Optional) Add WhatsApp Cloud module — requires Meta Business account + approved templates.",
+    "7. (Optional) Add the CRM module that matches your chosen system (Fresha / Salonist / Zoho).",
+    "8. Activate the scenario. Test by submitting a booking on the live site.",
+    "9. The Admin → Leads dashboard reads from the same Google Sheet via its published CSV URL."
+  ],
+
+  "_GOOGLE_SHEET_HEADERS": [
+    "timestamp", "name", "phone", "branch", "service", "date", "time", "message",
+    "bookingId", "utm_source", "utm_medium", "utm_campaign", "utm_content",
+    "utm_term", "gclid", "fbclid", "ttclid", "sc_click_id", "locale"
+  ]
+}

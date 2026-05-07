@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>Kanaan Insights</title>
+    <link>https://kanaanspa.ae/blog.html</link>
+    <atom:link href="https://kanaanspa.ae/blog/feed.xml" rel="self" type="application/rss+xml"/>
+    <description>Notes from the chair — grooming, skin and salon craft from Kanaan Gents Salon &amp; Spa.</description>
+    <language>en</language>
+    <copyright>© 2026 Kanaan Gents Salon &amp; Spa</copyright>
+    <pubDate>Thu, 01 May 2026 00:00:00 +0400</pubDate>
+
+    <item>
+      <title>Choosing the right facial for UAE skin</title>
+      <link>https://kanaanspa.ae/blog/choosing-the-right-facial.html</link>
+      <guid>https://kanaanspa.ae/blog/choosing-the-right-facial.html</guid>
+      <pubDate>Wed, 29 Apr 2026 09:00:00 +0400</pubDate>
+      <dc:creator>Kanaan</dc:creator>
+      <description>Hydra, signature, anti-fatigue, anti-ageing — which facial is right for your skin? An honest, no-fluff guide from Kanaan therapists.</description>
+    </item>
+
+    <item>
+      <title>Beard care in Abu Dhabi's climate</title>
+      <link>https://kanaanspa.ae/blog/beard-care-abu-dhabi.html</link>
+      <guid>https://kanaanspa.ae/blog/beard-care-abu-dhabi.html</guid>
+      <pubDate>Tue, 22 Apr 2026 09:00:00 +0400</pubDate>
+      <dc:creator>Kanaan</dc:creator>
+      <description>Heat, dust, AC, and beard care — practical advice from our master barbers on keeping a healthy beard in UAE conditions.</description>
+    </item>
+
+    <item>
+      <title>A Moroccan bath, properly explained</title>
+      <link>https://kanaanspa.ae/blog/moroccan-bath-guide.html</link>
+      <guid>https://kanaanspa.ae/blog/moroccan-bath-guide.html</guid>
+      <pubDate>Tue, 15 Apr 2026 09:00:00 +0400</pubDate>
+      <dc:creator>Kanaan</dc:creator>
+      <description>What a Moroccan bath actually is, why it works for men, and how to get the most from your first visit.</description>
+    </item>
+  </channel>
+</rss>

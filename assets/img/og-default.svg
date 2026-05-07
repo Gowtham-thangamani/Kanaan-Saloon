@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0E0F11"/>
+      <stop offset="100%" stop-color="#1A1C20"/>
+    </linearGradient>
+    <pattern id="hairline" patternUnits="userSpaceOnUse" width="40" height="40">
+      <path d="M0 40L40 0" stroke="#2A2C30" stroke-width="0.5"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#hairline)" opacity="0.4"/>
+
+  <!-- Top eyebrow -->
+  <text x="80" y="120" font-family="Inter, Arial, sans-serif" font-size="22" letter-spacing="6" fill="#C8A04A">KANAAN GENTS SALON &amp; SPA · ABU DHABI</text>
+
+  <!-- Hairline -->
+  <rect x="80" y="160" width="60" height="2" fill="#C8A04A"/>
+
+  <!-- Main headline (serif) -->
+  <text x="80" y="320" font-family="Cormorant Garamond, Georgia, serif" font-size="120" font-weight="500" fill="#EDEAE3" letter-spacing="-2">Grooming,</text>
+  <text x="80" y="450" font-family="Cormorant Garamond, Georgia, serif" font-size="120" font-weight="500" fill="#C8A04A" letter-spacing="-2">Refined.</text>
+
+  <!-- Bottom strip -->
+  <rect x="0" y="560" width="1200" height="70" fill="#0A0B0D"/>
+  <text x="80" y="603" font-family="Inter, Arial, sans-serif" font-size="20" letter-spacing="4" fill="#8A8780">TEN HOUSES · ONE STANDARD · KANAAN.AE</text>
+
+  <!-- Crest -->
+  <g transform="translate(1080, 100)">
+    <rect width="40" height="40" fill="none" stroke="#C8A04A" stroke-width="1.5"/>
+    <text x="20" y="29" font-family="Cormorant Garamond, Georgia, serif" font-size="26" font-weight="500" fill="#C8A04A" text-anchor="middle">K</text>
+  </g>
+</svg>

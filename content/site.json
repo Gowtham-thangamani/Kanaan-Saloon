@@ -1,0 +1,52 @@
+{
+  "_DATA_TO_REPLACE": "Replace placeholder values below with real Kanaan data. Anything starting with REPLACE: must be filled before launch.",
+  "brand": {
+    "name_en": "Kanaan Gents Salon & Spa · Abu Dhabi",
+    "name_ar": "كنعان صالون وسبا للرجال · أبوظبي",
+    "tagline_en": "Grooming, Refined.",
+    "tagline_ar": "عناية، بمعيار راقٍ.",
+    "logo": "REPLACE: /assets/img/logo.svg",
+    "logoMark": "REPLACE: /assets/img/logo-mark.svg",
+    "primaryHex": "#0E0F11",
+    "accentHex": "#C8A04A"
+  },
+  "contact": {
+    "centralPhone": "+971505556795",
+    "centralWhatsApp": "971505556795",
+    "tel_url": "tel:+971505556795",
+    "wa_url": "https://wa.me/971505556795",
+    "email": "kanaansaloon@gmail.com",
+    "careersEmail": "kanaansaloon@gmail.com",
+    "pressEmail": "kanaansaloon@gmail.com",
+    "privacyEmail": "kanaansaloon@gmail.com"
+  },
+  "social": {
+    "instagram": "",
+    "instagram_handle": "",
+    "tiktok": "",
+    "tiktok_handle": "",
+    "snapchat": "",
+    "snapchat_handle": "",
+    "facebook": "",
+    "youtube": "",
+    "google_business": ""
+  },
+  "homepage_hero": {
+    "headline_en": "Grooming, Refined.",
+    "headline_ar": "عناية، بمعيار راقٍ.",
+    "headline_html_en": "Grooming,<br/>Refined.",
+    "headline_html_ar": "عناية،<br/>بمعيار راقٍ.",
+    "sub_en": "Ten houses across Abu Dhabi and Al Ain. One uncompromising standard of barbering, grooming and spa craft — held by master practitioners since the day we opened.",
+    "sub_ar": "عشرة فروع في أبوظبي والعين. معيار واحد لا يتغيّر في الحلاقة والعناية والسبا — تصنعه أيدٍ مدرّبة منذ يومنا الأول.",
+    "image": "/assets/img/photos/arch-staircase-lemon-1600.webp",
+    "primary_cta_en": "Book Your Chair",
+    "primary_cta_ar": "احجز كرسيك",
+    "primary_cta_url": "/book.html"
+  },
+  "stats": {
+    "branches": 10,
+    "categories": 7,
+    "founded": "REPLACE: 2018",
+    "languages": "EN/AR"
+  }
+}

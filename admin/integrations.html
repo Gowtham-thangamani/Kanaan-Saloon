@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Integrations · Kanaan Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+<div class="admin-shell">
+  <aside class="admin-side">
+    <div class="admin-side__brand">KANAAN<span>.</span></div>
+    <nav class="admin-side__nav">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="leads.html">Leads · CRM</a>
+      <a href="offers.html">Offers</a>
+      <a href="branches.html">Branches</a>
+      <a href="banners.html">Banners</a>
+      <a href="integrations.html" class="active">Integrations</a>
+      <a href="settings.html">Settings</a>
+    </nav>
+    <div class="admin-side__user">Signed in as admin · <button type="button" onclick="KANAAN_ADMIN.logout()">Sign out</button></div>
+  </aside>
+
+  <main class="admin-main">
+    <h1 class="admin-h">Integrations</h1>
+    <p class="admin-sub">Tracking pixels, booking webhook, and CRM connections.</p>
+
+    <div class="card">
+      <h3>Tracking IDs</h3>
+      <p style="color: var(--muted); font-size: 13px;">These power GA4, Meta, TikTok, and Snapchat tracking. Pixels only fire after the user accepts marketing cookies.</p>
+      <div class="row">
+        <div><label>Google Tag Manager ID</label><input class="input" id="gtmId" placeholder="GTM-XXXXXXX" /></div>
+        <div><label>Google Analytics 4 ID</label><input class="input" id="ga4Id" placeholder="G-XXXXXXXXXX" /></div>
+        <div><label>Meta (Facebook) Pixel ID</label><input class="input" id="metaPixelId" placeholder="15-digit ID" /></div>
+        <div><label>TikTok Pixel ID</label><input class="input" id="tiktokPixelId" placeholder="CXXXXXXXXXXXXX" /></div>
+        <div><label>Snapchat Pixel ID</label><input class="input" id="snapPixelId" placeholder="UUID" /></div>
+        <div><label>Google Ads ID (optional)</label><input class="input" id="googleAdsId" placeholder="AW-XXXXXXXXX" /></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Booking webhook</h3>
+      <p style="color: var(--muted); font-size: 13px;">When a guest submits a booking, the form POSTs JSON to this URL. Recommended: a Make.com or Zapier scenario that fans out to email + Google Sheet + WhatsApp Cloud + your CRM.</p>
+      <label>Webhook URL</label>
+      <input class="input" id="webhookUrl" placeholder="https://hook.eu1.make.com/abc123" />
+      <label style="margin-top: 16px;">Confirmation redirect page</label>
+      <input class="input" id="confirmRedirect" value="thank-you.html" />
+    </div>
+
+    <div class="card">
+      <h3>CRM adapter</h3>
+      <p style="color: var(--muted); font-size: 13px;">Choose which CRM/booking system the webhook should forward to. Switching here changes the Make.com scenario template you'll use — no front-end changes needed.</p>
+      <label>Active CRM</label>
+      <select class="sel" id="crmAdapter">
+        <option value="none">None — Google Sheet only (v1 default)</option>
+        <option value="fresha">Fresha</option>
+        <option value="salonist">Salonist</option>
+        <option value="zoho">Zoho Bookings / Zoho CRM</option>
+        <option value="custom">Custom (your own webhook)</option>
+      </select>
+      <div id="crmHelp" style="margin-top: 16px; font-size: 13px; color: var(--muted); padding: 16px; background: var(--surface-2); border-left: 2px solid var(--gold);"></div>
+    </div>
+
+    <div class="card">
+      <h3>Make.com scenario blueprint</h3>
+      <p style="color: var(--muted); font-size: 13px;">A ready-to-import Make.com scenario that wires the booking webhook to email, Google Sheet, and WhatsApp Cloud. Import it into Make.com and connect your accounts.</p>
+      <a href="../assets/make-scenario.json" download class="btn btn--ghost btn--sm">⬇ Download scenario.json</a>
+    </div>
+
+    <div class="bar">
+      <span class="spacer"></span>
+      <button type="button" class="btn" id="save">💾 Save &amp; download config.js</button>
+    </div>
+    <p style="color: var(--muted); font-size: 12px;">Saving downloads an updated <code>assets/js/config.js</code> file — overwrite the file on your server with this download.</p>
+  </main>
+</div>
+
+<script src="admin.js"></script>
+<script src="../assets/js/config.js"></script>
+<script>
+if (KANAAN_ADMIN.requireAuth()) (function () {
+  const cfg = window.KANAAN_CONFIG || { tracking:{}, booking:{}, contact:{}, consent:{} };
+  // Pre-fill from config.js + localStorage overrides
+  const stored = JSON.parse(localStorage.getItem('kanaan_integrations') || '{}');
+  const t = Object.assign({}, cfg.tracking, stored.tracking || {});
+  const b = Object.assign({}, cfg.booking, stored.booking || {});
+  ['gtmId','ga4Id','metaPixelId','tiktokPixelId','snapPixelId','googleAdsId'].forEach(k => {
+    if (t[k]) document.getElementById(k).value = t[k];
+  });
+  if (b.webhookUrl) document.getElementById('webhookUrl').value = b.webhookUrl;
+  if (b.confirmRedirect) document.getElementById('confirmRedirect').value = b.confirmRedirect;
+  document.getElementById('crmAdapter').value = stored.crmAdapter || 'none';
+
+  const helpText = {
+    none: 'Bookings go to Make.com → Google Sheet + email + WhatsApp. No CRM integration. Suitable for v1 launch.',
+    fresha: 'Recommended for fastest go-live. Use the Make.com Fresha module to create appointments. Alternatively, embed Fresha\'s native booking widget on /book.html.',
+    salonist: 'Salonist exposes a REST API. Use Make.com\'s HTTP module to POST to Salonist\'s /api/v1/appointments endpoint with your API key.',
+    zoho: 'Use Make.com\'s native Zoho CRM and Zoho Bookings modules. Map: name → Lead.Name, phone → Lead.Phone, branch → Lead.Custom_Field.Branch, etc.',
+    custom: 'Point the webhook at your own backend. Schema is documented in assets/make-scenario.json.'
+  };
+  function refreshHelp() { document.getElementById('crmHelp').textContent = helpText[document.getElementById('crmAdapter').value] || ''; }
+  document.getElementById('crmAdapter').addEventListener('change', refreshHelp);
+  refreshHelp();
+
+  document.getElementById('save').addEventListener('click', () => {
+    const newCfg = {
+      tracking: {
+        gtmId: document.getElementById('gtmId').value.trim(),
+        ga4Id: document.getElementById('ga4Id').value.trim(),
+        metaPixelId: document.getElementById('metaPixelId').value.trim(),
+        tiktokPixelId: document.getElementById('tiktokPixelId').value.trim(),
+        snapPixelId: document.getElementById('snapPixelId').value.trim(),
+        googleAdsId: document.getElementById('googleAdsId').value.trim()
+      },
+      booking: {
+        webhookUrl: document.getElementById('webhookUrl').value.trim(),
+        fallbackEmail: cfg.booking.fallbackEmail || 'kanaansaloon@gmail.com',
+        confirmRedirect: document.getElementById('confirmRedirect').value.trim() || 'thank-you.html'
+      },
+      contact: cfg.contact,
+      consent: cfg.consent,
+      crmAdapter: document.getElementById('crmAdapter').value
+    };
+    localStorage.setItem('kanaan_integrations', JSON.stringify(newCfg));
+
+    const js = `/* Kanaan — Site configuration. Generated from /admin/integrations on ${new Date().toISOString().slice(0,10)}. */
+window.KANAAN_CONFIG = ${JSON.stringify(newCfg, null, 2)};
+`;
+    const blob = new Blob([js], { type: 'application/javascript' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = 'config.js';
+    a.click();
+    KANAAN_ADMIN.toast('config.js downloaded — replace assets/js/config.js with this file.');
+  });
+})();
+</script>
+  <script src="../assets/js/tracking.js"></script>
+  <script src="../assets/js/consent.js" defer></script>
+</body>
+</html>

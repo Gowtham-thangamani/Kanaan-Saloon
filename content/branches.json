@@ -1,0 +1,729 @@
+{
+  "branches": [
+    {
+      "id": "al-ain",
+      "name_en": "Al Ain",
+      "name_ar": "العين",
+      "area_en": "Al Ain",
+      "area_ar": "العين",
+      "address_en": "Main Street, Al Ain, UAE",
+      "address_ar": "الشارع الرئيسي، العين، الإمارات",
+      "phone": "+97137663555",
+      "whatsapp": "971505556795",
+      "type": "Standard",
+      "active": true,
+      "hours": {
+        "sun": "10:00-23:00",
+        "mon": "10:00-23:00",
+        "tue": "10:00-23:00",
+        "wed": "10:00-23:00",
+        "thu": "10:00-23:00",
+        "fri": "14:00-23:00",
+        "sat": "10:00-23:00"
+      },
+      "image": "/assets/img/photos/exterior-day-bilingual-1600.webp",
+      "maps_query": "Al+Ain+UAE",
+      "google_business": "REPLACE_WITH_REAL_GBP_URL",
+      "geo": {
+        "lat": 24.207,
+        "lng": 55.745
+      },
+      "gallery": [
+        "/assets/img/photos/service-pedicure-station-1000.webp",
+        "/assets/img/photos/service-pedicure-trolley-1000.webp",
+        "/assets/img/photos/brand-logo-wall-1000.webp",
+        "/assets/img/photos/lounge-logo-wall-1000.webp",
+        "/assets/img/photos/exterior-day-bilingual-1000.webp",
+        "/assets/img/photos/storefront-entrance-1000.webp"
+      ],
+      "instagram": "",
+      "tiktok": "",
+      "faqs": [
+        {
+          "q": "Do you accept walk-ins at Al Ain?",
+          "a": "Yes, walk-ins are welcome where availability allows. For guaranteed seating book online or via WhatsApp."
+        },
+        {
+          "q": "Where exactly is Kanaan Al Ain?",
+          "a": "On Main Street, Al Ain. Free parking is available within walking distance."
+        },
+        {
+          "q": "What hours is Al Ain open?",
+          "a": "Saturday to Thursday 10:00–23:00, Friday 14:00–23:00."
+        }
+      ],
+      "amenities": [
+        "Free parking",
+        "Walk-ins welcome",
+        "English & Arabic"
+      ],
+      "testimonials": [
+        {
+          "q": "Best haircut I've had in Abu Dhabi.",
+          "n": "Khalid A."
+        },
+        {
+          "q": "They take their time. Quality every visit.",
+          "n": "Ahmed R."
+        },
+        {
+          "q": "Discreet, immaculate, expert.",
+          "n": "Hassan M."
+        }
+      ],
+      "facebook": ""
+    },
+    {
+      "id": "khalifa-city",
+      "name_en": "Khalifa City",
+      "name_ar": "مدينة خليفة",
+      "area_en": "Khalifa City, Abu Dhabi",
+      "area_ar": "مدينة خليفة، أبوظبي",
+      "address_en": "Khalifa City A, Abu Dhabi",
+      "address_ar": "مدينة خليفة أ، أبوظبي",
+      "phone": "+97125832155",
+      "whatsapp": "971505556795",
+      "type": "Standard",
+      "active": true,
+      "hours": {
+        "sun": "10:00-23:00",
+        "mon": "10:00-23:00",
+        "tue": "10:00-23:00",
+        "wed": "10:00-23:00",
+        "thu": "10:00-23:00",
+        "fri": "14:00-23:00",
+        "sat": "10:00-23:00"
+      },
+      "image": "/assets/img/photos/arch-corridor-marble-1600.webp",
+      "maps_query": "Khalifa+City+Abu+Dhabi",
+      "google_business": "REPLACE_WITH_REAL_GBP_URL",
+      "geo": {
+        "lat": 24.426,
+        "lng": 54.581
+      },
+      "gallery": [
+        "/assets/img/photos/service-massage-wood-1000.webp",
+        "/assets/img/photos/service-pedicure-trolley-1000.webp",
+        "/assets/img/photos/lounge-logo-wall-1000.webp",
+        "/assets/img/photos/arch-corridor-marble-1000.webp",
+        "/assets/img/photos/exterior-day-bilingual-1000.webp",
+        "/assets/img/photos/arch-marble-staircase-1000.webp"
+      ],
+      "instagram": "",
+      "tiktok": "",
+      "faqs": [
+        {
+          "q": "Is parking easy at Khalifa City?",
+          "a": "Yes — free street parking available, plus a small lot at the side."
+        },
+        {
+          "q": "Do you offer Moroccan bath at Khalifa City?",
+          "a": "Moroccan bath is only at Baniyas Spa and VIP Muroor. Khalifa City offers all other services including hair, beard, facial, mani/pedi."
+        },
+        {
+          "q": "Friday hours?",
+          "a": "Friday opens at 14:00 and closes 23:00."
+        }
+      ],
+      "amenities": [
+        "Free parking",
+        "Walk-ins welcome",
+        "English & Arabic"
+      ],
+      "testimonials": [
+        {
+          "q": "Best haircut I've had in Abu Dhabi.",
+          "n": "Khalid A."
+        },
+        {
+          "q": "They take their time. Quality every visit.",
+          "n": "Ahmed R."
+        },
+        {
+          "q": "Discreet, immaculate, expert.",
+          "n": "Hassan M."
+        }
+      ],
+      "facebook": ""
+    },
+    {
+      "id": "khalidiya",
+      "name_en": "Khalidiya",
+      "name_ar": "الخالدية",
+      "area_en": "Khalidiya, Abu Dhabi",
+      "area_ar": "الخالدية، أبوظبي",
+      "address_en": "Khalidiya, Abu Dhabi",
+      "address_ar": "الخالدية، أبوظبي",
+      "phone": "+97126219912",
+      "whatsapp": "971505556795",
+      "type": "Standard",
+      "active": true,
+      "hours": {
+        "sun": "10:00-23:00",
+        "mon": "10:00-23:00",
+        "tue": "10:00-23:00",
+        "wed": "10:00-23:00",
+        "thu": "10:00-23:00",
+        "fri": "14:00-23:00",
+        "sat": "10:00-23:00"
+      },
+      "image": "/assets/img/photos/lounge-logo-wall-1600.webp",
+      "maps_query": "Khalidiya+Abu+Dhabi",
+      "google_business": "REPLACE_WITH_REAL_GBP_URL",
+      "geo": {
+        "lat": 24.475,
+        "lng": 54.351
+      },
+      "gallery": [
+        "/assets/img/photos/service-facial-overview-1000.webp",
+        "/assets/img/photos/service-pedicure-trolley-1000.webp",
+        "/assets/img/photos/brand-logo-wall-1000.webp",
+        "/assets/img/photos/lounge-logo-wall-1000.webp",
+        "/assets/img/photos/storefront-entrance-1000.webp",
+        "/assets/img/photos/exterior-day-bilingual-1000.webp"
+      ],
+      "instagram": "",
+      "tiktok": "",
+      "faqs": [
+        {
+          "q": "Closest landmark to Kanaan Khalidiya?",
+          "a": "In the heart of Khalidiya, near the corniche. Easy reach from Khalidiya Mall area."
+        },
+        {
+          "q": "Family rooms?",
+          "a": "Khalidiya is gents-only — for father-son visits we have side-by-side seating."
+        },
+        {
+          "q": "Can I book the same barber every visit?",
+          "a": "Yes — note the name in the booking message and we will assign them when available."
+        }
+      ],
+      "amenities": [
+        "Walk-ins welcome",
+        "English & Arabic"
+      ],
+      "testimonials": [
+        {
+          "q": "Best haircut I've had in Abu Dhabi.",
+          "n": "Khalid A."
+        },
+        {
+          "q": "They take their time. Quality every visit.",
+          "n": "Ahmed R."
+        },
+        {
+          "q": "Discreet, immaculate, expert.",
+          "n": "Hassan M."
+        }
+      ],
+      "facebook": ""
+    },
+    {
+      "id": "baniyas-spa",
+      "name_en": "Baniyas Spa",
+      "name_ar": "بنياس سبا",
+      "area_en": "Baniyas, Abu Dhabi",
+      "area_ar": "بنياس، أبوظبي",
+      "address_en": "Baniyas East, Abu Dhabi",
+      "address_ar": "بنياس الشرقية، أبوظبي",
+      "phone": "+97124462027",
+      "whatsapp": "971505556795",
+      "type": "Spa",
+      "active": true,
+      "hours": {
+        "sun": "10:00-23:00",
+        "mon": "10:00-23:00",
+        "tue": "10:00-23:00",
+        "wed": "10:00-23:00",
+        "thu": "10:00-23:00",
+        "fri": "14:00-23:00",
+        "sat": "10:00-23:00"
+      },
+      "image": "/assets/img/photos/service-moroccan-bath-1600.webp",
+      "maps_query": "Baniyas+Abu+Dhabi",
+      "google_business": "REPLACE_WITH_REAL_GBP_URL",
+      "geo": {
+        "lat": 24.318,
+        "lng": 54.628
+      },
+      "gallery": [
+        "/assets/img/photos/service-facial-candlelit-1000.webp",
+        "/assets/img/photos/service-massage-tools-1000.webp",
+        "/assets/img/photos/service-moroccan-shower-1000.webp",
+        "/assets/img/photos/service-pedicure-marble-1000.webp",
+        "/assets/img/photos/exterior-day-bilingual-1000.webp",
+        "/assets/img/photos/arch-corridor-editorial-1000.webp"
+      ],
+      "instagram": "",
+      "tiktok": "",
+      "faqs": [
+        {
+          "q": "Is the Moroccan bath here authentic?",
+          "a": "Yes — full traditional ritual: steam, beldi black soap, kessa exfoliation, ghassoul mask, argan oil. ~60 min."
+        },
+        {
+          "q": "Do you have steam rooms?",
+          "a": "Yes — Baniyas Spa is our flagship spa house with steam, hammam, and a full grooming menu."
+        },
+        {
+          "q": "Couples sessions?",
+          "a": "Couples hammam available by appointment in our private suite. Call to arrange."
+        }
+      ],
+      "amenities": [
+        "Free parking",
+        "Steam room",
+        "Hammam suite",
+        "English & Arabic",
+        "Couples by appointment"
+      ],
+      "testimonials": [
+        {
+          "q": "Best spa visit I've had in Abu Dhabi.",
+          "n": "Khalid A."
+        },
+        {
+          "q": "They take their time. Quality every visit.",
+          "n": "Ahmed R."
+        },
+        {
+          "q": "Discreet, immaculate, expert.",
+          "n": "Hassan M."
+        }
+      ],
+      "facebook": ""
+    },
+    {
+      "id": "baniyas-barber",
+      "name_en": "Baniyas Barber",
+      "name_ar": "بنياس باربر",
+      "area_en": "Baniyas, Abu Dhabi",
+      "area_ar": "بنياس، أبوظبي",
+      "address_en": "Baniyas, Abu Dhabi",
+      "address_ar": "بنياس، أبوظبي",
+      "phone": "+97125823031",
+      "whatsapp": "971505556795",
+      "type": "Barber",
+      "active": true,
+      "hours": {
+        "sun": "10:00-23:00",
+        "mon": "10:00-23:00",
+        "tue": "10:00-23:00",
+        "wed": "10:00-23:00",
+        "thu": "10:00-23:00",
+        "fri": "14:00-23:00",
+        "sat": "10:00-23:00"
+      },
+      "image": "/assets/img/photos/service-hair-barber-stations-1600.webp",
+      "maps_query": "Baniyas+Abu+Dhabi",
+      "google_business": "REPLACE_WITH_REAL_GBP_URL",
+      "geo": {
+        "lat": 24.318,
+        "lng": 54.628
+      },
+      "gallery": [
+        "/assets/img/photos/service-hair-brand-wall-1000.webp",
+        "/assets/img/photos/brand-logo-wall-1000.webp",
+        "/assets/img/photos/service-pedicure-station-1000.webp",
+        "/assets/img/photos/lounge-logo-wall-1000.webp",
+        "/assets/img/photos/storefront-entrance-1000.webp",
+        "/assets/img/photos/exterior-day-bilingual-1000.webp"
+      ],
+      "instagram": "",
+      "tiktok": "",
+      "faqs": [
+        {
+          "q": "Is this a barber-only branch?",
+          "a": "Yes — focused master-barber room. For spa services visit Baniyas Spa just nearby."
+        },
+        {
+          "q": "Do you do hot-towel shaves?",
+          "a": "Yes — classic double-pass straight-razor hot-towel shave is one of our signature services here."
+        },
+        {
+          "q": "How long for a haircut?",
+          "a": "~45 minutes for a signature cut including consultation, cut, wash, and finish."
+        }
+      ],
+      "amenities": [
+        "Walk-ins welcome",
+        "English & Arabic"
+      ],
+      "testimonials": [
+        {
+          "q": "Best haircut I've had in Abu Dhabi.",
+          "n": "Khalid A."
+        },
+        {
+          "q": "They take their time. Quality every visit.",
+          "n": "Ahmed R."
+        },
+        {
+          "q": "Discreet, immaculate, expert.",
+          "n": "Hassan M."
+        }
+      ],
+      "facebook": ""
+    },
+    {
+      "id": "rabdan",
+      "name_en": "Rabdan",
+      "name_ar": "ربدان",
+      "area_en": "Rabdan, Abu Dhabi",
+      "area_ar": "ربدان، أبوظبي",
+      "address_en": "Rabdan, Abu Dhabi",
+      "address_ar": "ربدان، أبوظبي",
+      "phone": "+97124434746",
+      "whatsapp": "971505556795",
+      "type": "Standard",
+      "active": true,
+      "hours": {
+        "sun": "10:00-23:00",
+        "mon": "10:00-23:00",
+        "tue": "10:00-23:00",
+        "wed": "10:00-23:00",
+        "thu": "10:00-23:00",
+        "fri": "14:00-23:00",
+        "sat": "10:00-23:00"
+      },
+      "image": "/assets/img/photos/arch-corridor-editorial-1600.webp",
+      "maps_query": "Rabdan+Abu+Dhabi",
+      "google_business": "REPLACE_WITH_REAL_GBP_URL",
+      "geo": {
+        "lat": 24.471,
+        "lng": 54.366
+      },
+      "gallery": [
+        "/assets/img/photos/service-massage-wood-1000.webp",
+        "/assets/img/photos/service-facial-overview-1000.webp",
+        "/assets/img/photos/brand-logo-wall-1000.webp",
+        "/assets/img/photos/lounge-logo-wall-1000.webp",
+        "/assets/img/photos/exterior-day-bilingual-1000.webp",
+        "/assets/img/photos/storefront-entrance-1000.webp"
+      ],
+      "instagram": "",
+      "tiktok": "",
+      "faqs": [
+        {
+          "q": "Discreet entrance?",
+          "a": "Yes — Rabdan house has a private side entrance for clients who value discretion."
+        },
+        {
+          "q": "Do you take corporate accounts?",
+          "a": "Yes — speak to the branch manager about a monthly corporate package."
+        },
+        {
+          "q": "Is there valet parking?",
+          "a": "No valet, but ample free parking is available outside."
+        }
+      ],
+      "amenities": [
+        "Free parking",
+        "Discreet entrance",
+        "Corporate accounts",
+        "English & Arabic"
+      ],
+      "testimonials": [
+        {
+          "q": "Best haircut I've had in Abu Dhabi.",
+          "n": "Khalid A."
+        },
+        {
+          "q": "They take their time. Quality every visit.",
+          "n": "Ahmed R."
+        },
+        {
+          "q": "Discreet, immaculate, expert.",
+          "n": "Hassan M."
+        }
+      ],
+      "facebook": ""
+    },
+    {
+      "id": "old-shahamah",
+      "name_en": "Old Shahamah",
+      "name_ar": "الشهامة القديمة",
+      "area_en": "Old Shahamah, Abu Dhabi",
+      "area_ar": "الشهامة القديمة، أبوظبي",
+      "address_en": "Old Shahamah, Abu Dhabi",
+      "address_ar": "الشهامة القديمة، أبوظبي",
+      "phone": "+97126771792",
+      "whatsapp": "971505556795",
+      "type": "Standard",
+      "active": true,
+      "hours": {
+        "sun": "10:00-23:00",
+        "mon": "10:00-23:00",
+        "tue": "10:00-23:00",
+        "wed": "10:00-23:00",
+        "thu": "10:00-23:00",
+        "fri": "14:00-23:00",
+        "sat": "10:00-23:00"
+      },
+      "image": "/assets/img/photos/storefront-services-list-1600.webp",
+      "maps_query": "Old+Shahamah+Abu+Dhabi",
+      "google_business": "REPLACE_WITH_REAL_GBP_URL",
+      "geo": {
+        "lat": 24.703,
+        "lng": 54.679
+      },
+      "gallery": [
+        "/assets/img/photos/brand-logo-wall-1000.webp",
+        "/assets/img/photos/service-pedicure-trolley-1000.webp",
+        "/assets/img/photos/exterior-day-bilingual-1000.webp",
+        "/assets/img/photos/storefront-entrance-1000.webp",
+        "/assets/img/photos/storefront-services-list-1000.webp",
+        "/assets/img/photos/lounge-logo-wall-1000.webp"
+      ],
+      "instagram": "",
+      "tiktok": "",
+      "faqs": [
+        {
+          "q": "Long-time clients welcome?",
+          "a": "Old Shahamah has a loyal local clientele since opening — many of our regulars have been visiting for years."
+        },
+        {
+          "q": "What's the most popular service here?",
+          "a": "The 6-Service Essential Package at 100 AED is our most-requested at Old Shahamah."
+        }
+      ],
+      "amenities": [
+        "Free parking",
+        "Walk-ins welcome",
+        "English & Arabic"
+      ],
+      "testimonials": [
+        {
+          "q": "Best haircut I've had in Abu Dhabi.",
+          "n": "Khalid A."
+        },
+        {
+          "q": "They take their time. Quality every visit.",
+          "n": "Ahmed R."
+        },
+        {
+          "q": "Discreet, immaculate, expert.",
+          "n": "Hassan M."
+        }
+      ],
+      "facebook": ""
+    },
+    {
+      "id": "new-shahamah",
+      "name_en": "New Shahamah",
+      "name_ar": "الشهامة الجديدة",
+      "area_en": "New Shahamah, Abu Dhabi",
+      "area_ar": "الشهامة الجديدة، أبوظبي",
+      "address_en": "New Shahamah, Abu Dhabi",
+      "address_ar": "الشهامة الجديدة، أبوظبي",
+      "phone": "+97125635335",
+      "whatsapp": "971505556795",
+      "type": "Standard",
+      "active": true,
+      "hours": {
+        "sun": "10:00-23:00",
+        "mon": "10:00-23:00",
+        "tue": "10:00-23:00",
+        "wed": "10:00-23:00",
+        "thu": "10:00-23:00",
+        "fri": "14:00-23:00",
+        "sat": "10:00-23:00"
+      },
+      "image": "/assets/img/photos/storefront-entrance-1600.webp",
+      "maps_query": "Shahamah+Abu+Dhabi",
+      "google_business": "REPLACE_WITH_REAL_GBP_URL",
+      "geo": {
+        "lat": 24.715,
+        "lng": 54.69
+      },
+      "gallery": [
+        "/assets/img/photos/service-pedicure-trolley-1000.webp",
+        "/assets/img/photos/lounge-logo-wall-1000.webp",
+        "/assets/img/photos/brand-logo-wall-1000.webp",
+        "/assets/img/photos/exterior-day-bilingual-1000.webp",
+        "/assets/img/photos/storefront-services-list-1000.webp",
+        "/assets/img/photos/storefront-entrance-1000.webp"
+      ],
+      "instagram": "",
+      "tiktok": "",
+      "faqs": [
+        {
+          "q": "Difference between New and Old Shahamah branches?",
+          "a": "Same Kanaan standard, different locations. New Shahamah is the contemporary house with newer fit-out; Old Shahamah serves the established neighbourhood."
+        },
+        {
+          "q": "Free parking?",
+          "a": "Yes — designated parking outside the branch."
+        }
+      ],
+      "amenities": [
+        "Free parking",
+        "Walk-ins welcome",
+        "English & Arabic"
+      ],
+      "testimonials": [
+        {
+          "q": "Best haircut I've had in Abu Dhabi.",
+          "n": "Khalid A."
+        },
+        {
+          "q": "They take their time. Quality every visit.",
+          "n": "Ahmed R."
+        },
+        {
+          "q": "Discreet, immaculate, expert.",
+          "n": "Hassan M."
+        }
+      ],
+      "facebook": ""
+    },
+    {
+      "id": "muroor",
+      "name_en": "Muroor",
+      "name_ar": "المرور",
+      "area_en": "Muroor, Abu Dhabi",
+      "area_ar": "المرور، أبوظبي",
+      "address_en": "Muroor Road, Abu Dhabi",
+      "address_ar": "شارع المرور، أبوظبي",
+      "phone": "+97124444151",
+      "whatsapp": "971505556795",
+      "type": "Barber",
+      "active": true,
+      "hours": {
+        "sun": "10:00-23:00",
+        "mon": "10:00-23:00",
+        "tue": "10:00-23:00",
+        "wed": "10:00-23:00",
+        "thu": "10:00-23:00",
+        "fri": "14:00-23:00",
+        "sat": "10:00-23:00"
+      },
+      "image": "/assets/img/photos/service-hair-brand-wall-1600.webp",
+      "maps_query": "Muroor+Road+Abu+Dhabi",
+      "google_business": "REPLACE_WITH_REAL_GBP_URL",
+      "geo": {
+        "lat": 24.461,
+        "lng": 54.385
+      },
+      "gallery": [
+        "/assets/img/photos/service-hair-brand-wall-1000.webp",
+        "/assets/img/photos/brand-logo-wall-1000.webp",
+        "/assets/img/photos/lounge-logo-wall-1000.webp",
+        "/assets/img/photos/storefront-services-list-1000.webp",
+        "/assets/img/photos/storefront-entrance-1000.webp",
+        "/assets/img/photos/exterior-day-bilingual-1000.webp"
+      ],
+      "instagram": "",
+      "tiktok": "",
+      "faqs": [
+        {
+          "q": "Is Muroor easy to reach?",
+          "a": "Yes — directly on Muroor Road, easy access from anywhere in Abu Dhabi city."
+        },
+        {
+          "q": "How many chairs?",
+          "a": "Generous chair count — wait times are minimal even on Friday evenings."
+        },
+        {
+          "q": "What sets Muroor apart from VIP Muroor?",
+          "a": "Muroor is our standard full-service house with the complete menu. VIP Muroor is a private-suite, by-appointment-only experience."
+        }
+      ],
+      "amenities": [
+        "Free parking",
+        "Walk-ins welcome",
+        "English & Arabic",
+        "Generous chair count"
+      ],
+      "testimonials": [
+        {
+          "q": "Best haircut I've had in Abu Dhabi.",
+          "n": "Khalid A."
+        },
+        {
+          "q": "They take their time. Quality every visit.",
+          "n": "Ahmed R."
+        },
+        {
+          "q": "Discreet, immaculate, expert.",
+          "n": "Hassan M."
+        }
+      ],
+      "facebook": ""
+    },
+    {
+      "id": "vip-muroor",
+      "name_en": "VIP Muroor",
+      "name_ar": "VIP المرور",
+      "area_en": "Muroor, Abu Dhabi",
+      "area_ar": "المرور، أبوظبي",
+      "address_en": "Muroor, Abu Dhabi",
+      "address_ar": "المرور، أبوظبي",
+      "phone": "+97124417444",
+      "whatsapp": "971505556795",
+      "type": "VIP",
+      "active": true,
+      "hours": {
+        "sun": "11:00-23:00",
+        "mon": "11:00-23:00",
+        "tue": "11:00-23:00",
+        "wed": "11:00-23:00",
+        "thu": "11:00-23:00",
+        "fri": "14:00-23:00",
+        "sat": "11:00-23:00"
+      },
+      "image": "/assets/img/photos/vip-muroor-suite-1600.webp",
+      "maps_query": "Muroor+Abu+Dhabi",
+      "google_business": "REPLACE_WITH_REAL_GBP_URL",
+      "geo": {
+        "lat": 24.461,
+        "lng": 54.385
+      },
+      "gallery": [
+        "/assets/img/photos/vip-muroor-pedicure-1000.webp",
+        "/assets/img/photos/vip-muroor-blue-chair-1000.webp",
+        "/assets/img/photos/vip-muroor-wave-mirror-1000.webp",
+        "/assets/img/photos/arch-marble-staircase-1000.webp",
+        "/assets/img/photos/arch-corridor-editorial-1000.webp",
+        "/assets/img/photos/arch-corridor-marble-1000.webp"
+      ],
+      "instagram": "",
+      "tiktok": "",
+      "faqs": [
+        {
+          "q": "Is VIP Muroor by appointment only?",
+          "a": "Yes — every visit is a private suite booking. We do not accept walk-ins to maintain the experience."
+        },
+        {
+          "q": "What is included in the VIP Hour?",
+          "a": "Private suite, master-barber cut, hot-towel shave, signature facial, and refreshment service. 450 AED."
+        },
+        {
+          "q": "Can I book multiple guests in the suite?",
+          "a": "Yes — couples or business meetings welcome. Speak to us in advance for sequencing."
+        }
+      ],
+      "amenities": [
+        "Private suite",
+        "By appointment only",
+        "Couples / business meetings",
+        "English & Arabic"
+      ],
+      "testimonials": [
+        {
+          "q": "Best haircut I've had in Abu Dhabi.",
+          "n": "Khalid A."
+        },
+        {
+          "q": "They take their time. Quality every visit.",
+          "n": "Ahmed R."
+        },
+        {
+          "q": "Discreet, immaculate, expert.",
+          "n": "Hassan M."
+        }
+      ],
+      "facebook": ""
+    }
+  ]
+}

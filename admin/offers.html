@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Offers · Kanaan Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+<div class="admin-shell">
+  <aside class="admin-side">
+    <div class="admin-side__brand">KANAAN<span>.</span></div>
+    <nav class="admin-side__nav">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="leads.html">Leads · CRM</a>
+      <a href="offers.html" class="active">Offers</a>
+      <a href="branches.html">Branches</a>
+      <a href="banners.html">Banners</a>
+      <a href="integrations.html">Integrations</a>
+      <a href="settings.html">Settings</a>
+    </nav>
+    <div class="admin-side__user">Signed in as admin · <button type="button" onclick="KANAAN_ADMIN.logout()">Sign out</button></div>
+  </aside>
+
+  <main class="admin-main">
+    <h1 class="admin-h">Offers &amp; Packages</h1>
+    <p class="admin-sub">Edit your live offers — bilingual, branch-scoped, with limited-time scheduling.</p>
+
+    <div class="bar">
+      <button type="button" class="btn btn--ghost btn--sm" id="addOffer">+ Add new offer</button>
+      <span class="spacer"></span>
+      <button type="button" class="btn btn--ghost btn--sm" id="reload">Reset from file</button>
+      <button type="button" class="btn btn--sm" id="save">💾 Save locally</button>
+      <button type="button" class="btn btn--sm" id="download">⬇ Download offers.json</button>
+    </div>
+
+    <div id="list"></div>
+
+    <p style="color: var(--muted); font-size: 12px; margin-top: 24px;">
+      <strong>Workflow:</strong> Edit → Save locally (preserved in your browser) → Download offers.json → upload to <code>content/offers.json</code> on your server (or commit to Git).
+    </p>
+  </main>
+</div>
+
+<script src="admin.js"></script>
+<script>
+if (KANAAN_ADMIN.requireAuth()) (async function () {
+  let data;
+  async function load(reset = false) {
+    if (reset) localStorage.removeItem('kanaan_content_content/offers.json');
+    data = await KANAAN_ADMIN.loadJSON('content/offers.json');
+    render();
+  }
+  function render() {
+    const list = document.getElementById('list');
+    list.innerHTML = data.offers.map((o, i) => `
+      <div class="card">
+        <div class="bar">
+          <span class="pill pill--gold">${o.id}</span>
+          ${o.active ? '<span class="pill pill--sage">active</span>' : '<span class="pill pill--rust">inactive</span>'}
+          ${o.limited_time ? '<span class="pill pill--rust">limited time</span>' : ''}
+          <span class="spacer"></span>
+          <button type="button" class="btn btn--ghost btn--sm" data-toggle="${i}">${o.active ? 'Disable' : 'Enable'}</button>
+          <button type="button" class="btn btn--danger btn--sm" data-del="${i}">Delete</button>
+        </div>
+        <div class="row">
+          <div>
+            <label>Name (English)</label>
+            <input class="input" value="${o.name_en||''}" data-i="${i}" data-k="name_en" />
+          </div>
+          <div>
+            <label>Name (Arabic)</label>
+            <input class="input" value="${o.name_ar||''}" data-i="${i}" data-k="name_ar" dir="rtl" />
+          </div>
+          <div>
+            <label>Price (AED)</label>
+            <input type="number" class="input" value="${o.price||0}" data-i="${i}" data-k="price" />
+          </div>
+          <div>
+            <label>Badge (English)</label>
+            <input class="input" value="${o.badge_en||''}" data-i="${i}" data-k="badge_en" />
+          </div>
+          <div>
+            <label>Badge (Arabic)</label>
+            <input class="input" value="${o.badge_ar||''}" data-i="${i}" data-k="badge_ar" dir="rtl" />
+          </div>
+          <div>
+            <label>Image URL</label>
+            <input class="input" value="${o.image||''}" data-i="${i}" data-k="image" />
+          </div>
+          <div>
+            <label>Inclusions (English) — one per line</label>
+            <textarea class="ta" data-i="${i}" data-k="inclusions_en">${(o.inclusions_en||[]).join('\n')}</textarea>
+          </div>
+          <div>
+            <label>Inclusions (Arabic) — one per line</label>
+            <textarea class="ta" data-i="${i}" data-k="inclusions_ar" dir="rtl">${(o.inclusions_ar||[]).join('\n')}</textarea>
+          </div>
+          <div>
+            <label>Branches (comma-separated, "all" or branch IDs)</label>
+            <input class="input" value="${(o.branches||['all']).join(',')}" data-i="${i}" data-k="branches" />
+          </div>
+          <div>
+            <label>Limited time</label>
+            <select class="sel" data-i="${i}" data-k="limited_time">
+              <option value="false" ${!o.limited_time?'selected':''}>No</option>
+              <option value="true" ${o.limited_time?'selected':''}>Yes</option>
+            </select>
+          </div>
+          <div>
+            <label>Valid from</label>
+            <input type="date" class="input" value="${o.valid_from||''}" data-i="${i}" data-k="valid_from" />
+          </div>
+          <div>
+            <label>Valid to</label>
+            <input type="date" class="input" value="${o.valid_to||''}" data-i="${i}" data-k="valid_to" />
+          </div>
+        </div>
+      </div>
+    `).join('');
+
+    list.querySelectorAll('[data-k]').forEach(el => {
+      el.addEventListener('input', e => {
+        const i = +el.dataset.i, k = el.dataset.k;
+        let v = el.value;
+        if (k === 'inclusions_en' || k === 'inclusions_ar') v = v.split('\n').filter(x => x.trim());
+        else if (k === 'branches') v = v.split(',').map(x => x.trim()).filter(Boolean);
+        else if (k === 'limited_time') v = (v === 'true');
+        else if (k === 'price') v = +v;
+        data.offers[i][k] = v;
+      });
+    });
+    list.querySelectorAll('[data-del]').forEach(b => b.addEventListener('click', () => {
+      if (!confirm('Delete this offer?')) return;
+      data.offers.splice(+b.dataset.del, 1); render();
+    }));
+    list.querySelectorAll('[data-toggle]').forEach(b => b.addEventListener('click', () => {
+      const i = +b.dataset.toggle; data.offers[i].active = !data.offers[i].active; render();
+    }));
+  }
+  document.getElementById('addOffer').addEventListener('click', () => {
+    data.offers.push({
+      id: 'new-offer-' + Date.now().toString(36),
+      name_en: 'New Offer', name_ar: 'عرض جديد',
+      price: 0, currency: 'AED',
+      badge_en: '', badge_ar: '',
+      image: '',
+      inclusions_en: [], inclusions_ar: [],
+      branches: ['all'], limited_time: false,
+      valid_from: '', valid_to: '', tags: [], active: true
+    });
+    render();
+  });
+  document.getElementById('save').addEventListener('click', () => KANAAN_ADMIN.saveJSON('content/offers.json', data));
+  document.getElementById('download').addEventListener('click', () => KANAAN_ADMIN.download('content/offers.json', data));
+  document.getElementById('reload').addEventListener('click', () => { if (confirm('Discard unsaved changes?')) load(true); });
+  load();
+})();
+</script>
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/tracking.js"></script>
+  <script src="../assets/js/consent.js" defer></script>
+</body>
+</html>

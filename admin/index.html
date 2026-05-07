@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Admin · Kanaan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+  <div class="login">
+    <form class="login__card" id="loginForm">
+      <h1 class="login__brand">KANAAN<span>.</span></h1>
+      <p class="login__sub">Admin Panel</p>
+      <label for="pw">Password</label>
+      <input type="password" id="pw" class="input" autocomplete="current-password" required />
+      <p style="font-size: 11px; color: var(--muted); margin: 12px 0 0;">First time? Default password is <code style="color: var(--gold);">kanaan2026</code> — change it from Settings after login.</p>
+      <div style="margin-top: 24px;"><button type="submit" class="btn" style="width: 100%; justify-content: center;">Sign in</button></div>
+      <div id="err" style="margin-top: 12px; color: var(--rust); font-size: 13px; display:none;">Wrong password</div>
+    </form>
+  </div>
+
+  <script src="admin.js"></script>
+  <script>
+    const f = document.getElementById('loginForm');
+    f.addEventListener('submit', async e => {
+      e.preventDefault();
+      const ok = await KANAAN_ADMIN.login(document.getElementById('pw').value);
+      if (ok) location.href = 'dashboard.html';
+      else document.getElementById('err').style.display = 'block';
+    });
+    if (KANAAN_ADMIN.isLoggedIn()) location.href = 'dashboard.html';
+  </script>
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/tracking.js"></script>
+  <script src="../assets/js/consent.js" defer></script>
+</body>
+</html>

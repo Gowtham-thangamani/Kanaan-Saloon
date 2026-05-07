@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Banners · Kanaan Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+<div class="admin-shell">
+  <aside class="admin-side">
+    <div class="admin-side__brand">KANAAN<span>.</span></div>
+    <nav class="admin-side__nav">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="leads.html">Leads · CRM</a>
+      <a href="offers.html">Offers</a>
+      <a href="branches.html">Branches</a>
+      <a href="banners.html" class="active">Banners</a>
+      <a href="integrations.html">Integrations</a>
+      <a href="settings.html">Settings</a>
+    </nav>
+    <div class="admin-side__user">Signed in as admin · <button type="button" onclick="KANAAN_ADMIN.logout()">Sign out</button></div>
+  </aside>
+
+  <main class="admin-main">
+    <h1 class="admin-h">Homepage banner &amp; brand text</h1>
+    <p class="admin-sub">Edit the homepage hero, taglines, and central contact. Changes save to <code>content/site.json</code>.</p>
+
+    <div class="bar">
+      <span class="spacer"></span>
+      <button type="button" class="btn btn--ghost btn--sm" id="reload">Reset from file</button>
+      <button type="button" class="btn btn--sm" id="save">💾 Save locally</button>
+      <button type="button" class="btn btn--sm" id="download">⬇ Download site.json</button>
+    </div>
+
+    <div id="form"></div>
+  </main>
+</div>
+
+<script src="admin.js"></script>
+<script>
+if (KANAAN_ADMIN.requireAuth()) (async function () {
+  let data;
+  async function load(reset = false) {
+    if (reset) localStorage.removeItem('kanaan_content_content/site.json');
+    data = await KANAAN_ADMIN.loadJSON('content/site.json');
+    render();
+  }
+  function render() {
+    const f = document.getElementById('form');
+    f.innerHTML = `
+      <div class="card">
+        <h3>Homepage Hero</h3>
+        <div class="row">
+          <div><label>Headline (EN)</label><textarea class="ta" data-k="homepage_hero.headline_en">${data.homepage_hero.headline_en}</textarea></div>
+          <div><label>Headline (AR)</label><textarea class="ta" data-k="homepage_hero.headline_ar" dir="rtl">${data.homepage_hero.headline_ar}</textarea></div>
+          <div><label>Sub-text (EN)</label><textarea class="ta" data-k="homepage_hero.sub_en">${data.homepage_hero.sub_en}</textarea></div>
+          <div><label>Sub-text (AR)</label><textarea class="ta" data-k="homepage_hero.sub_ar" dir="rtl">${data.homepage_hero.sub_ar}</textarea></div>
+          <div style="grid-column: 1/-1;"><label>Hero image URL</label><input class="input" data-k="homepage_hero.image" value="${data.homepage_hero.image||''}" /></div>
+          <div><label>Primary CTA label (EN)</label><input class="input" data-k="homepage_hero.primary_cta_en" value="${data.homepage_hero.primary_cta_en||''}" /></div>
+          <div><label>Primary CTA label (AR)</label><input class="input" data-k="homepage_hero.primary_cta_ar" value="${data.homepage_hero.primary_cta_ar||''}" dir="rtl" /></div>
+          <div style="grid-column: 1/-1;"><label>Primary CTA URL</label><input class="input" data-k="homepage_hero.primary_cta_url" value="${data.homepage_hero.primary_cta_url||''}" /></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Brand</h3>
+        <div class="row">
+          <div><label>Name (EN)</label><input class="input" data-k="brand.name_en" value="${data.brand.name_en||''}" /></div>
+          <div><label>Name (AR)</label><input class="input" data-k="brand.name_ar" value="${data.brand.name_ar||''}" dir="rtl" /></div>
+          <div><label>Tagline (EN)</label><input class="input" data-k="brand.tagline_en" value="${data.brand.tagline_en||''}" /></div>
+          <div><label>Tagline (AR)</label><input class="input" data-k="brand.tagline_ar" value="${data.brand.tagline_ar||''}" dir="rtl" /></div>
+          <div><label>Primary brand colour (hex)</label><input class="input" data-k="brand.primaryHex" value="${data.brand.primaryHex||''}" /></div>
+          <div><label>Accent gold (hex)</label><input class="input" data-k="brand.accentHex" value="${data.brand.accentHex||''}" /></div>
+          <div><label>Logo path</label><input class="input" data-k="brand.logo" value="${data.brand.logo||''}" /></div>
+          <div><label>Logo mark path</label><input class="input" data-k="brand.logoMark" value="${data.brand.logoMark||''}" /></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Central contact</h3>
+        <div class="row">
+          <div><label>Phone</label><input class="input" data-k="contact.centralPhone" value="${data.contact.centralPhone||''}" /></div>
+          <div><label>WhatsApp (no +)</label><input class="input" data-k="contact.centralWhatsApp" value="${data.contact.centralWhatsApp||''}" /></div>
+          <div><label>General email</label><input class="input" data-k="contact.email" value="${data.contact.email||''}" /></div>
+          <div><label>Careers email</label><input class="input" data-k="contact.careersEmail" value="${data.contact.careersEmail||''}" /></div>
+          <div><label>Press email</label><input class="input" data-k="contact.pressEmail" value="${data.contact.pressEmail||''}" /></div>
+          <div><label>Privacy email</label><input class="input" data-k="contact.privacyEmail" value="${data.contact.privacyEmail||''}" /></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Social</h3>
+        <div class="row">
+          <div><label>Instagram URL</label><input class="input" data-k="social.instagram" value="${data.social.instagram||''}" /></div>
+          <div><label>TikTok URL</label><input class="input" data-k="social.tiktok" value="${data.social.tiktok||''}" /></div>
+          <div><label>Snapchat URL</label><input class="input" data-k="social.snapchat" value="${data.social.snapchat||''}" /></div>
+          <div><label>Google Business URL</label><input class="input" data-k="social.google_business" value="${data.social.google_business||''}" /></div>
+        </div>
+      </div>
+    `;
+    f.querySelectorAll('[data-k]').forEach(el => {
+      el.addEventListener('input', () => {
+        const path = el.dataset.k.split('.');
+        let cur = data;
+        for (let i = 0; i < path.length - 1; i++) cur = cur[path[i]];
+        cur[path[path.length - 1]] = el.value;
+      });
+    });
+  }
+  document.getElementById('save').addEventListener('click', () => KANAAN_ADMIN.saveJSON('content/site.json', data));
+  document.getElementById('download').addEventListener('click', () => KANAAN_ADMIN.download('content/site.json', data));
+  document.getElementById('reload').addEventListener('click', () => { if (confirm('Discard unsaved changes?')) load(true); });
+  load();
+})();
+</script>
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/tracking.js"></script>
+  <script src="../assets/js/consent.js" defer></script>
+</body>
+</html>

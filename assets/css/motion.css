@@ -1,0 +1,850 @@
+/* ============================================================
+   KANAAN MOTION SYSTEM
+   IntersectionObserver-driven reveals + lightweight rAF parallax.
+   No GSAP. Respects prefers-reduced-motion. ~2KB gzipped.
+
+   Hidden state: no transition declared → snaps instantly on .motion-ready.
+   Visible (.is-in) state: transition declared → smooth animation.
+   ============================================================ */
+
+:root {
+  --m-ease-out: cubic-bezier(.2, .8, .2, 1);
+  --m-ease-mask: cubic-bezier(.77, 0, .18, 1);
+  --m-dur-base: 800ms;
+  --m-dur-slow: 1100ms;
+  --m-dur-mask: 1200ms;
+  --m-distance: 40px;
+}
+
+/* ============================================================
+   LOGO — HTML+CSS wordmark (no SVG, no font load dependency)
+   Crescent mark drawn with CSS borders + an offset dot.
+   ============================================================ */
+.logo--text {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  color: var(--c-pearl, #F2EFE9);
+  line-height: 1;
+  font-family: var(--f-display, 'Cormorant Garamond', Georgia, serif);
+  position: relative;
+  transition: color 250ms ease;
+}
+.logo--text:hover { color: var(--c-gold, #C8A04A); }
+
+.logo--text .logo__mark {
+  position: relative;
+  display: inline-block;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+}
+/* Three stacked crescent arcs */
+.logo--text .logo__mark::before,
+.logo--text .logo__mark::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 2px solid currentColor;
+  border-color: currentColor transparent transparent transparent;
+  border-radius: 50%;
+  transform: rotate(-35deg);
+}
+.logo--text .logo__mark::after {
+  inset: 5px;
+  border-width: 1.5px;
+  transform: rotate(-22deg);
+}
+/* The eye / dot accent */
+.logo--text .logo__mark > i {
+  position: absolute;
+  right: 7px;
+  bottom: 7px;
+  width: 10px;
+  height: 10px;
+  background: var(--c-gold, #C8A04A);
+  border-radius: 50%;
+  display: block;
+}
+
+.logo--text .logo__word {
+  font-size: 30px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: inherit;
+  white-space: nowrap;
+}
+.logo--text .logo__dot {
+  color: var(--c-gold, #C8A04A);
+  font-weight: 400;
+}
+.logo--text .logo__sub { display: none; }
+/* Footer: keep mark+word horizontal, push subtitle to its own line below */
+.site-footer .logo--text {
+  flex-wrap: wrap;
+  align-items: center;
+}
+.site-footer .logo--text .logo__sub {
+  display: block;
+  flex: 0 0 100%;            /* break to new line */
+  font-family: var(--f-sans, 'Inter', sans-serif);
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--c-pearl, #F2EFE9);
+  opacity: 0.85;
+  margin: 8px 0 0 52px;       /* indent past the mark; sits under "KANAAN." */
+  padding: 0;
+  border: 0;
+  white-space: nowrap;
+  align-self: flex-start;
+}
+@media (max-width: 768px) {
+  .site-footer .logo--text .logo__sub {
+    margin-left: 44px;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+  }
+}
+.site-footer .logo--text { color: var(--c-pearl, #F2EFE9); }
+.site-header.shrunk .logo--text .logo__word { font-size: 22px; transition: font-size 200ms ease; }
+.site-header.shrunk .logo--text .logo__mark { width: 32px; height: 32px; }
+
+@media (max-width: 768px) {
+  .logo--text .logo__sub { display: none; }
+  .logo--text .logo__word { font-size: 22px; }
+  .logo--text .logo__mark { width: 32px; height: 32px; }
+}
+
+/* ============================================================
+   HERO MOTION OVERRIDES — faster, snappier arrival
+   ============================================================ */
+.motion-ready .hero [data-reveal].is-in,
+.motion-ready .page-hero [data-reveal].is-in,
+.motion-ready [data-reveal="mask"].is-in {
+  transition-duration: 600ms !important;
+}
+.motion-ready [data-reveal="mask"].is-in > img,
+.motion-ready [data-reveal="mask"].is-in img {
+  transition-duration: 700ms !important;
+}
+.motion-ready .hero [data-split="lines"].is-in .split-line__inner,
+.motion-ready .page-hero [data-split="lines"].is-in .split-line__inner {
+  transition-duration: 650ms !important;
+}
+
+/* --- Hidden states (no transition, no flicker on first paint) --- */
+.motion-ready [data-reveal="up"]    { opacity: 0; transform: translate3d(0, var(--m-distance), 0); will-change: opacity, transform; }
+.motion-ready [data-reveal="in"]    { opacity: 0; will-change: opacity; }
+.motion-ready [data-reveal="scale"] { opacity: 0; transform: scale(1.06); will-change: opacity, transform; }
+.motion-ready [data-reveal="mask"]  { -webkit-clip-path: inset(0 100% 0 0); clip-path: inset(0 100% 0 0); will-change: clip-path; }
+html[dir="rtl"].motion-ready [data-reveal="mask"] { -webkit-clip-path: inset(0 0 0 100%); clip-path: inset(0 0 0 100%); }
+
+.motion-ready [data-reveal="mask"] > img,
+.motion-ready [data-reveal="mask"] img { transform: scale(1.08); will-change: transform; }
+
+/* Stagger group children: same hidden state as fade-up */
+.motion-ready [data-reveal-stagger] > * { opacity: 0; transform: translate3d(0, var(--m-distance), 0); will-change: opacity, transform; }
+
+/* Heading split-line containers */
+.motion-ready .split-line { display: block; overflow: hidden; line-height: 1.05; padding-bottom: 0.05em; }
+.motion-ready .split-line__inner { display: block; transform: translateY(110%); will-change: transform; }
+
+/* --- Visible (.is-in) states — transitions live here only --- */
+.motion-ready [data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+  -webkit-clip-path: inset(0 0 0 0);
+  clip-path: inset(0 0 0 0);
+  transition:
+    opacity var(--m-dur-base) var(--m-ease-out),
+    transform var(--m-dur-base) var(--m-ease-out),
+    -webkit-clip-path var(--m-dur-mask) var(--m-ease-mask),
+    clip-path var(--m-dur-mask) var(--m-ease-mask);
+}
+.motion-ready [data-reveal="mask"].is-in > img,
+.motion-ready [data-reveal="mask"].is-in img {
+  transform: scale(1);
+  transition: transform var(--m-dur-mask) var(--m-ease-mask);
+}
+.motion-ready [data-reveal-stagger].is-in > * {
+  opacity: 1;
+  transform: none;
+  transition: opacity var(--m-dur-base) var(--m-ease-out), transform var(--m-dur-base) var(--m-ease-out);
+}
+.motion-ready [data-split="lines"].is-in .split-line__inner {
+  transform: translateY(0);
+  transition: transform var(--m-dur-slow) var(--m-ease-out);
+}
+
+/* ============================================================
+   PARALLAX — JS sets transform inline.
+   Just kill the conflicting kenburns CSS animation; let JS own the transform.
+   The JS combines translate + scale(1.08) so a slight zoom hides edge gaps.
+   ============================================================ */
+[data-parallax] { will-change: transform; }
+[data-parallax="bg"] { overflow: hidden; }
+
+.motion-ready .hero__media img,
+.motion-ready .page-hero__media img,
+.motion-ready [data-parallax="bg"] img {
+  animation: none !important;
+}
+
+/* Image hover micro-interaction */
+[data-hover-zoom] { overflow: hidden; display: block; }
+[data-hover-zoom] img {
+  transition: transform 600ms var(--m-ease-out), filter 400ms var(--m-ease-out);
+  will-change: transform;
+}
+[data-hover-zoom]:hover img,
+[data-hover-zoom]:focus-visible img {
+  transform: scale(1.06);
+  filter: brightness(0.92) saturate(1.04);
+}
+
+/* ============================================================
+   MOBILE A11Y — skip link, touch targets, iOS form zoom prevention
+   ============================================================ */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--c-gold, #C8A04A);
+  color: #0E0F11;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  z-index: 9999;
+}
+.skip-link:focus {
+  left: 16px;
+  top: 16px;
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+/* Touch target minimums on mobile */
+@media (max-width: 768px) {
+  .main-nav a,
+  .mobile-nav a,
+  .nav-dd-m__head,
+  .footer-bottom a,
+  .footer-grid a,
+  .branch-social a,
+  .share-bar a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+  .menu-toggle { width: 48px; height: 48px; }
+
+  /* Prevent iOS auto-zoom on focus by enforcing 16px+ on inputs */
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="date"],
+  input[type="time"],
+  input[type="number"],
+  input[type="search"],
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+
+  /* Mobile CTA bar should clear bottom inset on iOS */
+  .mobile-cta {
+    padding-bottom: max(8px, env(safe-area-inset-bottom)) !important;
+  }
+}
+
+/* Visible focus ring everywhere (a11y baseline) */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid var(--c-gold, #C8A04A);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ============================================================
+   SCROLL-DRIVEN TEXT REVEAL — luxury word-by-word lighting.
+   Uses IntersectionObserver per-word; falls back gracefully.
+   Apply via [data-scroll-text] attribute (JS splits on init).
+   ============================================================ */
+.motion-ready [data-scroll-text] .srt-word {
+  display: inline-block;
+  color: rgba(242, 239, 233, 0.18); /* pearl @ 18% — dim baseline */
+  transition: color 700ms cubic-bezier(.2, .8, .2, 1), text-shadow 700ms ease;
+  will-change: color;
+}
+.motion-ready [data-scroll-text] .srt-word.is-lit {
+  color: var(--c-pearl, #F2EFE9);
+}
+/* Light theme variant: dark base, dark on lit */
+.motion-ready [data-scroll-text-light] .srt-word { color: rgba(14, 15, 17, 0.18); }
+.motion-ready [data-scroll-text-light] .srt-word.is-lit { color: var(--c-ink, #0E0F11); }
+
+/* Modern scroll-timeline path for browsers that support it (Chrome/Edge 115+, Safari TP) */
+@supports (animation-timeline: view()) {
+  .motion-ready [data-scroll-text] {
+    background: linear-gradient(
+      90deg,
+      var(--c-pearl, #F2EFE9) 0%,
+      var(--c-pearl, #F2EFE9) 33%,
+      var(--c-gold, #C8A04A) 50%,
+      rgba(242, 239, 233, 0.2) 66%,
+      rgba(242, 239, 233, 0.2) 100%
+    );
+    background-size: 300% 100%;
+    background-position: 100% 0;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: srt-sweep linear both;
+    animation-timeline: view();
+    animation-range: entry 20% cover 70%;
+  }
+  @keyframes srt-sweep {
+    to { background-position: 0% 0; }
+  }
+  /* When CSS scroll-timeline runs, the JS word spans are no longer needed visually. */
+  .motion-ready [data-scroll-text] .srt-word {
+    color: inherit !important;
+    background: none;
+    transition: none;
+  }
+}
+
+/* ============================================================
+   QUICK-BOOK STICKY WIDGET
+   ============================================================ */
+.qb-widget {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 95;
+  font-family: var(--f-sans, 'Inter', sans-serif);
+}
+html[dir="rtl"] .qb-widget { right: auto; left: 24px; }
+
+.qb-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--c-gold, #C8A04A);
+  color: #0E0F11;
+  border: 0;
+  padding: 14px 22px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: 0 16px 40px -12px rgba(0,0,0,0.45);
+  cursor: pointer;
+  transition: transform 250ms var(--m-ease-out, cubic-bezier(.2,.8,.2,1)), box-shadow 250ms ease;
+}
+.qb-pill:hover { transform: translateY(-2px); box-shadow: 0 22px 48px -12px rgba(0,0,0,0.5); }
+.qb-pill svg { display: block; }
+.qb-widget.is-open .qb-pill { transform: scale(0.92); opacity: 0.6; }
+
+.qb-panel {
+  position: absolute;
+  bottom: calc(100% + 14px);
+  right: 0;
+  width: min(360px, calc(100vw - 48px));
+  background: var(--c-obsidian, #0E0F11);
+  border: 1px solid var(--c-smoke, #2A2C2F);
+  border-top: 2px solid var(--c-gold, #C8A04A);
+  padding: 24px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px) scale(0.98);
+  transition: opacity 200ms var(--m-ease-out, ease), transform 250ms var(--m-ease-out, ease);
+  box-shadow: 0 24px 60px -16px rgba(0,0,0,0.6);
+}
+html[dir="rtl"] .qb-panel { right: auto; left: 0; }
+.qb-widget.is-open .qb-panel {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+.qb-close {
+  position: absolute;
+  top: 8px; right: 12px;
+  background: none; border: 0;
+  color: var(--c-stone, #B7B0A2);
+  font-size: 24px; line-height: 1;
+  cursor: pointer; padding: 4px 8px;
+}
+html[dir="rtl"] .qb-close { right: auto; left: 12px; }
+.qb-panel__title {
+  font-family: var(--f-display, serif);
+  font-size: 22px;
+  margin: 0 0 6px;
+  color: var(--c-pearl, #F2EFE9);
+}
+.qb-panel__sub {
+  font-size: 13px;
+  color: var(--c-stone, #B7B0A2);
+  margin: 0 0 16px;
+}
+.qb-form { display: grid; gap: 12px; }
+.qb-form label {
+  display: grid;
+  gap: 4px;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--c-stone, #B7B0A2);
+}
+.qb-form select,
+.qb-form input {
+  width: 100%;
+  padding: 10px 12px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--c-smoke, #2A2C2F);
+  color: var(--c-pearl, #F2EFE9);
+  font-family: inherit;
+  font-size: 14px;
+}
+.qb-form select:focus,
+.qb-form input:focus {
+  outline: 0;
+  border-color: var(--c-gold, #C8A04A);
+}
+.qb-cta {
+  margin-top: 8px;
+  background: var(--c-gold, #C8A04A);
+  color: #0E0F11;
+  border: 0;
+  padding: 12px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 200ms ease;
+}
+.qb-cta:hover { background: #d4ad58; }
+
+@media (max-width: 640px) {
+  .qb-widget { bottom: 88px; right: 16px; } /* clear of mobile-cta */
+  html[dir="rtl"] .qb-widget { left: 16px; }
+  .qb-pill { padding: 12px 18px; font-size: 12px; }
+  .qb-pill span { display: none; } /* icon-only on phones to save space */
+  .qb-pill { border-radius: 50px; padding: 14px; }
+}
+
+/* ============================================================
+   VISIBILITY UPGRADE — contrast + borders + hover affordances
+   (Excludes the .service-card--cta gold call-to-action card)
+   ============================================================ */
+.branch-card,
+.service-card:not(.service-card--cta),
+.offer-card,
+.option-card,
+[data-stepper] .option-card,
+[data-stepper] label.option-card {
+  border: 1px solid rgba(200, 160, 74, 0.18);
+  background: rgba(255, 255, 255, 0.025);
+  transition: border-color 220ms ease, background 220ms ease, transform 220ms ease, box-shadow 220ms ease;
+}
+.branch-card:hover,
+.service-card:not(.service-card--cta):hover,
+.offer-card:hover,
+.option-card:hover,
+[data-stepper] .option-card:hover {
+  border-color: var(--c-gold, #C8A04A);
+  background: rgba(200, 160, 74, 0.06);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px -16px rgba(0,0,0,0.5);
+}
+
+/* Service card with photo thumbnail (home page services grid) */
+.service-card--photo {
+  display: flex !important;
+  flex-direction: column;
+  padding: 0 !important;
+  overflow: hidden;
+}
+.service-card--photo .service-card__media {
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: rgba(0,0,0,0.3);
+}
+.service-card--photo .service-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.service-card--photo .service-card__body {
+  padding: 28px 28px 32px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  position: relative;
+}
+.service-card--photo .service-card__num {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: var(--c-gold, #C8A04A);
+  margin-bottom: 12px;
+}
+.service-card--photo .service-card__title {
+  font-family: var(--f-display, serif);
+  font-size: 26px;
+  margin: 0 0 12px;
+  color: var(--c-pearl, #F2EFE9);
+  line-height: 1.15;
+}
+.service-card--photo .service-card__desc {
+  font-size: 14px;
+  color: rgba(242, 239, 233, 0.78);
+  line-height: 1.6;
+  margin: 0 0 20px;
+  flex: 1;
+}
+.service-card--photo .service-card__arrow {
+  font-size: 18px;
+  color: var(--c-gold, #C8A04A);
+  transition: transform 280ms ease;
+  align-self: flex-start;
+}
+.service-card--photo:hover .service-card__arrow {
+  transform: translateX(8px);
+}
+
+/* CTA "Browse all treatments" gold card — bright, high contrast, opt-out of dim treatment */
+.service-card--cta {
+  background: var(--c-gold, #C8A04A) !important;
+  color: #0E0F11 !important;
+  border: 1px solid var(--c-gold, #C8A04A) !important;
+  display: flex !important;
+  align-items: stretch;
+  transition: transform 280ms ease, box-shadow 280ms ease, background 280ms ease;
+}
+.service-card--cta:hover {
+  background: #d4ad58 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px -10px rgba(200, 160, 74, 0.4);
+}
+.service-card--cta .service-card__body {
+  padding: 28px 28px 32px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.service-card--cta .service-card__num,
+.service-card--cta .service-card__title,
+.service-card--cta .service-card__desc,
+.service-card--cta .service-card__arrow {
+  color: #0E0F11 !important;
+}
+.service-card--cta .service-card__num {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  margin-bottom: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.service-card--cta .service-card__title {
+  font-family: var(--f-display, serif);
+  font-size: 28px;
+  margin: 0 0 14px;
+  line-height: 1.15;
+}
+.service-card--cta .service-card__desc {
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0 0 24px;
+  opacity: 0.78;
+  flex: 1;
+}
+.service-card--cta .service-card__arrow {
+  font-size: 22px;
+  align-self: flex-start;
+  transition: transform 280ms ease;
+}
+.service-card--cta:hover .service-card__arrow {
+  transform: translateX(10px);
+}
+/* Selected/active card */
+.option-card.is-selected,
+.option-card[aria-checked="true"],
+input:checked + .option-card,
+[data-stepper] input:checked + label.option-card {
+  border-color: var(--c-gold, #C8A04A) !important;
+  background: rgba(200, 160, 74, 0.10) !important;
+  box-shadow: inset 0 0 0 1px var(--c-gold, #C8A04A);
+}
+
+/* Brighten secondary / .muted text from too-grey to readable */
+.muted, p.muted, span.muted,
+.option-card .muted,
+.section-head__lede,
+.lede {
+  color: rgba(242, 239, 233, 0.78) !important;
+}
+.section--light .muted,
+.section--light p.muted,
+form[style*="background: #fff"] .muted {
+  color: rgba(14, 15, 17, 0.65) !important;
+}
+
+/* Form inputs — visible borders + focus glow */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+input[type="time"],
+input[type="number"],
+input[type="search"],
+input[type="password"],
+textarea,
+select {
+  border: 1px solid rgba(200, 160, 74, 0.25) !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  color: var(--c-pearl, #F2EFE9);
+  transition: border-color 200ms ease, box-shadow 200ms ease, background 200ms ease;
+}
+input:focus, textarea:focus, select:focus {
+  outline: 0 !important;
+  border-color: var(--c-gold, #C8A04A) !important;
+  box-shadow: 0 0 0 3px rgba(200, 160, 74, 0.15) !important;
+}
+
+/* Light-theme inputs (corporate/gift form on white bg) */
+.section--light input,
+.section--light textarea,
+.section--light select,
+form[style*="background: #fff"] input,
+form[style*="background: #fff"] textarea,
+form[style*="background: #fff"] select {
+  background: #fff !important;
+  border: 1px solid rgba(14,15,17,0.18) !important;
+  color: var(--c-ink, #0E0F11);
+}
+
+/* Stepper steps — clearer active state */
+.stepper__item {
+  color: rgba(242, 239, 233, 0.5);
+}
+.stepper__item.is-active {
+  color: var(--c-gold, #C8A04A);
+}
+.stepper__num {
+  border: 1px solid currentColor;
+}
+
+/* Geolocation/location hint banner — gold instead of pink for brand consistency */
+[data-suggest-msg],
+.location-hint {
+  color: var(--c-gold, #C8A04A);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+}
+
+/* CTA bands secondary text */
+.cta-band__sub {
+  color: rgba(242, 239, 233, 0.85);
+}
+
+/* Eyebrow visibility on dark bg */
+.eyebrow {
+  color: var(--c-gold, #C8A04A);
+}
+
+/* Better disabled / placeholder visibility */
+::placeholder { color: rgba(242, 239, 233, 0.35) !important; }
+
+/* ============================================================
+   INLINE CALENDAR WIDGET
+   ============================================================ */
+.cal-wrap { position: relative; }
+.cal-input {
+  background: rgba(255,255,255,0.04) !important;
+  cursor: pointer !important;
+  padding-right: 36px !important;
+}
+.cal-wrap::after {
+  content: "📅";
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-size: 16px;
+  filter: grayscale(1) brightness(2.5);
+  opacity: 0.5;
+}
+html[dir="rtl"] .cal-wrap::after { right: auto; left: 14px; }
+html[dir="rtl"] .cal-input { padding-right: 12px !important; padding-left: 36px !important; }
+
+.cal-panel {
+  display: none;
+  position: relative;
+  margin-top: 8px;
+  background: var(--c-obsidian, #0E0F11);
+  border: 1px solid var(--c-smoke, #2A2C2F);
+  border-top: 2px solid var(--c-gold, #C8A04A);
+  padding: 16px;
+  z-index: 50;
+  box-shadow: 0 16px 32px -12px rgba(0,0,0,0.4);
+}
+.cal-input:focus + .cal-panel,
+.cal-wrap:focus-within .cal-panel,
+.cal-wrap.is-open .cal-panel { display: block; }
+/* Always show inline (simpler UX than popover for booking flow) */
+.cal-panel { display: block; }
+
+.cal-head {
+  display: grid;
+  grid-template-columns: 32px 1fr 90px 32px;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.cal-nav {
+  width: 32px; height: 32px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--c-smoke, #2A2C2F);
+  color: var(--c-pearl, #F2EFE9);
+  font-size: 18px; line-height: 1;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+.cal-nav:hover { background: var(--c-gold, #C8A04A); color: #0E0F11; border-color: var(--c-gold, #C8A04A); }
+.cal-month, .cal-year {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--c-smoke, #2A2C2F);
+  color: var(--c-pearl, #F2EFE9);
+  padding: 8px 10px;
+  font-family: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+.cal-grid--head { margin-bottom: 6px; }
+.cal-dow {
+  text-align: center;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--c-stone, #B7B0A2);
+  padding: 6px 0;
+}
+.cal-day {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--c-pearl, #F2EFE9);
+  font-family: inherit;
+  font-size: 14px;
+  padding: 10px 0;
+  cursor: pointer;
+  transition: all 180ms ease;
+  font-variant-numeric: tabular-nums;
+}
+.cal-day:hover:not(:disabled) {
+  border-color: var(--c-gold, #C8A04A);
+  color: var(--c-gold, #C8A04A);
+}
+.cal-day--empty { cursor: default; }
+.cal-day--today { border-color: var(--c-stone, #B7B0A2); }
+.cal-day--selected {
+  background: var(--c-gold, #C8A04A) !important;
+  color: #0E0F11 !important;
+  border-color: var(--c-gold, #C8A04A) !important;
+  font-weight: 600;
+}
+.cal-day--fri { color: var(--c-gold, #C8A04A); }
+.cal-day--disabled,
+.cal-day:disabled {
+  color: rgba(242, 239, 233, 0.2);
+  cursor: not-allowed;
+}
+.cal-foot { margin-top: 12px; text-align: right; }
+html[dir="rtl"] .cal-foot { text-align: left; }
+.cal-today {
+  background: transparent;
+  border: 1px solid var(--c-smoke, #2A2C2F);
+  color: var(--c-stone, #B7B0A2);
+  padding: 6px 14px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+.cal-today:hover { border-color: var(--c-gold, #C8A04A); color: var(--c-gold, #C8A04A); }
+
+@media (max-width: 480px) {
+  .cal-day { padding: 8px 0; font-size: 13px; }
+  .cal-head { grid-template-columns: 32px 1fr 80px 32px; }
+}
+
+/* ============================================================
+   FORM CONTROLS — dark dropdown rendering across browsers / OS
+   The native <select> dropdown panel inherits OS UA colors unless
+   we tell the browser this is a dark form.
+   ============================================================ */
+select,
+input,
+textarea {
+  color-scheme: dark;
+}
+/* Explicit option styling — guarantees high contrast in the popup */
+select option,
+select optgroup {
+  color: var(--c-pearl, #F2EFE9) !important;
+  background-color: var(--c-obsidian, #0E0F11) !important;
+  font-weight: 500;
+}
+select option:checked,
+select option:hover {
+  background-color: var(--c-gold, #C8A04A) !important;
+  color: #0E0F11 !important;
+}
+/* Light-theme forms (corporate request, gift-voucher recipient form on white bg) */
+.section--light select,
+.section--light input,
+.section--light textarea,
+form[style*="background: #fff"] select,
+form[style*="background: #fff"] input,
+form[style*="background: #fff"] textarea {
+  color-scheme: light;
+}
+.section--light select option,
+form[style*="background: #fff"] select option {
+  color: var(--c-ink, #0E0F11) !important;
+  background-color: #fff !important;
+}
+
+/* Reduced motion: collapse to opacity-only, instant. */
+@media (prefers-reduced-motion: reduce) {
+  .motion-ready [data-reveal],
+  .motion-ready [data-reveal-stagger] > *,
+  .motion-ready [data-reveal] img,
+  .motion-ready .split-line__inner {
+    opacity: 1 !important;
+    transform: none !important;
+    -webkit-clip-path: none !important;
+    clip-path: none !important;
+    transition: none !important;
+  }
+  [data-parallax] { transform: none !important; }
+  [data-hover-zoom] img { transition: none; }
+}

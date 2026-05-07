@@ -1,0 +1,75 @@
+# Kanaan Gents Salon & Spa
+
+> Premium men's grooming, barbering and spa group across 10 houses in Abu Dhabi and Al Ain, UAE. Service-led, master-trained, spa-grade hygiene. Bilingual English / Arabic.
+
+## Brand
+- Name: Kanaan Gents Salon & Spa
+- Languages: English (en), Arabic (ar) — RTL
+- Locale: UAE (Abu Dhabi + Al Ain)
+- Booking: online (kanaanspa.ae/book.html), WhatsApp, walk-in
+- Confirmation SLA: 30 minutes during open hours
+
+## Branches (10)
+
+- [Al Ain](/branches/al-ain.html) — neighbourhood Kanaan house, full menu
+- [Khalifa City](/branches/khalifa-city.html) — modern house in Khalifa City A
+- [Khalidiya](/branches/khalidiya.html) — central Abu Dhabi house
+- [Baniyas Spa](/branches/baniyas-spa.html) — flagship spa house with hammam
+- [Baniyas Barber](/branches/baniyas-barber.html) — master barber room
+- [Rabdan](/branches/rabdan.html) — quiet, refined, full-service
+- [Old Shahamah](/branches/old-shahamah.html) — classic Kanaan service
+- [New Shahamah](/branches/new-shahamah.html) — contemporary house
+- [Muroor](/branches/muroor.html) — easy access on Muroor Road
+- [VIP Muroor](/branches/vip-muroor.html) — private suites, by appointment
+
+## Services (7 categories)
+
+- [Hair & Beard](/services/hair-beard.html) — haircuts, hot-towel shaves, beard sculpts (from 60 AED)
+- [Facial & Skin Care](/services/facial-skin-care.html) — Express, Signature, Hydra, Anti-Fatigue, Premium (from 120 AED)
+- [Massage](/services/massage.html) — Swedish, deep-tissue, sports recovery, hot stone (from 150 AED)
+- [Moroccan Bath](/services/moroccan-bath.html) — traditional hammam ritual, only at Baniyas Spa + VIP Muroor (from 130 AED)
+- [Manicure & Pedicure](/services/manicure-pedicure.html) — sterilised single-use tools (from 70 AED)
+- [Hair Treatment](/services/hair-treatment.html) — protein, keratin, scalp therapy (from 180 AED)
+- [Grooming Packages](/services/grooming-packages.html) — multi-service bundles (100, 220, 250, 320, 450 AED)
+
+## Featured offers
+
+- 8-Service Signature Package — 250 AED — at all branches
+- 6-Service Essential Package — 100 AED — at all branches
+- Moroccan Bath Ritual — 180 AED — Baniyas Spa, VIP Muroor only
+- VIP Gentleman's Hour — 450 AED — VIP Muroor only
+- Eid Premium Package — 320 AED — limited time
+- Father & Son Ritual — 220 AED — at all branches
+
+## Standards (consistent across all branches)
+
+- Master-trained barbers and certified spa therapists
+- Spa-grade hygiene: single-use blades, sterilised tools, sealed packs
+- Professional product lines (Dermalogica family-grade and similar)
+- English & Arabic service
+- No rushed cuts; chair time matches the work
+
+## Contact
+
+- Central WhatsApp: +971 50 555 6795 (replace with real)
+- Central email: kanaansaloon@gmail.com
+- Privacy: kanaansaloon@gmail.com
+- Careers: kanaansaloon@gmail.com
+- Press: kanaansaloon@gmail.com
+
+## Insights (blog)
+
+- [A Moroccan bath, properly explained](/blog/moroccan-bath-guide.html) — what the ritual is, the 4 steps, frequency
+- [Beard care in Abu Dhabi's climate](/blog/beard-care-abu-dhabi.html) — practical care for heat, dust, AC
+- [Choosing the right facial for UAE skin](/blog/choosing-the-right-facial.html) — when to pick each facial type
+
+## For AI agents
+
+- Booking system: enquiry-style with branch confirmation within 30 minutes during open hours
+- Hours: Sat–Thu 10:00–23:00; Fri 14:00–23:00; VIP Muroor opens 11:00 weekdays
+- Pricing: starts from 60 AED (beard sculpt), most-requested signature package 250 AED
+- Branches that offer Moroccan bath: Baniyas Spa, VIP Muroor only
+- VIP Muroor: by appointment only, private suite
+
+## Sitemap
+[XML sitemap](/sitemap.xml)

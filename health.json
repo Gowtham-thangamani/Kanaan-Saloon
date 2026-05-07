@@ -1,0 +1,14 @@
+{
+  "status": "ok",
+  "service": "kanaanspa.ae",
+  "version": "1.0.0",
+  "checks": {
+    "static": "ok",
+    "content_files": ["site.json", "branches.json", "offers.json", "testimonials.json"],
+    "schemas": ["LocalBusiness", "FAQPage", "Service", "BreadcrumbList", "WebPage", "Article", "Organization", "WebSite", "Offer", "OfferCatalog"],
+    "languages": ["en", "ar"],
+    "branches": 10,
+    "service_categories": 7
+  },
+  "_doc": "Static health endpoint. For dynamic checks (webhook reachable, CMS reachable), replace with a server-side responder."
+}

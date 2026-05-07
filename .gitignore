@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+package-lock.json
+npm-debug.log*
+
+# Build / cache
+.cache/
+dist/
+.tmp_pricelists/
+
+# Tooling artefacts
+.playwright-mcp/
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+Thumbs.db
+.DS_Store
+
+# Source price lists (local reference only — re-derived data is in content/prices.json)
+pricelists/
+
+# Supabase CLI local artefacts (never commit these — they contain secrets)
+supabase/.branches/
+supabase/.temp/
+supabase/.env
+
+# Environment / secrets
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+
+# OS
+desktop.ini
