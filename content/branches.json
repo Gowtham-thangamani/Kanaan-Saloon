@@ -4,8 +4,8 @@
       "id": "al-ain",
       "name_en": "Al Ain",
       "name_ar": "العين",
-      "area_en": "Al Ain",
-      "area_ar": "العين",
+      "area_en": "Al Jimi, Al Ain",
+      "area_ar": "الجيمي، العين",
       "address_en": "Main Street, Al Ain, UAE",
       "address_ar": "الشارع الرئيسي، العين، الإمارات",
       "phone": "+97137663555",
@@ -21,9 +21,9 @@
         "fri": "14:00-23:00",
         "sat": "10:00-23:00"
       },
-      "image": "/assets/img/photos/exterior-day-bilingual-1600.webp",
-      "maps_query": "Al+Ain+UAE",
-      "google_business": "REPLACE_WITH_REAL_GBP_URL",
+      "image": "/assets/img/branches/al-ain/al-ain-5-1600.webp",
+      "maps_query": "Kanaan+Gents+Saloon+Al+Jimi+Al+Ain",
+      "google_business": "https://maps.app.goo.gl/FMZp2Ra5DjrgtGvD6",
       "geo": {
         "lat": 24.207,
         "lng": 55.745
@@ -94,12 +94,12 @@
         "fri": "14:00-23:00",
         "sat": "10:00-23:00"
       },
-      "image": "/assets/img/photos/arch-corridor-marble-1600.webp",
-      "maps_query": "Khalifa+City+Abu+Dhabi",
-      "google_business": "REPLACE_WITH_REAL_GBP_URL",
+      "image": "/assets/img/branches/khalifa-city/khalifa-city-1.webp",
+      "maps_query": "24.3981095,54.5631248",
+      "google_business": "https://maps.app.goo.gl/Ls8VbZrs2s1jrWKd9",
       "geo": {
-        "lat": 24.426,
-        "lng": 54.581
+        "lat": 24.3981095,
+        "lng": 54.5631248
       },
       "gallery": [
         "/assets/img/photos/service-massage-wood-1000.webp",
@@ -167,12 +167,12 @@
         "fri": "14:00-23:00",
         "sat": "10:00-23:00"
       },
-      "image": "/assets/img/photos/lounge-logo-wall-1600.webp",
-      "maps_query": "Khalidiya+Abu+Dhabi",
-      "google_business": "REPLACE_WITH_REAL_GBP_URL",
+      "image": "/assets/img/branches/khalidiya/khalidiya-3-1600.webp",
+      "maps_query": "24.4798416,54.3584076",
+      "google_business": "https://maps.app.goo.gl/C89ULn5gKAPKoBkC8",
       "geo": {
-        "lat": 24.475,
-        "lng": 54.351
+        "lat": 24.4798416,
+        "lng": 54.3584076
       },
       "gallery": [
         "/assets/img/photos/service-facial-overview-1000.webp",
@@ -239,9 +239,9 @@
         "fri": "14:00-23:00",
         "sat": "10:00-23:00"
       },
-      "image": "/assets/img/photos/service-moroccan-bath-1600.webp",
-      "maps_query": "Baniyas+Abu+Dhabi",
-      "google_business": "REPLACE_WITH_REAL_GBP_URL",
+      "image": "/assets/img/branches/baniyas-spa/baniyas-spa-2.webp",
+      "maps_query": "Kanaan+Saloon+Spa+Bani+Yas+Abu+Dhabi",
+      "google_business": "https://maps.app.goo.gl/hVszshrQMCXiWgYS9",
       "geo": {
         "lat": 24.318,
         "lng": 54.628
@@ -264,10 +264,6 @@
         {
           "q": "Do you have steam rooms?",
           "a": "Yes — Baniyas Spa is our flagship spa house with steam, hammam, and a full grooming menu."
-        },
-        {
-          "q": "Couples sessions?",
-          "a": "Couples hammam available by appointment in our private suite. Call to arrange."
         }
       ],
       "amenities": [
@@ -315,11 +311,11 @@
         "sat": "10:00-23:00"
       },
       "image": "/assets/img/photos/service-hair-barber-stations-1600.webp",
-      "maps_query": "Baniyas+Abu+Dhabi",
-      "google_business": "REPLACE_WITH_REAL_GBP_URL",
+      "maps_query": "24.2969341,54.6287108",
+      "google_business": "https://maps.app.goo.gl/EZZjs9fBuQGVPY5y5",
       "geo": {
-        "lat": 24.318,
-        "lng": 54.628
+        "lat": 24.2969341,
+        "lng": 54.6287108
       },
       "gallery": [
         "/assets/img/photos/service-hair-brand-wall-1000.webp",
@@ -386,12 +382,12 @@
         "fri": "14:00-23:00",
         "sat": "10:00-23:00"
       },
-      "image": "/assets/img/photos/arch-corridor-editorial-1600.webp",
-      "maps_query": "Rabdan+Abu+Dhabi",
-      "google_business": "REPLACE_WITH_REAL_GBP_URL",
+      "image": "/assets/img/branches/rabdan/rabdan-4-1600.webp",
+      "maps_query": "24.4172367,54.4957746",
+      "google_business": "https://maps.app.goo.gl/yTEpKPjkBvs7MdUY8",
       "geo": {
-        "lat": 24.471,
-        "lng": 54.366
+        "lat": 24.4172367,
+        "lng": 54.4957746
       },
       "gallery": [
         "/assets/img/photos/service-massage-wood-1000.webp",
@@ -460,12 +456,12 @@
         "fri": "14:00-23:00",
         "sat": "10:00-23:00"
       },
-      "image": "/assets/img/photos/storefront-services-list-1600.webp",
-      "maps_query": "Old+Shahamah+Abu+Dhabi",
-      "google_business": "REPLACE_WITH_REAL_GBP_URL",
+      "image": "/assets/img/branches/old-shahamah/old-shahamah-5-1600.webp",
+      "maps_query": "24.5522131,54.6940039",
+      "google_business": "https://maps.app.goo.gl/zWH4PAuWLDf38vhZ8",
       "geo": {
-        "lat": 24.703,
-        "lng": 54.679
+        "lat": 24.5522131,
+        "lng": 54.6940039
       },
       "gallery": [
         "/assets/img/photos/brand-logo-wall-1000.webp",
@@ -512,8 +508,8 @@
       "id": "new-shahamah",
       "name_en": "New Shahamah",
       "name_ar": "الشهامة الجديدة",
-      "area_en": "New Shahamah, Abu Dhabi",
-      "area_ar": "الشهامة الجديدة، أبوظبي",
+      "area_en": "New Shahamah / Al Bahyah, Abu Dhabi",
+      "area_ar": "الشهامة الجديدة / البهية، أبوظبي",
       "address_en": "New Shahamah, Abu Dhabi",
       "address_ar": "الشهامة الجديدة، أبوظبي",
       "phone": "+97125635335",
@@ -529,12 +525,12 @@
         "fri": "14:00-23:00",
         "sat": "10:00-23:00"
       },
-      "image": "/assets/img/photos/storefront-entrance-1600.webp",
-      "maps_query": "Shahamah+Abu+Dhabi",
-      "google_business": "REPLACE_WITH_REAL_GBP_URL",
+      "image": "/assets/img/branches/new-shahamah/new-shahamah-3.webp",
+      "maps_query": "24.5241819,54.6766356",
+      "google_business": "https://maps.app.goo.gl/vYCq3rE4QxzspzJP7",
       "geo": {
-        "lat": 24.715,
-        "lng": 54.69
+        "lat": 24.5241819,
+        "lng": 54.6766356
       },
       "gallery": [
         "/assets/img/photos/service-pedicure-trolley-1000.webp",
@@ -598,9 +594,9 @@
         "fri": "14:00-23:00",
         "sat": "10:00-23:00"
       },
-      "image": "/assets/img/photos/service-hair-brand-wall-1600.webp",
-      "maps_query": "Muroor+Road+Abu+Dhabi",
-      "google_business": "REPLACE_WITH_REAL_GBP_URL",
+      "image": "/assets/img/branches/vip-muroor/vip-muroor-1.webp",
+      "maps_query": "Kanaan+Gents+Saloon+Al+Saadah+Abu+Dhabi",
+      "google_business": "https://maps.app.goo.gl/8E6t8TUt3onpKsfv8",
       "geo": {
         "lat": 24.461,
         "lng": 54.385
@@ -672,12 +668,12 @@
         "fri": "14:00-23:00",
         "sat": "11:00-23:00"
       },
-      "image": "/assets/img/photos/vip-muroor-suite-1600.webp",
-      "maps_query": "Muroor+Abu+Dhabi",
-      "google_business": "REPLACE_WITH_REAL_GBP_URL",
+      "image": "/assets/img/branches/vip-muroor/vip-muroor-5-1600.webp",
+      "maps_query": "24.4400772,54.4122623",
+      "google_business": "https://maps.app.goo.gl/5KeDv3Bd9fLQuk6N6",
       "geo": {
-        "lat": 24.461,
-        "lng": 54.385
+        "lat": 24.4400772,
+        "lng": 54.4122623
       },
       "gallery": [
         "/assets/img/photos/vip-muroor-pedicure-1000.webp",

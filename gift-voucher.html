@@ -6,10 +6,12 @@
   <title>Gift Vouchers | Kanaan Gents Salon &amp; Spa</title>
   <meta name="description" content="The grooming gift that always fits. Kanaan vouchers — pick an amount, send by WhatsApp, redeem at any of 10 houses." />
   <link rel="stylesheet" href="assets/css/fonts.css" />
-  <link rel="stylesheet" href="assets/css/style.css" />
-  <link rel="stylesheet" href="assets/css/motion.css?v=18" />
+  <link rel="stylesheet" href="assets/css/style.css?v=3" />
+  <link rel="stylesheet" href="assets/css/motion.css?v=19" />
   <script id="motion-pre-paint">(function(){if(!window.matchMedia||!window.matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.classList.add("motion-ready");}})();</script>
-  <link rel="canonical" href="/gift-voucher.html" />
+  <link rel="canonical" href="https://kanaanspa.ae/gift-voucher.html" />
+  <link rel="alternate" hreflang="en" href="https://kanaanspa.ae/gift-voucher.html" />
+  <link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/gift-voucher.html" />
   <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg" />
 </head>
 <body>
@@ -27,12 +29,11 @@
 
   <header class="site-header">
     <div class="site-header__inner">
-      <a href="index.html" class="logo logo--text"><span class="logo__mark"><i></i></span><span class="logo__word">KANAAN<span class="logo__dot">.</span></span></a>
+      <a href="index.html" class="logo" aria-label="Kanaan Gents Salon &amp; Spa — home"><img src="assets/img/logo.svg" alt="Kanaan Gents Salon &amp; Spa" class="logo-img" /></a>
       <nav class="main-nav">
         <a href="index.html">Home</a>
-        <a href="services.html">Services</a>
         <a href="offers.html">Offers</a>
-        <div class="nav-dd"><button class="nav-dd__trigger" type="button">Branches <i class="nav-dd__caret" aria-hidden="true"></i></button><div class="nav-dd__panel"><div class="nav-dd__col"><h6>Abu Dhabi</h6><ul><li><a href="branches/khalifa-city.html"><span>Khalifa City</span></a></li><li><a href="branches/khalidiya.html"><span>Khalidiya</span></a></li><li><a href="branches/baniyas-spa.html"><span>Baniyas Spa</span><span class="nav-dd__type">Spa</span></a></li><li><a href="branches/baniyas-barber.html"><span>Baniyas Barber</span><span class="nav-dd__type">Barber</span></a></li><li><a href="branches/rabdan.html"><span>Rabdan</span></a></li><li><a href="branches/old-shahamah.html"><span>Old Shahamah</span></a></li><li><a href="branches/new-shahamah.html"><span>New Shahamah</span></a></li><li><a href="branches/muroor.html"><span>Muroor</span><span class="nav-dd__type">Barber</span></a></li><li><a href="branches/vip-muroor.html"><span>VIP Muroor</span><span class="nav-dd__type">VIP</span></a></li></ul></div><div class="nav-dd__col"><h6>Al Ain</h6><ul><li><a href="branches/al-ain.html"><span>Al Ain</span></a></li></ul></div><div class="nav-dd__foot"><a href="branches.html">View all branches →</a><span>10 houses · One standard</span></div></div></div>
+        <a href="branches.html">Houses &amp; Services</a>
         <a href="contact.html">Contact</a>
       </nav>
       <div class="header-actions">
@@ -114,22 +115,53 @@
 
   <script src="assets/js/config.js"></script>
   <script src="assets/js/runtime.js"></script>
-  <script src="assets/js/main.js"></script>
+  <script src="assets/js/main.js?v=25"></script>
   <script src="assets/js/motion.js?v=18" defer></script>
   <script src="assets/js/quickbook.js" defer></script>
 
   <script>
-    document.getElementById('giftForm').addEventListener('submit', function (e) {
+    document.getElementById('giftForm').addEventListener('submit', async function (e) {
       e.preventDefault();
       var fd = new FormData(this);
+      var phoneRaw = fd.get('phone') || '';
+      var phone = phoneRaw.replace(/[^\d+]/g, '');
       var msg = 'Hi Kanaan, I\'d like to order a gift voucher:\n' +
         'Amount: ' + fd.get('amount') + ' AED\n' +
         'For: ' + fd.get('recipient') + '\n' +
         'From: ' + fd.get('sender') + '\n' +
         'Occasion: ' + fd.get('occasion') + '\n' +
         (fd.get('note') ? 'Note: ' + fd.get('note') + '\n' : '') +
-        'My number: ' + fd.get('phone');
+        'My number: ' + phoneRaw;
+      // Open WhatsApp first so the user has confirmation even if Supabase fails.
       window.open('https://wa.me/971505556795?text=' + encodeURIComponent(msg), '_blank', 'noopener');
+
+      // Log the voucher request to Supabase if configured.
+      var supa = (window.KANAAN_CONFIG && window.KANAAN_CONFIG.supabase) || {};
+      if (supa.url && supa.anonKey) {
+        var id = 'GV-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).slice(2, 6).toUpperCase();
+        try {
+          await fetch(supa.url + '/rest/v1/vouchers', {
+            method: 'POST',
+            headers: {
+              'apikey': supa.anonKey,
+              'Authorization': 'Bearer ' + supa.anonKey,
+              'Content-Type': 'application/json',
+              'Prefer': 'return=minimal'
+            },
+            body: JSON.stringify({
+              id: id,
+              status: 'new',
+              amount: fd.get('amount') || null,
+              recipient: fd.get('recipient') || null,
+              sender: fd.get('sender') || null,
+              occasion: fd.get('occasion') || null,
+              note: fd.get('note') || null,
+              phone: phone || null,
+              locale: document.documentElement.lang || 'en'
+            })
+          });
+        } catch (_) { /* non-fatal — WhatsApp already opened */ }
+      }
     });
   </script>
   <script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){});});}</script>

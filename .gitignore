@@ -36,3 +36,9 @@ supabase/.env
 
 # OS
 desktop.ini
+
+# Claude Code internal cache
+.claude/
+
+# Generated deployment zip
+kanaanspa-site.zip

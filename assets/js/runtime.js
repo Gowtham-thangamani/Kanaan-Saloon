@@ -58,18 +58,28 @@
   }
 
   function applyBindings(root, ctx) {
+    // Walk both the root element and its descendants so bindings on a list
+    // template's *root* element (e.g. `<a data-bind-attr-href="book_url">`) are
+    // honoured — `querySelectorAll('*')` skips the root itself.
+    const all = root.nodeType === 1 ? [root, ...root.querySelectorAll('*')] : Array.from(root.querySelectorAll('*'));
+
     // Plain text bindings
-    root.querySelectorAll('[data-bind]').forEach(el => {
-      const v = get(ctx, el.dataset.bind);
-      if (v != null) el.textContent = v;
+    all.forEach(el => {
+      if (el.hasAttribute && el.hasAttribute('data-bind')) {
+        const v = get(ctx, el.getAttribute('data-bind'));
+        if (v != null) el.textContent = v;
+      }
     });
     // HTML bindings (use sparingly — never with user input)
-    root.querySelectorAll('[data-bind-html]').forEach(el => {
-      const v = get(ctx, el.dataset.bindHtml);
-      if (v != null) el.innerHTML = v;
+    all.forEach(el => {
+      if (el.hasAttribute && el.hasAttribute('data-bind-html')) {
+        const v = get(ctx, el.getAttribute('data-bind-html'));
+        if (v != null) el.innerHTML = v;
+      }
     });
     // Attribute bindings — collect all data-bind-attr-* on each element
-    root.querySelectorAll('*').forEach(el => {
+    all.forEach(el => {
+      if (!el.attributes) return;
       Array.from(el.attributes).forEach(attr => {
         const m = attr.name.match(/^data-bind-attr-(.+)$/);
         if (!m) return;
@@ -158,6 +168,7 @@
         name: b['name_' + lang] || b.name_en,
         area: b['area_' + lang] || b.area_en,
         view_url: pathPrefix() + (lang === 'ar' ? 'ar/branches/' : 'branches/') + b.id + '.html',
+        book_url: pathPrefix() + (lang === 'ar' ? 'ar/book.html?branch=' : 'book.html?branch=') + b.id,
         wa_url: 'https://wa.me/' + b.whatsapp,
         tel_url: 'tel:' + b.phone,
         // Lowercase type so filter chips (data-tags) match data-filter-chip values

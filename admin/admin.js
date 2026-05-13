@@ -1,4 +1,19 @@
-/* Kanaan Admin — auth + utilities */
+/* Kanaan Admin — Supabase-Auth based access + utilities
+
+   Authentication:
+     - Admins must log in via Supabase Auth (email + password).
+     - The session token from Supabase is used for *all* read/update/delete
+       calls, so RLS policies that allow only `authenticated` users will work.
+     - There is no client-side password hash, no "default password" in
+       localStorage, and no shared secret in the page source.
+
+   Server prerequisites (one-time, in the Supabase dashboard):
+     1. Authentication → Providers → Email: enable email/password.
+     2. Authentication → Users: invite each admin (set their password, or
+        let them set it via the magic link / reset-password flow).
+     3. Run the migrations under /supabase/migrations so RLS only allows
+        authenticated UPDATE / DELETE / SELECT on bookings & co.
+*/
 
 (function () {
   'use strict';
@@ -10,7 +25,6 @@
   }
   applyTheme(localStorage.getItem('kanaan_admin_theme') || 'dark');
 
-  // Inject toggle into the sidebar after DOM ready
   document.addEventListener('DOMContentLoaded', () => {
     const sideUser = document.querySelector('.admin-side__user');
     if (!sideUser || sideUser.querySelector('.theme-toggle')) return;
@@ -28,55 +42,208 @@
     sideUser.appendChild(btn);
   });
 
-  // === Auth ===========================================================
-  // For a static prototype we use a simple shared password hashed in localStorage.
-  // For production, swap this for OAuth (Auth0, GitHub, etc.) or move admin to a
-  // server with proper authentication.
-  const PASSWORD_HASH_KEY = 'kanaan_admin_pw_hash';
-  const SESSION_KEY = 'kanaan_admin_session';
+  // === Supabase Auth ==================================================
+  const SESSION_KEY = 'kanaan_admin_supa_session';
 
-  // Default password if none set: "kanaan2026" — admin will change on first login.
-  const DEFAULT_HASH = '5e8e1e5dac1a9e2d5d54a6a76e1a6f88'; // md5('kanaan2026')
+  function supaCfg() {
+    return (window.KANAAN_CONFIG && window.KANAAN_CONFIG.supabase) || {};
+  }
 
-  async function hash(str) {
-    // Simple SHA-256 via SubtleCrypto — md5 placeholder above is for default only
-    if (window.crypto && crypto.subtle) {
-      const buf = new TextEncoder().encode(str);
-      const h = await crypto.subtle.digest('SHA-256', buf);
-      return Array.from(new Uint8Array(h)).map(b => b.toString(16).padStart(2, '0')).join('');
-    }
-    // Fallback — extremely weak, but never reached in modern browsers
-    let h = 0; for (let i = 0; i < str.length; i++) h = ((h << 5) - h + str.charCodeAt(i)) | 0;
-    return String(h);
+  function readSession() {
+    try {
+      const raw = localStorage.getItem(SESSION_KEY);
+      if (!raw) return null;
+      const s = JSON.parse(raw);
+      // expiry check
+      if (s.expires_at && Date.now() / 1000 > s.expires_at) return null;
+      return s;
+    } catch (_) { return null; }
+  }
+
+  function writeSession(s) {
+    try { localStorage.setItem(SESSION_KEY, JSON.stringify(s)); } catch (_) {}
+  }
+
+  function clearSession() {
+    try { localStorage.removeItem(SESSION_KEY); } catch (_) {}
+  }
+
+  /* Auth headers — uses access_token if logged in, otherwise anon key.
+     INSERT calls (public booking form, contact form, etc.) should use the
+     anon key. SELECT/UPDATE/DELETE in admin should use the access_token. */
+  function authHeaders(useUserToken) {
+    const sb = supaCfg();
+    const session = readSession();
+    const token = (useUserToken && session && session.access_token) ? session.access_token : sb.anonKey;
+    return {
+      'apikey': sb.anonKey || '',
+      'Authorization': 'Bearer ' + (token || ''),
+      'Content-Type': 'application/json'
+    };
   }
 
   window.KANAAN_ADMIN = {
-    async login(pw) {
-      const stored = localStorage.getItem(PASSWORD_HASH_KEY);
-      if (!stored) {
-        // First time — accept default and store its SHA-256
-        if (pw === 'kanaan2026') {
-          const h = await hash(pw);
-          localStorage.setItem(PASSWORD_HASH_KEY, h);
-          sessionStorage.setItem(SESSION_KEY, '1');
-          return true;
-        }
-        return false;
+    /* === Auth === */
+    async login(email, pw) {
+      const sb = supaCfg();
+      if (!sb.url || !sb.anonKey) {
+        return { ok: false, error: 'Supabase not configured (assets/js/config.js).' };
       }
-      const h = await hash(pw);
-      if (h === stored) { sessionStorage.setItem(SESSION_KEY, '1'); return true; }
-      return false;
+      try {
+        const r = await fetch(sb.url + '/auth/v1/token?grant_type=password', {
+          method: 'POST',
+          headers: {
+            'apikey': sb.anonKey,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email: email, password: pw })
+        });
+        const j = await r.json().catch(() => ({}));
+        if (!r.ok) {
+          return { ok: false, error: j.error_description || j.msg || j.error || ('HTTP ' + r.status) };
+        }
+        // j: { access_token, refresh_token, expires_in, expires_at, user, ... }
+        writeSession(j);
+        return { ok: true, user: j.user };
+      } catch (e) {
+        return { ok: false, error: e.message || String(e) };
+      }
     },
+    async logout() {
+      const sb = supaCfg();
+      const session = readSession();
+      if (sb.url && sb.anonKey && session && session.access_token) {
+        try {
+          await fetch(sb.url + '/auth/v1/logout', {
+            method: 'POST',
+            headers: {
+              'apikey': sb.anonKey,
+              'Authorization': 'Bearer ' + session.access_token
+            }
+          });
+        } catch (_) {}
+      }
+      clearSession();
+      location.href = 'index.html';
+    },
+    /* Send a "reset your password" email via Supabase Auth.
+       Returns { ok, error }. The email contains a magic link that lands on
+       /admin/reset.html with a recovery access_token in the URL hash. */
+    async requestPasswordReset(email, redirectTo) {
+      const sb = supaCfg();
+      if (!sb.url || !sb.anonKey) return { ok: false, error: 'Supabase not configured' };
+      if (!email) return { ok: false, error: 'Email required' };
+      try {
+        const body = redirectTo
+          ? { email: email, redirect_to: redirectTo }
+          : { email: email };
+        const r = await fetch(sb.url + '/auth/v1/recover', {
+          method: 'POST',
+          headers: {
+            'apikey': sb.anonKey,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(body)
+        });
+        if (!r.ok) {
+          const j = await r.json().catch(() => ({}));
+          return { ok: false, error: j.error_description || j.msg || j.error || ('HTTP ' + r.status) };
+        }
+        // Supabase returns 200 even when the email doesn't exist (anti-enumeration).
+        // That's fine — we always tell the user "if the account exists, an email is on the way".
+        return { ok: true };
+      } catch (e) {
+        return { ok: false, error: e.message || String(e) };
+      }
+    },
+    /* Persist a recovery session (parsed from the URL hash on /admin/reset.html)
+       so the next setPassword() call goes through with that token. */
+    consumeRecoveryToken(tokens) {
+      // tokens = { access_token, refresh_token, expires_in, expires_at, ... }
+      if (!tokens || !tokens.access_token) return false;
+      writeSession(tokens);
+      return true;
+    },
+    isLoggedIn() {
+      const s = readSession();
+      return !!(s && s.access_token);
+    },
+    currentUserEmail() {
+      const s = readSession();
+      return s && s.user && s.user.email;
+    },
+    /* Validate a candidate password against the salon's policy:
+        - 8+ characters
+        - at least one letter
+        - at least one digit
+        - at least one non-alphanumeric symbol
+       Returns { ok: true } or { ok: false, error: '...' }. */
+    validatePasswordStrength(pw) {
+      if (!pw || pw.length < 8) return { ok: false, error: 'Use at least 8 characters.' };
+      if (!/[A-Za-z]/.test(pw))  return { ok: false, error: 'Include at least one letter.' };
+      if (!/\d/.test(pw))        return { ok: false, error: 'Include at least one number.' };
+      if (!/[^A-Za-z0-9]/.test(pw)) return { ok: false, error: 'Include at least one symbol (! @ # $ etc).' };
+      if (pw.length > 72)        return { ok: false, error: 'Maximum 72 characters.' };
+      return { ok: true };
+    },
+    /* Check whether `candidatePw` is identical to the user's current password.
+       Returns { same: boolean, error?: string }. We do this by firing a raw
+       sign-in attempt against Supabase Auth and inspecting the response — we
+       never persist the resulting session, so the calling page's existing
+       (recovery or normal) session stays untouched. */
+    async isSameAsCurrentPassword(email, candidatePw) {
+      const sb = supaCfg();
+      if (!sb.url || !sb.anonKey) return { same: false, error: 'Supabase not configured' };
+      if (!email) return { same: false, error: 'Email not available' };
+      try {
+        const r = await fetch(sb.url + '/auth/v1/token?grant_type=password', {
+          method: 'POST',
+          headers: {
+            'apikey': sb.anonKey,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email: email, password: candidatePw })
+        });
+        // 200 → sign-in succeeded → candidate === current password.
+        // 400 / 401 → wrong password → candidate is different.
+        if (r.ok) return { same: true };
+        return { same: false };
+      } catch (e) {
+        // If the network is flaky, fail-open — don't block the user from updating.
+        return { same: false, error: e.message || String(e) };
+      }
+    },
+    /* Update the signed-in user's password via Supabase Auth.
+       Returns { ok, error }. */
     async setPassword(newPw) {
-      const h = await hash(newPw);
-      localStorage.setItem(PASSWORD_HASH_KEY, h);
+      const sb = supaCfg();
+      const session = readSession();
+      if (!sb.url || !sb.anonKey) return { ok: false, error: 'Supabase not configured' };
+      if (!session || !session.access_token) return { ok: false, error: 'Not signed in' };
+      try {
+        const r = await fetch(sb.url + '/auth/v1/user', {
+          method: 'PUT',
+          headers: {
+            'apikey': sb.anonKey,
+            'Authorization': 'Bearer ' + session.access_token,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ password: newPw })
+        });
+        const j = await r.json().catch(() => ({}));
+        if (!r.ok) return { ok: false, error: j.error_description || j.msg || j.error || ('HTTP ' + r.status) };
+        return { ok: true };
+      } catch (e) {
+        return { ok: false, error: e.message || String(e) };
+      }
     },
-    isLoggedIn() { return sessionStorage.getItem(SESSION_KEY) === '1'; },
-    logout() { sessionStorage.removeItem(SESSION_KEY); location.href = 'index.html'; },
     requireAuth() {
       if (!this.isLoggedIn()) { location.href = 'index.html'; return false; }
       return true;
     },
+    authHeaders: authHeaders,
+
+    /* === UI helper — toast === */
     toast(msg) {
       let t = document.querySelector('.toast');
       if (!t) {
@@ -86,7 +253,9 @@
       t.textContent = msg; t.classList.add('is-shown');
       setTimeout(() => t.classList.remove('is-shown'), 2400);
     },
-    // === Content I/O =================================================
+
+    /* === Content I/O — local-edit + JSON download (server persistence
+           still requires manual deploy; see admin/integrations.html) === */
     async loadJSON(path) {
       const local = localStorage.getItem('kanaan_content_' + path);
       if (local) return JSON.parse(local);
@@ -105,21 +274,20 @@
       document.body.appendChild(a); a.click(); a.remove();
       URL.revokeObjectURL(url);
     },
-    // === Leads (Google Sheet CSV) ====================================
+
+    /* === Bookings / leads — Supabase reads (authenticated) === */
     async loadLeads() {
       let local = [], remote = [], supa = [];
       try { local = JSON.parse(localStorage.getItem('kanaan_bookings') || '[]'); } catch (_) {}
 
-      // Supabase: live read from Postgres (primary source)
-      const sb = (window.KANAAN_CONFIG && window.KANAAN_CONFIG.supabase) || {};
-      if (sb.url && sb.anonKey) {
+      const sb = supaCfg();
+      if (sb.url && sb.anonKey && this.isLoggedIn()) {
         try {
           const r = await fetch(sb.url + '/rest/v1/' + (sb.table || 'bookings') + '?select=*&order=created_at.desc&limit=1000', {
-            headers: { 'apikey': sb.anonKey, 'Authorization': 'Bearer ' + sb.anonKey }
+            headers: authHeaders(true)
           });
           if (r.ok) {
             const rows = await r.json();
-            // Normalize to admin shape
             supa = rows.map(b => ({
               bookingId: b.id,
               timestamp: b.created_at,
@@ -137,6 +305,10 @@
               campaign:  b.campaign,
               locale:    b.locale
             }));
+          } else if (r.status === 401) {
+            clearSession();
+            location.href = 'index.html';
+            return [];
           } else {
             console.warn('[admin] supabase fetch', r.status);
           }
@@ -145,7 +317,6 @@
         }
       }
 
-      // Optional fallback: published Google Sheet CSV
       const url = localStorage.getItem('kanaan_leads_csv_url') || '';
       if (url) {
         try {
@@ -155,7 +326,6 @@
         } catch (e) { console.warn('[admin] csv fetch failed', e); }
       }
 
-      // De-dupe — prefer Supabase > CSV > local
       const map = new Map();
       [...local, ...remote, ...supa].forEach(b => {
         const key = b.bookingId || b.id || (b.timestamp + '|' + b.phone);
@@ -168,29 +338,88 @@
       });
     },
 
-    /* Supabase usage stats — for the 500 MB cap monitor */
+    /* PATCH a booking's status via Supabase. Returns { ok, error }. */
+    async updateBookingStatus(id, status) {
+      const sb = supaCfg();
+      if (!sb.url || !sb.anonKey) return { ok: false, error: 'Supabase not configured' };
+      if (!this.isLoggedIn()) return { ok: false, error: 'Not signed in' };
+      try {
+        const r = await fetch(sb.url + '/rest/v1/' + (sb.table || 'bookings') + '?id=eq.' + encodeURIComponent(id), {
+          method: 'PATCH',
+          headers: Object.assign({}, authHeaders(true), { 'Prefer': 'return=minimal' }),
+          body: JSON.stringify({ status: status })
+        });
+        if (!r.ok) {
+          const txt = await r.text().catch(() => '');
+          return { ok: false, error: 'HTTP ' + r.status + ' ' + txt };
+        }
+        return { ok: true };
+      } catch (e) {
+        return { ok: false, error: e.message || String(e) };
+      }
+    },
+
+    /* DELETE a booking via Supabase. Returns { ok, error }. */
+    async deleteBooking(id) {
+      const sb = supaCfg();
+      if (!sb.url || !sb.anonKey) return { ok: false, error: 'Supabase not configured' };
+      if (!this.isLoggedIn()) return { ok: false, error: 'Not signed in' };
+      try {
+        const r = await fetch(sb.url + '/rest/v1/' + (sb.table || 'bookings') + '?id=eq.' + encodeURIComponent(id), {
+          method: 'DELETE',
+          headers: Object.assign({}, authHeaders(true), { 'Prefer': 'return=minimal' })
+        });
+        if (!r.ok) {
+          const txt = await r.text().catch(() => '');
+          return { ok: false, error: 'HTTP ' + r.status + ' ' + txt };
+        }
+        return { ok: true };
+      } catch (e) {
+        return { ok: false, error: e.message || String(e) };
+      }
+    },
+
+    /* Generic table read (contacts, newsletter, careers, vouchers) */
+    async loadTable(table, opts) {
+      opts = opts || {};
+      const sb = supaCfg();
+      if (!sb.url || !sb.anonKey) return [];
+      if (!this.isLoggedIn()) return [];
+      const limit = opts.limit || 1000;
+      try {
+        const r = await fetch(sb.url + '/rest/v1/' + table + '?select=*&order=created_at.desc&limit=' + limit, {
+          headers: authHeaders(true)
+        });
+        if (!r.ok) {
+          if (r.status === 401) { clearSession(); location.href = 'index.html'; }
+          return [];
+        }
+        return await r.json();
+      } catch (e) { return []; }
+    },
+
+    /* === Supabase usage stats — for the 500 MB cap monitor === */
     async loadSupabaseUsage() {
-      const sb = (window.KANAAN_CONFIG && window.KANAAN_CONFIG.supabase) || {};
-      if (!sb.url || !sb.anonKey) return null;
+      const sb = supaCfg();
+      if (!sb.url || !sb.anonKey || !this.isLoggedIn()) return null;
       try {
         const r = await fetch(sb.url + '/rest/v1/' + (sb.table || 'bookings') + '?select=*', {
           method: 'HEAD',
-          headers: {
-            'apikey': sb.anonKey,
-            'Authorization': 'Bearer ' + sb.anonKey,
+          headers: Object.assign({}, authHeaders(true), {
             'Prefer': 'count=exact',
             'Range-Unit': 'items',
             'Range': '0-0'
-          }
+          })
         });
         const range = r.headers.get('content-range') || '';
         const count = parseInt(range.split('/').pop(), 10) || 0;
-        const estBytesPerRow = 380; // realistic average for our schema
+        const estBytesPerRow = 380;
         const estMB = (count * estBytesPerRow) / (1024 * 1024);
         const max = sb.maxSizeMB || 500;
         return { count: count, mb: estMB, maxMB: max, pct: (estMB / max) * 100 };
       } catch (e) { return null; }
     },
+
     parseCSV(text) {
       const lines = text.trim().split(/\r?\n/);
       if (!lines.length) return [];
@@ -202,23 +431,17 @@
         return o;
       });
     },
-    /* Image upload helper — converts a chosen file to a base64 data URL.
-       Use this in admin editors as a quick alternative to hosting images
-       elsewhere. Suitable for small images (<200 KB). For production, host
-       images on Cloudinary/S3 and paste the URL into the image field instead. */
     fileToDataURL(file, maxKB) {
       maxKB = maxKB || 200;
       return new Promise((resolve, reject) => {
         if (!file) return reject(new Error('no file'));
-        if (file.size > maxKB * 1024) return reject(new Error(`File too large (${Math.round(file.size/1024)} KB > ${maxKB} KB). Host on Cloudinary/S3 and paste the URL instead.`));
+        if (file.size > maxKB * 1024) return reject(new Error('File too large (' + Math.round(file.size/1024) + ' KB > ' + maxKB + ' KB). Host on Cloudinary/S3 and paste the URL instead.'));
         const r = new FileReader();
         r.onload = () => resolve(r.result);
         r.onerror = () => reject(r.error);
         r.readAsDataURL(file);
       });
     },
-    /* Wire an <input type="file"> next to a URL field. When the user picks
-       an image, it's converted to a data URL and written into the URL field. */
     wireImagePicker(fileInput, urlInput) {
       fileInput.addEventListener('change', async () => {
         const f = fileInput.files[0];

@@ -7,13 +7,13 @@
   <meta name="description" content="The Eid Premium Package — haircut, beard sculpt, Moroccan bath, premium facial, manicure, pedicure. 320 AED. Limited time." />
   <meta name="robots" content="index,follow" />
   <link rel="stylesheet" href="../assets/css/fonts.css" />
-  <link rel="stylesheet" href="../assets/css/style.css" />
-  <link rel="stylesheet" href="../assets/css/motion.css?v=18" />
+  <link rel="stylesheet" href="../assets/css/style.css?v=3" />
+  <link rel="stylesheet" href="../assets/css/motion.css?v=19" />
   <script id="motion-pre-paint">(function(){if(!window.matchMedia||!window.matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.classList.add("motion-ready");}})();</script>
-  <link rel="preload" as="image" href="../assets/img/photos/service-facial-overview-1600.webp" fetchpriority="high" />
-  <link rel="canonical" href="/lp/eid-offer.html" />
-  <link rel="alternate" hreflang="en" href="/lp/eid-offer.html" />
-  <link rel="alternate" hreflang="ar" href="/ar/lp/eid-offer.html" />
+  <link rel="preload" as="image" href="../assets/img/photos/service-facial-candlelit-1600.webp" fetchpriority="high" />
+  <link rel="canonical" href="https://kanaanspa.ae/lp/eid-offer.html" />
+  <link rel="alternate" hreflang="en" href="https://kanaanspa.ae/lp/eid-offer.html" />
+  <link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/lp/eid-offer.html" />
   <style>
     .lp-form { background: var(--c-carbon); padding: 32px; border: 1px solid var(--c-smoke); }
     .lp-grid { display: grid; grid-template-columns: 1fr 480px; gap: 64px; align-items: start; }
@@ -40,7 +40,7 @@
   <!-- Stripped header for LP — only logo + WhatsApp -->
   <header class="site-header">
     <div class="site-header__inner">
-      <a href="../index.html" class="logo logo--text"><span class="logo__mark" aria-hidden="true"><i></i></span><span class="logo__word">KANAAN<span class="logo__dot">.</span></span><span class="logo__sub">Gents Salon &amp; Spa</span></a>
+      <a href="../index.html" class="logo" aria-label="Kanaan Gents Salon &amp; Spa — home"><img src="../assets/img/logo.svg" alt="Kanaan Gents Salon &amp; Spa" class="logo-img" /></a>
       <div class="header-actions">
         <a href="https://wa.me/971505556795?text=Hi%20Kanaan%2C%20I'd%20like%20to%20book.%20Please%20share%20nearest%20branch%20%2B%20available%20times." class="btn btn--sm btn--ghost" data-track="whatsapp_click">WhatsApp</a>
         <a href="tel:+971505556795" class="btn btn--sm" data-track="call_click">Call</a>
@@ -49,7 +49,7 @@
   </header>
 
   <main id="main"><section class="page-hero" style="min-height: auto; padding: 120px 0 0;">
-    <div class="page-hero__media" data-reveal="mask" data-parallax="bg" data-speed="0.50"><img src="../assets/img/photos/service-hair-barber-stations-1600.webp" alt="Barber tools and grooming detail" loading="eager" fetchpriority="high" decoding="async" /></div>
+    <div class="page-hero__media" data-reveal="mask" data-parallax="bg" data-speed="0.50"><img src="../assets/img/photos/service-facial-candlelit-1600.webp" alt="Barber tools and grooming detail" loading="eager" fetchpriority="high" decoding="async" /></div>
     <div class="container page-hero__content">
       <span class="eyebrow">Limited Time · Eid 2026</span>
       <h1 class="page-hero__title" data-split="lines">Eid Premium Package.<br/>320 AED.</h1>
@@ -82,7 +82,7 @@
 
           <h3 style="margin-top: var(--s-7); font-size: 28px;">Where you can use it</h3>
           <p class="muted" style="margin-bottom: var(--s-4);">Available at all branches except VIP Muroor. The Moroccan bath portion redirects to Baniyas Spa or your nearest spa-led house.</p>
-          <a href="../branches.html" class="text-link">View all branches →</a>
+          <a href="../branches.html" class="text-link">View all houses →</a>
         </div>
 
         <aside>
@@ -168,7 +168,7 @@
           <p>Kanaan offers and updates, once a month — no more.</p>
         </div>
         <form data-newsletter-form>
-          <input type="email" required placeholder="Your email address" />
+          <input type="email" name="email" required placeholder="Your email address" aria-label="Email address" />
           <button type="submit" class="btn btn--sm">Subscribe</button>
         </form>
       </div>
@@ -181,15 +181,15 @@
 
   <div class="mobile-cta">
     <button type="button" class="mobile-cta__book" onclick="document.getElementById('lpName').focus(); document.getElementById('lpName').scrollIntoView({behavior:'smooth', block:'center'});">Reserve Now</button>
-    <a href="https://wa.me/971505556795?text=Hi%20Kanaan%2C%20I'd%20like%20to%20book.%20Please%20share%20nearest%20branch%20%2B%20available%20times." data-track="whatsapp_click"><span class="mobile-cta__icon">✉</span></a>
-    <a href="tel:+971505556795" data-track="call_click"><span class="mobile-cta__icon">☏</span></a>
+    <a href="https://wa.me/971505556795?text=Hi%20Kanaan%2C%20I'd%20like%20to%20book.%20Please%20share%20nearest%20branch%20%2B%20available%20times." aria-label="WhatsApp" data-track="whatsapp_click"><svg class="icon" aria-hidden="true"><use href="../assets/img/icons.svg#i-whatsapp"/></svg></a>
+    <a href="tel:+971505556795" aria-label="Call" data-track="call_click"><svg class="icon" aria-hidden="true"><use href="../assets/img/icons.svg#i-phone"/></svg></a>
   </div>
 
   <script src="../assets/js/config.js"></script>
   <script src="../assets/js/tracking.js"></script>
   <script src="../assets/js/consent.js" defer></script>
   <script src="../assets/js/runtime.js"></script>
-  <script src="../assets/js/main.js"></script>
+  <script src="../assets/js/main.js?v=25"></script>
   <script src="../assets/js/motion.js?v=18" defer></script>
   <script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("../sw.js").catch(function(){});});}</script>
 </body>

@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Before &amp; After | Kanaan Gents Salon &amp; Spa</title>
   <meta name="description" content="Real results from Kanaan chairs — haircut transformations, beard sculpts, and hair-treatment outcomes from across our houses." />
-  <link rel="canonical" href="/before-after.html" />
-  <link rel="alternate" hreflang="en" href="/before-after.html" />
-  <link rel="alternate" hreflang="ar" href="/ar/before-after.html" />
+  <link rel="canonical" href="https://kanaanspa.ae/before-after.html" />
+  <link rel="alternate" hreflang="en" href="https://kanaanspa.ae/before-after.html" />
+  <link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/before-after.html" />
   <link rel="stylesheet" href="assets/css/fonts.css" />
-  <link rel="stylesheet" href="assets/css/style.css" />
-  <link rel="stylesheet" href="assets/css/motion.css?v=18" />
+  <link rel="stylesheet" href="assets/css/style.css?v=3" />
+  <link rel="stylesheet" href="assets/css/motion.css?v=19" />
   <script id="motion-pre-paint">(function(){if(!window.matchMedia||!window.matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.classList.add("motion-ready");}})();</script>
   <link rel="preload" as="image" href="assets/img/photos/service-pedicure-trolley-1600.webp" fetchpriority="high" />
   <meta property="og:type" content="website" />
@@ -49,13 +49,12 @@
 
   <header class="site-header">
     <div class="site-header__inner">
-      <a href="index.html" class="logo logo--text"><span class="logo__mark" aria-hidden="true"><i></i></span><span class="logo__word">KANAAN<span class="logo__dot">.</span></span><span class="logo__sub">Gents Salon &amp; Spa</span></a>
+      <a href="index.html" class="logo" aria-label="Kanaan Gents Salon &amp; Spa — home"><img src="assets/img/logo.svg" alt="Kanaan Gents Salon &amp; Spa" class="logo-img" /></a>
       <nav class="main-nav">
         <a href="index.html">Home</a>
-        <a href="services.html">Services</a>
         <a href="gallery.html">Gallery</a>
         <a href="before-after.html" class="is-active">Before &amp; After</a>
-        <div class="nav-dd"><button class="nav-dd__trigger" type="button">Branches <i class="nav-dd__caret" aria-hidden="true"></i></button><div class="nav-dd__panel"><div class="nav-dd__col"><h6>Abu Dhabi</h6><ul><li><a href="branches/khalifa-city.html"><span>Khalifa City</span></a></li><li><a href="branches/khalidiya.html"><span>Khalidiya</span></a></li><li><a href="branches/baniyas-spa.html"><span>Baniyas Spa</span><span class="nav-dd__type">Spa</span></a></li><li><a href="branches/baniyas-barber.html"><span>Baniyas Barber</span><span class="nav-dd__type">Barber</span></a></li><li><a href="branches/rabdan.html"><span>Rabdan</span></a></li><li><a href="branches/old-shahamah.html"><span>Old Shahamah</span></a></li><li><a href="branches/new-shahamah.html"><span>New Shahamah</span></a></li><li><a href="branches/muroor.html"><span>Muroor</span><span class="nav-dd__type">Barber</span></a></li><li><a href="branches/vip-muroor.html"><span>VIP Muroor</span><span class="nav-dd__type">VIP</span></a></li></ul></div><div class="nav-dd__col"><h6>Al Ain</h6><ul><li><a href="branches/al-ain.html"><span>Al Ain</span></a></li></ul></div><div class="nav-dd__foot"><a href="branches.html">View all branches →</a><span>10 houses · One standard</span></div></div></div>
+        <a href="branches.html">Houses &amp; Services</a>
         <a href="contact.html">Contact</a>
       </nav>
       <div class="header-actions">
@@ -75,37 +74,54 @@
     </div>
   </section>
 
+  <!-- ===========================================================
+       BEFORE/AFTER PAIRS — placeholder grid until real client photos exist.
+       To go live: replace each pair's two image src= paths with real before
+       + after photos (same crop, same lighting if possible). Update the
+       `alt` text and the "Service" label below each pair. The slider JS
+       handles the drag-to-reveal interaction automatically.
+       Drop new photos into /assets/img/photos/before-after/ and link them.
+       =========================================================== -->
   <section class="section">
     <div class="container">
+      <div class="ba-placeholder-note" style="margin-bottom: var(--s-6); padding: var(--s-4) var(--s-5); border: 1px dashed var(--c-smoke); color: var(--c-stone); font-size: 13px; text-align: center;">
+        <strong style="color: var(--c-gold);">Placeholder pairs shown.</strong>
+        Real before/after photos coming soon — every pair will be shared with explicit client consent and tagged with the exact service performed.
+      </div>
+
       <div class="ba-grid">
-        <div class="ba-pair" data-ba>
-          <img class="ba-pair__after" src="assets/img/photos/service-facial-overview-1000.webp" alt="After haircut" loading="lazy" decoding="async" />
-          <img class="ba-pair__before" src="assets/img/photos/service-massage-pink-1000.webp" alt="Before haircut" loading="lazy" decoding="async" />
+        <figure class="ba-pair" data-ba>
+          <img class="ba-pair__after"  src="assets/img/photos/service-facial-overview-1000.webp" alt="Placeholder — after facial" loading="lazy" decoding="async" />
+          <img class="ba-pair__before" src="assets/img/photos/service-massage-pink-1000.webp"   alt="Placeholder — before facial" loading="lazy" decoding="async" />
           <div class="ba-pair__handle"></div>
           <span class="ba-pair__label ba-pair__label--before">Before</span>
           <span class="ba-pair__label ba-pair__label--after">After</span>
-        </div>
-        <div class="ba-pair" data-ba>
-          <img class="ba-pair__after" src="assets/img/photos/standard-pedicure-onyx-1000.webp" alt="After beard sculpt" loading="lazy" decoding="async" />
-          <img class="ba-pair__before" src="assets/img/photos/arch-marble-staircase-1000.webp" alt="Before beard sculpt" loading="lazy" decoding="async" />
+          <figcaption style="margin-top: var(--s-3); font-size: 13px; color: var(--c-stone); text-align: center;">Facial — Calibrated Hydration · 90 min</figcaption>
+        </figure>
+        <figure class="ba-pair" data-ba>
+          <img class="ba-pair__after"  src="assets/img/photos/service-hair-barber-stations-1000.webp" alt="Placeholder — after haircut" loading="lazy" decoding="async" />
+          <img class="ba-pair__before" src="assets/img/photos/arch-marble-staircase-1000.webp"      alt="Placeholder — before haircut" loading="lazy" decoding="async" />
           <div class="ba-pair__handle"></div>
           <span class="ba-pair__label ba-pair__label--before">Before</span>
           <span class="ba-pair__label ba-pair__label--after">After</span>
-        </div>
-        <div class="ba-pair" data-ba>
-          <img class="ba-pair__after" src="assets/img/photos/brand-logo-wall-1000.webp" alt="After hair treatment" loading="lazy" decoding="async" />
-          <img class="ba-pair__before" src="assets/img/photos/service-hair-barber-stations-1000.webp" alt="Before hair treatment" loading="lazy" decoding="async" />
+          <figcaption style="margin-top: var(--s-3); font-size: 13px; color: var(--c-stone); text-align: center;">Hair &amp; Beard — Signature Cut · 45 min</figcaption>
+        </figure>
+        <figure class="ba-pair" data-ba>
+          <img class="ba-pair__after"  src="assets/img/photos/service-hair-brand-wall-1000.webp" alt="Placeholder — after keratin treatment" loading="lazy" decoding="async" />
+          <img class="ba-pair__before" src="assets/img/photos/service-hair-barber-stations-1000.webp" alt="Placeholder — before keratin treatment" loading="lazy" decoding="async" />
           <div class="ba-pair__handle"></div>
           <span class="ba-pair__label ba-pair__label--before">Before</span>
           <span class="ba-pair__label ba-pair__label--after">After</span>
-        </div>
-        <div class="ba-pair" data-ba>
-          <img class="ba-pair__after" src="assets/img/photos/service-facial-overview-1000.webp" alt="After facial" loading="lazy" decoding="async" />
-          <img class="ba-pair__before" src="assets/img/photos/service-massage-pink-1000.webp" alt="Before facial" loading="lazy" decoding="async" />
+          <figcaption style="margin-top: var(--s-3); font-size: 13px; color: var(--c-stone); text-align: center;">Hair Treatment — Brazilian Keratin · 75 min</figcaption>
+        </figure>
+        <figure class="ba-pair" data-ba>
+          <img class="ba-pair__after"  src="assets/img/photos/service-moroccan-bath-1000.webp"     alt="Placeholder — after Moroccan bath" loading="lazy" decoding="async" />
+          <img class="ba-pair__before" src="assets/img/photos/service-moroccan-shower-1000.webp"   alt="Placeholder — before Moroccan bath" loading="lazy" decoding="async" />
           <div class="ba-pair__handle"></div>
           <span class="ba-pair__label ba-pair__label--before">Before</span>
           <span class="ba-pair__label ba-pair__label--after">After</span>
-        </div>
+          <figcaption style="margin-top: var(--s-3); font-size: 13px; color: var(--c-stone); text-align: center;">Moroccan Bath — Royal Ritual · 60 min</figcaption>
+        </figure>
       </div>
 
       <p class="muted" style="margin-top: var(--s-7); font-size: 13px; text-align: center;">All photos shared with explicit client consent. Outcomes vary by hair type, skin condition, and the brief.</p>
@@ -126,7 +142,7 @@
           <p>Kanaan offers and updates, once a month — no more.</p>
         </div>
         <form data-newsletter-form>
-          <input type="email" required placeholder="Your email address" />
+          <input type="email" name="email" required placeholder="Your email address" aria-label="Email address" />
           <button type="submit" class="btn btn--sm">Subscribe</button>
         </form>
       </div>

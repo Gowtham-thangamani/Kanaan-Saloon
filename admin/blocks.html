@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Blocked slots · Kanaan Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+<div class="admin-shell">
+  <aside class="admin-side">
+    <div class="admin-side__brand">KANAAN<span>.</span></div>
+    <nav class="admin-side__nav">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="leads.html">Leads · CRM</a>
+      <a href="scan.html">Scan booking</a>
+      <a href="blocks.html" class="active">Blocked slots</a>
+      <a href="offers.html">Offers</a>
+      <a href="branches.html">Houses</a>
+      <a href="banners.html">Banners</a>
+      <a href="integrations.html">Integrations</a>
+      <a href="settings.html">Settings</a>
+    </nav>
+    <div class="admin-side__user">Signed in · <button type="button" onclick="KANAAN_ADMIN.logout()">Sign out</button></div>
+  </aside>
+
+  <main class="admin-main">
+    <h1 class="admin-h">Blocked slots</h1>
+    <p class="admin-sub">Manually block time at a branch — therapist on leave, equipment maintenance, public holiday, private event. The customer booking page excludes these slots in real time.</p>
+
+    <div class="card">
+      <h3>Add a block</h3>
+      <p style="color: var(--muted); font-size: 13px; margin-bottom: 16px;">All times are local (Abu Dhabi). The block applies in 30-minute increments.</p>
+      <div class="row" style="gap: 12px;">
+        <div style="flex: 1; min-width: 160px;">
+          <label for="b-branch">House</label>
+          <select class="sel" id="b-branch">
+            <option>Al Ain</option>
+            <option>Khalifa City</option>
+            <option>Khalidiya</option>
+            <option>Baniyas Spa</option>
+            <option>Baniyas Barber</option>
+            <option>Rabdan</option>
+            <option>Old Shahamah</option>
+            <option>New Shahamah</option>
+            <option>Muroor</option>
+            <option>VIP Muroor</option>
+          </select>
+        </div>
+        <div style="flex: 1; min-width: 140px;">
+          <label for="b-date">Date</label>
+          <input class="input" type="date" id="b-date" />
+        </div>
+        <div style="flex: 1; min-width: 100px;">
+          <label for="b-time">Start time</label>
+          <input class="input" type="time" id="b-time" step="1800" />
+        </div>
+        <div style="flex: 1; min-width: 110px;">
+          <label for="b-duration">Duration (min)</label>
+          <select class="sel" id="b-duration">
+            <option value="30">30 min</option>
+            <option value="60" selected>1 hour</option>
+            <option value="90">1.5 hours</option>
+            <option value="120">2 hours</option>
+            <option value="180">3 hours</option>
+            <option value="240">4 hours</option>
+            <option value="360">6 hours</option>
+            <option value="480">8 hours</option>
+            <option value="720">12 hours (all day)</option>
+          </select>
+        </div>
+        <div style="flex: 2; min-width: 200px;">
+          <label for="b-reason">Reason (optional)</label>
+          <input class="input" id="b-reason" placeholder="e.g. Therapist on leave, equipment maintenance" />
+        </div>
+      </div>
+      <div style="margin-top: 16px;"><button type="button" class="btn" id="addBlock">Block these slots</button></div>
+    </div>
+
+    <div class="bar" style="margin-top: 24px;">
+      <select class="sel" id="f-branch" aria-label="Filter by branch" title="Filter by branch" style="width: auto;">
+        <option value="">All branches</option>
+        <option>Al Ain</option><option>Khalifa City</option><option>Khalidiya</option>
+        <option>Baniyas Spa</option><option>Baniyas Barber</option><option>Rabdan</option>
+        <option>Old Shahamah</option><option>New Shahamah</option><option>Muroor</option>
+        <option>VIP Muroor</option>
+      </select>
+      <input class="input" type="date" id="f-from" aria-label="From date" title="From date" />
+      <span style="color: var(--muted); align-self: center;">to</span>
+      <input class="input" type="date" id="f-to" aria-label="To date" title="To date" />
+      <span class="spacer"></span>
+      <button type="button" class="btn btn--ghost btn--sm" id="refresh">↻ Refresh</button>
+    </div>
+
+    <div class="card" id="empty" style="display: none;">
+      <h3>No blocks set</h3>
+      <p style="color: var(--muted);">When you block a slot above, the booking page on the site will stop offering it. Blocks are visible to every signed-in admin and persist across devices.</p>
+    </div>
+
+    <div class="card" id="data" style="display: none;">
+      <table>
+        <thead>
+          <tr>
+            <th>House</th><th>Date</th><th>Start</th><th>Duration</th><th>Reason</th><th>Added</th><th></th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <p id="count" style="color: var(--muted); font-size: 12px; margin-top: 16px;"></p>
+    </div>
+  </main>
+</div>
+
+<script src="../assets/js/config.js"></script>
+<script src="admin.js"></script>
+<script>
+if (KANAAN_ADMIN.requireAuth()) (async function () {
+  /* ---------- helpers ---------- */
+  function escapeHtml(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+  }
+  function fmtDuration(min) {
+    if (min < 60) return min + ' min';
+    if (min % 60 === 0) return (min / 60) + (min === 60 ? ' hour' : ' hours');
+    return Math.floor(min / 60) + 'h ' + (min % 60) + 'min';
+  }
+  function authHeaders() { return KANAAN_ADMIN.authHeaders(true); }
+  function sbUrl(path) {
+    const sb = (window.KANAAN_CONFIG && window.KANAAN_CONFIG.supabase) || {};
+    return sb.url + '/rest/v1/' + path;
+  }
+
+  /* ---------- defaults ---------- */
+  const today = new Date();
+  function isoDate(d) {
+    const y = d.getFullYear(), m = String(d.getMonth() + 1).padStart(2, '0'), day = String(d.getDate()).padStart(2, '0');
+    return y + '-' + m + '-' + day;
+  }
+  const todayIso = isoDate(today);
+  const monthOut = new Date(today); monthOut.setMonth(today.getMonth() + 1);
+  document.getElementById('b-date').value = todayIso;
+  document.getElementById('b-date').min = todayIso;
+  document.getElementById('b-time').value = '14:00';
+  document.getElementById('f-from').value = todayIso;
+  document.getElementById('f-to').value = isoDate(monthOut);
+
+  /* ---------- list ---------- */
+  let allRows = [];
+
+  async function load() {
+    const from = document.getElementById('f-from').value || todayIso;
+    const to   = document.getElementById('f-to').value   || isoDate(monthOut);
+    let url = sbUrl('blocked_slots') + '?select=*&order=blocked_date.asc,blocked_time.asc';
+    url += '&blocked_date=gte.' + encodeURIComponent(from);
+    url += '&blocked_date=lte.' + encodeURIComponent(to);
+    const fb = document.getElementById('f-branch').value;
+    if (fb) url += '&branch=eq.' + encodeURIComponent(fb);
+
+    try {
+      const r = await fetch(url, { headers: authHeaders() });
+      if (!r.ok) {
+        if (r.status === 401) { KANAAN_ADMIN.logout(); return; }
+        KANAAN_ADMIN.toast('Load failed (HTTP ' + r.status + ')');
+        return;
+      }
+      allRows = await r.json();
+      render();
+    } catch (e) {
+      KANAAN_ADMIN.toast('Network error: ' + e.message);
+    }
+  }
+
+  function render() {
+    if (!allRows.length) {
+      document.getElementById('empty').style.display = 'block';
+      document.getElementById('data').style.display = 'none';
+      return;
+    }
+    document.getElementById('empty').style.display = 'none';
+    document.getElementById('data').style.display = 'block';
+    document.getElementById('rows').innerHTML = allRows.map(r => `
+      <tr>
+        <td>${escapeHtml(r.branch)}</td>
+        <td>${escapeHtml(r.blocked_date)}</td>
+        <td style="font-family: monospace;">${escapeHtml(String(r.blocked_time || '').slice(0,5))}</td>
+        <td>${escapeHtml(fmtDuration(r.duration_minutes))}</td>
+        <td>${escapeHtml(r.reason || '—')}</td>
+        <td style="color: var(--muted); font-size: 12px;">${escapeHtml((r.created_at || '').slice(0,16).replace('T',' '))}</td>
+        <td><button type="button" class="btn btn--ghost btn--sm" data-del="${escapeHtml(r.id)}">Unblock</button></td>
+      </tr>
+    `).join('');
+    document.getElementById('count').textContent = allRows.length + ' active block' + (allRows.length === 1 ? '' : 's');
+
+    document.querySelectorAll('[data-del]').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        if (!confirm('Unblock this slot? Customers will be able to book it again.')) return;
+        const id = btn.dataset.del;
+        btn.disabled = true; btn.textContent = '…';
+        try {
+          const r = await fetch(sbUrl('blocked_slots') + '?id=eq.' + encodeURIComponent(id), {
+            method: 'DELETE',
+            headers: Object.assign({}, authHeaders(), { 'Prefer': 'return=minimal' })
+          });
+          if (!r.ok) { KANAAN_ADMIN.toast('Delete failed (HTTP ' + r.status + ')'); return; }
+          allRows = allRows.filter(x => x.id !== id);
+          KANAAN_ADMIN.toast('Slot unblocked');
+          render();
+        } catch (e) {
+          KANAAN_ADMIN.toast('Network error: ' + e.message);
+        }
+      });
+    });
+  }
+
+  /* ---------- add ---------- */
+  document.getElementById('addBlock').addEventListener('click', async () => {
+    const branch   = document.getElementById('b-branch').value;
+    const date     = document.getElementById('b-date').value;
+    const time     = document.getElementById('b-time').value;
+    const duration = parseInt(document.getElementById('b-duration').value, 10);
+    const reason   = document.getElementById('b-reason').value.trim();
+    if (!branch || !date || !time || !duration) {
+      KANAAN_ADMIN.toast('Pick a branch, date, time, and duration');
+      return;
+    }
+    const btn = document.getElementById('addBlock');
+    btn.disabled = true; const original = btn.textContent; btn.textContent = 'Adding…';
+    try {
+      const r = await fetch(sbUrl('blocked_slots'), {
+        method: 'POST',
+        headers: Object.assign({}, authHeaders(), { 'Prefer': 'return=representation' }),
+        body: JSON.stringify({
+          branch: branch,
+          blocked_date: date,
+          blocked_time: time + ':00',
+          duration_minutes: duration,
+          reason: reason || null
+        })
+      });
+      if (!r.ok) {
+        const txt = await r.text().catch(() => '');
+        KANAAN_ADMIN.toast('Block failed: HTTP ' + r.status + ' ' + txt.slice(0, 80));
+        return;
+      }
+      KANAAN_ADMIN.toast('Slot blocked');
+      document.getElementById('b-reason').value = '';
+      await load();
+    } catch (e) {
+      KANAAN_ADMIN.toast('Network error: ' + e.message);
+    } finally {
+      btn.disabled = false; btn.textContent = original;
+    }
+  });
+
+  /* ---------- filters ---------- */
+  document.getElementById('f-branch').addEventListener('change', load);
+  document.getElementById('f-from').addEventListener('change', load);
+  document.getElementById('f-to').addEventListener('change', load);
+  document.getElementById('refresh').addEventListener('click', load);
+
+  load();
+})();
+</script>
+</body>
+</html>

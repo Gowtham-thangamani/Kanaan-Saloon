@@ -4,14 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>شكراً | كنعان صالون وسبا للرجال</title>
+  <meta name="description" content="تم تأكيد حجزك في كنعان. أبرز رمز QR أو رقم الحجز عند الكرسي." />
   <meta name="robots" content="noindex" />
   <link rel="stylesheet" href="../assets/css/fonts.css" />
-  <link rel="stylesheet" href="../assets/css/style.css" />
-  <link rel="stylesheet" href="../assets/css/motion.css?v=18" />
+  <link rel="stylesheet" href="../assets/css/style.css?v=3" />
+  <link rel="stylesheet" href="../assets/css/motion.css?v=19" />
   <script id="motion-pre-paint">(function(){if(!window.matchMedia||!window.matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.classList.add("motion-ready");}})();</script>
-  <link rel="canonical" href="/thank-you.html" />
-  <link rel="alternate" hreflang="en" href="/thank-you.html" />
-  <link rel="alternate" hreflang="ar" href="/ar/thank-you.html" />
+  <link rel="canonical" href="https://kanaanspa.ae/ar/thank-you.html" />
+  <link rel="alternate" hreflang="en" href="https://kanaanspa.ae/thank-you.html" />
+  <link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/thank-you.html" />
+  <link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/thank-you.html" />
 
   <meta property="og:type" content="website" />
   <meta property="og:title" content="شكراً | كنعان صالون وسبا للرجال" />
@@ -32,8 +34,8 @@
   <a href="#main" class="skip-link">Skip to content</a>
   <header class="site-header">
     <div class="site-header__inner">
-      <a href="index.html" class="logo logo--text"><span class="logo__mark" aria-hidden="true"><i></i></span><span class="logo__word">KANAAN<span class="logo__dot">.</span></span><span class="logo__sub">Gents Salon &amp; Spa</span></a>
-      <nav class="main-nav"><a href="index.html">الرئيسية</a><a href="services.html">الخدمات</a><div class="nav-dd"><button class="nav-dd__trigger" type="button">الفروع <i class="nav-dd__caret" aria-hidden="true"></i></button><div class="nav-dd__panel"><div class="nav-dd__col"><h6>أبوظبي</h6><ul><li><a href="branches/khalifa-city.html"><span>مدينة خليفة</span></a></li><li><a href="branches/khalidiya.html"><span>الخالدية</span></a></li><li><a href="branches/baniyas-spa.html"><span>بنياس سبا</span><span class="nav-dd__type">سبا</span></a></li><li><a href="branches/baniyas-barber.html"><span>بنياس باربر</span><span class="nav-dd__type">حلاقة</span></a></li><li><a href="branches/rabdan.html"><span>ربدان</span></a></li><li><a href="branches/old-shahamah.html"><span>الشهامة القديمة</span></a></li><li><a href="branches/new-shahamah.html"><span>الشهامة الجديدة</span></a></li><li><a href="branches/muroor.html"><span>المرور</span><span class="nav-dd__type">حلاقة</span></a></li><li><a href="branches/vip-muroor.html"><span>VIP المرور</span><span class="nav-dd__type">VIP</span></a></li></ul></div><div class="nav-dd__col"><h6>العين</h6><ul><li><a href="branches/al-ain.html"><span>العين</span></a></li></ul></div><div class="nav-dd__foot"><a href="branches.html">كل الفروع ←</a><span>١٠ بيوت · معيار واحد</span></div></div></div><a href="contact.html">تواصل</a></nav>
+      <a href="index.html" class="logo" aria-label="كنعان — صالون وسبا للرجال"><img src="../assets/img/logo.svg" alt="كنعان صالون وسبا للرجال" class="logo-img" /></a>
+      <nav class="main-nav"><a href="index.html">الرئيسية</a><a href="about.html">عن كنعان</a><a href="offers.html">العروض</a><a href="../branches.html">البيوت والخدمات</a><a href="gallery.html">المعرض</a><a href="contact.html">تواصل</a></nav>
       <div class="header-actions"><a href="../thank-you.html" class="lang-switch">EN</a></div>
     </div>
   </header>
@@ -42,11 +44,15 @@
     <div class="container" style="max-width: 720px; text-align: center;">
       <span style="display: inline-flex; width: 80px; height: 80px; border: 2px solid var(--c-gold); align-items: center; justify-content: center; margin-bottom: var(--s-6); font-family: var(--f-display); font-size: 40px; color: var(--c-gold);">✓</span>
       <span class="eyebrow">تمّ استلام الحجز</span>
+      <span id="statusPill" class="pill" style="display:none; margin-right: 8px; padding: 4px 12px; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; border: 1px solid var(--c-gold); color: var(--c-gold);"></span>
       <h1 class="display-1" style="margin-bottom: var(--s-5);">كرسيك محجوز.</h1>
       <p class="lede" data-reveal="up" style="margin: 0 auto var(--s-7);" data-scroll-text>شكراً لك. سيؤكّد الفرع موعدك خلال ٣٠ دقيقة من ساعات العمل عبر واتساب أو الهاتف.</p>
 
       <div data-summary style="border: 1px solid var(--hairline); padding: var(--s-6); text-align: right; margin: 0 auto var(--s-7); max-width: 520px;">
-        <h3 style="margin-bottom: var(--s-4); font-size: 20px;">تفاصيل حجزك</h3>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--s-4);">
+          <h3 style="margin: 0; font-size: 20px;">تفاصيل حجزك</h3>
+          <span id="verifyBadge" style="display:none; font-size: 11px; letter-spacing: 0.06em; color: var(--c-sage); padding: 3px 10px; border: 1px solid var(--c-sage);">✓ مُتحقَّق</span>
+        </div>
         <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 12px; font-size: 15px;">
           <span class="muted">الفرع</span><span data-field="branch">—</span>
           <span class="muted">الخدمة</span><span data-field="service">—</span>
@@ -59,7 +65,10 @@
         <a id="confirmWA" href="https://wa.me/971505556795?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D9%83%D9%86%D8%B9%D8%A7%D9%86%D8%8C%20%D8%A3%D8%B1%D8%BA%D8%A8%20%D9%81%D9%8A%20%D8%A7%D9%84%D8%AD%D8%AC%D8%B2.%20%D8%A7%D9%84%D8%B1%D8%AC%D8%A7%D8%A1%20%D8%A5%D8%B9%D9%84%D8%A7%D9%85%D9%8A%20%D8%A8%D8%A3%D9%82%D8%B1%D8%A8%20%D9%81%D8%B1%D8%B9%20%D9%88%D8%A3%D9%88%D9%82%D8%A7%D8%AA%20%D9%85%D8%AA%D8%A7%D8%AD%D8%A9." class="btn">افتح واتساب</a>
         <a href="branches.html" class="btn btn--ghost">عرض تفاصيل الفرع</a>
         <button type="button" id="rescheduleBtn" class="btn btn--ghost" data-track="reschedule_open">إعادة جدولة / إلغاء</button>
-        <button type="button" id="walletBtn" class="btn btn--ghost" data-track="wallet_pass">احفظ في المفكرة</button>
+        <button type="button" id="walletBtn" class="btn btn--ghost" data-track="wallet_pass">📅 احفظ في المفكرة</button>
+        <button type="button" id="downloadQrBtn" class="btn btn--ghost" data-track="qr_download">⬇ تحميل رمز QR</button>
+        <button type="button" id="appleWalletBtn" class="btn btn--ghost" data-track="apple_wallet" hidden></button>
+        <button type="button" id="googleWalletBtn" class="btn btn--ghost" data-track="google_wallet" hidden></button>
       </div>
 
       <div id="qrBox" style="margin: var(--s-7) auto 0; display: inline-block; padding: var(--s-4); background: #fff; border: 1px solid var(--hairline);">
@@ -67,17 +76,50 @@
         <div style="font-family: monospace; font-size: 11px; color: #15171A; margin-top: 8px;" id="qrId">—</div>
       </div>
 
-      <div id="cancelModal" style="display:none; position:fixed; inset:0; background:rgba(14,15,17,0.94); z-index:200; align-items:center; justify-content:center; padding:20px;">
+      <div id="cancelModal" role="dialog" aria-modal="true" aria-labelledby="cancelModalTitle" aria-hidden="true" style="display:none; position:fixed; inset:0; background:rgba(14,15,17,0.94); z-index:200; align-items:center; justify-content:center; padding:20px;">
         <div style="background: var(--c-carbon); border:1px solid var(--c-smoke); padding:var(--s-7); max-width:440px; width:100%;">
-          <h3 style="font-family:var(--f-display); font-size:28px; margin:0 0 var(--s-4);">إعادة جدولة أو إلغاء</h3>
+          <h3 id="cancelModalTitle" style="font-family:var(--f-display); font-size:28px; margin:0 0 var(--s-4);">إعادة جدولة أو إلغاء</h3>
           <p class="muted" style="font-size:14px; margin-bottom:var(--s-5);">اختر ما تريد. سيتم تضمين رقم الحجز تلقائياً.</p>
           <div class="flex gap-3" style="flex-direction:column;">
             <a id="actReschedule" href="#" class="btn">طلب إعادة جدولة (واتساب)</a>
             <a id="actCancel" href="#" class="btn btn--ghost" style="border-color: var(--c-rust); color: var(--c-rust);">إلغاء الحجز (واتساب)</a>
-            <button type="button" onclick="document.getElementById('cancelModal').style.display='none';" class="btn btn--ghost">إغلاق</button>
+            <button type="button" id="cancelModalClose" class="btn btn--ghost">إغلاق</button>
           </div>
         </div>
       </div>
+      <script>
+        // Modal a11y — focus trap + Escape close + focus restore. Mirror of EN thank-you.html.
+        (function () {
+          var modal = document.getElementById('cancelModal');
+          if (!modal) return;
+          var triggerBtn = document.getElementById('rescheduleBtn');
+          var closeBtn = document.getElementById('cancelModalClose');
+          function getFocusables() {
+            return modal.querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])');
+          }
+          function openModal() {
+            modal.style.display = 'flex';
+            modal.setAttribute('aria-hidden', 'false');
+            var f = getFocusables(); if (f.length) f[0].focus();
+          }
+          function closeModal() {
+            modal.style.display = 'none';
+            modal.setAttribute('aria-hidden', 'true');
+            if (triggerBtn) triggerBtn.focus();
+          }
+          if (triggerBtn) triggerBtn.addEventListener('click', openModal);
+          if (closeBtn) closeBtn.addEventListener('click', closeModal);
+          modal.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') { e.preventDefault(); closeModal(); return; }
+            if (e.key !== 'Tab') return;
+            var f = getFocusables(); if (!f.length) return;
+            var first = f[0], last = f[f.length - 1];
+            if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+            else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+          });
+          modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+        })();
+      </script>
 
       <script>
         (function () {
@@ -85,17 +127,24 @@
           var id = p.get('id') || '', branch = p.get('branch') || '', date = p.get('date') || '', time = p.get('time') || '';
           var c = document.getElementById('confirmWA');
           if (c) c.href = 'https://wa.me/971505556795?text=' + encodeURIComponent('مرحباً كنعان، تأكيد الحجز ' + id);
+          // Modal open/close is wired in the a11y IIFE above; here we only set
+          // the booking-specific WhatsApp deep-links.
           var modal = document.getElementById('cancelModal');
           var btn = document.getElementById('rescheduleBtn');
           if (btn && modal) {
-            btn.addEventListener('click', function () { modal.style.display = 'flex'; });
-            document.getElementById('actReschedule').href = 'https://wa.me/971505556795?text=' + encodeURIComponent('مرحباً كنعان، أحتاج لإعادة جدولة الحجز ' + id + ' (' + branch + '، ' + date + ' ' + time + '). شكراً.');
-            document.getElementById('actCancel').href = 'https://wa.me/971505556795?text=' + encodeURIComponent('مرحباً كنعان، أحتاج لإلغاء الحجز ' + id + ' (' + branch + '، ' + date + ' ' + time + '). شكراً.');
+            var act1 = document.getElementById('actReschedule');
+            var act2 = document.getElementById('actCancel');
+            if (act1) act1.href = 'https://wa.me/971505556795?text=' + encodeURIComponent('مرحباً كنعان، أحتاج لإعادة جدولة الحجز ' + id + ' (' + branch + '، ' + date + ' ' + time + '). شكراً.');
+            if (act2) act2.href = 'https://wa.me/971505556795?text=' + encodeURIComponent('مرحباً كنعان، أحتاج لإلغاء الحجز ' + id + ' (' + branch + '، ' + date + ' ' + time + '). شكراً.');
           }
           var qrId = document.getElementById('qrId'); if (qrId) qrId.textContent = id || '—';
           var qr = document.getElementById('qr');
+          // Use configured production URL so the QR encodes a scannable URL.
+          var siteUrl = (window.KANAAN_CONFIG && window.KANAAN_CONFIG.site && window.KANAAN_CONFIG.site.url) || location.origin;
+          var bookingUrl = siteUrl.replace(/\/$/, '') + location.pathname + '?' + p.toString();
+          var qrApiBase = 'https://api.qrserver.com/v1/create-qr-code/';
           if (qr && id) {
-            qr.innerHTML = '<img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&margin=0&data=' + encodeURIComponent('KANAAN BOOKING ' + id) + '" alt="QR ' + id + '" width="140" height="140" loading="lazy" decoding="async" />';
+            qr.innerHTML = '<img id="qrImg" src="' + qrApiBase + '?size=200x200&margin=0&data=' + encodeURIComponent(bookingUrl) + '" alt="QR ' + id + '" width="200" height="200" loading="lazy" decoding="async" />';
           }
           var w = document.getElementById('walletBtn');
           if (w && id && date && time) {
@@ -106,6 +155,118 @@
               var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'kanaan-' + id + '.ics'; a.click();
             });
           }
+
+          // Download QR — fetches a 600x600 PNG and triggers a save.
+          var dlBtn = document.getElementById('downloadQrBtn');
+          if (dlBtn && id) {
+            dlBtn.addEventListener('click', async function () {
+              var url = qrApiBase + '?size=600x600&margin=12&data=' + encodeURIComponent(bookingUrl) + '&format=png';
+              try {
+                var res = await fetch(url);
+                if (!res.ok) throw new Error('fetch failed');
+                var blob = await res.blob();
+                var href = URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = href; a.download = 'kanaan-booking-' + id + '.png';
+                document.body.appendChild(a); a.click(); a.remove();
+                setTimeout(function () { URL.revokeObjectURL(href); }, 1000);
+              } catch (e) {
+                window.open(url, '_blank', 'noopener');
+              }
+            });
+          }
+
+          // Apple Wallet / Google Wallet — only enabled if KANAAN_CONFIG.wallet.* is set.
+          var wcfg = (window.KANAAN_CONFIG && window.KANAAN_CONFIG.wallet) || {};
+          var appleBtn = document.getElementById('appleWalletBtn');
+          if (appleBtn && id && wcfg.applePassEndpoint) {
+            appleBtn.hidden = false;
+            appleBtn.textContent = '🍎 أضف إلى Apple Wallet';
+            appleBtn.addEventListener('click', function () {
+              window.location.href = wcfg.applePassEndpoint.replace('{id}', encodeURIComponent(id));
+            });
+          }
+          var googleBtn = document.getElementById('googleWalletBtn');
+          if (googleBtn && id && wcfg.googleSaveEndpoint) {
+            googleBtn.hidden = false;
+            googleBtn.textContent = '📲 احفظ في Google Wallet';
+            googleBtn.addEventListener('click', async function () {
+              try {
+                var res = await fetch(wcfg.googleSaveEndpoint.replace('{id}', encodeURIComponent(id)));
+                if (!res.ok) throw new Error('endpoint error');
+                var j = await res.json();
+                if (j && j.saveUrl) window.open(j.saveUrl, '_blank', 'noopener');
+              } catch (e) { console.warn('[Google Wallet] save endpoint failed', e); }
+            });
+          }
+        })();
+      </script>
+
+      <!-- التحقق الحقيقي من الحجز عبر Supabase + تحديث الحالة المباشر -->
+      <script>
+        (function () {
+          var p = new URLSearchParams(location.search);
+          var id = p.get('id') || '';
+          if (!id) return;
+          var sb = (window.KANAAN_CONFIG && window.KANAAN_CONFIG.supabase) || {};
+          if (!sb.url || !sb.anonKey) return;
+          var STATUS_LABEL = { new: 'قيد التأكيد', confirmed: 'مُؤكّد', completed: 'مكتمل', no_show: 'لم يحضر', cancelled: 'مُلغى' };
+          var STATUS_COLOR = {
+            new:       { color: 'var(--c-gold)',  border: 'var(--c-gold)'  },
+            confirmed: { color: 'var(--c-sage)',  border: 'var(--c-sage)'  },
+            completed: { color: 'var(--c-sage)',  border: 'var(--c-sage)'  },
+            no_show:   { color: 'var(--c-rust)',  border: 'var(--c-rust)'  },
+            cancelled: { color: 'var(--c-rust)',  border: 'var(--c-rust)'  }
+          };
+          var pill = document.getElementById('statusPill');
+          var badge = document.getElementById('verifyBadge');
+          function setField(key, val) {
+            var el = document.querySelector('[data-field="' + key + '"]');
+            if (el && val) el.textContent = val;
+          }
+          async function verify() {
+            try {
+              var url = sb.url + '/rest/v1/' + (sb.table || 'bookings') +
+                        '?id=eq.' + encodeURIComponent(id) +
+                        '&select=id,status,branch,service,booking_date,booking_time';
+              var r = await fetch(url, {
+                headers: { 'apikey': sb.anonKey, 'Authorization': 'Bearer ' + sb.anonKey }
+              });
+              if (!r.ok) return false;
+              var rows = await r.json();
+              if (!rows.length) return false;
+              var b = rows[0];
+              setField('branch',  b.branch);
+              setField('service', b.service);
+              setField('date',    b.booking_date);
+              setField('time',    (b.booking_time || '').slice(0, 5));
+              if (badge) badge.style.display = 'inline-block';
+              if (pill) {
+                var s = String(b.status || 'new');
+                var c = STATUS_COLOR[s] || STATUS_COLOR.new;
+                pill.textContent = STATUS_LABEL[s] || s;
+                pill.style.color = c.color;
+                pill.style.borderColor = c.border;
+                pill.style.display = 'inline-block';
+              }
+              return true;
+            } catch (e) { return false; }
+          }
+          (async function () {
+            for (var i = 0; i < 6; i++) {
+              if (await verify()) break;
+              await new Promise(function (r) { setTimeout(r, 800 * (i + 1)); });
+            }
+          })();
+          var poll = setInterval(async function () {
+            var ok = await verify();
+            if (!ok) return;
+            var t = pill && pill.textContent;
+            if (t === 'مكتمل' || t === 'مُلغى' || t === 'لم يحضر') clearInterval(poll);
+          }, 12000);
+          document.addEventListener('visibilitychange', function () {
+            if (document.hidden) clearInterval(poll);
+          });
         })();
       </script>
     </div>
@@ -120,7 +281,7 @@
           <p>عروض ومستجدّات كنعان مرّة كل شهر — لا أكثر.</p>
         </div>
         <form data-newsletter-form>
-          <input type="email" required placeholder="بريدك الإلكتروني" />
+          <input type="email" name="email" required placeholder="بريدك الإلكتروني" aria-label="البريد الإلكتروني" />
           <button type="submit" class="btn btn--sm">اشترك</button>
         </form>
       </div>
@@ -135,7 +296,7 @@
   <script src="../assets/js/config.js"></script>
   <script src="../assets/js/tracking.js"></script>
   <script src="../assets/js/consent.js" defer></script>
-  <script src="../assets/js/main.js"></script>
+  <script src="../assets/js/main.js?v=25"></script>
   <script src="assets/js/nav-dropdown.js" defer></script>
   <script src="../assets/js/motion.js?v=18" defer></script>
   <script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("../sw.js").catch(function(){});});}</script>

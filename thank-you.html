@@ -4,14 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Thank You | Kanaan Gents Salon &amp; Spa</title>
+  <meta name="description" content="Booking confirmed at Kanaan Gents Salon &amp; Spa. Show your QR or booking ID at the chair." />
   <meta name="robots" content="noindex" />
   <link rel="stylesheet" href="assets/css/fonts.css" />
-  <link rel="stylesheet" href="assets/css/style.css" />
-  <link rel="stylesheet" href="assets/css/motion.css?v=18" />
+  <link rel="stylesheet" href="assets/css/style.css?v=3" />
+  <link rel="stylesheet" href="assets/css/motion.css?v=19" />
   <script id="motion-pre-paint">(function(){if(!window.matchMedia||!window.matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.classList.add("motion-ready");}})();</script>
-  <link rel="canonical" href="/thank-you.html" />
-  <link rel="alternate" hreflang="en" href="/thank-you.html" />
-  <link rel="alternate" hreflang="ar" href="/ar/thank-you.html" />
+  <link rel="canonical" href="https://kanaanspa.ae/thank-you.html" />
+  <link rel="alternate" hreflang="en" href="https://kanaanspa.ae/thank-you.html" />
+  <link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/thank-you.html" />
+  <link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/thank-you.html" />
 
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Thank You | Kanaan Gents Salon &amp; Spa" />
@@ -32,11 +34,13 @@
   <a href="#main" class="skip-link">Skip to content</a>
   <header class="site-header">
     <div class="site-header__inner">
-      <a href="index.html" class="logo logo--text"><span class="logo__mark" aria-hidden="true"><i></i></span><span class="logo__word">KANAAN<span class="logo__dot">.</span></span><span class="logo__sub">Gents Salon &amp; Spa</span></a>
+      <a href="index.html" class="logo" aria-label="Kanaan Gents Salon &amp; Spa — home"><img src="assets/img/logo.svg" alt="Kanaan Gents Salon &amp; Spa" class="logo-img" /></a>
       <nav class="main-nav">
         <a href="index.html">Home</a>
-        <a href="services.html">Services</a>
-        <div class="nav-dd"><button class="nav-dd__trigger" type="button">Branches <i class="nav-dd__caret" aria-hidden="true"></i></button><div class="nav-dd__panel"><div class="nav-dd__col"><h6>Abu Dhabi</h6><ul><li><a href="branches/khalifa-city.html"><span>Khalifa City</span></a></li><li><a href="branches/khalidiya.html"><span>Khalidiya</span></a></li><li><a href="branches/baniyas-spa.html"><span>Baniyas Spa</span><span class="nav-dd__type">Spa</span></a></li><li><a href="branches/baniyas-barber.html"><span>Baniyas Barber</span><span class="nav-dd__type">Barber</span></a></li><li><a href="branches/rabdan.html"><span>Rabdan</span></a></li><li><a href="branches/old-shahamah.html"><span>Old Shahamah</span></a></li><li><a href="branches/new-shahamah.html"><span>New Shahamah</span></a></li><li><a href="branches/muroor.html"><span>Muroor</span><span class="nav-dd__type">Barber</span></a></li><li><a href="branches/vip-muroor.html"><span>VIP Muroor</span><span class="nav-dd__type">VIP</span></a></li></ul></div><div class="nav-dd__col"><h6>Al Ain</h6><ul><li><a href="branches/al-ain.html"><span>Al Ain</span></a></li></ul></div><div class="nav-dd__foot"><a href="branches.html">View all branches →</a><span>10 houses · One standard</span></div></div></div>
+        <a href="about.html">About</a>
+        <a href="offers.html">Offers</a>
+        <a href="branches.html">Houses &amp; Services</a>
+        <a href="gallery.html">Gallery</a>
         <a href="contact.html">Contact</a>
       </nav>
       <div class="header-actions">
@@ -45,8 +49,13 @@
       </div>
     </div>
     <nav class="mobile-nav">
-      <a href="index.html">Home</a><a href="services.html">Services</a>
-      <div class="nav-dd-m"><button class="nav-dd-m__head" type="button">Branches <i class="nav-dd__caret" aria-hidden="true"></i></button><div class="nav-dd-m__panel"><a href="branches/al-ain.html">Al Ain</a><a href="branches/khalifa-city.html">Khalifa City</a><a href="branches/khalidiya.html">Khalidiya</a><a href="branches/baniyas-spa.html">Baniyas Spa</a><a href="branches/baniyas-barber.html">Baniyas Barber</a><a href="branches/rabdan.html">Rabdan</a><a href="branches/old-shahamah.html">Old Shahamah</a><a href="branches/new-shahamah.html">New Shahamah</a><a href="branches/muroor.html">Muroor</a><a href="branches/vip-muroor.html">VIP Muroor</a></div></div><a href="contact.html">Contact</a>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="offers.html">Offers</a>
+      <a href="branches.html">Houses &amp; Services</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="contact.html">Contact</a>
+      <a href="ar/index.html">عربي</a>
     </nav>
   </header>
 
@@ -54,24 +63,69 @@
     <div class="container" style="max-width: 720px; text-align: center;">
       <span style="display: inline-flex; width: 80px; height: 80px; border: 2px solid var(--c-gold); align-items: center; justify-content: center; margin-bottom: var(--s-6); font-family: var(--f-display); font-size: 40px; color: var(--c-gold);">✓</span>
       <span class="eyebrow">Booking received</span>
+      <!-- Live status pill — hydrated from Supabase by the verification script. -->
+      <span id="statusPill" class="pill" style="display:none; margin-left: 8px; padding: 4px 12px; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; border: 1px solid var(--c-gold); color: var(--c-gold);"></span>
       <h1 class="display-1" style="margin-bottom: var(--s-5);">Your chair is reserved.</h1>
       <p class="lede" data-reveal="up" style="margin: 0 auto var(--s-7);" data-scroll-text>Thank you. The branch will confirm your appointment within 30 minutes during open hours, by WhatsApp or phone.</p>
 
       <div data-summary style="border: 1px solid var(--hairline); padding: var(--s-6); text-align: left; margin: 0 auto var(--s-7); max-width: 520px;">
-        <h3 style="margin-bottom: var(--s-4); font-size: 20px;">Your booking</h3>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--s-4);">
+          <h3 style="margin: 0; font-size: 20px;">Your booking</h3>
+          <!-- ✓ Verified badge — appears when the booking ID round-trips against
+               the live database. Until verified, no badge is shown so the user
+               doesn't see "unverified" flicker. -->
+          <span id="verifyBadge" style="display:none; font-size: 11px; letter-spacing: 0.06em; color: var(--c-sage); padding: 3px 10px; border: 1px solid var(--c-sage);">✓ Verified</span>
+        </div>
         <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 12px; font-size: 15px;">
-          <span class="muted">Branch</span><span data-field="branch">—</span>
+          <span class="muted">House</span><span data-field="branch">—</span>
           <span class="muted">Service</span><span data-field="service">—</span>
           <span class="muted">Date</span><span data-field="date">—</span>
           <span class="muted">Time</span><span data-field="time">—</span>
         </div>
       </div>
 
-      <div class="flex gap-3" style="justify-content: center; flex-wrap: wrap;">
-        <a id="confirmWA" href="https://wa.me/971505556795?text=Hi%20Kanaan%2C%20I'd%20like%20to%20book.%20Please%20share%20nearest%20branch%20%2B%20available%20times." class="btn">Open WhatsApp</a>
-        <a href="branches.html" class="btn btn--ghost">View Branch Details</a>
-        <button type="button" id="rescheduleBtn" class="btn btn--ghost" data-track="reschedule_open">Reschedule / Cancel</button>
-        <button type="button" id="walletBtn" class="btn btn--ghost" data-track="wallet_pass">Save to Wallet</button>
+      <!-- Action buttons: primary (WhatsApp) standalone, then a neat 2x2 grid
+           of secondary actions. Wallet buttons reveal themselves into the grid
+           only when KANAAN_CONFIG.wallet.* is set (JS unhides them); until then
+           they stay collapsed so the layout doesn't show blank tiles. -->
+      <div class="thank-actions" style="max-width: 520px; margin: 0 auto;">
+        <a id="confirmWA" href="https://wa.me/971505556795?text=Hi%20Kanaan%2C%20I'd%20like%20to%20book.%20Please%20share%20nearest%20branch%20%2B%20available%20times." class="btn btn--lg" style="display:block; width:100%; margin-bottom: var(--s-3);">Open WhatsApp</a>
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--s-3);">
+          <button type="button" id="walletBtn" class="btn btn--ghost" data-track="wallet_pass">📅 Add to Calendar</button>
+          <button type="button" id="downloadQrBtn" class="btn btn--ghost" data-track="qr_download">⬇ Download QR</button>
+          <a href="branches.html" class="btn btn--ghost">View Branch Details</a>
+          <button type="button" id="rescheduleBtn" class="btn btn--ghost" data-track="reschedule_open">Reschedule / Cancel</button>
+          <button type="button" id="appleWalletBtn" class="btn btn--ghost" data-track="apple_wallet" hidden style="display:none;"></button>
+          <button type="button" id="googleWalletBtn" class="btn btn--ghost" data-track="google_wallet" hidden style="display:none;"></button>
+        </div>
+      </div>
+
+      <!-- WHAT HAPPENS NEXT — 3-step expectation-setter -->
+      <div class="next-steps" style="margin: var(--s-7) auto 0; max-width: 520px; text-align: left;">
+        <span class="eyebrow">What happens next</span>
+        <ol style="list-style: none; padding: 0; margin: var(--s-4) 0 0; display: grid; gap: var(--s-4);">
+          <li style="display:flex; gap: var(--s-4); align-items: flex-start;">
+            <span style="flex:0 0 28px; height:28px; border:1px solid var(--c-gold); color: var(--c-gold); border-radius: 50%; display:inline-flex; align-items:center; justify-content:center; font-family: var(--f-display); font-size: 14px;">1</span>
+            <div>
+              <strong style="display:block; margin-bottom: 2px;">We confirm by WhatsApp.</strong>
+              <span class="muted" style="font-size: 14px;">Within 30 minutes during open hours. We'll lock the slot and the master barber/therapist who fits your service.</span>
+            </div>
+          </li>
+          <li style="display:flex; gap: var(--s-4); align-items: flex-start;">
+            <span style="flex:0 0 28px; height:28px; border:1px solid var(--c-gold); color: var(--c-gold); border-radius: 50%; display:inline-flex; align-items:center; justify-content:center; font-family: var(--f-display); font-size: 14px;">2</span>
+            <div>
+              <strong style="display:block; margin-bottom: 2px;">A reminder 24 hours before.</strong>
+              <span class="muted" style="font-size: 14px;">A short WhatsApp note so you don't have to remember. Reply "reschedule" or "cancel" any time — it's free up to 2 hours before.</span>
+            </div>
+          </li>
+          <li style="display:flex; gap: var(--s-4); align-items: flex-start;">
+            <span style="flex:0 0 28px; height:28px; border:1px solid var(--c-gold); color: var(--c-gold); border-radius: 50%; display:inline-flex; align-items:center; justify-content:center; font-family: var(--f-display); font-size: 14px;">3</span>
+            <div>
+              <strong style="display:block; margin-bottom: 2px;">Arrive 5 minutes early.</strong>
+              <span class="muted" style="font-size: 14px;">Show this booking ID at the desk (or the QR below). Pay at the chair after — no payment now.</span>
+            </div>
+          </li>
+        </ol>
       </div>
 
       <!-- QR code (renders the booking ID for branch staff to scan) -->
@@ -80,18 +134,56 @@
         <div style="font-family: monospace; font-size: 11px; color: #15171A; margin-top: 8px;" id="qrId">—</div>
       </div>
 
-      <!-- Reschedule modal -->
-      <div id="cancelModal" style="display:none; position:fixed; inset:0; background:rgba(14,15,17,0.94); z-index:200; align-items:center; justify-content:center; padding:20px;">
+      <!-- Reschedule modal — dialog semantics + focus trap wired below. -->
+      <div id="cancelModal" role="dialog" aria-modal="true" aria-labelledby="cancelModalTitle" aria-hidden="true" style="display:none; position:fixed; inset:0; background:rgba(14,15,17,0.94); z-index:200; align-items:center; justify-content:center; padding:20px;">
         <div style="background: var(--c-carbon); border:1px solid var(--c-smoke); padding:var(--s-7); max-width:440px; width:100%;">
-          <h3 style="font-family:var(--f-display); font-size:28px; margin:0 0 var(--s-4);">Reschedule or cancel</h3>
+          <h3 id="cancelModalTitle" style="font-family:var(--f-display); font-size:28px; margin:0 0 var(--s-4);">Reschedule or cancel</h3>
           <p class="muted" style="font-size:14px; margin-bottom:var(--s-5);">Choose what you'd like to do. Your booking ID will be included automatically.</p>
           <div class="flex gap-3" style="flex-direction:column;">
             <a id="actReschedule" href="#" class="btn">Request reschedule (WhatsApp)</a>
             <a id="actCancel" href="#" class="btn btn--ghost" style="border-color: var(--c-rust); color: var(--c-rust);">Cancel booking (WhatsApp)</a>
-            <button type="button" onclick="document.getElementById('cancelModal').style.display='none';" class="btn btn--ghost">Close</button>
+            <button type="button" id="cancelModalClose" class="btn btn--ghost">Close</button>
           </div>
         </div>
       </div>
+      <script>
+        // Modal a11y: trap Tab focus inside the dialog while open, close on
+        // Escape, restore focus to the trigger button on close. Without this,
+        // keyboard + screen-reader users could not operate the dialog.
+        (function () {
+          var modal = document.getElementById('cancelModal');
+          if (!modal) return;
+          var triggerBtn = document.getElementById('rescheduleBtn');
+          var closeBtn = document.getElementById('cancelModalClose');
+          function getFocusables() {
+            return modal.querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])');
+          }
+          function openModal() {
+            modal.style.display = 'flex';
+            modal.setAttribute('aria-hidden', 'false');
+            var f = getFocusables(); if (f.length) f[0].focus();
+          }
+          function closeModal() {
+            modal.style.display = 'none';
+            modal.setAttribute('aria-hidden', 'true');
+            if (triggerBtn) triggerBtn.focus();
+          }
+          if (triggerBtn) triggerBtn.addEventListener('click', openModal);
+          if (closeBtn) closeBtn.addEventListener('click', closeModal);
+          modal.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') { e.preventDefault(); closeModal(); return; }
+            if (e.key !== 'Tab') return;
+            var f = getFocusables(); if (!f.length) return;
+            var first = f[0], last = f[f.length - 1];
+            if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+            else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+          });
+          // Click the backdrop (the modal itself, outside the inner panel) closes.
+          modal.addEventListener('click', function (e) {
+            if (e.target === modal) closeModal();
+          });
+        })();
+      </script>
 
       <script>
         (function () {
@@ -103,21 +195,94 @@
           // Confirm WA
           var c = document.getElementById('confirmWA');
           if (c) c.href = 'https://wa.me/971505556795?text=' + encodeURIComponent('Hi Kanaan, confirming booking ' + id);
-          // Reschedule modal wiring
+          // Reschedule modal wiring (open/close + focus management lives in the
+          // dedicated a11y IIFE in the previous <script>; here we only set the
+          // booking-specific WhatsApp links so the user's ID is included).
           var modal = document.getElementById('cancelModal');
           var btn = document.getElementById('rescheduleBtn');
           if (btn && modal) {
-            btn.addEventListener('click', function () { modal.style.display = 'flex'; });
-            document.getElementById('actReschedule').href = 'https://wa.me/971505556795?text=' + encodeURIComponent('Hi Kanaan, I need to RESCHEDULE booking ' + id + ' (' + branch + ', ' + date + ' ' + time + '). Thank you.');
-            document.getElementById('actCancel').href = 'https://wa.me/971505556795?text=' + encodeURIComponent('Hi Kanaan, I need to CANCEL booking ' + id + ' (' + branch + ', ' + date + ' ' + time + '). Thank you.');
+            var act1 = document.getElementById('actReschedule');
+            var act2 = document.getElementById('actCancel');
+            if (act1) act1.href = 'https://wa.me/971505556795?text=' + encodeURIComponent('Hi Kanaan, I need to RESCHEDULE booking ' + id + ' (' + branch + ', ' + date + ' ' + time + '). Thank you.');
+            if (act2) act2.href = 'https://wa.me/971505556795?text=' + encodeURIComponent('Hi Kanaan, I need to CANCEL booking ' + id + ' (' + branch + ', ' + date + ' ' + time + '). Thank you.');
           }
-          // Render QR code (uses Google Chart API as a simple no-dependency QR generator)
+          // Render QR code — each booking gets a unique URL.
+          // Scanning the QR re-opens *this* customer's confirmation page (with all
+          // booking params). Branch staff can also scan it at the chair to verify.
           var qrId = document.getElementById('qrId');
           if (qrId) qrId.textContent = id || '—';
           var qr = document.getElementById('qr');
+          // Use the configured public site URL so the QR encodes a real,
+          // scannable URL even when generated on local dev. Falls back to
+          // location.origin if config isn't loaded.
+          var siteUrl = (window.KANAAN_CONFIG && window.KANAAN_CONFIG.site && window.KANAAN_CONFIG.site.url) || location.origin;
+          var bookingUrl = siteUrl.replace(/\/$/, '') + location.pathname + '?' + p.toString();
+          var qrApiBase = 'https://api.qrserver.com/v1/create-qr-code/';
           if (qr && id) {
-            var data = encodeURIComponent('KANAAN BOOKING\n' + id + '\nBranch: ' + branch + '\nWhen: ' + date + ' ' + time);
-            qr.innerHTML = '<img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&margin=0&data=' + data + '" alt="Booking QR ' + id + '" width="140" height="140" loading="lazy" decoding="async" />';
+            // 200x200 displayed on the page; download button fetches a 600x600 copy.
+            qr.innerHTML = '<img id="qrImg" src="' + qrApiBase + '?size=200x200&margin=0&data=' + encodeURIComponent(bookingUrl) + '" alt="Booking QR ' + id + '" width="200" height="200" loading="lazy" decoding="async" />';
+          }
+
+          // Download QR — fetches a hi-res 600x600 PNG and triggers a save.
+          var dlBtn = document.getElementById('downloadQrBtn');
+          if (dlBtn && id) {
+            dlBtn.addEventListener('click', async function () {
+              var url = qrApiBase + '?size=600x600&margin=12&data=' + encodeURIComponent(bookingUrl) + '&format=png';
+              try {
+                var res = await fetch(url);
+                if (!res.ok) throw new Error('fetch failed');
+                var blob = await res.blob();
+                var href = URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = href;
+                a.download = 'kanaan-booking-' + id + '.png';
+                document.body.appendChild(a); a.click(); a.remove();
+                setTimeout(function () { URL.revokeObjectURL(href); }, 1000);
+              } catch (e) {
+                // Fallback for older browsers / offline: open the QR image in a new tab
+                // so the user can long-press to save.
+                window.open(url, '_blank', 'noopener');
+              }
+            });
+          }
+
+          // ---- Apple Wallet & Google Wallet ----
+          // Both buttons are hidden until KANAAN_CONFIG.wallet.* is configured.
+          // Apple Wallet requires a signed .pkpass (server-side, Apple Developer cert).
+          // Google Wallet requires a signed JWT from a service account.
+          // We expose a hook so a backend (or Make.com / Zapier) can return a save-link
+          // per booking. Until configured, the buttons stay hidden.
+          var wcfg = (window.KANAAN_CONFIG && window.KANAAN_CONFIG.wallet) || {};
+
+          // Apple Wallet — expects an endpoint that returns a Content-Type:
+          //   application/vnd.apple.pkpass for the booking ID. Browser auto-installs.
+          var appleBtn = document.getElementById('appleWalletBtn');
+          if (appleBtn && id && wcfg.applePassEndpoint) {
+            appleBtn.hidden = false;
+            appleBtn.style.display = '';  // clear inline display:none so the button shows in the grid
+            appleBtn.innerHTML = '<svg style="width:14px;height:14px;vertical-align:-2px;display:inline-block;margin-right:4px;" viewBox="0 0 384 512" fill="currentColor"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg> Add to Apple Wallet';
+            appleBtn.addEventListener('click', function () {
+              window.location.href = wcfg.applePassEndpoint.replace('{id}', encodeURIComponent(id));
+            });
+          }
+
+          // Google Wallet — expects an endpoint that returns a save URL like
+          //   https://pay.google.com/gp/v/save/<JWT>. We open it in a new tab.
+          var googleBtn = document.getElementById('googleWalletBtn');
+          if (googleBtn && id && wcfg.googleSaveEndpoint) {
+            googleBtn.hidden = false;
+            googleBtn.style.display = '';
+            googleBtn.innerHTML = '<svg style="width:14px;height:14px;vertical-align:-2px;display:inline-block;margin-right:4px;" viewBox="0 0 24 24" fill="currentColor"><path d="M21 7H3a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1zm-1 8H4V9h16v6z"/></svg> Save to Google Wallet';
+            googleBtn.addEventListener('click', async function () {
+              try {
+                var res = await fetch(wcfg.googleSaveEndpoint.replace('{id}', encodeURIComponent(id)));
+                if (!res.ok) throw new Error('endpoint error');
+                var j = await res.json();
+                if (j && j.saveUrl) window.open(j.saveUrl, '_blank', 'noopener');
+              } catch (e) {
+                console.warn('[Google Wallet] save endpoint failed', e);
+              }
+            });
           }
           // Wallet pass (.ics calendar invite — works for Apple + Google calendars)
           var w = document.getElementById('walletBtn');
@@ -134,6 +299,96 @@
           }
           // Notify main.js to capture phone for returning-customer detection
           var phone = p.get('phone'); if (phone) document.dispatchEvent(new CustomEvent('kanaan:booking-success', { detail: { phone: phone } }));
+        })();
+      </script>
+
+      <!-- ============================================================
+           Real booking verification: fetches the row from Supabase by ID,
+           proves it's a real booking (not a spoofed URL), shows live status,
+           and overwrites the URL-param summary with DB-of-record values.
+           Polls every 12s so if branch staff mark Confirmed/Completed via
+           the scan page, the customer sees it update without refreshing.
+           ============================================================ -->
+      <script>
+        (function () {
+          var p = new URLSearchParams(location.search);
+          var id = p.get('id') || '';
+          if (!id) return;
+          var sb = (window.KANAAN_CONFIG && window.KANAAN_CONFIG.supabase) || {};
+          if (!sb.url || !sb.anonKey) return; // local dev / not configured — keep URL-param mode
+          var STATUS_LABEL = { new: 'Pending confirmation', confirmed: 'Confirmed', completed: 'Completed', no_show: 'No-show', cancelled: 'Cancelled' };
+          var STATUS_COLOR = {
+            new:       { color: 'var(--c-gold)',  border: 'var(--c-gold)'  },
+            confirmed: { color: 'var(--c-sage)',  border: 'var(--c-sage)'  },
+            completed: { color: 'var(--c-sage)',  border: 'var(--c-sage)'  },
+            no_show:   { color: 'var(--c-rust)',  border: 'var(--c-rust)'  },
+            cancelled: { color: 'var(--c-rust)',  border: 'var(--c-rust)'  }
+          };
+          var pill = document.getElementById('statusPill');
+          var badge = document.getElementById('verifyBadge');
+
+          function setField(key, val) {
+            var el = document.querySelector('[data-field="' + key + '"]');
+            if (el && val) el.textContent = val;
+          }
+
+          async function verify() {
+            try {
+              var url = sb.url + '/rest/v1/' + (sb.table || 'bookings') +
+                        '?id=eq.' + encodeURIComponent(id) +
+                        '&select=id,status,branch,service,booking_date,booking_time';
+              var r = await fetch(url, {
+                headers: { 'apikey': sb.anonKey, 'Authorization': 'Bearer ' + sb.anonKey }
+              });
+              if (!r.ok) return false;
+              var rows = await r.json();
+              if (!rows.length) return false;
+              var b = rows[0];
+              // DB is the source of truth — overwrite the summary with its values.
+              setField('branch',  b.branch);
+              setField('service', b.service);
+              setField('date',    b.booking_date);
+              setField('time',    (b.booking_time || '').slice(0, 5));
+              // Show the ✓ Verified badge.
+              if (badge) badge.style.display = 'inline-block';
+              // Render the live status pill next to "Booking received".
+              if (pill) {
+                var s = String(b.status || 'new');
+                var c = STATUS_COLOR[s] || STATUS_COLOR.new;
+                pill.textContent = STATUS_LABEL[s] || s;
+                pill.style.color = c.color;
+                pill.style.borderColor = c.border;
+                pill.style.display = 'inline-block';
+              }
+              return true;
+            } catch (e) {
+              return false;
+            }
+          }
+
+          // First check runs on load. Edge function may take ~1s to propagate
+          // the INSERT, so retry a few times before giving up.
+          (async function () {
+            for (var i = 0; i < 6; i++) {
+              if (await verify()) break;
+              await new Promise(function (r) { setTimeout(r, 800 * (i + 1)); });
+            }
+          })();
+
+          // Live status polling — every 12s. Cheap (single-row PostgREST query
+          // with caching) and stops once the booking lands in a terminal state.
+          var poll = setInterval(async function () {
+            var ok = await verify();
+            if (!ok) return;
+            var pillTxt = pill && pill.textContent;
+            if (pillTxt === 'Completed' || pillTxt === 'Cancelled' || pillTxt === 'No-show') {
+              clearInterval(poll);
+            }
+          }, 12000);
+          // Stop polling when the tab is hidden (battery + bandwidth).
+          document.addEventListener('visibilitychange', function () {
+            if (document.hidden) clearInterval(poll);
+          });
         })();
       </script>
 
@@ -184,7 +439,7 @@
           <p>Kanaan offers and updates, once a month — no more.</p>
         </div>
         <form data-newsletter-form>
-          <input type="email" required placeholder="Your email address" />
+          <input type="email" name="email" required placeholder="Your email address" aria-label="Email address" />
           <button type="submit" class="btn btn--sm">Subscribe</button>
         </form>
       </div>
@@ -199,7 +454,7 @@
   <script src="assets/js/consent.js" defer></script>
 
   <script src="assets/js/runtime.js"></script>
-  <script src="assets/js/main.js"></script>
+  <script src="assets/js/main.js?v=25"></script>
   <script src="assets/js/nav-dropdown.js" defer></script>
   <script src="assets/js/motion.js?v=18" defer></script>
   <script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){});});}</script>

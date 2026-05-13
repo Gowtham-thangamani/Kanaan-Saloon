@@ -5,13 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="noindex" />
   <title>Search | Kanaan Gents Salon &amp; Spa</title>
+  <meta name="description" content="Search Kanaan — find a branch, service, offer, or guide across all 10 Abu Dhabi houses." />
   <link rel="stylesheet" href="assets/css/fonts.css" />
-  <link rel="stylesheet" href="assets/css/style.css" />
-  <link rel="stylesheet" href="assets/css/motion.css?v=18" />
+  <link rel="stylesheet" href="assets/css/style.css?v=3" />
+  <link rel="stylesheet" href="assets/css/motion.css?v=19" />
   <script id="motion-pre-paint">(function(){if(!window.matchMedia||!window.matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.classList.add("motion-ready");}})();</script>
-  <link rel="canonical" href="/search.html" />
-  <link rel="alternate" hreflang="en" href="/search.html" />
-  <link rel="alternate" hreflang="ar" href="/ar/search.html" />
+  <link rel="canonical" href="https://kanaanspa.ae/search.html" />
+  <link rel="alternate" hreflang="en" href="https://kanaanspa.ae/search.html" />
+  <link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/search.html" />
+  <link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/search.html" />
 
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Search | Kanaan Gents Salon &amp; Spa" />
@@ -32,10 +34,10 @@
   <a href="#main" class="skip-link">Skip to content</a>
   <header class="site-header">
     <div class="site-header__inner">
-      <a href="index.html" class="logo logo--text"><span class="logo__mark" aria-hidden="true"><i></i></span><span class="logo__word">KANAAN<span class="logo__dot">.</span></span><span class="logo__sub">Gents Salon &amp; Spa</span></a>
+      <a href="index.html" class="logo" aria-label="Kanaan Gents Salon &amp; Spa — home"><img src="assets/img/logo.svg" alt="Kanaan Gents Salon &amp; Spa" class="logo-img" /></a>
       <nav class="main-nav">
-        <a href="index.html">Home</a><a href="services.html">Services</a>
-        <div class="nav-dd"><button class="nav-dd__trigger" type="button">Branches <i class="nav-dd__caret" aria-hidden="true"></i></button><div class="nav-dd__panel"><div class="nav-dd__col"><h6>Abu Dhabi</h6><ul><li><a href="branches/khalifa-city.html"><span>Khalifa City</span></a></li><li><a href="branches/khalidiya.html"><span>Khalidiya</span></a></li><li><a href="branches/baniyas-spa.html"><span>Baniyas Spa</span><span class="nav-dd__type">Spa</span></a></li><li><a href="branches/baniyas-barber.html"><span>Baniyas Barber</span><span class="nav-dd__type">Barber</span></a></li><li><a href="branches/rabdan.html"><span>Rabdan</span></a></li><li><a href="branches/old-shahamah.html"><span>Old Shahamah</span></a></li><li><a href="branches/new-shahamah.html"><span>New Shahamah</span></a></li><li><a href="branches/muroor.html"><span>Muroor</span><span class="nav-dd__type">Barber</span></a></li><li><a href="branches/vip-muroor.html"><span>VIP Muroor</span><span class="nav-dd__type">VIP</span></a></li></ul></div><div class="nav-dd__col"><h6>Al Ain</h6><ul><li><a href="branches/al-ain.html"><span>Al Ain</span></a></li></ul></div><div class="nav-dd__foot"><a href="branches.html">View all branches →</a><span>10 houses · One standard</span></div></div></div><a href="contact.html">Contact</a>
+        <a href="index.html">Home</a>
+        <a href="branches.html">Houses &amp; Services</a><a href="contact.html">Contact</a>
       </nav>
       <div class="header-actions">
         <a href="ar/index.html" class="lang-switch">عربي</a>
@@ -73,7 +75,7 @@
           <p>Kanaan offers and updates, once a month — no more.</p>
         </div>
         <form data-newsletter-form>
-          <input type="email" required placeholder="Your email address" />
+          <input type="email" name="email" required placeholder="Your email address" aria-label="Email address" />
           <button type="submit" class="btn btn--sm">Subscribe</button>
         </form>
       </div>
@@ -84,30 +86,39 @@
   <script>
     const INDEX = [
       { t: 'Home', d: 'Welcome to Kanaan', u: 'index.html', tags: 'home kanaan' },
-      { t: 'About Kanaan', d: 'Our story, our standard', u: 'about.html', tags: 'about story team' },
-      { t: 'Services', d: 'All grooming services', u: 'services.html', tags: 'services' },
-      { t: 'Hair & Beard', d: 'Cuts, shaves, beard sculpt', u: 'services/hair-beard.html', tags: 'haircut beard shave' },
-      { t: 'Facial & Skin Care', d: 'Facials, hydra, anti-fatigue', u: 'services/facial-skin-care.html', tags: 'facial skin hydra' },
-      { t: 'Massage', d: 'Swedish, deep-tissue, sports', u: 'services/massage.html', tags: 'massage swedish deep tissue' },
-      { t: 'Moroccan Bath', d: 'Hammam ritual, kessa exfoliation', u: 'services/moroccan-bath.html', tags: 'moroccan bath hammam' },
-      { t: 'Manicure & Pedicure', d: 'Hand and foot care', u: 'services/manicure-pedicure.html', tags: 'manicure pedicure nails' },
-      { t: 'Hair Treatment', d: 'Protein, keratin, scalp', u: 'services/hair-treatment.html', tags: 'protein keratin scalp' },
-      { t: 'Grooming Packages', d: 'Multi-service packages', u: 'services/grooming-packages.html', tags: 'package bundle' },
-      { t: 'Offers', d: 'Curated offers and promotions', u: 'offers.html', tags: 'offer package promotion' },
-      { t: 'Branches', d: 'All 10 Kanaan houses', u: 'branches.html', tags: 'branches locations' },
+      { t: 'About Kanaan', d: 'Our story, our standard, our team', u: 'about.html', tags: 'about story team founders' },
+      { t: 'Menu & Prices', d: 'Every service at every branch, with prices', u: 'menu.html', tags: 'menu price prices cost rates services' },
+      { t: 'Services', d: 'Pick a branch to see its full menu', u: 'services.html', tags: 'services branches pick choose' },
+      { t: 'Hair & Beard', d: 'Cuts, shaves, beard sculpt', u: 'services/hair-beard.html', tags: 'haircut beard shave colouring' },
+      { t: 'Facial & Skin Care', d: 'Facials, hydra, anti-fatigue', u: 'services/facial-skin-care.html', tags: 'facial skin hydra cleansing' },
+      { t: 'Massage', d: 'Swedish, deep-tissue, sports, hot stone', u: 'services/massage.html', tags: 'massage swedish deep tissue thai hot stone' },
+      { t: 'Moroccan Bath', d: 'Hammam ritual, kessa exfoliation', u: 'services/moroccan-bath.html', tags: 'moroccan bath hammam steam kessa' },
+      { t: 'Manicure & Pedicure', d: 'Hand and foot care', u: 'services/manicure-pedicure.html', tags: 'manicure pedicure nails foot' },
+      { t: 'Hair Treatment', d: 'Protein, keratin, scalp', u: 'services/hair-treatment.html', tags: 'protein keratin scalp treatment oil bath' },
+      { t: 'Grooming Packages', d: 'Multi-service packages', u: 'services/grooming-packages.html', tags: 'package bundle 6 8 service vip hour' },
+      { t: 'Offers', d: 'Curated offers and promotions', u: 'offers.html', tags: 'offer package promotion discount' },
+      { t: 'Branches', d: 'All 10 Kanaan houses', u: 'branches.html', tags: 'branches locations find nearest near me' },
       { t: 'Kanaan Al Ain', d: 'Al Ain branch', u: 'branches/al-ain.html', tags: 'al ain' },
       { t: 'Kanaan Khalifa City', d: 'Khalifa City branch', u: 'branches/khalifa-city.html', tags: 'khalifa city abu dhabi' },
       { t: 'Kanaan Khalidiya', d: 'Khalidiya branch', u: 'branches/khalidiya.html', tags: 'khalidiya abu dhabi' },
       { t: 'Kanaan Baniyas Spa', d: 'Spa-led house', u: 'branches/baniyas-spa.html', tags: 'baniyas spa' },
-      { t: 'Kanaan Baniyas Barber', d: 'Master barber room', u: 'branches/baniyas-barber.html', tags: 'baniyas barber' },
+      { t: 'Kanaan Baniyas Barber', d: 'Master barber room', u: 'branches/baniyas-barber.html', tags: 'baniyas barber east' },
       { t: 'Kanaan Rabdan', d: 'Rabdan branch', u: 'branches/rabdan.html', tags: 'rabdan abu dhabi' },
-      { t: 'Kanaan Old Shahamah', d: 'Old Shahamah branch', u: 'branches/old-shahamah.html', tags: 'shahamah' },
-      { t: 'Kanaan New Shahamah', d: 'New Shahamah branch', u: 'branches/new-shahamah.html', tags: 'shahamah' },
+      { t: 'Kanaan Old Shahamah', d: 'Old Shahamah branch', u: 'branches/old-shahamah.html', tags: 'shahamah old' },
+      { t: 'Kanaan New Shahamah', d: 'New Shahamah branch', u: 'branches/new-shahamah.html', tags: 'shahamah new' },
       { t: 'Kanaan Muroor', d: 'Muroor branch', u: 'branches/muroor.html', tags: 'muroor' },
-      { t: 'Kanaan VIP Muroor', d: 'Private VIP suite, by appointment', u: 'branches/vip-muroor.html', tags: 'vip muroor private' },
-      { t: 'Gallery', d: 'Inside the houses', u: 'gallery.html', tags: 'gallery photos' },
-      { t: 'Book Now', d: 'Online booking', u: 'book.html', tags: 'book booking appointment' },
-      { t: 'Contact', d: 'Get in touch', u: 'contact.html', tags: 'contact email phone' }
+      { t: 'Kanaan VIP Muroor', d: 'Private VIP suite, by appointment', u: 'branches/vip-muroor.html', tags: 'vip muroor private suite' },
+      { t: 'Gallery', d: 'Inside the houses', u: 'gallery.html', tags: 'gallery photos interior' },
+      { t: 'Before & After', d: 'Real customer transformations', u: 'before-after.html', tags: 'before after transformation results photos' },
+      { t: 'Book Now', d: 'Online booking', u: 'book.html', tags: 'book booking appointment reserve' },
+      { t: 'Contact', d: 'Get in touch — FAQ + form + phone', u: 'contact.html', tags: 'contact email phone whatsapp faq' },
+      { t: 'Careers', d: 'Join the Kanaan team', u: 'careers.html', tags: 'careers jobs hiring apply cv' },
+      { t: 'Corporate', d: 'Corporate accounts and packages', u: 'corporate.html', tags: 'corporate business team event group' },
+      { t: 'Gift Vouchers', d: 'A grooming gift that always fits', u: 'gift-voucher.html', tags: 'gift voucher coupon present' },
+      { t: 'Beard Care in Abu Dhabi', d: 'Climate-specific beard advice', u: 'blog/beard-care-abu-dhabi.html', tags: 'beard care climate humid dry oil blog' },
+      { t: 'Choosing the Right Facial', d: 'Guide to facial selection', u: 'blog/choosing-the-right-facial.html', tags: 'facial skin guide blog' },
+      { t: 'A Moroccan Bath, Explained', d: 'The hammam ritual in detail', u: 'blog/moroccan-bath-guide.html', tags: 'moroccan bath hammam steam blog guide' },
+      { t: 'Insights', d: 'Grooming and spa journal', u: 'blog.html', tags: 'blog insights articles journal' }
     ];
     const r = document.getElementById('results'), e = document.getElementById('empty');
     function render(q) {

@@ -6,11 +6,21 @@
 window.KANAAN_CONFIG = {
 
   /* ============================================================
+     SITE — public production URL used in the QR code on thank-you.html.
+     The QR encodes `<site.url>/thank-you.html?id=…` so scanning works on
+     any phone after deploy. In local dev this means the QR still encodes
+     the live URL instead of 127.0.0.1 (which a phone scanner can't reach).
+     ============================================================ */
+  site: {
+    url: 'https://kanaanspa.ae'
+  },
+
+  /* ============================================================
      TRACKING IDS — replace each placeholder when ready
      ============================================================ */
   tracking: {
     gtmId: '',          // e.g. 'GTM-XXXXXXX'  — Google Tag Manager
-    ga4Id: '',          // e.g. 'G-XXXXXXXXXX' — Google Analytics 4 (only if not loaded via GTM)
+    ga4Id: 'G-7GVEFWMT85', // Google Analytics 4 (only if not loaded via GTM)
     metaPixelId: '',    // e.g. '123456789012345' — Meta (Facebook/Instagram) Pixel
     tiktokPixelId: '',  // e.g. 'CXXXXXXXXXXXXXXXX' — TikTok Pixel
     snapPixelId: '',    // e.g. 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx' — Snapchat Pixel
@@ -58,17 +68,30 @@ window.KANAAN_CONFIG = {
      Free tier: 500 MB. Admin panel warns at 80%.
      ============================================================ */
   supabase: {
-    url:      '',     // e.g. 'https://xxxxxxx.supabase.co'
-    anonKey:  '',     // your anon/public key from Project Settings → API
+    url:      'https://ckqioeixkwuxrcybsoew.supabase.co',
+    anonKey:  'sb_publishable_UQDMxcrZKcQBJc2UQffe0Q_NLTnuyjh',
     table:    'bookings',
     maxSizeMB: 500
+  },
+
+  /* ============================================================
+     APPLE / GOOGLE WALLET
+     Both buttons on the thank-you page stay hidden until the
+     respective endpoint is configured. Apple needs a server-side
+     route that returns a signed `.pkpass` for a booking ID.
+     Google needs a service-account-signed JWT.
+     See LAUNCH_CHECKLIST.md → "Wallet integration" for setup.
+     ============================================================ */
+  wallet: {
+    applePassEndpoint:  '',  // e.g. 'https://api.kanaanspa.ae/wallet/apple/{id}'
+    googleSaveEndpoint: ''   // e.g. 'https://api.kanaanspa.ae/wallet/google/{id}'
   },
 
   /* ============================================================
      CONTACT
      ============================================================ */
   contact: {
-    centralPhone: '+971505556795',
+    centralPhone: '+971 50 555 6795',
     centralWhatsApp: '971505556795',
     email: 'kanaansaloon@gmail.com'
   },

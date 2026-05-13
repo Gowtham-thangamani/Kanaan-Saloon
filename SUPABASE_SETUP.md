@@ -1,7 +1,7 @@
 # Kanaan Booking DB — Supabase Setup
 
-Total time: ~20 minutes. Cost: **$0/month** as long as you stay under 500 MB.
-Result: every booking → row in Supabase Postgres + email to kanaansaloon@gmail.com + admin panel reads cross-device in real time.
+Total time: ~30 minutes. Cost: **$0/month** as long as you stay under 500 MB.
+Result: every booking, contact form, newsletter signup, careers application, and gift voucher → row in Supabase Postgres. Admin panel reads cross-device in real time using Supabase Auth.
 
 **Capacity:** ~500 MB on free tier. Realistic load = 10 branches × 30 bookings/day × 365 = 110 k rows/year → roughly **5+ years before you hit the limit**. The admin dashboard will warn you at 80% (≈ 400 MB).
 
@@ -19,59 +19,45 @@ Result: every booking → row in Supabase Postgres + email to kanaansaloon@gmail
 
 ---
 
-## STEP 2 — Create the `bookings` table
+## STEP 2 — Apply the migrations
 
-1. Left sidebar → **SQL Editor** → click **New query**.
-2. Paste **this entire SQL block** and click **Run**:
+Two migration files live in `/supabase/migrations/`:
 
-```sql
--- Kanaan bookings table
-create table public.bookings (
-  id           text primary key,
-  created_at   timestamptz not null default now(),
-  status       text not null default 'new',
-  branch       text,
-  service      text,
-  booking_date date,
-  booking_time time,
-  name         text,
-  phone        text,
-  email        text,
-  dob          date,
-  message      text,
-  source       text,
-  campaign     text,
-  locale       text default 'en'
-);
+- `20260507000000_init_bookings.sql` — `bookings` table + tightened RLS (anon INSERT only; reads/updates require an authenticated admin).
+- `20260509000000_add_forms_tables.sql` — `contacts`, `newsletter`, `careers`, `vouchers` tables and the `careers-cv` Storage bucket.
 
--- Indexes for fast filtering
-create index bookings_phone_idx     on public.bookings (phone);
-create index bookings_branch_idx    on public.bookings (branch);
-create index bookings_status_idx    on public.bookings (status);
-create index bookings_created_idx   on public.bookings (created_at desc);
+You have two ways to apply them:
 
--- Row-level security: anyone can INSERT (the form), anyone can SELECT (admin panel reads).
--- The anon key is what authenticates these calls. Tighten later with real auth if needed.
-alter table public.bookings enable row level security;
+### Option A — Supabase CLI (recommended)
 
-create policy "anyone can insert"
-  on public.bookings for insert
-  to anon, authenticated
-  with check (true);
-
-create policy "anyone can read"
-  on public.bookings for select
-  to anon, authenticated
-  using (true);
-
-create policy "anyone can update status"
-  on public.bookings for update
-  to anon, authenticated
-  using (true)
-  with check (true);
+```bash
+npx supabase login
+npx supabase link --project-ref <your-project-ref>
+npx supabase db push
 ```
 
-3. You should see "Success. No rows returned." That's correct — the table is empty.
+### Option B — Paste into SQL Editor
+
+1. Left sidebar → **SQL Editor** → **New query**.
+2. Paste the entire contents of `supabase/migrations/20260507000000_init_bookings.sql` → **Run**.
+3. Repeat for `supabase/migrations/20260509000000_add_forms_tables.sql`.
+
+You should see "Success. No rows returned." after each one.
+
+---
+
+## STEP 2.5 — Create the admin auth users
+
+The admin panel logs in via **Supabase Auth** (not a hard-coded password). To add an admin:
+
+1. Sidebar → **Authentication → Providers** → ensure **Email** is enabled.
+2. Sidebar → **Authentication → Users** → **Add user → Create new user**.
+3. Enter the admin's email (e.g. `kanaansaloon@gmail.com`) and a strong password. Tick **Auto Confirm User**.
+4. Repeat for any additional admin staff. Each gets their own email + password — no shared credentials.
+
+To **remove** access: delete the user from this same screen. To **rotate** a password: ask the admin to change it from `/admin/settings.html`, or use the dashboard's "Send password recovery" button.
+
+> **Why this matters:** the new RLS policies only let `authenticated` users read or update bookings. The publishable anon key alone can't read your customer data — anyone trying to scrape it without a session token gets nothing back.
 
 ---
 

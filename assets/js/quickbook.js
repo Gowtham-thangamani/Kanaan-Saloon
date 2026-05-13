@@ -52,15 +52,23 @@
   var form = root.querySelector('.qb-form');
   var branchSelect = root.querySelector('select[name="branch"]');
 
-  // Populate branches from runtime data once it's ready, or fall back to a static list
+  // Populate branches from runtime data once it's ready, or fall back to a static list.
+  // Accepts either the raw array OR an object wrapping it (e.detail.branches can be
+  // either depending on whether KANAAN_DATA is normalised yet).
   function populateBranches(branches) {
+    if (branches && !Array.isArray(branches) && Array.isArray(branches.branches)) {
+      branches = branches.branches;          // unwrap { branches: [...] }
+    }
+    if (!Array.isArray(branches)) return;    // bad data — leave the static fallback
     branchSelect.innerHTML = '<option value="">—</option>' + branches.map(function (b) {
       var name = isAr ? (b.name_ar || b.name_en) : b.name_en;
       return '<option>' + name + '</option>';
     }).join('');
   }
   document.addEventListener('kanaan:data-ready', function (e) {
-    if (e.detail && e.detail.branches) populateBranches(e.detail.branches);
+    if (!e.detail) return;
+    // Handle both shapes: e.detail.branches OR the whole detail being branches.
+    populateBranches(e.detail.branches || e.detail);
   });
   // Fallback static list
   populateBranches([

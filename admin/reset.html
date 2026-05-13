@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Reset password · Kanaan Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+  <div class="login">
+    <!-- Set new password (visible only if a valid recovery token is in the URL) -->
+    <form class="login__card" id="resetForm" style="display: none;">
+      <h1 class="login__brand">KANAAN<span>.</span></h1>
+      <p class="login__sub">Choose a new password</p>
+      <p id="resetEmail" style="font-size: 13px; color: var(--muted); margin: 0 0 16px;"></p>
+
+      <label for="pw1">New password</label>
+      <input type="password" id="pw1" class="input" autocomplete="new-password" minlength="8" required />
+
+      <label for="pw2" style="margin-top: 12px;">Confirm new password</label>
+      <input type="password" id="pw2" class="input" autocomplete="new-password" minlength="8" required />
+
+      <ul style="font-size: 11px; color: var(--muted); margin: 8px 0 0; padding-left: 16px; line-height: 1.6;">
+        <li id="rule-len">At least 8 characters</li>
+        <li id="rule-letter">At least one letter (A–Z)</li>
+        <li id="rule-num">At least one number (0–9)</li>
+        <li id="rule-sym">At least one symbol (! @ # $ etc)</li>
+        <li id="rule-diff">Different from your current password</li>
+      </ul>
+
+      <div style="margin-top: 24px;"><button type="submit" class="btn" style="width: 100%; justify-content: center;">Update password</button></div>
+      <div id="msg" style="margin-top: 12px; font-size: 13px; display: none;"></div>
+    </form>
+
+    <!-- Shown when the URL doesn't contain a valid recovery token -->
+    <div class="login__card" id="invalidCard" style="display: none;">
+      <h1 class="login__brand">KANAAN<span>.</span></h1>
+      <p class="login__sub">Reset link issue</p>
+      <p style="font-size: 14px; color: var(--muted); margin: 0 0 16px; line-height: 1.6;">This password-reset link is invalid or has expired. Reset links are valid for 1 hour from when the email was sent.</p>
+      <a href="index.html" class="btn" style="width: 100%; justify-content: center;">Request a new link</a>
+    </div>
+  </div>
+
+  <script src="../assets/js/config.js"></script>
+  <script src="admin.js"></script>
+  <script>
+    /* Parse Supabase's recovery payload from the URL hash. The magic link
+       lands here with a hash like:
+         #access_token=...&refresh_token=...&expires_in=3600&token_type=bearer
+         &type=recovery&user=... (in some envs)                              */
+    function parseHash() {
+      const h = (location.hash || '').replace(/^#/, '');
+      if (!h) return null;
+      const params = new URLSearchParams(h);
+      const out = {};
+      params.forEach((v, k) => { out[k] = v; });
+      return out;
+    }
+
+    /* Wait for the Supabase config to be loaded. */
+    function bootstrap() {
+      const tokens = parseHash();
+      const resetForm = document.getElementById('resetForm');
+      const invalidCard = document.getElementById('invalidCard');
+      const msgEl = document.getElementById('msg');
+
+      // No token, or wrong type → show the "invalid link" card.
+      if (!tokens || !tokens.access_token || (tokens.type && tokens.type !== 'recovery')) {
+        invalidCard.style.display = '';
+        return;
+      }
+
+      // Persist the recovery session locally so KANAAN_ADMIN.setPassword() works.
+      const consumed = KANAAN_ADMIN.consumeRecoveryToken({
+        access_token:  tokens.access_token,
+        refresh_token: tokens.refresh_token || '',
+        expires_in:    parseInt(tokens.expires_in || '3600', 10),
+        expires_at:    Math.floor(Date.now() / 1000) + parseInt(tokens.expires_in || '3600', 10),
+        token_type:    tokens.token_type || 'bearer',
+        user:          {} // we don't need the full user object; setPassword only needs the access_token
+      });
+      if (!consumed) {
+        invalidCard.style.display = '';
+        return;
+      }
+
+      // Wipe the hash so the token isn't sitting in the URL bar / history.
+      history.replaceState(null, '', location.pathname);
+
+      // Try to fetch the user's email so the form shows whose account is being reset.
+      let userEmail = '';
+      (async function () {
+        try {
+          const sb = (window.KANAAN_CONFIG && window.KANAAN_CONFIG.supabase) || {};
+          const r = await fetch(sb.url + '/auth/v1/user', {
+            headers: {
+              'apikey': sb.anonKey,
+              'Authorization': 'Bearer ' + tokens.access_token
+            }
+          });
+          if (r.ok) {
+            const u = await r.json();
+            if (u && u.email) {
+              userEmail = u.email;
+              document.getElementById('resetEmail').textContent = 'Resetting password for ' + u.email + '.';
+            }
+          }
+        } catch (_) { /* non-fatal — the form still works without the email label */ }
+      })();
+
+      resetForm.style.display = '';
+
+      function showMsg(text, ok) {
+        msgEl.textContent = text;
+        msgEl.style.color = ok ? 'var(--gold)' : 'var(--rust)';
+        msgEl.style.display = 'block';
+      }
+
+      /* Live rule indicators — turn green as the candidate password meets each rule */
+      const pw1 = document.getElementById('pw1');
+      const ruleEls = {
+        len:    document.getElementById('rule-len'),
+        letter: document.getElementById('rule-letter'),
+        num:    document.getElementById('rule-num'),
+        sym:    document.getElementById('rule-sym')
+      };
+      function paintRule(el, ok) {
+        if (!el) return;
+        el.style.color = ok ? 'var(--gold)' : 'var(--muted)';
+        el.style.listStyleType = ok ? '"✓ "' : 'disc';
+      }
+      pw1.addEventListener('input', () => {
+        const v = pw1.value;
+        paintRule(ruleEls.len,    v.length >= 8);
+        paintRule(ruleEls.letter, /[A-Za-z]/.test(v));
+        paintRule(ruleEls.num,    /\d/.test(v));
+        paintRule(ruleEls.sym,    /[^A-Za-z0-9]/.test(v));
+      });
+
+      resetForm.addEventListener('submit', async e => {
+        e.preventDefault();
+        msgEl.style.display = 'none';
+        const a = document.getElementById('pw1').value;
+        const b = document.getElementById('pw2').value;
+        if (a !== b) return showMsg('Passwords do not match.', false);
+
+        // Strength
+        const strength = KANAAN_ADMIN.validatePasswordStrength(a);
+        if (!strength.ok) return showMsg(strength.error, false);
+
+        const btn = resetForm.querySelector('button[type="submit"]');
+        btn.disabled = true;
+        const original = btn.textContent;
+        btn.textContent = 'Checking…';
+
+        // Reject if the new password is the same as the current one
+        if (userEmail) {
+          const dupCheck = await KANAAN_ADMIN.isSameAsCurrentPassword(userEmail, a);
+          if (dupCheck.same) {
+            btn.disabled = false;
+            btn.textContent = original;
+            const ruleDiff = document.getElementById('rule-diff');
+            if (ruleDiff) ruleDiff.style.color = 'var(--rust)';
+            return showMsg('Your new password must be different from your current one.', false);
+          }
+        }
+
+        btn.textContent = 'Updating…';
+        const result = await KANAAN_ADMIN.setPassword(a);
+        btn.disabled = false;
+        btn.textContent = original;
+
+        if (!result.ok) return showMsg('Update failed: ' + result.error, false);
+
+        showMsg('Password updated. Redirecting to sign in…', true);
+        // Sign the user out of the recovery session so they have to log in fresh
+        // with the new password (don't await — let it happen while we redirect).
+        KANAAN_ADMIN.logout();
+      });
+    }
+
+    if (window.KANAAN_ADMIN) bootstrap();
+    else window.addEventListener('load', bootstrap);
+  </script>
+</body>
+</html>

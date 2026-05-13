@@ -10,29 +10,105 @@
 </head>
 <body>
   <div class="login">
+    <!-- Sign-in form -->
     <form class="login__card" id="loginForm">
       <h1 class="login__brand">KANAAN<span>.</span></h1>
       <p class="login__sub">Admin Panel</p>
-      <label for="pw">Password</label>
+      <label for="email">Email</label>
+      <input type="email" id="email" class="input" autocomplete="username" required />
+      <label for="pw" style="margin-top: 12px;">Password</label>
       <input type="password" id="pw" class="input" autocomplete="current-password" required />
-      <p style="font-size: 11px; color: var(--muted); margin: 12px 0 0;">First time? Default password is <code style="color: var(--gold);">kanaan2026</code> — change it from Settings after login.</p>
       <div style="margin-top: 24px;"><button type="submit" class="btn" style="width: 100%; justify-content: center;">Sign in</button></div>
-      <div id="err" style="margin-top: 12px; color: var(--rust); font-size: 13px; display:none;">Wrong password</div>
+      <div style="margin-top: 12px; text-align: right;">
+        <a href="#" id="forgotLink" style="color: var(--gold); font-size: 12px; letter-spacing: 0.06em; text-decoration: underline;">Forgot password?</a>
+      </div>
+      <div id="err" style="margin-top: 12px; color: var(--rust); font-size: 13px; display:none;"></div>
+    </form>
+
+    <!-- Forgot-password form (hidden by default; toggled by the link above) -->
+    <form class="login__card" id="forgotForm" style="display: none;">
+      <h1 class="login__brand">KANAAN<span>.</span></h1>
+      <p class="login__sub">Reset password</p>
+      <p style="font-size: 13px; color: var(--muted); margin: 0 0 16px; line-height: 1.5;">Enter your admin email. If the account exists, we'll send a one-time link to choose a new password.</p>
+      <label for="forgotEmail">Email</label>
+      <input type="email" id="forgotEmail" class="input" autocomplete="username" required />
+      <div style="margin-top: 24px;"><button type="submit" class="btn" style="width: 100%; justify-content: center;">Send reset link</button></div>
+      <div style="margin-top: 12px; text-align: right;">
+        <a href="#" id="backToLogin" style="color: var(--gold); font-size: 12px; letter-spacing: 0.06em; text-decoration: underline;">← Back to sign in</a>
+      </div>
+      <div id="forgotMsg" style="margin-top: 12px; font-size: 13px; display: none;"></div>
     </form>
   </div>
 
+  <script src="../assets/js/config.js"></script>
   <script src="admin.js"></script>
   <script>
-    const f = document.getElementById('loginForm');
-    f.addEventListener('submit', async e => {
+    const loginForm = document.getElementById('loginForm');
+    const forgotForm = document.getElementById('forgotForm');
+    const errEl = document.getElementById('err');
+    const forgotMsg = document.getElementById('forgotMsg');
+
+    function showErr(msg) { errEl.textContent = msg; errEl.style.display = 'block'; }
+    function showForgotMsg(msg, ok) {
+      forgotMsg.textContent = msg;
+      forgotMsg.style.color = ok ? 'var(--gold)' : 'var(--rust)';
+      forgotMsg.style.display = 'block';
+    }
+
+    /* Sign in */
+    loginForm.addEventListener('submit', async e => {
       e.preventDefault();
-      const ok = await KANAAN_ADMIN.login(document.getElementById('pw').value);
-      if (ok) location.href = 'dashboard.html';
-      else document.getElementById('err').style.display = 'block';
+      errEl.style.display = 'none';
+      const email = document.getElementById('email').value.trim();
+      const pw = document.getElementById('pw').value;
+      const result = await KANAAN_ADMIN.login(email, pw);
+      if (result.ok) location.href = 'dashboard.html';
+      else showErr(result.error || 'Sign-in failed');
     });
+
+    /* Forgot-password toggle */
+    document.getElementById('forgotLink').addEventListener('click', e => {
+      e.preventDefault();
+      loginForm.style.display = 'none';
+      forgotForm.style.display = '';
+      // Pre-fill the email from the sign-in form if the user already typed it
+      const typed = document.getElementById('email').value.trim();
+      if (typed) document.getElementById('forgotEmail').value = typed;
+      forgotMsg.style.display = 'none';
+    });
+    document.getElementById('backToLogin').addEventListener('click', e => {
+      e.preventDefault();
+      forgotForm.style.display = 'none';
+      loginForm.style.display = '';
+      errEl.style.display = 'none';
+    });
+
+    /* Send the reset email */
+    forgotForm.addEventListener('submit', async e => {
+      e.preventDefault();
+      forgotMsg.style.display = 'none';
+      const email = document.getElementById('forgotEmail').value.trim();
+      // Build an absolute URL pointing at /admin/reset.html on this host
+      const origin = location.origin;
+      const path = location.pathname.replace(/\/index\.html$/, '/').replace(/\/$/, '/');
+      const redirectTo = origin + path + 'reset.html';
+      const btn = forgotForm.querySelector('button[type="submit"]');
+      btn.disabled = true;
+      const original = btn.textContent;
+      btn.textContent = 'Sending…';
+      const result = await KANAAN_ADMIN.requestPasswordReset(email, redirectTo);
+      btn.disabled = false;
+      btn.textContent = original;
+      if (result.ok) {
+        showForgotMsg('Check your inbox. If an account exists for ' + email + ', a reset link is on its way (valid for 1 hour).', true);
+      } else {
+        showForgotMsg('Could not send the reset email: ' + result.error, false);
+      }
+    });
+
+    /* Already signed in? Skip straight to the dashboard. */
     if (KANAAN_ADMIN.isLoggedIn()) location.href = 'dashboard.html';
   </script>
-  <script src="../assets/js/config.js"></script>
   <script src="../assets/js/tracking.js"></script>
   <script src="../assets/js/consent.js" defer></script>
 </body>

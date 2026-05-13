@@ -48,23 +48,41 @@
     panel.setAttribute('role','dialog');
     wrap.appendChild(panel);
 
+    function clampView() {
+      // Don't allow viewing months that are entirely outside the bookable window.
+      var minMonth = new Date(minDate.getFullYear(), minDate.getMonth(), 1);
+      var maxMonth = new Date(maxDate.getFullYear(), maxDate.getMonth(), 1);
+      if (view < minMonth) view = new Date(minMonth);
+      if (view > maxMonth) view = new Date(maxMonth);
+    }
+
     function render() {
+      clampView();
       var year = view.getFullYear();
       var month = view.getMonth();
       var first = new Date(year, month, 1);
       var startDay = first.getDay();
       var daysInMonth = new Date(year, month + 1, 0).getDate();
 
-      // Year options: today's year ± 1 (we don't allow past years; only this year + next for booking convenience)
-      var yearMin = today.getFullYear();
-      var yearMax = today.getFullYear() + 1;
+      // Year options: only show years that contain at least one bookable day.
+      var yearMin = minDate.getFullYear();
+      var yearMax = maxDate.getFullYear();
       var yearOpts = '';
       for (var yy = yearMin; yy <= yearMax; yy++) {
         yearOpts += '<option value="' + yy + '"' + (yy === year ? ' selected' : '') + '>' + (isAr ? fmtArDigits(String(yy)) : yy) + '</option>';
       }
+      // Month options: only show months that contain at least one bookable day.
       var monthOpts = L.months.map(function (m, i) {
+        var monthStart = new Date(year, i, 1);
+        var monthEnd = new Date(year, i + 1, 0);
+        if (monthEnd < new Date(minDate.getFullYear(), minDate.getMonth(), 1)) return '';
+        if (monthStart > new Date(maxDate.getFullYear(), maxDate.getMonth() + 1, 0)) return '';
         return '<option value="' + i + '"' + (i === month ? ' selected' : '') + '>' + m + '</option>';
-      }).join('');
+      }).filter(Boolean).join('');
+
+      // Hide prev/next when at the bookable bounds.
+      var atMinMonth = (year === minDate.getFullYear() && month === minDate.getMonth());
+      var atMaxMonth = (year === maxDate.getFullYear() && month === maxDate.getMonth());
 
       var headRow = L.days.map(function (d) { return '<div class="cal-dow">' + d + '</div>'; }).join('');
 
@@ -89,10 +107,10 @@
 
       panel.innerHTML =
         '<div class="cal-head">' +
-          '<button type="button" class="cal-nav" data-nav="-1" aria-label="Previous month">‹</button>' +
-          '<select class="cal-month">' + monthOpts + '</select>' +
-          '<select class="cal-year">' + yearOpts + '</select>' +
-          '<button type="button" class="cal-nav" data-nav="1" aria-label="Next month">›</button>' +
+          '<button type="button" class="cal-nav" data-nav="-1" aria-label="Previous month"' + (atMinMonth ? ' disabled' : '') + '>‹</button>' +
+          '<select class="cal-month" aria-label="Month">' + monthOpts + '</select>' +
+          '<select class="cal-year" aria-label="Year">' + yearOpts + '</select>' +
+          '<button type="button" class="cal-nav" data-nav="1" aria-label="Next month"' + (atMaxMonth ? ' disabled' : '') + '>›</button>' +
         '</div>' +
         '<div class="cal-grid cal-grid--head">' + headRow + '</div>' +
         '<div class="cal-grid">' + cells + '</div>' +
@@ -111,6 +129,7 @@
       });
       panel.querySelectorAll('.cal-nav').forEach(function (btn) {
         btn.addEventListener('click', function () {
+          if (btn.disabled) return;
           var delta = parseInt(btn.dataset.nav, 10);
           view.setMonth(view.getMonth() + delta);
           render();

@@ -1,17 +1,15 @@
 {
-  "_DATA_TO_REPLACE": "Replace placeholder values below with real Kanaan data. Anything starting with REPLACE: must be filled before launch.",
   "brand": {
     "name_en": "Kanaan Gents Salon & Spa · Abu Dhabi",
     "name_ar": "كنعان صالون وسبا للرجال · أبوظبي",
     "tagline_en": "Grooming, Refined.",
     "tagline_ar": "عناية، بمعيار راقٍ.",
-    "logo": "REPLACE: /assets/img/logo.svg",
-    "logoMark": "REPLACE: /assets/img/logo-mark.svg",
+    "logo": "/assets/img/logo.svg",
     "primaryHex": "#0E0F11",
     "accentHex": "#C8A04A"
   },
   "contact": {
-    "centralPhone": "+971505556795",
+    "centralPhone": "+971 50 555 6795",
     "centralWhatsApp": "971505556795",
     "tel_url": "tel:+971505556795",
     "wa_url": "https://wa.me/971505556795",
@@ -46,7 +44,7 @@
   "stats": {
     "branches": 10,
     "categories": 7,
-    "founded": "REPLACE: 2018",
+    "founded": "2018",
     "languages": "EN/AR"
   }
 }

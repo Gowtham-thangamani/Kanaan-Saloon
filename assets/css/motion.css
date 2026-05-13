@@ -274,53 +274,56 @@ textarea:focus-visible,
 }
 
 /* ============================================================
-   SCROLL-DRIVEN TEXT REVEAL — luxury word-by-word lighting.
-   Uses IntersectionObserver per-word; falls back gracefully.
-   Apply via [data-scroll-text] attribute (JS splits on init).
+   SCROLL-DRIVEN TEXT REVEAL — DISABLED for readability.
+   The previous word-by-word lighting effect dimmed body copy to 18%
+   opacity until scrolled into view, which left text unreadable on
+   light-background sections regardless of animation state. Reset to
+   solid, inherited color so [data-scroll-text] is a no-op visually.
    ============================================================ */
-.motion-ready [data-scroll-text] .srt-word {
-  display: inline-block;
-  color: rgba(242, 239, 233, 0.18); /* pearl @ 18% — dim baseline */
-  transition: color 700ms cubic-bezier(.2, .8, .2, 1), text-shadow 700ms ease;
-  will-change: color;
+.motion-ready [data-scroll-text] .srt-word,
+.motion-ready [data-scroll-text] .srt-word.is-lit,
+.motion-ready [data-scroll-text-light] .srt-word,
+.motion-ready [data-scroll-text-light] .srt-word.is-lit {
+  display: inline;
+  color: inherit;
+  background: none;
+  transition: none;
+  will-change: auto;
 }
-.motion-ready [data-scroll-text] .srt-word.is-lit {
-  color: var(--c-pearl, #F2EFE9);
+.motion-ready [data-scroll-text],
+.motion-ready [data-scroll-text-light] {
+  color: inherit;
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  -webkit-text-fill-color: initial;
+  animation: none;
+  animation-timeline: auto;
 }
-/* Light theme variant: dark base, dark on lit */
-.motion-ready [data-scroll-text-light] .srt-word { color: rgba(14, 15, 17, 0.18); }
-.motion-ready [data-scroll-text-light] .srt-word.is-lit { color: var(--c-ink, #0E0F11); }
 
-/* Modern scroll-timeline path for browsers that support it (Chrome/Edge 115+, Safari TP) */
-@supports (animation-timeline: view()) {
-  .motion-ready [data-scroll-text] {
-    background: linear-gradient(
-      90deg,
-      var(--c-pearl, #F2EFE9) 0%,
-      var(--c-pearl, #F2EFE9) 33%,
-      var(--c-gold, #C8A04A) 50%,
-      rgba(242, 239, 233, 0.2) 66%,
-      rgba(242, 239, 233, 0.2) 100%
-    );
-    background-size: 300% 100%;
-    background-position: 100% 0;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
-    animation: srt-sweep linear both;
-    animation-timeline: view();
-    animation-range: entry 20% cover 70%;
-  }
-  @keyframes srt-sweep {
-    to { background-position: 0% 0; }
-  }
-  /* When CSS scroll-timeline runs, the JS word spans are no longer needed visually. */
-  .motion-ready [data-scroll-text] .srt-word {
-    color: inherit !important;
-    background: none;
-    transition: none;
-  }
+/* ============================================================
+   REVEAL-ON-SCROLL OVERRIDE — show content immediately.
+   The previous fade/slide-in pattern hid elements until JS added
+   `.is-in` via IntersectionObserver. When that listener failed
+   (e.g. element combined data-reveal AND data-scroll-text), the
+   element stayed invisible. Force always-visible for ALL reveal
+   variants: fade-up, fade-in, scale, mask (banner images), and
+   staggered groups. No transforms, no clip-paths.
+   ============================================================ */
+.motion-ready [data-reveal="up"],
+.motion-ready [data-reveal="in"],
+.motion-ready [data-reveal="scale"],
+.motion-ready [data-reveal-stagger] > * {
+  opacity: 1 !important;
+  transform: none !important;
+}
+.motion-ready [data-reveal="mask"] {
+  -webkit-clip-path: inset(0 0 0 0) !important;
+  clip-path: inset(0 0 0 0) !important;
+}
+.motion-ready [data-reveal="mask"] > img,
+.motion-ready [data-reveal="mask"] img {
+  transform: none !important;
 }
 
 /* ============================================================
@@ -700,12 +703,25 @@ html[dir="rtl"] .cal-input { padding-right: 12px !important; padding-left: 36px 
   padding: 16px;
   z-index: 50;
   box-shadow: 0 16px 32px -12px rgba(0,0,0,0.4);
+  animation: cal-fade-in 240ms cubic-bezier(.22,.61,.36,1);
+}
+@keyframes cal-fade-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cal-panel { animation: none; }
 }
 .cal-input:focus + .cal-panel,
 .cal-wrap:focus-within .cal-panel,
 .cal-wrap.is-open .cal-panel { display: block; }
 /* Always show inline (simpler UX than popover for booking flow) */
 .cal-panel { display: block; }
+/* Force single-column body on very small screens so the calendar grid never crowds */
+@media (max-width: 420px) {
+  .cal-grid { grid-template-columns: repeat(7, 1fr); font-size: 12px; }
+  .cal-day { padding: 6px 0; }
+}
 
 .cal-head {
   display: grid;

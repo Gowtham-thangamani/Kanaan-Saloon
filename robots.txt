@@ -1,6 +1,20 @@
 User-agent: *
 Allow: /
+
+# Booking confirmation pages — personalised content, no SEO value
 Disallow: /thank-you.html
 Disallow: /ar/thank-you.html
+
+# Internal admin / staff tools
+Disallow: /admin/
+
+# Internal previews & health probes
+Disallow: /og-preview.html
+Disallow: /health.json
+Disallow: /supabase/
+
+# Redirect-only pages (services -> branches)
+Disallow: /services.html
+Disallow: /ar/services.html
 
 Sitemap: https://kanaanspa.ae/sitemap.xml

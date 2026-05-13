@@ -25,29 +25,37 @@ create index if not exists bookings_branch_idx  on public.bookings (branch);
 create index if not exists bookings_status_idx  on public.bookings (status);
 create index if not exists bookings_created_idx on public.bookings (created_at desc);
 
--- Row-level security: anon role can insert/select/update.
--- Tighten later by replacing `anon` with `authenticated` once you add real auth.
+-- Row-level security: anon may INSERT only. Reads/updates/deletes are restricted
+-- to authenticated users (admins log in via Supabase Auth in the admin panel).
 alter table public.bookings enable row level security;
 
 drop policy if exists "anon insert"        on public.bookings;
 drop policy if exists "anon select"        on public.bookings;
 drop policy if exists "anon update status" on public.bookings;
+drop policy if exists "auth select"        on public.bookings;
+drop policy if exists "auth update"        on public.bookings;
+drop policy if exists "auth delete"        on public.bookings;
 
 create policy "anon insert"
   on public.bookings for insert
   to anon, authenticated
   with check (true);
 
-create policy "anon select"
+create policy "auth select"
   on public.bookings for select
-  to anon, authenticated
+  to authenticated
   using (true);
 
-create policy "anon update status"
+create policy "auth update"
   on public.bookings for update
-  to anon, authenticated
+  to authenticated
   using (true)
   with check (true);
+
+create policy "auth delete"
+  on public.bookings for delete
+  to authenticated
+  using (true);
 
 -- Optional: auto-cleanup older than 2 years (uncomment to enable)
 -- create extension if not exists pg_cron;

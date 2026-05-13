@@ -5,13 +5,15 @@ const path = require('path');
 
 const SITE = 'https://kanaanspa.ae';
 const root = __dirname;
-const exclude = ['thank-you.html', '404.html', 'ar/thank-you.html'];
+const exclude = ['thank-you.html', '404.html', 'ar/thank-you.html', 'ar/404.html'];
+// Directories never indexed (admin panel, build artifacts, supabase code).
+const SKIP_DIRS = ['node_modules', '.playwright-mcp', 'assets', 'admin', 'supabase', '.git', '.claude'];
 
 function walk(dir, files = []) {
   fs.readdirSync(dir).forEach(name => {
     const p = path.join(dir, name);
     const stat = fs.statSync(p);
-    if (stat.isDirectory() && !['node_modules', '.playwright-mcp', 'assets'].includes(name)) walk(p, files);
+    if (stat.isDirectory() && !SKIP_DIRS.includes(name)) walk(p, files);
     else if (name.endsWith('.html')) files.push(p);
   });
   return files;
@@ -20,6 +22,7 @@ function walk(dir, files = []) {
 const files = walk(root)
   .map(f => path.relative(root, f).replace(/\\/g, '/'))
   .filter(f => !exclude.includes(f))
+  .filter(f => !f.startsWith('admin/') && !f.startsWith('supabase/'))
   .sort();
 
 const enFiles = files.filter(f => !f.startsWith('ar/'));

@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Scan booking · Kanaan Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="admin.css" />
+  <style>
+    .scan-shell { display: grid; grid-template-columns: minmax(280px, 360px) 1fr; gap: 24px; align-items: start; }
+    @media (max-width: 900px) { .scan-shell { grid-template-columns: 1fr; } }
+    .scan-frame {
+      position: relative; border: 1px solid var(--hairline);
+      background: #000; aspect-ratio: 1 / 1; overflow: hidden;
+    }
+    .scan-frame video, .scan-frame canvas { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .scan-frame canvas { position: absolute; inset: 0; pointer-events: none; }
+    .scan-frame .scan-overlay {
+      position: absolute; inset: 12%; border: 2px solid var(--gold);
+      box-shadow: 0 0 0 9999px rgba(0,0,0,0.45);
+      animation: scan-pulse 1.6s ease-in-out infinite;
+    }
+    @keyframes scan-pulse { 0%, 100% { opacity: .85; } 50% { opacity: 0.55; } }
+    .scan-status {
+      font-size: 13px; letter-spacing: 0.04em; color: var(--muted);
+      padding: 12px 16px; border: 1px solid var(--hairline);
+      margin-top: 12px;
+    }
+    .scan-status--err { color: var(--rust); border-color: var(--rust); }
+    .booking-card { padding: 20px; border: 1px solid var(--hairline); border-top: 2px solid var(--gold); }
+    .booking-card h3 { margin: 0 0 8px; font-family: var(--f-display, Georgia, serif); font-size: 22px; color: var(--gold); }
+    .booking-card dl { margin: 0; display: grid; grid-template-columns: 100px 1fr; gap: 8px 16px; font-size: 14px; }
+    .booking-card dt { color: var(--muted); }
+    .booking-card dd { margin: 0; color: var(--text); }
+    .booking-card .actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; }
+    .empty {
+      padding: 40px 24px; text-align: center; color: var(--muted);
+      border: 1px dashed var(--hairline);
+    }
+    .pill-status { padding: 2px 10px; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; }
+    .pill-status--new { color: var(--gold); border: 1px solid var(--gold); }
+    .pill-status--confirmed, .pill-status--completed { color: var(--sage, #708069); border: 1px solid var(--sage, #708069); }
+    .pill-status--no_show, .pill-status--cancelled { color: var(--rust); border: 1px solid var(--rust); }
+  </style>
+</head>
+<body>
+<div class="admin-shell">
+  <aside class="admin-side">
+    <div class="admin-side__brand">KANAAN<span>.</span></div>
+    <nav class="admin-side__nav">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="leads.html">Leads · CRM</a>
+      <a href="scan.html" class="active">Scan booking</a>
+      <a href="blocks.html">Blocked slots</a>
+      <a href="offers.html">Offers</a>
+      <a href="branches.html">Houses</a>
+      <a href="banners.html">Banners</a>
+      <a href="integrations.html">Integrations</a>
+      <a href="settings.html">Settings</a>
+    </nav>
+    <div class="admin-side__user">Signed in · <button type="button" onclick="KANAAN_ADMIN.logout()">Sign out</button></div>
+  </aside>
+
+  <main class="admin-main">
+    <h1 class="admin-h">Scan booking</h1>
+    <p class="admin-sub">Point the camera at the customer's QR code (or upload a screenshot). The booking opens here so you can verify, mark arrived, or message them.</p>
+
+    <div class="scan-shell">
+      <!-- Scanner panel -->
+      <section>
+        <div class="scan-frame" id="scanFrame">
+          <video id="scanVideo" playsinline muted></video>
+          <canvas id="scanCanvas"></canvas>
+          <div class="scan-overlay" aria-hidden="true"></div>
+        </div>
+        <div class="bar" style="margin-top: 12px;">
+          <button type="button" class="btn btn--sm" id="startBtn">Start camera</button>
+          <button type="button" class="btn btn--ghost btn--sm" id="stopBtn" hidden>Stop camera</button>
+          <span class="spacer"></span>
+          <label class="btn btn--ghost btn--sm" style="cursor:pointer;">
+            Upload image
+            <input type="file" id="fileInput" accept="image/*" hidden />
+          </label>
+        </div>
+        <div class="scan-status" id="scanStatus">Idle. Press <strong>Start camera</strong> or upload a screenshot.</div>
+      </section>
+
+      <!-- Booking detail panel -->
+      <section>
+        <div id="bookingPane" class="empty">No booking loaded yet. Scan a QR or paste a Booking&nbsp;ID below.</div>
+
+        <div class="bar" style="margin-top: 16px;">
+          <input class="input" id="manualId" placeholder="Or type a Booking ID e.g. KNN-KHA-MFLZ4QY8" style="flex: 1;" />
+          <button type="button" class="btn btn--sm" id="manualBtn">Look up</button>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<script src="../assets/js/config.js"></script>
+<script src="admin.js"></script>
+<!-- jsQR: ~30 KB, pure JS QR decoder. Pinned to a known-good version. -->
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+<script>
+if (KANAAN_ADMIN.requireAuth()) (function () {
+  const video = document.getElementById('scanVideo');
+  const canvas = document.getElementById('scanCanvas');
+  const ctx = canvas.getContext('2d', { willReadFrequently: true });
+  const startBtn = document.getElementById('startBtn');
+  const stopBtn = document.getElementById('stopBtn');
+  const fileInput = document.getElementById('fileInput');
+  const status = document.getElementById('scanStatus');
+  const pane = document.getElementById('bookingPane');
+  const manualId = document.getElementById('manualId');
+  const manualBtn = document.getElementById('manualBtn');
+
+  let stream = null;
+  let scanLoop = null;
+  let lastDecodedAt = 0;
+  let lastDecodedId = null;
+
+  function showStatus(msg, isErr) {
+    status.textContent = msg;
+    status.classList.toggle('scan-status--err', !!isErr);
+  }
+
+  async function startCamera() {
+    if (typeof jsQR !== 'function') {
+      showStatus('QR decoder failed to load. Check your network and refresh.', true);
+      return;
+    }
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      showStatus('Camera API unavailable in this browser. Try Chrome/Safari/Edge on a phone.', true);
+      return;
+    }
+    // Camera requires a secure context (HTTPS) — exception: localhost.
+    // On a custom domain over plain http, getUserMedia silently rejects.
+    if (!window.isSecureContext) {
+      showStatus('Camera blocked — this page is not on HTTPS or localhost. Open it via https:// or use the "Upload image" / manual ID below.', true);
+      return;
+    }
+    showStatus('Requesting camera permission…');
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: { ideal: 'environment' }, width: { ideal: 1280 }, height: { ideal: 1280 } },
+        audio: false
+      });
+      video.srcObject = stream;
+      await video.play();
+      startBtn.hidden = true;
+      stopBtn.hidden = false;
+      showStatus('Scanning… hold the QR steady inside the frame.');
+      runScanLoop();
+    } catch (e) {
+      // Common error names from MediaDevices spec:
+      //   NotAllowedError    - user denied permission (or browser auto-denied)
+      //   NotFoundError      - no camera attached
+      //   NotReadableError   - camera in use by another app
+      //   OverconstrainedError - the facingMode/resolution constraint failed
+      //   SecurityError      - blocked by feature policy / mixed content
+      const name = e && e.name || 'Error';
+      let hint = '';
+      if (name === 'NotAllowedError')      hint = 'You denied camera access. Click the camera icon in the address bar to re-enable, then press Start camera again.';
+      else if (name === 'NotFoundError')   hint = 'No camera detected on this device. Use Upload image or manual ID instead.';
+      else if (name === 'NotReadableError') hint = 'Camera is busy (another app using it). Close that app and retry.';
+      else if (name === 'OverconstrainedError') hint = 'No camera matches the requested settings.';
+      else                                  hint = e.message || 'Unknown camera error.';
+      showStatus(name + ' — ' + hint, true);
+      console.error('[KANAAN scan] getUserMedia failed:', e);
+    }
+  }
+
+  function stopCamera() {
+    if (scanLoop) { cancelAnimationFrame(scanLoop); scanLoop = null; }
+    if (stream) {
+      stream.getTracks().forEach(t => t.stop());
+      stream = null;
+    }
+    video.srcObject = null;
+    startBtn.hidden = false;
+    stopBtn.hidden = true;
+    showStatus('Camera stopped.');
+  }
+
+  function runScanLoop() {
+    scanLoop = requestAnimationFrame(runScanLoop);
+    if (video.readyState !== video.HAVE_ENOUGH_DATA) return;
+
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const code = jsQR(imageData.data, imageData.width, imageData.height, { inversionAttempts: 'attemptBoth' });
+    if (!code || !code.data) return;
+
+    const now = Date.now();
+    const id = extractBookingId(code.data);
+    if (!id) {
+      showStatus('That QR is not a Kanaan booking.', true);
+      return;
+    }
+    if (id === lastDecodedId && now - lastDecodedAt < 3000) return; // debounce
+    lastDecodedId = id;
+    lastDecodedAt = now;
+
+    showStatus('Found ' + id + ' — loading booking…');
+    if (navigator.vibrate) navigator.vibrate(60);
+    loadBooking(id);
+  }
+
+  /* The QR encodes a URL like:
+       https://kanaanspa.ae/thank-you.html?id=KNN-KHA-XXX&branch=...
+     or a localhost URL when developing. We pull the `id` query param.
+     Fallback: if the QR is just a plain ID string (legacy), accept that too. */
+  function extractBookingId(data) {
+    try {
+      const u = new URL(data);
+      const id = u.searchParams.get('id');
+      if (id && /^KNN-[A-Z]+-[A-Z0-9]+/i.test(id)) return id;
+    } catch (_) { /* not a URL — fall through */ }
+    if (/^KNN-[A-Z]+-[A-Z0-9]+/i.test(data.trim())) return data.trim();
+    return null;
+  }
+
+  async function loadBooking(id) {
+    const sb = (window.KANAAN_CONFIG && window.KANAAN_CONFIG.supabase) || {};
+    if (!sb.url || !sb.anonKey) {
+      pane.innerHTML = '<div class="empty">Supabase not configured.</div>';
+      return;
+    }
+    pane.innerHTML = '<div class="empty">Loading ' + escapeHtml(id) + '…</div>';
+    try {
+      const queryUrl = sb.url + '/rest/v1/' + (sb.table || 'bookings') + '?id=eq.' + encodeURIComponent(id) + '&select=*';
+      const r = await fetch(queryUrl, { headers: KANAAN_ADMIN.authHeaders(true) });
+      if (!r.ok) {
+        if (r.status === 401) { KANAAN_ADMIN.logout(); return; }
+        const body = await r.text().catch(() => '');
+        pane.innerHTML =
+          '<div class="empty">' +
+          '<p><strong>Lookup failed (HTTP ' + r.status + ')</strong></p>' +
+          '<p style="font-family:monospace;font-size:12px;color:var(--rust);">' + escapeHtml(body) + '</p>' +
+          '<p style="font-size:12px;margin-top:8px;">If this is 403 or PGRST, the RLS policy is blocking SELECT for your role. Check that you are signed in and the <code>auth select</code> policy exists on the bookings table.</p>' +
+          '</div>';
+        return;
+      }
+      const rows = await r.json();
+      if (!rows.length) {
+        // Booking not in DB — could be: (a) insert failed when customer
+        // submitted; (b) wrong ID; (c) row was deleted. Show actionable info.
+        pane.innerHTML =
+          '<div class="empty">' +
+          '<p><strong>No booking found</strong> with ID <code style="font-family:monospace;color:var(--gold);">' + escapeHtml(id) + '</code></p>' +
+          '<p style="font-size:13px;margin-top:12px;">The query worked but the row doesn\'t exist. Likely causes:</p>' +
+          '<ul style="text-align:left;font-size:13px;margin:8px 0 12px 20px;color:var(--muted);">' +
+            '<li><strong>Insert failed when the customer submitted.</strong> Check the booking form\'s DevTools console — look for a <code>[KANAAN supabase] booking insert failed</code> warning.</li>' +
+            '<li>The customer scanned a QR from a different system or older session.</li>' +
+            '<li>The row was deleted from the bookings table.</li>' +
+          '</ul>' +
+          '<p style="font-size:12px;margin-top:12px;">' +
+            '<a href="' + sb.url + '/project/default/editor" target="_blank" rel="noopener" style="color:var(--gold);">Open the Supabase Table Editor →</a> and verify the bookings table for this ID.' +
+          '</p>' +
+          '</div>';
+        return;
+      }
+      renderBooking(rows[0]);
+      showStatus('Loaded ' + id + '.');
+    } catch (e) {
+      pane.innerHTML = '<div class="empty">Network error: ' + escapeHtml(e.message || String(e)) + '</div>';
+    }
+  }
+
+  function renderBooking(b) {
+    const phone = String(b.phone || '');
+    const phoneDigits = phone.replace(/\D/g, '');
+    const status = b.status || 'new';
+    const statusLabel = { new: 'New', confirmed: 'Confirmed', completed: 'Completed', no_show: 'No-show', cancelled: 'Cancelled' }[status] || status;
+    const waLink = phoneDigits
+      ? 'https://wa.me/' + phoneDigits + '?text=' + encodeURIComponent('Hi ' + (b.name || '') + ', confirming Kanaan booking ' + b.id + ' (' + (b.branch || '') + ', ' + (b.booking_date || '') + ' ' + (b.booking_time || '') + ').')
+      : null;
+    const mailLink = b.email
+      ? 'mailto:' + encodeURIComponent(b.email) + '?subject=' + encodeURIComponent('Your Kanaan booking ' + b.id) + '&body=' + encodeURIComponent('Hi ' + (b.name || '') + ',\n\nConfirming Kanaan booking ' + b.id + ' (' + (b.branch || '') + ', ' + (b.booking_date || '') + ' ' + (b.booking_time || '') + ').\n\nKanaan')
+      : null;
+
+    pane.innerHTML = `
+      <div class="booking-card" data-booking="${escapeHtml(b.id)}">
+        <span class="pill pill-status pill-status--${escapeHtml(status)}">${escapeHtml(statusLabel)}</span>
+        <h3>${escapeHtml(b.name || 'Unnamed')}</h3>
+        <dl>
+          <dt>Booking</dt><dd style="font-family: monospace;">${escapeHtml(b.id)}</dd>
+          <dt>House</dt><dd>${escapeHtml(b.branch || '—')}</dd>
+          <dt>Service</dt><dd>${escapeHtml(b.service || '—')}</dd>
+          <dt>When</dt><dd>${escapeHtml((b.booking_date || '') + ' ' + (b.booking_time || ''))}</dd>
+          <dt>Phone</dt><dd>${phone ? '<a href="tel:' + escapeHtml(phone) + '">' + escapeHtml(phone) + '</a>' : '—'}</dd>
+          <dt>Email</dt><dd>${escapeHtml(b.email || '—')}</dd>
+          ${b.message ? '<dt>Notes</dt><dd>' + escapeHtml(b.message) + '</dd>' : ''}
+          <dt>Created</dt><dd>${escapeHtml((b.created_at || '').slice(0, 16).replace('T', ' '))}</dd>
+        </dl>
+        <div class="actions">
+          ${status !== 'completed' ? '<button type="button" class="btn btn--sm" data-mark="completed">✓ Mark arrived &amp; completed</button>' : ''}
+          ${status === 'new' ? '<button type="button" class="btn btn--sm" data-mark="confirmed">Mark confirmed</button>' : ''}
+          ${status !== 'no_show' && status !== 'completed' ? '<button type="button" class="btn btn--ghost btn--sm" data-mark="no_show">Mark no-show</button>' : ''}
+          ${waLink ? '<a class="btn btn--ghost btn--sm" href="' + waLink + '" target="_blank" rel="noopener">WhatsApp</a>' : ''}
+          ${mailLink ? '<a class="btn btn--ghost btn--sm" href="' + mailLink + '">Email</a>' : ''}
+        </div>
+      </div>
+    `;
+
+    // Wire status-update buttons
+    pane.querySelectorAll('[data-mark]').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const newStatus = btn.dataset.mark;
+        btn.disabled = true; const original = btn.textContent; btn.textContent = '…';
+        const result = await KANAAN_ADMIN.updateBookingStatus(b.id, newStatus);
+        if (!result.ok) {
+          KANAAN_ADMIN.toast('Update failed: ' + result.error);
+          btn.disabled = false; btn.textContent = original;
+          return;
+        }
+        KANAAN_ADMIN.toast('Marked as ' + newStatus);
+        // Reload the booking to reflect new state
+        loadBooking(b.id);
+      });
+    });
+  }
+
+  function escapeHtml(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+  }
+
+  /* Image-upload fallback (e.g. customer screenshots their QR) */
+  fileInput.addEventListener('change', async () => {
+    const file = fileInput.files && fileInput.files[0];
+    fileInput.value = '';
+    if (!file) return;
+    showStatus('Decoding image…');
+    const img = new Image();
+    img.onload = function () {
+      canvas.width = img.naturalWidth;
+      canvas.height = img.naturalHeight;
+      ctx.drawImage(img, 0, 0);
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const code = jsQR(imageData.data, imageData.width, imageData.height, { inversionAttempts: 'attemptBoth' });
+      if (!code || !code.data) {
+        showStatus('No QR detected in that image.', true);
+        return;
+      }
+      const id = extractBookingId(code.data);
+      if (!id) { showStatus('That QR is not a Kanaan booking.', true); return; }
+      showStatus('Found ' + id + ' — loading booking…');
+      loadBooking(id);
+    };
+    img.onerror = () => showStatus('Could not load that image.', true);
+    img.src = URL.createObjectURL(file);
+  });
+
+  /* Manual ID entry — for when staff already has the ID typed somewhere */
+  manualBtn.addEventListener('click', () => {
+    const id = (manualId.value || '').trim().toUpperCase();
+    if (!id) return;
+    if (!/^KNN-[A-Z]+-[A-Z0-9]+/.test(id)) {
+      showStatus('Booking IDs look like KNN-KHA-XXXXXX.', true);
+      return;
+    }
+    loadBooking(id);
+  });
+  manualId.addEventListener('keydown', e => { if (e.key === 'Enter') manualBtn.click(); });
+
+  startBtn.addEventListener('click', startCamera);
+  stopBtn.addEventListener('click', stopCamera);
+  window.addEventListener('beforeunload', stopCamera);
+
+  /* If the page was opened with ?id=KNN-… (e.g. from another admin tab),
+     auto-load that booking. */
+  const urlId = new URLSearchParams(location.search).get('id');
+  if (urlId) loadBooking(urlId);
+})();
+</script>
+</body>
+</html>

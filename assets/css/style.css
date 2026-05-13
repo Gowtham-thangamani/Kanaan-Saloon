@@ -10,9 +10,9 @@
   --c-alabaster: #F6F3ED;
   --c-pearl: #EDEAE3;
   --c-ink: #15171A;
-  --c-stone: #8A8780;
+  --c-stone: #A09D95; /* bumped from #8A8780 to clear WCAG AA 4.5:1 on obsidian */
   --c-gold: #C8A04A;
-  --c-gold-dark: #8E6A2A;
+  --c-gold-dark: #7A5A1F; /* darkened for clear AA 4.5:1+ on alabaster — previous #8E6A2A measured ~4.07:1 */
   --c-smoke: #2A2C30;
   --c-hairline-light: #E2DED5;
   --c-sage: #5C7A5A;
@@ -55,7 +55,11 @@
   --t-slow: 600ms;
 }
 
-/* Light section override */
+/* Light section override.
+   --c-gold-dark (#8E6A2A) is used in place of --c-gold for body links so
+   gold reads at AA contrast on the alabaster background. The brand-accent
+   --c-gold stays available for buttons/borders where contrast isn't the
+   bottleneck. */
 .section--light {
   --bg: var(--c-alabaster);
   --surface: #fff;
@@ -63,6 +67,11 @@
   --muted: #5b5d62;
   --hairline: var(--c-hairline-light);
 }
+.section--light .text-gold,
+.section--light .text-link,
+.section--light a.text-link,
+.section--light .eyebrow { color: var(--c-gold-dark); }
+.section--light .text-link:hover { border-color: var(--c-gold-dark); }
 
 /* ============================================================
    RESET
@@ -213,27 +222,49 @@ body.lang-ar .eyebrow { letter-spacing: 0; }
 
 /* ============================================================
    HEADER
+   At rest (top of page): transparent gradient over the hero image so the
+   bar reads while the image still fills the viewport behind it.
+   On scroll (.shrunk): becomes fully opaque obsidian.
    ============================================================ */
 .site-header {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 100;
-  background: rgba(14, 15, 17, 0.85);
+  /* Strong gradient for legibility. No backdrop-filter here — it creates a
+     containing block, which traps the descendant .mobile-nav inside the
+     header's bounds (only ~96px tall), breaking the slide-out drawer. */
+  background: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.55) 50%, rgba(0,0,0,0.15) 100%);
+  border-bottom: 1px solid transparent;
+  transition: padding var(--t-fast) var(--ease),
+              background var(--t-fast) var(--ease),
+              transform var(--t-mid) var(--ease),
+              box-shadow var(--t-fast) var(--ease);
+}
+/* Once scrolled past the hero, make the bar fully opaque so content
+   never reads through it, and lift it with a subtle shadow. */
+.site-header.shrunk {
+  background: var(--c-obsidian, #0E0F11);
+  border-bottom-color: var(--c-smoke);
+  box-shadow: 0 6px 24px -8px rgba(0, 0, 0, 0.6);
   -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--c-smoke);
-  transition: padding var(--t-fast) var(--ease);
+}
+/* Smart-hide: while the user scrolls *down* past the hero, slide the bar
+   off-screen. The moment they scroll *up*, the JS removes this class so
+   the bar drops back in instantly. */
+.site-header.hidden-on-scroll {
+  transform: translateY(-100%);
 }
 .site-header__inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 80px;
+  height: 96px;
   padding: 0 var(--gutter);
   max-width: var(--container);
   margin: 0 auto;
 }
-.site-header.shrunk .site-header__inner { height: 64px; }
+.site-header.shrunk .site-header__inner { height: 72px; }
 
 .logo {
   font-family: var(--f-display);
@@ -241,8 +272,37 @@ body.lang-ar .eyebrow { letter-spacing: 0; }
   letter-spacing: 0.06em;
   color: var(--c-pearl);
   font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
 }
 .logo span { color: var(--c-gold); }
+
+/* New image logo — replaces the CSS-text wordmark.
+   logo.svg is BLACK on transparent; invert it on dark headers via filter so
+   the same single SVG works on both dark + light backgrounds. The logo has
+   a stacked layout (Saloon / KANAAN / Gents & Spa) so it needs height to
+   read properly — ~72px on desktop, scaled down on shrunk + mobile. */
+.logo-img {
+  display: block;
+  height: 76px;
+  width: auto;
+  max-width: 280px;
+  /* Black logo → white on the obsidian header */
+  filter: brightness(0) invert(1);
+}
+.site-header.shrunk .logo-img { height: 56px; }
+/* Sections with the light alabaster background keep the original black. */
+.section--light .logo-img,
+.footer-bottom .logo-img,
+.footer-brand .logo-img { filter: none; }
+/* Footer renders the logo larger (no shrunk state to worry about). */
+.footer-brand .logo-img { height: 88px; max-width: 320px; filter: brightness(0) invert(1); }
+@media (max-width: 640px) {
+  .logo-img { height: 56px; max-width: 200px; }
+  .site-header.shrunk .logo-img { height: 44px; }
+  .footer-brand .logo-img { height: 64px; max-width: 240px; }
+}
 
 .main-nav { display: flex; align-items: center; gap: var(--s-6); }
 .main-nav a {
@@ -437,7 +497,35 @@ html[dir="rtl"] .nav-dd__col a:hover { padding-left: 0; padding-right: 8px; }
   width: 44px; height: 44px;
   position: relative;
 }
-.mobile-nav { display: none; }
+/* Mobile nav: rendered as an off-canvas right-side drawer. Pre-positioned
+   (not display:none) so the transform transition can animate it in/out and
+   so screen readers still find it in the DOM. Visually hidden off-screen
+   until .is-open flips the translate. */
+.mobile-nav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(85vw, 360px);
+  background-color: #0E0F11;
+  z-index: 200;
+  transform: translateX(100%);
+  transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+  visibility: hidden;             /* removes from a11y tree when closed */
+  box-shadow: -12px 0 40px rgba(0,0,0,0.45);
+  display: flex;
+  flex-direction: column;
+  padding: 80px var(--gutter) var(--s-7);
+  gap: 4px;
+}
+/* RTL: drawer slides from the LEFT instead of the right. */
+[dir="rtl"] .mobile-nav {
+  right: auto;
+  left: 0;
+  transform: translateX(-100%);
+  box-shadow: 12px 0 40px rgba(0,0,0,0.45);
+}
 .menu-toggle span {
   position: absolute;
   left: 10px; right: 10px;
@@ -455,38 +543,88 @@ html[dir="rtl"] .nav-dd__col a:hover { padding-left: 0; padding-right: 8px; }
 @media (max-width: 1024px) {
   .main-nav, .header-actions .btn { display: none; }
   .menu-toggle { display: block; }
+
+  /* Open state: slide the drawer into view from the right (LTR) or left (RTL).
+     The base .mobile-nav rule above defines the drawer; .is-open just toggles
+     the transform + visibility so the transition can animate cleanly. */
   .mobile-nav.is-open {
-    display: flex;
-    position: fixed;
-    inset: 80px 0 0 0;
-    background: var(--c-obsidian);
-    flex-direction: column;
-    padding: var(--s-7) var(--gutter);
-    z-index: 99;
-    overflow-y: auto;
+    transform: translateX(0);
+    visibility: visible;
   }
-  .mobile-nav { display: none; }
+  [dir="rtl"] .mobile-nav.is-open { transform: translateX(0); }
+
+  /* Backdrop — dims and blurs the page behind the drawer. Clicking it
+     closes the menu (wired in main.js). Sits below the drawer but above
+     the header. */
+  .mobile-nav-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+    z-index: 199;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.28s ease;
+  }
+  body.is-menu-open .mobile-nav-backdrop {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  body.is-menu-open { overflow: hidden; }
+
   .mobile-nav a {
     font-family: var(--f-display);
-    font-size: 32px;
+    font-size: 24px;
     color: var(--c-pearl);
-    padding: 16px 0;
+    padding: 14px 0;
     border-bottom: 1px solid var(--c-smoke);
+    display: block;
   }
-  .mobile-nav .btn { margin-top: var(--s-5); }
+  .mobile-nav a:hover,
+  .mobile-nav a:focus-visible { color: var(--c-gold); }
+  .mobile-nav .btn {
+    margin-top: var(--s-5);
+    border-bottom: 0;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  /* Close button (×) inside the drawer — pinned top-right (top-left in RTL). */
+  .mobile-nav__close {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: 1px solid var(--c-smoke);
+    color: var(--c-pearl);
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  [dir="rtl"] .mobile-nav__close { right: auto; left: 18px; }
+  .mobile-nav__close:hover { color: var(--c-gold); border-color: var(--c-gold); }
 }
 
 /* ============================================================
    HERO
    ============================================================ */
 .hero {
-  min-height: 88vh;
+  /* Full-bleed: image fills from the very top of the viewport, BEHIND the
+     transparent header. The .utility-bar (36px) + .site-header (96px) overlay
+     on top — content sits below them via padding-top. */
+  min-height: 100vh;
   display: flex;
   align-items: flex-end;
   position: relative;
   overflow: hidden;
-  padding: var(--s-9) 0 var(--s-8);
-  margin-top: 80px;
+  padding: calc(var(--s-9) + 132px) 0 var(--s-8);
+  margin-top: 0;
 }
 .hero__media {
   position: absolute; inset: 0;
@@ -500,10 +638,57 @@ html[dir="rtl"] .nav-dd__col a:hover { padding-left: 0; padding-right: 8px; }
 .hero__media img {
   width: 100%; height: 100%; object-fit: cover;
   animation: kenburns 18s var(--ease) forwards;
+  /* CLS guard for hero slides that don't carry width/height attributes —
+     reserves layout space at the same aspect ratio as the source WebPs. */
+  aspect-ratio: 16 / 9;
 }
 @keyframes kenburns {
   from { transform: scale(1); }
   to { transform: scale(1.06); }
+}
+
+/* Hero slider — image-only fade carousel */
+.hero__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+  z-index: 0;
+}
+.hero__slide.is-active { opacity: 1; }
+.hero__slide img { animation: none; }
+.hero__slide.is-active img {
+  animation: kenburns 6s ease-out forwards;
+}
+.hero__dots {
+  position: absolute;
+  bottom: var(--s-5);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 3;
+  padding: 0;
+}
+.hero__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.6);
+  background: transparent;
+  cursor: pointer;
+  transition: background .3s ease, transform .3s ease, border-color .3s ease;
+  padding: 0;
+}
+.hero__dot:hover { background: rgba(255,255,255,0.4); }
+.hero__dot.is-active {
+  background: var(--c-accent, #C8A04A);
+  border-color: var(--c-accent, #C8A04A);
+  transform: scale(1.3);
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero__slide { transition: none; }
+  .hero__slide.is-active img { animation: none; }
 }
 .hero__content { max-width: 720px; }
 .hero__title { color: #fff; margin-bottom: var(--s-5); }
@@ -597,6 +782,7 @@ html[dir="rtl"] .nav-dd__col a:hover { padding-left: 0; padding-right: 8px; }
 }
 body.lang-ar .service-card__title { font-family: var(--f-arabic); }
 .service-card__desc { color: var(--muted); font-size: 15px; flex: 1; }
+.service-card__price { color: var(--muted); font-size: 13px; letter-spacing: 0.04em; margin-top: var(--s-3); }
 .service-card__arrow {
   margin-top: var(--s-5);
   color: var(--c-gold);
@@ -714,8 +900,8 @@ body.lang-ar .split--reverse > * { direction: rtl; }
 
 .split__media img {
   width: 100%; height: auto;
-  aspect-ratio: 4/5;
-  object-fit: cover;
+  max-height: 80vh;          /* prevent absurdly tall phone shots from dominating the layout */
+  object-fit: contain;        /* show the whole photo — never crop */
 }
 @media (max-width: 900px) {
   .split { grid-template-columns: 1fr; gap: var(--s-6); }
@@ -724,21 +910,83 @@ body.lang-ar .split--reverse > * { direction: rtl; }
 /* ============================================================
    CTA BAND
    ============================================================ */
+/* ============================================================
+   CTA BAND — candlelit photo backdrop + centred dark spotlight panel
+   The photo stays atmospheric at the edges; a soft dark "spotlight"
+   sits behind the text+button stack so the message always reads
+   crisply, regardless of where bright spots in the photo land.
+   ============================================================ */
 .cta-band {
   text-align: center;
   padding: clamp(80px, 10vw, 140px) var(--gutter);
-  background: var(--c-obsidian);
   position: relative;
   overflow: hidden;
+  /* Photo + a single uniform dark overlay (no aggressive vignette — the
+     spotlight panel handles centre contrast). Atmosphere stays visible. */
+  background:
+    linear-gradient(180deg, rgba(14,15,17,0.62) 0%, rgba(14,15,17,0.55) 50%, rgba(14,15,17,0.68) 100%),
+    url('../img/photos/service-facial-candlelit-1600.webp') center/cover no-repeat;
+  background-color: var(--c-obsidian);
+  isolation: isolate; /* establishes a stacking context for the ::before spotlight */
 }
+
+/* Spotlight panel — sits between the photo and the text stack.
+   It's a near-opaque dark card with brand-gold hairlines top + bottom,
+   a slight inner glow at the centre, and a soft blur of whatever's behind
+   so the photo bleeds through delicately at the panel edges. */
+.cta-band::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(680px, 92%);
+  height: calc(100% - 64px);
+  background:
+    radial-gradient(ellipse at center, rgba(200,160,74,0.06) 0%, rgba(14,15,17,0) 70%),
+    rgba(14, 15, 17, 0.68);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border-top: 1px solid rgba(200,160,74,0.35);
+  border-bottom: 1px solid rgba(200,160,74,0.35);
+  box-shadow: 0 24px 64px -16px rgba(0,0,0,0.55);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Lift every direct child of the band above the spotlight panel. */
+.cta-band > * { position: relative; z-index: 1; }
+
+/* Tighter typography now that the panel handles legibility — drop the
+   heavy text-shadows so the headline reads crisp, not muddy. */
 .cta-band__title {
   font-family: var(--f-display);
   font-size: clamp(40px, 6vw, 72px);
   color: #fff;
   margin-bottom: var(--s-5);
   line-height: 1.05;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.35);
 }
-.cta-band__sub { color: var(--muted); margin-bottom: var(--s-6); font-size: 17px; }
+.cta-band__sub {
+  color: var(--c-pearl);
+  margin-bottom: var(--s-6);
+  font-size: 17px;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  max-width: 52ch;
+  margin-left: auto;
+  margin-right: auto;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.35);
+}
+
+@media (max-width: 640px) {
+  .cta-band::before {
+    width: calc(100% - 32px);
+    height: calc(100% - 48px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cta-band::before { -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
 
 /* ============================================================
    FOOTER
@@ -831,6 +1079,16 @@ body.lang-ar .split--reverse > * { direction: rtl; }
   border-color: var(--c-gold) !important;
 }
 .mobile-cta__icon { font-size: 20px; }
+/* Real SVG sprite icons (whatsapp, phone) for the mobile CTA buttons —
+   replaces the previous text glyphs ✉ ☏ which looked generic. */
+.mobile-cta svg.icon {
+  width: 22px;
+  height: 22px;
+  display: block;
+  fill: currentColor;
+  stroke: currentColor;
+}
+.mobile-cta a { color: var(--c-pearl); }
 
 @media (max-width: 900px) {
   .mobile-cta { display: flex; }
@@ -943,7 +1201,7 @@ body.lang-ar .choice { text-align: right; }
    PAGE HERO (smaller than home hero)
    ============================================================ */
 .page-hero {
-  margin-top: 80px;
+  margin-top: 96px;
   padding: clamp(80px, 12vw, 160px) 0 clamp(56px, 8vw, 96px);
   position: relative;
   overflow: hidden;
@@ -1000,10 +1258,29 @@ body.lang-ar .main-nav {
    UTILITY BAR (desktop-only top strip with central phone/WhatsApp)
    ============================================================ */
 .utility-bar {
-  background: #0A0B0D;
-  border-bottom: 1px solid var(--c-smoke);
+  /* At rest: transparent strip over the hero image, holds white text.
+     Stays fixed at top:0, sliding away with the header on scroll-down. */
+  background: linear-gradient(to bottom, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.25) 100%);
+  border-bottom: 1px solid transparent;
   font-size: 12px;
   letter-spacing: 0.06em;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 101;
+  pointer-events: none;
+  transition: transform var(--t-mid, 280ms) var(--ease, ease),
+              background var(--t-fast, 180ms) var(--ease, ease);
+  will-change: transform;
+}
+.utility-bar .utility-bar__inner { pointer-events: auto; }
+/* On scroll past hero → solid background to match the shrunk header. */
+.utility-bar.shrunk {
+  background: #0A0B0D;
+  border-bottom-color: var(--c-smoke);
+}
+/* On scroll DOWN → slide both off-screen together. Scroll UP → slide back. */
+.utility-bar.hidden-on-scroll {
+  transform: translateY(-100%);
 }
 .utility-bar__inner {
   max-width: var(--container);
@@ -1014,16 +1291,24 @@ body.lang-ar .main-nav {
   align-items: center;
   color: var(--c-stone);
 }
-.utility-bar__pitch { text-transform: uppercase; letter-spacing: 0.12em; }
+.utility-bar__pitch {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--c-pearl);   /* white — was inheriting muted stone color */
+}
 .utility-bar__actions { display: flex; gap: 24px; }
 .utility-bar__actions a { color: var(--c-pearl); transition: color 0.2s; }
 .utility-bar__actions a:hover { color: var(--c-gold); }
+/* Utility bar + header are now both position: fixed at top:0, overlaid.
+   The hero is full-bleed (margin-top: 0) and uses padding-top to push
+   content below them. .page-hero on other pages keeps the offset since
+   they're not full-bleed. */
 .site-header { top: 36px; }
-.hero, .page-hero { margin-top: 116px; }
+.page-hero { margin-top: 132px; }
 @media (max-width: 1024px) {
   .utility-bar { display: none; }
   .site-header { top: 0; }
-  .hero, .page-hero { margin-top: 80px; }
+  .page-hero { margin-top: 80px; }
 }
 
 /* ============================================================
@@ -1222,6 +1507,41 @@ body.splash-active { overflow: hidden; height: 100vh; }
 body.lang-ar .fab-book { right: auto; left: 20px; }
 @media (min-width: 901px) { .fab-book { display: none !important; } }
 @media (max-width: 900px) { .fab-book { display: flex; } }
+
+/* ============================================================
+   WHATSAPP FAB — site-wide, visible on all pages, all screens.
+   Positioned bottom-LEFT so it never collides with the gold
+   Quick-Book widget or the mobile Book FAB (both bottom-right).
+   ============================================================ */
+.fab-whatsapp {
+  position: fixed;
+  bottom: 24px; left: 24px;
+  z-index: 95;
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: #25D366;
+  color: #fff;
+  display: flex;
+  align-items: center; justify-content: center;
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.35);
+  transition: transform 200ms var(--ease, ease), box-shadow 200ms var(--ease, ease);
+  text-decoration: none;
+}
+.fab-whatsapp:hover { transform: scale(1.08); box-shadow: 0 12px 32px rgba(37, 211, 102, 0.5); color: #fff; }
+.fab-whatsapp:focus-visible { outline: 2px solid var(--c-gold, #C8A04A); outline-offset: 3px; }
+.fab-whatsapp svg { width: 28px; height: 28px; }
+body.lang-ar .fab-whatsapp { left: auto; right: 24px; }
+/* Mobile: sit ABOVE the .mobile-cta bar (70px tall, anchored to bottom: 0). */
+@media (max-width: 900px) {
+  .fab-whatsapp {
+    bottom: calc(70px + env(safe-area-inset-bottom, 0px) + 16px);
+    left: 16px;
+    width: 52px; height: 52px;
+  }
+  body.lang-ar .fab-whatsapp { left: auto; right: 16px; }
+  .fab-whatsapp svg { width: 26px; height: 26px; }
+}
+@media print { .fab-whatsapp { display: none !important; } }
 
 /* ============================================================
    SKELETON LOADER (for JSON-driven grids)

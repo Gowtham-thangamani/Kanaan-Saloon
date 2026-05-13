@@ -1,33 +1,32 @@
 {
   "offers": [
     {
-      "id": "8-services",
-      "name_en": "8-Service Signature Package",
-      "name_ar": "باقة ٨ خدمات",
-      "price": 250,
+      "id": "complete-grooming",
+      "name_en": "Complete Grooming Package",
+      "name_ar": "باقة العناية الشاملة",
+      "subtitle_en": "For the Modern Man",
+      "subtitle_ar": "للرجل العصري",
+      "price": 120,
+      "was_price": 200,
       "currency": "AED",
-      "badge_en": "Signature",
-      "badge_ar": "مميّز",
+      "badge_en": "Save 40%",
+      "badge_ar": "خصم ٤٠٪",
       "image": "/assets/img/photos/service-hair-barber-stations-1000.webp",
       "inclusions_en": [
+        "Beard trimming / beard shave",
         "Haircut",
-        "Beard sculpt",
-        "Hair wash",
-        "Hair treatment",
-        "Express facial",
-        "Head massage",
-        "Manicure",
-        "Pedicure"
+        "Facial / deep cleansing facial",
+        "Hair treatment / deep conditioning",
+        "Nose strip / blackhead removal",
+        "Head massage with oil"
       ],
       "inclusions_ar": [
+        "تشذيب أو حلاقة اللحية",
         "قصّة شعر",
-        "نحت لحية",
-        "غسيل شعر",
-        "علاج شعر",
-        "جلسة وجه",
-        "مساج رأس",
-        "عناية يدين",
-        "عناية قدمين"
+        "تنظيف عميق للوجه",
+        "علاج وترطيب الشعر",
+        "إزالة الرؤوس السوداء",
+        "مساج الرأس بالزيت"
       ],
       "branches": [
         "all"
@@ -41,173 +40,45 @@
       "active": true
     },
     {
-      "id": "6-services",
-      "name_en": "6-Service Essential Package",
-      "name_ar": "باقة ٦ خدمات",
-      "price": 100,
+      "id": "premium-spa-8",
+      "name_en": "8 Premium Spa Services",
+      "name_ar": "٨ خدمات سبا فاخرة",
+      "subtitle_en": "Limited Time Offer",
+      "subtitle_ar": "عرض لفترة محدودة",
+      "price": 250,
       "currency": "AED",
-      "badge_en": "Bestseller",
-      "badge_ar": "الأكثر طلباً",
-      "image": "/assets/img/photos/service-hair-brand-wall-1000.webp",
-      "inclusions_en": [
-        "Haircut",
-        "Beard trim",
-        "Hair wash",
-        "Express facial",
-        "Hand care",
-        "Foot care"
-      ],
-      "inclusions_ar": [
-        "قصّة شعر",
-        "تشذيب لحية",
-        "غسيل شعر",
-        "جلسة وجه",
-        "عناية يدين",
-        "عناية قدمين"
-      ],
-      "branches": [
-        "all"
-      ],
-      "limited_time": false,
-      "valid_from": "",
-      "valid_to": "",
-      "tags": [
-        "signature"
-      ],
-      "active": true
-    },
-    {
-      "id": "moroccan-bath",
-      "name_en": "Moroccan Bath Ritual",
-      "name_ar": "طقس الحمّام المغربي",
-      "price": 180,
-      "currency": "AED",
-      "badge_en": "Spa",
-      "badge_ar": "سبا",
+      "badge_en": "60% OFF",
+      "badge_ar": "خصم ٦٠٪",
       "image": "/assets/img/photos/service-moroccan-bath-1000.webp",
       "inclusions_en": [
-        "Steam room",
-        "Black soap cleanse",
-        "Kessa exfoliation",
-        "Hydrating mask",
-        "Argan oil finish"
+        "Moroccan bath with Oud & Amber",
+        "Hair oil treatment",
+        "Full body scrub",
+        "Classic manicure",
+        "Deep skin cleansing cream",
+        "Pedicure",
+        "Blackhead removal (nose)",
+        "30-minute relaxing massage"
       ],
       "inclusions_ar": [
-        "غرفة بخار",
-        "صابون أسود",
-        "تقشير كيس الكسة",
-        "قناع مرطّب",
-        "زيت أرجان"
-      ],
-      "branches": [
-        "baniyas-spa",
-        "vip-muroor"
-      ],
-      "limited_time": false,
-      "valid_from": "",
-      "valid_to": "",
-      "tags": [
-        "spa"
-      ],
-      "active": true
-    },
-    {
-      "id": "vip-hour",
-      "name_en": "VIP Gentleman's Hour",
-      "name_ar": "ساعة الـ VIP",
-      "price": 450,
-      "currency": "AED",
-      "badge_en": "VIP",
-      "badge_ar": "VIP",
-      "image": "/assets/img/photos/vip-muroor-suite-1000.webp",
-      "inclusions_en": [
-        "Private suite",
-        "Master barber cut",
-        "Hot-towel shave",
-        "Signature facial",
-        "Refreshment service"
-      ],
-      "inclusions_ar": [
-        "جناح خاص",
-        "قصّة على يد حلّاق رئيسي",
-        "حلاقة بالمنشفة الساخنة",
-        "جلسة وجه مميّزة",
-        "ضيافة كاملة"
-      ],
-      "branches": [
-        "vip-muroor"
-      ],
-      "limited_time": false,
-      "valid_from": "",
-      "valid_to": "",
-      "tags": [
-        "vip"
-      ],
-      "active": true
-    },
-    {
-      "id": "eid",
-      "name_en": "Eid Premium Package",
-      "name_ar": "باقة العيد المميّزة",
-      "price": 320,
-      "currency": "AED",
-      "badge_en": "Limited Time",
-      "badge_ar": "لفترة محدودة",
-      "image": "/assets/img/photos/service-facial-overview-1000.webp",
-      "inclusions_en": [
-        "Haircut & beard sculpt",
-        "Moroccan bath",
-        "Premium facial",
-        "Manicure",
-        "Pedicure"
-      ],
-      "inclusions_ar": [
-        "قصّة ونحت لحية",
-        "حمّام مغربي",
-        "جلسة وجه فاخرة",
-        "عناية يدين",
-        "عناية قدمين"
+        "حمّام مغربي بالعود والعنبر",
+        "علاج زيت الشعر",
+        "تقشير كامل للجسم",
+        "منيكير كلاسيك",
+        "كريم تنظيف عميق للبشرة",
+        "باديكير",
+        "إزالة الرؤوس السوداء (الأنف)",
+        "مساج استرخاء ٣٠ دقيقة"
       ],
       "branches": [
         "all"
       ],
       "limited_time": true,
-      "valid_from": "2026-01-01",
-      "valid_to": "2026-12-31",
-      "tags": [
-        "limited"
-      ],
-      "active": true
-    },
-    {
-      "id": "father-son",
-      "name_en": "Father & Son Ritual",
-      "name_ar": "طقس الأب والابن",
-      "price": 220,
-      "currency": "AED",
-      "badge_en": "Family",
-      "badge_ar": "عائلي",
-      "image": "/assets/img/photos/service-hair-barber-stations-1000.webp",
-      "inclusions_en": [
-        "Two haircuts",
-        "Two beard trims (or kids' style)",
-        "Hair wash",
-        "Refreshments"
-      ],
-      "inclusions_ar": [
-        "قصّتان",
-        "تشذيب لحيتين أو قصّة أطفال",
-        "غسيل شعر",
-        "ضيافة"
-      ],
-      "branches": [
-        "all"
-      ],
-      "limited_time": false,
       "valid_from": "",
       "valid_to": "",
       "tags": [
-        "signature"
+        "limited",
+        "spa"
       ],
       "active": true
     }

@@ -6,13 +6,18 @@
   <title>Kanaan Gents Salon &amp; Spa | Premium Men's Grooming in Abu Dhabi</title>
   <meta name="description" content="Ten houses across Abu Dhabi. One uncompromising standard of men's grooming, barbering, and spa. Book your chair at Kanaan." />
   <link rel="stylesheet" href="assets/css/fonts.css" />
-  <link rel="stylesheet" href="assets/css/style.css" />
-  <link rel="stylesheet" href="assets/css/motion.css?v=18" />
+  <link rel="stylesheet" href="assets/css/style.css?v=3" />
+  <link rel="stylesheet" href="assets/css/motion.css?v=19" />
   <script id="motion-pre-paint">(function(){if(!window.matchMedia||!window.matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.classList.add("motion-ready");}})();</script>
-  <link rel="preload" as="image" href="assets/img/photos/arch-staircase-lemon-1600.webp" fetchpriority="high" />
-  <link rel="canonical" href="/index.html" />
-  <link rel="alternate" hreflang="en" href="/index.html" />
-  <link rel="alternate" hreflang="ar" href="/ar/index.html" />
+  <!-- Preload the actual first hero slide (matches the eager <img> at line 124) so the LCP image starts fetching before CSS parses. -->
+  <link rel="preload" as="image" href="assets/img/photos/hero-exterior-night-1600.webp" fetchpriority="high" />
+  <!-- Self-hosted font preloads — block FOIT on the body + display faces used above the fold. -->
+  <link rel="preload" as="font" type="font/woff2" href="assets/fonts/inter-latin-400.woff2" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="assets/fonts/cormorant-garamond-latin-600.woff2" crossorigin />
+  <link rel="canonical" href="https://kanaanspa.ae/index.html" />
+  <link rel="alternate" hreflang="en" href="https://kanaanspa.ae/index.html" />
+  <link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/index.html" />
+  <link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/index.html" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -53,6 +58,19 @@
     }
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type":"Question","name":"How do I book an appointment at Kanaan?","acceptedAnswer":{"@type":"Answer","text":"Use the online booking form (about 60 seconds), call +971 50 555 6795, or message on WhatsApp. The branch confirms within 30 minutes during open hours."}},
+      {"@type":"Question","name":"What are Kanaan's prices?","acceptedAnswer":{"@type":"Answer","text":"Each branch has its own menu. Cuts start at 25 AED at Baniyas Barber and 30–50 AED at most other houses. VAT included. See the Menu & Prices page to browse by branch."}},
+      {"@type":"Question","name":"Can I cancel or reschedule my booking?","acceptedAnswer":{"@type":"Answer","text":"Yes — free up to 2 hours before your appointment. Reply to the WhatsApp confirmation, or use the Reschedule / Cancel button on your booking confirmation page."}},
+      {"@type":"Question","name":"Does Kanaan take walk-ins?","acceptedAnswer":{"@type":"Answer","text":"Yes — but Friday evenings, weekends, and the last hour before close fill up fast. Booking online or by phone first guarantees a chair."}},
+      {"@type":"Question","name":"What time does Kanaan close?","acceptedAnswer":{"@type":"Answer","text":"All branches close at 23:00 daily. Last bookings accepted approximately 60 minutes before close for shorter services. VIP Muroor opens at 11:00; Friday hours start at 14:00 across the chain."}}
+    ]
+  }
+  </script>
 
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Kanaan Gents Salon &amp; Spa | Premium Men's Grooming in Abu Dhabi" />
@@ -86,13 +104,12 @@
   <!-- HEADER -->
   <header class="site-header" role="banner">
     <div class="site-header__inner">
-      <a href="index.html" class="logo logo--text" aria-label="Kanaan home"><span class="logo__mark" aria-hidden="true"><i></i></span><span class="logo__word">KANAAN<span class="logo__dot">.</span></span><span class="logo__sub">Gents Salon &amp; Spa</span></a>
+      <a href="index.html" class="logo" aria-label="Kanaan Gents Salon &amp; Spa — home"><img src="assets/img/logo.svg" alt="Kanaan Gents Salon &amp; Spa" class="logo-img" /></a>
       <nav class="main-nav" aria-label="Primary">
         <a href="index.html" class="is-active">Home</a>
         <a href="about.html">About</a>
-        <a href="services.html">Services</a>
         <a href="offers.html">Offers</a>
-        <div class="nav-dd"><button class="nav-dd__trigger" type="button">Branches <i class="nav-dd__caret" aria-hidden="true"></i></button><div class="nav-dd__panel"><div class="nav-dd__col"><h6>Abu Dhabi</h6><ul><li><a href="branches/khalifa-city.html"><span>Khalifa City</span></a></li><li><a href="branches/khalidiya.html"><span>Khalidiya</span></a></li><li><a href="branches/baniyas-spa.html"><span>Baniyas Spa</span><span class="nav-dd__type">Spa</span></a></li><li><a href="branches/baniyas-barber.html"><span>Baniyas Barber</span><span class="nav-dd__type">Barber</span></a></li><li><a href="branches/rabdan.html"><span>Rabdan</span></a></li><li><a href="branches/old-shahamah.html"><span>Old Shahamah</span></a></li><li><a href="branches/new-shahamah.html"><span>New Shahamah</span></a></li><li><a href="branches/muroor.html"><span>Muroor</span><span class="nav-dd__type">Barber</span></a></li><li><a href="branches/vip-muroor.html"><span>VIP Muroor</span><span class="nav-dd__type">VIP</span></a></li></ul></div><div class="nav-dd__col"><h6>Al Ain</h6><ul><li><a href="branches/al-ain.html"><span>Al Ain</span></a></li></ul></div><div class="nav-dd__foot"><a href="branches.html">View all branches →</a><span>10 houses · One standard</span></div></div></div>
+        <a href="branches.html">Houses &amp; Services</a>
         <a href="gallery.html">Gallery</a>
         <a href="contact.html">Contact</a>
       </nav>
@@ -107,9 +124,8 @@
     <nav class="mobile-nav" aria-label="Mobile">
       <a href="index.html">Home</a>
       <a href="about.html">About</a>
-      <a href="services.html">Services</a>
       <a href="offers.html">Offers</a>
-      <div class="nav-dd-m"><button class="nav-dd-m__head" type="button">Branches <i class="nav-dd__caret" aria-hidden="true"></i></button><div class="nav-dd-m__panel"><a href="branches/al-ain.html">Al Ain</a><a href="branches/khalifa-city.html">Khalifa City</a><a href="branches/khalidiya.html">Khalidiya</a><a href="branches/baniyas-spa.html">Baniyas Spa</a><a href="branches/baniyas-barber.html">Baniyas Barber</a><a href="branches/rabdan.html">Rabdan</a><a href="branches/old-shahamah.html">Old Shahamah</a><a href="branches/new-shahamah.html">New Shahamah</a><a href="branches/muroor.html">Muroor</a><a href="branches/vip-muroor.html">VIP Muroor</a></div></div>
+      <a href="branches.html">Houses &amp; Services</a>
       <a href="gallery.html">Gallery</a>
       <a href="contact.html">Contact</a>
       <a href="ar/index.html">عربي</a>
@@ -117,10 +133,24 @@
     </nav>
   </header>
 
-  <!-- HERO — runtime-bound from content/site.json -->
-  <section class="hero">
+  <!-- HERO — image-only fade slider, headline stays constant -->
+  <section class="hero" data-hero-slider>
     <div class="hero__media" data-parallax="bg" data-speed="0.50">
-      <img src="assets/img/photos/arch-staircase-lemon-1600.webp" alt="Inside a Kanaan house — marble staircase" data-bind-attr-src="homepage_hero.image" loading="eager" fetchpriority="high" decoding="async" />
+      <div class="hero__slide is-active">
+        <img src="assets/img/photos/hero-exterior-night-1600.webp" alt="Kanaan Gents Salon storefront — Abu Dhabi" width="1600" height="900" loading="eager" fetchpriority="high" decoding="async" />
+      </div>
+      <div class="hero__slide">
+        <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=1600&q=85&auto=format&fit=crop" alt="Premium barber tools flat-lay" loading="lazy" decoding="async" />
+      </div>
+      <div class="hero__slide">
+        <img src="assets/img/photos/hero-kanaan-interior.png" alt="Kanaan Gents & Spa chair and styling station" loading="lazy" decoding="async" />
+      </div>
+      <div class="hero__slide">
+        <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=1600&q=85&auto=format&fit=crop" alt="Close-up of straight razor shave" loading="lazy" decoding="async" />
+      </div>
+      <div class="hero__slide">
+        <img src="assets/img/photos/hero-kanaan-tools.png" alt="Kanaan branded grooming tools on wooden board" loading="lazy" decoding="async" />
+      </div>
     </div>
     <div class="container hero__content">
       <span class="eyebrow" data-bind="brand.name">Kanaan Gents Salon &amp; Spa · Abu Dhabi</span>
@@ -128,8 +158,15 @@
       <p class="hero__sub" data-bind="homepage_hero.sub">Ten houses across Abu Dhabi and Al Ain. One uncompromising standard of barbering, grooming and spa craft — held by master practitioners since the day we opened.</p>
       <div class="hero__cta">
         <a href="book.html" class="btn btn--lg" data-track="book_now_click" data-bind="homepage_hero.primary_cta">Book Your Chair</a>
-        <a href="branches.html" class="btn btn--ghost btn--lg">Find Your Branch</a>
+        <a href="branches.html" class="btn btn--ghost btn--lg">Find Your House</a>
       </div>
+    </div>
+    <div class="hero__dots" role="tablist" aria-label="Hero slideshow navigation">
+      <button class="hero__dot is-active" aria-label="Show slide 1" aria-selected="true" type="button"></button>
+      <button class="hero__dot" aria-label="Show slide 2" type="button"></button>
+      <button class="hero__dot" aria-label="Show slide 3" type="button"></button>
+      <button class="hero__dot" aria-label="Show slide 4" type="button"></button>
+      <button class="hero__dot" aria-label="Show slide 5" type="button"></button>
     </div>
   </section>
 
@@ -167,7 +204,7 @@
       <div class="trust-strip">
         <div class="trust-strip__item">
           <span class="trust-strip__num" data-count-to="10">0</span>
-          <span class="trust-strip__label">Branches</span>
+          <span class="trust-strip__label">Houses</span>
         </div>
         <div class="trust-strip__item">
           <span class="trust-strip__num" data-count-to="7">0</span>
@@ -185,6 +222,40 @@
     </div>
   </section>
 
+  <!-- GOOGLE RATING + REVIEWS — replace the placeholder rating (4.7 / 2,400)
+       with the real Google Places rating when available, and swap the 3
+       sample quotes for real published reviews (with permission). -->
+  <section class="section section--tight section--light" style="padding-top: var(--s-7); padding-bottom: var(--s-7);">
+    <div class="container" style="max-width: 1100px;">
+      <div style="display: flex; gap: var(--s-6); align-items: center; justify-content: center; flex-wrap: wrap; margin-bottom: var(--s-6);">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="font-family: var(--f-display); font-size: 36px; color: var(--c-gold-dark);">4.7</span>
+          <div>
+            <div aria-label="4.7 out of 5 stars" style="color: #F4A300; font-size: 18px; letter-spacing: 2px;">★ ★ ★ ★ ★</div>
+            <div style="font-size: 13px; color: var(--c-stone);">from <strong>2,400+</strong> Google reviews · across 10 houses</div>
+          </div>
+        </div>
+        <a href="contact.html" class="text-link" style="color: var(--c-gold-dark);">Read all reviews →</a>
+      </div>
+
+      <div class="grid grid-3" data-reveal-stagger>
+        <blockquote style="border-left: 1px solid var(--c-gold-dark); padding-left: var(--s-5); margin: 0;">
+          <p style="font-family: var(--f-display); font-size: 18px; line-height: 1.5; color: var(--c-ink); margin: 0 0 var(--s-3);">"Best beard sculpt I've had in Abu Dhabi. The detail on the line-up was beyond what I expected at this price."</p>
+          <footer style="font-size: 13px; color: var(--c-stone);">— Hamad Al Suwaidi · Khalifa City</footer>
+        </blockquote>
+        <blockquote style="border-left: 1px solid var(--c-gold-dark); padding-left: var(--s-5); margin: 0;">
+          <p style="font-family: var(--f-display); font-size: 18px; line-height: 1.5; color: var(--c-ink); margin: 0 0 var(--s-3);">"The Moroccan bath at Baniyas Spa is the real thing. Not a hotel-spa imitation — proper kessa, proper steam, proper finish."</p>
+          <footer style="font-size: 13px; color: var(--c-stone);">— Karim Mansour · Baniyas Spa</footer>
+        </blockquote>
+        <blockquote style="border-left: 1px solid var(--c-gold-dark); padding-left: var(--s-5); margin: 0;">
+          <p style="font-family: var(--f-display); font-size: 18px; line-height: 1.5; color: var(--c-ink); margin: 0 0 var(--s-3);">"Booked the VIP suite for an anniversary. Private, calm, and the team remembered we'd been before. Worth every dirham."</p>
+          <footer style="font-size: 13px; color: var(--c-stone);">— Yousef Al Hosani · VIP Muroor</footer>
+        </blockquote>
+      </div>
+      <p class="muted" style="text-align: center; margin-top: var(--s-5); font-size: 12px;">Sample reviews shown — real Google reviews + ratings will populate here once we connect the Places API.</p>
+    </div>
+  </section>
+
   <!-- SERVICE CATEGORIES -->
   <section class="section">
     <div class="container">
@@ -195,69 +266,62 @@
       </div>
 
       <div class="service-grid reveal">
-        <a href="services/hair-beard.html" class="service-card service-card--photo">
+        <div class="service-card service-card--photo">
           <div class="service-card__media" data-hover-zoom><img src="assets/img/photos/service-hair-barber-stations-1000.webp" alt="" loading="lazy" decoding="async" /></div>
           <div class="service-card__body">
             <span class="service-card__num">01 / 07</span>
             <h3 class="service-card__title">Hair &amp; Beard</h3>
             <p class="service-card__desc">Precision cuts, classic shaves, beard sculpting in the master-barber tradition.</p>
-            <span class="service-card__arrow">→</span>
           </div>
-        </a>
-        <a href="services/facial-skin-care.html" class="service-card service-card--photo">
+        </div>
+        <div class="service-card service-card--photo">
           <div class="service-card__media" data-hover-zoom><img src="assets/img/photos/service-facial-candlelit-1000.webp" alt="" loading="lazy" decoding="async" /></div>
           <div class="service-card__body">
             <span class="service-card__num">02 / 07</span>
             <h3 class="service-card__title">Facial &amp; Skin</h3>
             <p class="service-card__desc">Calibrated treatments for every skin type — purifying, hydrating, restoring.</p>
-            <span class="service-card__arrow">→</span>
           </div>
-        </a>
-        <a href="services/massage.html" class="service-card service-card--photo">
+        </div>
+        <div class="service-card service-card--photo">
           <div class="service-card__media" data-hover-zoom><img src="assets/img/photos/service-massage-tools-1000.webp" alt="" loading="lazy" decoding="async" /></div>
           <div class="service-card__body">
             <span class="service-card__num">03 / 07</span>
             <h3 class="service-card__title">Massage</h3>
             <p class="service-card__desc">Deep-tissue, relaxation and recovery rituals from trained spa therapists.</p>
-            <span class="service-card__arrow">→</span>
           </div>
-        </a>
-        <a href="services/moroccan-bath.html" class="service-card service-card--photo">
+        </div>
+        <div class="service-card service-card--photo">
           <div class="service-card__media" data-hover-zoom><img src="assets/img/photos/service-moroccan-bath-1000.webp" alt="" loading="lazy" decoding="async" /></div>
           <div class="service-card__body">
             <span class="service-card__num">04 / 07</span>
             <h3 class="service-card__title">Moroccan Bath</h3>
             <p class="service-card__desc">A heritage hammam ritual — exfoliation, steam and renewal.</p>
-            <span class="service-card__arrow">→</span>
           </div>
-        </a>
-        <a href="services/manicure-pedicure.html" class="service-card service-card--photo">
+        </div>
+        <div class="service-card service-card--photo">
           <div class="service-card__media" data-hover-zoom><img src="assets/img/photos/service-pedicure-marble-1000.webp" alt="" loading="lazy" decoding="async" /></div>
           <div class="service-card__body">
             <span class="service-card__num">05 / 07</span>
             <h3 class="service-card__title">Manicure &amp; Pedicure</h3>
             <p class="service-card__desc">Refined hand and foot care, executed with surgical-grade precision.</p>
-            <span class="service-card__arrow">→</span>
           </div>
-        </a>
-        <a href="services/hair-treatment.html" class="service-card service-card--photo">
+        </div>
+        <div class="service-card service-card--photo">
           <div class="service-card__media" data-hover-zoom><img src="assets/img/photos/service-hair-brand-wall-1000.webp" alt="" loading="lazy" decoding="async" /></div>
           <div class="service-card__body">
             <span class="service-card__num">06 / 07</span>
             <h3 class="service-card__title">Hair Treatment</h3>
             <p class="service-card__desc">Restorative protein, keratin and scalp therapies for healthier hair.</p>
-            <span class="service-card__arrow">→</span>
           </div>
-        </a>
-        <a href="services/grooming-packages.html" class="service-card service-card--photo">
+        </div>
+        <div class="service-card service-card--photo">
           <div class="service-card__media" data-hover-zoom><img src="assets/img/photos/service-facial-overview-1000.webp" alt="" loading="lazy" decoding="async" /></div>
           <div class="service-card__body">
             <span class="service-card__num">07 / 07</span>
             <h3 class="service-card__title">Grooming Packages</h3>
             <p class="service-card__desc">Curated multi-service rituals for a complete reset.</p>
-            <span class="service-card__arrow">→</span>
           </div>
-        </a>
+        </div>
         <a href="services.html" class="service-card service-card--cta">
           <div class="service-card__body">
             <span class="service-card__num">View all</span>
@@ -298,62 +362,46 @@
         <p class="section-head__lede" data-scroll-text>Editor-picked packages from our houses across Abu Dhabi. Honest pricing, full inclusions, no upselling.</p>
       </div>
 
-      <div class="grid grid-3 reveal">
-        <a href="book.html" class="offer-card">
+      <div class="grid grid-2 reveal">
+        <a href="book.html?offer=complete-grooming" class="offer-card">
           <div class="offer-card__media" data-hover-zoom>
-            <span class="offer-card__badge">Signature</span>
-            <img src="assets/img/photos/service-massage-pink-1000.webp" alt="Premium grooming detail" loading="lazy" decoding="async" />
+            <span class="offer-card__badge">Save 40%</span>
+            <img src="assets/img/photos/service-hair-barber-stations-1000.webp" alt="Complete Grooming Package" loading="lazy" decoding="async" />
           </div>
           <div class="offer-card__body">
-            <h3 class="offer-card__title">8-Service Signature Package</h3>
+            <h3 class="offer-card__title">Complete Grooming Package</h3>
             <ul class="offer-card__list">
-              <li>Haircut &amp; beard sculpt</li>
-              <li>Hair wash &amp; treatment</li>
-              <li>Express facial</li>
-              <li>Head, hand &amp; foot care</li>
+              <li>Beard trimming / shave</li>
+              <li>Haircut</li>
+              <li>Deep cleansing facial</li>
+              <li>Hair treatment</li>
+              <li>Blackhead removal</li>
+              <li>Oil head massage</li>
+            </ul>
+            <div class="offer-card__price-row">
+              <div class="offer-card__price">120 <small>AED</small></div>
+              <span class="text-link">Book →</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="book.html?offer=premium-spa-8" class="offer-card">
+          <div class="offer-card__media" data-hover-zoom>
+            <span class="offer-card__badge">60% OFF</span>
+            <img src="assets/img/photos/service-moroccan-bath-1000.webp" alt="8 Premium Spa Services" loading="lazy" decoding="async" />
+          </div>
+          <div class="offer-card__body">
+            <h3 class="offer-card__title">8 Premium Spa Services</h3>
+            <ul class="offer-card__list">
+              <li>Moroccan bath with Oud &amp; Amber</li>
+              <li>Hair oil treatment &amp; full body scrub</li>
+              <li>Classic manicure &amp; pedicure</li>
+              <li>Deep skin cleansing cream</li>
+              <li>Blackhead removal (nose)</li>
+              <li>30-minute relaxing massage</li>
             </ul>
             <div class="offer-card__price-row">
               <div class="offer-card__price">250 <small>AED</small></div>
-              <span class="text-link">Book →</span>
-            </div>
-          </div>
-        </a>
-
-        <a href="book.html" class="offer-card">
-          <div class="offer-card__media" data-hover-zoom>
-            <span class="offer-card__badge">Bestseller</span>
-            <img src="assets/img/photos/standard-pedicure-onyx-1000.webp" alt="Master barber at work in Kanaan" loading="lazy" decoding="async" />
-          </div>
-          <div class="offer-card__body">
-            <h3 class="offer-card__title">6-Service Essential Package</h3>
-            <ul class="offer-card__list">
-              <li>Haircut &amp; beard trim</li>
-              <li>Hair wash</li>
-              <li>Express facial</li>
-              <li>Hand &amp; foot care</li>
-            </ul>
-            <div class="offer-card__price-row">
-              <div class="offer-card__price">100 <small>AED</small></div>
-              <span class="text-link">Book →</span>
-            </div>
-          </div>
-        </a>
-
-        <a href="book.html" class="offer-card">
-          <div class="offer-card__media" data-hover-zoom>
-            <span class="offer-card__badge">VIP</span>
-            <img src="assets/img/photos/arch-marble-staircase-1000.webp" alt="Kanaan VIP Muroor private suite" loading="lazy" decoding="async" />
-          </div>
-          <div class="offer-card__body">
-            <h3 class="offer-card__title">VIP Gentleman's Hour</h3>
-            <ul class="offer-card__list">
-              <li>Private suite</li>
-              <li>Master barber cut &amp; hot-towel shave</li>
-              <li>Signature facial</li>
-              <li>Refreshment service</li>
-            </ul>
-            <div class="offer-card__price-row">
-              <div class="offer-card__price">450 <small>AED</small></div>
               <span class="text-link">Book →</span>
             </div>
           </div>
@@ -422,7 +470,7 @@
       </div>
 
       <div class="text-center mt-7">
-        <a href="branches.html" class="btn">All 10 Branches</a>
+        <a href="branches.html" class="btn">All 10 Houses</a>
       </div>
     </div>
   </section>
@@ -454,27 +502,7 @@
     </div>
   </section>
 
-  <!-- INSTAGRAM FEED -->
-  <section class="section">
-    <div class="container">
-      <div class="section-head reveal" data-reveal="up">
-        <span class="eyebrow" data-parallax="text" data-speed="0.22">Follow Us</span>
-        <h2 class="section-head__title display-2" data-parallax="text" data-speed="0.15">On Instagram.</h2>
-        <p class="section-head__lede" data-scroll-text>Latest from inside our chairs — atmosphere, craft, and the work itself.<br/><a href="#" data-bind-attr-href="social.instagram" target="_blank" rel="noopener" class="text-link" style="margin-top: 12px;"><span data-bind="social.instagram_handle">@kanaan</span> →</a></p>
-      </div>
-      <div class="ig-feed reveal">
-        <a href="#" data-bind-attr-href="social.instagram" target="_blank" rel="noopener" class="ig-post" data-track="instagram_click"><img src="assets/img/photos/lounge-logo-wall-1000.webp" alt="Master barber at work in a Kanaan house" loading="lazy" /><span class="ig-post__overlay"><svg class="icon" style="width:24px;height:24px;"><use href="assets/img/icons.svg#i-instagram"/></svg></span></a>
-        <a href="#" data-bind-attr-href="social.instagram" target="_blank" rel="noopener" class="ig-post" data-track="instagram_click"><img src="assets/img/photos/service-hair-barber-stations-1000.webp" alt="Hot-towel shave preparation at Kanaan" loading="lazy" /><span class="ig-post__overlay"><svg class="icon" style="width:24px;height:24px;"><use href="assets/img/icons.svg#i-instagram"/></svg></span></a>
-        <a href="#" data-bind-attr-href="social.instagram" target="_blank" rel="noopener" class="ig-post" data-track="instagram_click"><img src="assets/img/photos/service-facial-overview-1000.webp" alt="Beard sculpt in progress" loading="lazy" /><span class="ig-post__overlay"><svg class="icon" style="width:24px;height:24px;"><use href="assets/img/icons.svg#i-instagram"/></svg></span></a>
-        <a href="#" data-bind-attr-href="social.instagram" target="_blank" rel="noopener" class="ig-post" data-track="instagram_click"><img src="assets/img/photos/service-massage-pink-1000.webp" alt="Spa room interior — Baniyas Spa" loading="lazy" /><span class="ig-post__overlay"><svg class="icon" style="width:24px;height:24px;"><use href="assets/img/icons.svg#i-instagram"/></svg></span></a>
-        <a href="#" data-bind-attr-href="social.instagram" target="_blank" rel="noopener" class="ig-post" data-track="instagram_click"><img src="assets/img/photos/standard-pedicure-onyx-1000.webp" alt="Detail of barber tools on the counter" loading="lazy" /><span class="ig-post__overlay"><svg class="icon" style="width:24px;height:24px;"><use href="assets/img/icons.svg#i-instagram"/></svg></span></a>
-        <a href="#" data-bind-attr-href="social.instagram" target="_blank" rel="noopener" class="ig-post" data-track="instagram_click"><img src="assets/img/photos/arch-marble-staircase-1000.webp" alt="Treatment-room ambience" loading="lazy" /><span class="ig-post__overlay"><svg class="icon" style="width:24px;height:24px;"><use href="assets/img/icons.svg#i-instagram"/></svg></span></a>
-      </div>
-      <p style="text-align: center; margin-top: var(--s-5); font-size: 11px; color: var(--muted); letter-spacing: 0.06em;">For a live Instagram feed, replace this section with an Elfsight, EmbedSocial, or Instagram Basic Display API widget. Edit the section in admin/banners.html.</p>
-    </div>
-  </section>
-
-  <!-- TESTIMONIALS -->
+  <!-- TESTIMONIALS — social proof above the social handle -->
   <section class="section section--light">
     <div class="container">
       <div class="section-head reveal" data-reveal="up">
@@ -491,6 +519,39 @@
     </div>
   </section>
 
+  <!-- FAQ — deflects the most common questions before customers reach contact. -->
+  <section class="section section--light">
+    <div class="container" style="max-width: 720px;">
+      <div class="section-head" data-reveal="up">
+        <span class="eyebrow">Common questions</span>
+        <h2 class="section-head__title display-2">Before you call.</h2>
+      </div>
+      <div class="faq-list" style="display: grid; gap: var(--s-3); margin-top: var(--s-6);">
+        <details class="faq" style="border: 1px solid var(--c-hairline-light); padding: var(--s-4) var(--s-5); background: #fff;">
+          <summary style="cursor: pointer; font-family: var(--f-display); font-size: 18px; color: var(--c-ink);">How do I book an appointment?</summary>
+          <p class="muted" style="margin: var(--s-3) 0 0;">Use the <a href="book.html" class="text-gold">online booking</a> form (about 60 seconds), call <a href="tel:+971505556795" class="text-gold">+971 50 555 6795</a>, or message us on <a href="https://wa.me/971505556795" class="text-gold">WhatsApp</a>. The branch confirms within 30 minutes during open hours.</p>
+        </details>
+        <details class="faq" style="border: 1px solid var(--c-hairline-light); padding: var(--s-4) var(--s-5); background: #fff;">
+          <summary style="cursor: pointer; font-family: var(--f-display); font-size: 18px; color: var(--c-ink);">What are your prices?</summary>
+          <p class="muted" style="margin: var(--s-3) 0 0;">Each branch has its own menu — see the <a href="menu.html" class="text-gold">Services &amp; Prices</a> page to browse by branch. Cuts start at <strong>25 AED</strong> at Baniyas Barber and <strong>30–50 AED</strong> at most other houses. VAT included.</p>
+        </details>
+        <details class="faq" style="border: 1px solid var(--c-hairline-light); padding: var(--s-4) var(--s-5); background: #fff;">
+          <summary style="cursor: pointer; font-family: var(--f-display); font-size: 18px; color: var(--c-ink);">Can I cancel or reschedule?</summary>
+          <p class="muted" style="margin: var(--s-3) 0 0;">Yes — free up to 2 hours before your appointment. Reply to the WhatsApp confirmation, or use the <strong>Reschedule / Cancel</strong> button on your booking confirmation page.</p>
+        </details>
+        <details class="faq" style="border: 1px solid var(--c-hairline-light); padding: var(--s-4) var(--s-5); background: #fff;">
+          <summary style="cursor: pointer; font-family: var(--f-display); font-size: 18px; color: var(--c-ink);">Do you take walk-ins?</summary>
+          <p class="muted" style="margin: var(--s-3) 0 0;">Yes — but Friday evenings, weekends, and the last hour before close fill up fast. Booking online or by phone first guarantees a chair.</p>
+        </details>
+        <details class="faq" style="border: 1px solid var(--c-hairline-light); padding: var(--s-4) var(--s-5); background: #fff;">
+          <summary style="cursor: pointer; font-family: var(--f-display); font-size: 18px; color: var(--c-ink);">What time do you close?</summary>
+          <p class="muted" style="margin: var(--s-3) 0 0;">All branches close at <strong>23:00</strong> daily. Last bookings accepted ~60 minutes before close for shorter services. VIP Muroor opens at 11:00 (not 10:00 like the others); Friday hours start at 14:00 across the chain.</p>
+        </details>
+      </div>
+      <p style="text-align: center; margin-top: var(--s-5); font-size: 13px;">More questions? <a href="contact.html" class="text-gold">Visit the contact page</a> or <a href="https://wa.me/971505556795" class="text-gold">message us on WhatsApp</a>.</p>
+    </div>
+  </section>
+
   <!-- FINAL CTA BAND -->
   <section class="cta-band" data-reveal="up">
     <h2 class="cta-band__title" data-parallax="text" data-speed="0.35">Book your chair.</h2>
@@ -503,7 +564,7 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <div class="logo logo--text"><span class="logo__mark" aria-hidden="true"><i></i></span><span class="logo__word">KANAAN<span class="logo__dot">.</span></span><span class="logo__sub">Gents Salon &amp; Spa</span></div>
+          <div class="logo"><img src="assets/img/logo.svg" alt="Kanaan Gents Salon &amp; Spa" class="logo-img" /></div>
           <p style="margin-top: var(--s-4);">Ten houses across Abu Dhabi. One uncompromising standard of grooming, barbering and spa craft.</p>
           <div class="footer-socials" aria-label="Social">
             <a href="#" data-bind-attr-href="social.instagram" aria-label="Instagram" target="_blank" rel="noopener"><svg class="icon"><use href="assets/img/icons.svg#i-instagram"/></svg></a>
@@ -515,7 +576,7 @@
         <div>
           <h5>Visit</h5>
           <ul>
-            <li><a href="services.html">Services</a></li>
+            <li></li>
             <li><a href="offers.html">Offers</a></li>
             <li><a href="gallery.html">Gallery</a></li>
             <li><a href="about.html">About</a></li>
@@ -523,7 +584,7 @@
           </ul>
         </div>
         <div>
-          <h5>Branches</h5>
+          <h5>Houses</h5>
           <ul>
             <li><a href="branches/al-ain.html">Al Ain</a></li>
             <li><a href="branches/khalifa-city.html">Khalifa City</a></li>
@@ -550,7 +611,7 @@
           <p>Kanaan offers and updates, once a month — no more.</p>
         </div>
         <form data-newsletter-form>
-          <input type="email" required placeholder="Your email address" />
+          <input type="email" name="email" required placeholder="Your email address" aria-label="Email address" />
           <button type="submit" class="btn btn--sm">Subscribe</button>
         </form>
       </div>
@@ -568,20 +629,48 @@
   <!-- STICKY MOBILE CTA -->
   <div class="mobile-cta" role="navigation" aria-label="Mobile actions">
     <a href="book.html" class="mobile-cta__book" data-track="book_now_click">Book Now</a>
-    <a href="https://wa.me/971505556795?text=Hi%20Kanaan%2C%20I'd%20like%20to%20book.%20Please%20share%20nearest%20branch%20%2B%20available%20times." aria-label="WhatsApp" data-track="whatsapp_click"><span class="mobile-cta__icon">✉</span></a>
-    <a href="tel:+971505556795" aria-label="Call" data-track="call_click"><span class="mobile-cta__icon">☏</span></a>
+    <a href="https://wa.me/971505556795?text=Hi%20Kanaan%2C%20I'd%20like%20to%20book.%20Please%20share%20nearest%20branch%20%2B%20available%20times." aria-label="WhatsApp" data-track="whatsapp_click"><svg class="icon" aria-hidden="true"><use href="assets/img/icons.svg#i-whatsapp"/></svg></a>
+    <a href="tel:+971505556795" aria-label="Call" data-track="call_click"><svg class="icon" aria-hidden="true"><use href="assets/img/icons.svg#i-phone"/></svg></a>
   </div>
 
-  <script src="assets/js/data.js"></script>
-  <script src="assets/js/splash.js"></script>
-  <script src="assets/js/config.js"></script>
-  <script src="assets/js/tracking.js"></script>
+  <!-- All scripts defer-loaded — preserves load order, doesn't block parser. -->
+  <script src="assets/js/data.js" defer></script>
+  <script src="assets/js/splash.js" defer></script>
+  <script src="assets/js/config.js" defer></script>
+  <script src="assets/js/tracking.js" defer></script>
   <script src="assets/js/consent.js" defer></script>
-  <script src="assets/js/runtime.js"></script>
-  <script src="assets/js/main.js"></script>
+  <script src="assets/js/runtime.js" defer></script>
+  <script src="assets/js/main.js?v=25" defer></script>
   <script src="assets/js/nav-dropdown.js" defer></script>
   <script src="assets/js/motion.js?v=18" defer></script>
   <script src="assets/js/quickbook.js" defer></script>
   <script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){});});}</script>
+  <script>
+  (function(){
+    var slider = document.querySelector('[data-hero-slider]');
+    if (!slider) return;
+    var slides = slider.querySelectorAll('.hero__slide');
+    var dots = slider.querySelectorAll('.hero__dot');
+    if (slides.length < 2) return;
+    var current = 0, timer = null;
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+    function show(i) {
+      slides[current].classList.remove('is-active');
+      if (dots[current]) { dots[current].classList.remove('is-active'); dots[current].removeAttribute('aria-selected'); }
+      current = (i + slides.length) % slides.length;
+      slides[current].classList.add('is-active');
+      if (dots[current]) { dots[current].classList.add('is-active'); dots[current].setAttribute('aria-selected', 'true'); }
+    }
+    function start() { stop(); if (!reduce.matches) timer = setInterval(function(){ show(current + 1); }, 4000); }
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+    for (var i = 0; i < dots.length; i++) {
+      (function(idx){ dots[idx].addEventListener('click', function(){ show(idx); start(); }); })(i);
+    }
+    slider.addEventListener('mouseenter', stop);
+    slider.addEventListener('mouseleave', start);
+    document.addEventListener('visibilitychange', function(){ document.hidden ? stop() : start(); });
+    start();
+  })();
+  </script>
 </body>
 </html>

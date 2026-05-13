@@ -88,10 +88,9 @@ const services = [
     aboutHeading: 'A heritage ritual,<br/>done properly.',
     aboutBody: 'The Moroccan bath is one of the oldest grooming rituals in the region. We perform it the way it should be performed — black soap, steam, kessa exfoliation, mask, and finish with argan oil. No shortcuts. Available at our spa-led houses (Baniyas Spa, VIP Muroor).',
     treatments: [
-      { name: 'Classic Moroccan Bath', desc: 'Steam, black soap, full-body kessa exfoliation, hydrating mask.', price: 'From 180 AED' },
-      { name: 'Royal Moroccan Ritual', desc: 'Classic bath plus argan oil treatment and head massage.', price: 'From 280 AED' },
-      { name: 'Couples Hammam Suite', desc: 'Side-by-side, in a private suite. By appointment.', price: 'Ask for price' },
-      { name: 'Express Hammam', desc: 'A shortened version for time-pressed visitors.', price: 'From 130 AED' }
+      { name: 'Moroccan Bath', desc: 'Steam, black soap, full-body kessa exfoliation, hydrating mask.', price: 'From 130 AED' },
+      { name: 'Private Moroccan Bath', desc: 'The full Moroccan ritual in a private treatment suite.', price: 'From 180 AED' },
+      { name: 'Royal Moroccan Bath', desc: 'The complete ritual with argan oil treatment and head massage.', price: 'From 300 AED' }
     ],
     ritual: [
       { name: 'Steam', body: '12–15 minutes in our hammam to open the pores.' },

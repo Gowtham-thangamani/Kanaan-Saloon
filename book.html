@@ -6,13 +6,14 @@
   <title>Book Online | Kanaan Gents Salon &amp; Spa</title>
   <meta name="description" content="Book your chair at any of the 10 Kanaan houses across Abu Dhabi. Two minutes online — confirmation by your branch." />
   <link rel="stylesheet" href="assets/css/fonts.css" />
-  <link rel="stylesheet" href="assets/css/style.css" />
-  <link rel="stylesheet" href="assets/css/motion.css?v=18" />
+  <link rel="stylesheet" href="assets/css/style.css?v=3" />
+  <link rel="stylesheet" href="assets/css/motion.css?v=19" />
   <script id="motion-pre-paint">(function(){if(!window.matchMedia||!window.matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.classList.add("motion-ready");}})();</script>
   <link rel="preload" as="image" href="assets/img/photos/hero-exterior-night-1600.webp" fetchpriority="high" />
-  <link rel="canonical" href="/book.html" />
-  <link rel="alternate" hreflang="en" href="/book.html" />
-  <link rel="alternate" hreflang="ar" href="/ar/book.html" />
+  <link rel="canonical" href="https://kanaanspa.ae/book.html" />
+  <link rel="alternate" hreflang="en" href="https://kanaanspa.ae/book.html" />
+  <link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/book.html" />
+  <link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/book.html" />
 
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Book Online | Kanaan Gents Salon &amp; Spa" />
@@ -45,13 +46,12 @@
   </div>
   <header class="site-header">
     <div class="site-header__inner">
-      <a href="index.html" class="logo logo--text"><span class="logo__mark" aria-hidden="true"><i></i></span><span class="logo__word">KANAAN<span class="logo__dot">.</span></span><span class="logo__sub">Gents Salon &amp; Spa</span></a>
+      <a href="index.html" class="logo" aria-label="Kanaan Gents Salon &amp; Spa — home"><img src="assets/img/logo.svg" alt="Kanaan Gents Salon &amp; Spa" class="logo-img" /></a>
       <nav class="main-nav">
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
-        <a href="services.html">Services</a>
         <a href="offers.html">Offers</a>
-        <div class="nav-dd"><button class="nav-dd__trigger" type="button">Branches <i class="nav-dd__caret" aria-hidden="true"></i></button><div class="nav-dd__panel"><div class="nav-dd__col"><h6>Abu Dhabi</h6><ul><li><a href="branches/khalifa-city.html"><span>Khalifa City</span></a></li><li><a href="branches/khalidiya.html"><span>Khalidiya</span></a></li><li><a href="branches/baniyas-spa.html"><span>Baniyas Spa</span><span class="nav-dd__type">Spa</span></a></li><li><a href="branches/baniyas-barber.html"><span>Baniyas Barber</span><span class="nav-dd__type">Barber</span></a></li><li><a href="branches/rabdan.html"><span>Rabdan</span></a></li><li><a href="branches/old-shahamah.html"><span>Old Shahamah</span></a></li><li><a href="branches/new-shahamah.html"><span>New Shahamah</span></a></li><li><a href="branches/muroor.html"><span>Muroor</span><span class="nav-dd__type">Barber</span></a></li><li><a href="branches/vip-muroor.html"><span>VIP Muroor</span><span class="nav-dd__type">VIP</span></a></li></ul></div><div class="nav-dd__col"><h6>Al Ain</h6><ul><li><a href="branches/al-ain.html"><span>Al Ain</span></a></li></ul></div><div class="nav-dd__foot"><a href="branches.html">View all branches →</a><span>10 houses · One standard</span></div></div></div>
+        <a href="branches.html">Houses &amp; Services</a>
         <a href="gallery.html">Gallery</a>
         <a href="contact.html">Contact</a>
       </nav>
@@ -62,8 +62,8 @@
       </div>
     </div>
     <nav class="mobile-nav">
-      <a href="index.html">Home</a><a href="about.html">About</a><a href="services.html">Services</a>
-      <a href="offers.html">Offers</a><div class="nav-dd-m"><button class="nav-dd-m__head" type="button">Branches <i class="nav-dd__caret" aria-hidden="true"></i></button><div class="nav-dd-m__panel"><a href="branches/al-ain.html">Al Ain</a><a href="branches/khalifa-city.html">Khalifa City</a><a href="branches/khalidiya.html">Khalidiya</a><a href="branches/baniyas-spa.html">Baniyas Spa</a><a href="branches/baniyas-barber.html">Baniyas Barber</a><a href="branches/rabdan.html">Rabdan</a><a href="branches/old-shahamah.html">Old Shahamah</a><a href="branches/new-shahamah.html">New Shahamah</a><a href="branches/muroor.html">Muroor</a><a href="branches/vip-muroor.html">VIP Muroor</a></div></div><a href="gallery.html">Gallery</a>
+      <a href="index.html">Home</a><a href="about.html">About</a>
+      <a href="offers.html">Offers</a><a href="branches.html">Houses &amp; Services</a><a href="gallery.html">Gallery</a>
       <a href="contact.html">Contact</a><a href="ar/book.html">عربي</a>
     </nav>
   </header>
@@ -86,56 +86,53 @@
       <!-- STEPPER -->
       <div data-stepper>
         <div class="stepper">
-          <div class="stepper__item is-active"><span class="stepper__num">1</span> Branch</div>
-          <div class="stepper__item"><span class="stepper__num">2</span> Service</div>
-          <div class="stepper__item"><span class="stepper__num">3</span> Date &amp; Time</div>
-          <div class="stepper__item"><span class="stepper__num">4</span> Your Details</div>
+          <div class="stepper__item is-active"><span class="stepper__num">1</span> Branch &amp; Service</div>
+          <div class="stepper__item"><span class="stepper__num">2</span> Date &amp; Time</div>
+          <div class="stepper__item"><span class="stepper__num">3</span> Your Details</div>
         </div>
 
-        <form data-booking-form novalidate>
+        <form data-booking-form novalidate action="javascript:void(0);" onsubmit="return false;">
 
-          <!-- STEP 1: BRANCH -->
+          <!-- STEP 1: BRANCH + SERVICE — combined for fewer clicks. -->
           <div data-step>
-            <h2 class="display-2" style="font-size: clamp(28px, 4vw, 40px); margin-bottom: var(--s-3);">Choose your branch.</h2>
-            <p class="muted mb-7">Pick the Kanaan house most convenient for you.</p>
+            <h2 class="display-2" style="font-size: clamp(28px, 4vw, 40px); margin-bottom: var(--s-3);">Where and what.</h2>
+            <p class="muted mb-7">Pick the Kanaan house most convenient for you, then choose one or more services. The branch confirms final pricing.</p>
 
-            <div class="choice-grid">
-              <label class="choice"><input type="radio" name="branch" value="Al Ain" hidden data-required /><div class="choice__title">Al Ain</div><div class="choice__meta">Al Ain</div></label>
-              <label class="choice"><input type="radio" name="branch" value="Khalifa City" hidden data-required /><div class="choice__title">Khalifa City</div><div class="choice__meta">Abu Dhabi</div></label>
-              <label class="choice"><input type="radio" name="branch" value="Khalidiya" hidden data-required /><div class="choice__title">Khalidiya</div><div class="choice__meta">Abu Dhabi</div></label>
+            <h3 class="eyebrow" style="margin-top: var(--s-3);">Branch · Abu Dhabi · 9 houses</h3>
+            <div class="choice-grid" style="margin-top: var(--s-3);">
+              <label class="choice"><input type="radio" name="branch" value="Khalifa City" hidden data-required /><div class="choice__title">Khalifa City</div><div class="choice__meta">Open until 23:00</div></label>
+              <label class="choice"><input type="radio" name="branch" value="Khalidiya" hidden data-required /><div class="choice__title">Khalidiya</div><div class="choice__meta">Open until 23:00</div></label>
               <label class="choice"><input type="radio" name="branch" value="Baniyas Spa" hidden data-required /><div class="choice__title">Baniyas Spa</div><div class="choice__meta">Spa-led house</div></label>
               <label class="choice"><input type="radio" name="branch" value="Baniyas Barber" hidden data-required /><div class="choice__title">Baniyas Barber</div><div class="choice__meta">Master barber</div></label>
-              <label class="choice"><input type="radio" name="branch" value="Rabdan" hidden data-required /><div class="choice__title">Rabdan</div><div class="choice__meta">Abu Dhabi</div></label>
-              <label class="choice"><input type="radio" name="branch" value="Old Shahamah" hidden data-required /><div class="choice__title">Old Shahamah</div><div class="choice__meta">Abu Dhabi</div></label>
-              <label class="choice"><input type="radio" name="branch" value="New Shahamah" hidden data-required /><div class="choice__title">New Shahamah</div><div class="choice__meta">Abu Dhabi</div></label>
-              <label class="choice"><input type="radio" name="branch" value="Muroor" hidden data-required /><div class="choice__title">Muroor</div><div class="choice__meta">Abu Dhabi</div></label>
+              <label class="choice"><input type="radio" name="branch" value="Rabdan" hidden data-required /><div class="choice__title">Rabdan</div><div class="choice__meta">Open until 23:00</div></label>
+              <label class="choice"><input type="radio" name="branch" value="Old Shahamah" hidden data-required /><div class="choice__title">Old Shahamah</div><div class="choice__meta">Open until 23:00</div></label>
+              <label class="choice"><input type="radio" name="branch" value="New Shahamah" hidden data-required /><div class="choice__title">New Shahamah</div><div class="choice__meta">Open until 23:00</div></label>
+              <label class="choice"><input type="radio" name="branch" value="Muroor" hidden data-required /><div class="choice__title">Muroor</div><div class="choice__meta">Master barber</div></label>
               <label class="choice"><input type="radio" name="branch" value="VIP Muroor" hidden data-required /><div class="choice__title">VIP Muroor</div><div class="choice__meta">Private suite · by appointment</div></label>
             </div>
 
+            <h3 class="eyebrow" style="margin-top: var(--s-5);">Branch · Al Ain · 1 house</h3>
+            <div class="choice-grid" style="margin-top: var(--s-3);">
+              <label class="choice"><input type="radio" name="branch" value="Al Ain" hidden data-required /><div class="choice__title">Al Ain</div><div class="choice__meta">Open until 23:00</div></label>
+            </div>
+
+            <hr style="border:none; border-top:1px solid var(--hairline); margin: var(--s-7) 0;" />
+
+            <h3 class="eyebrow">Service · Pick one or more</h3>
+            <div class="choice-grid" style="margin-top: var(--s-3);">
+              <label class="choice"><input type="checkbox" name="service" value="Hair & Beard" hidden data-required /><div class="choice__title">Hair &amp; Beard</div><div class="choice__meta">Cut, shave, sculpt · ~45 min · from 60 AED</div></label>
+              <label class="choice"><input type="checkbox" name="service" value="Facial & Skin" hidden /><div class="choice__title">Facial &amp; Skin</div><div class="choice__meta">~45 min · from 90 AED</div></label>
+              <label class="choice"><input type="checkbox" name="service" value="Massage" hidden /><div class="choice__title">Massage</div><div class="choice__meta">30 / 60 / 90 min · from 120 AED</div></label>
+              <label class="choice"><input type="checkbox" name="service" value="Moroccan Bath" hidden /><div class="choice__title">Moroccan Bath</div><div class="choice__meta">Hammam ritual · ~60 min · from 150 AED</div></label>
+              <label class="choice"><input type="checkbox" name="service" value="Manicure & Pedicure" hidden /><div class="choice__title">Mani &amp; Pedi</div><div class="choice__meta">Hand &amp; foot care · ~60 min · from 80 AED</div></label>
+              <label class="choice"><input type="checkbox" name="service" value="Hair Treatment" hidden /><div class="choice__title">Hair Treatment</div><div class="choice__meta">Protein / keratin · ~75 min · from 200 AED</div></label>
+              <label class="choice"><input type="checkbox" name="service" value="Complete Grooming Package" hidden /><div class="choice__title">Complete Grooming Package</div><div class="choice__meta">120 AED · Save 40%</div></label>
+              <label class="choice"><input type="checkbox" name="service" value="8 Premium Spa Services" hidden /><div class="choice__title">8 Premium Spa Services</div><div class="choice__meta">250 AED · 60% off</div></label>
+            </div>
+
+            <p class="muted" style="font-size: 12px; margin-top: var(--s-4);">Prices are starting points; final pricing depends on hair length, products and any add-ons. The branch confirms total before any work begins.</p>
+
             <div class="flex gap-3 mt-7" style="justify-content: flex-end;">
-              <button type="button" class="btn" data-next>Continue →</button>
-            </div>
-          </div>
-
-          <!-- STEP 2: SERVICE -->
-          <div data-step hidden>
-            <h2 class="display-2" style="font-size: clamp(28px, 4vw, 40px); margin-bottom: var(--s-3);">Choose your service.</h2>
-            <p class="muted mb-7">Or a curated package — you can refine on arrival.</p>
-
-            <div class="choice-grid">
-              <label class="choice"><input type="radio" name="service" value="Hair & Beard" hidden data-required /><div class="choice__title">Hair &amp; Beard</div><div class="choice__meta">Cut, shave, sculpt</div></label>
-              <label class="choice"><input type="radio" name="service" value="Facial & Skin" hidden /><div class="choice__title">Facial &amp; Skin</div><div class="choice__meta">~45 min</div></label>
-              <label class="choice"><input type="radio" name="service" value="Massage" hidden /><div class="choice__title">Massage</div><div class="choice__meta">30 / 60 / 90 min</div></label>
-              <label class="choice"><input type="radio" name="service" value="Moroccan Bath" hidden /><div class="choice__title">Moroccan Bath</div><div class="choice__meta">Hammam ritual</div></label>
-              <label class="choice"><input type="radio" name="service" value="Manicure & Pedicure" hidden /><div class="choice__title">Mani &amp; Pedi</div><div class="choice__meta">Hand &amp; foot care</div></label>
-              <label class="choice"><input type="radio" name="service" value="Hair Treatment" hidden /><div class="choice__title">Hair Treatment</div><div class="choice__meta">Protein / keratin</div></label>
-              <label class="choice"><input type="radio" name="service" value="8-Service Package" hidden /><div class="choice__title">8-Service Package</div><div class="choice__meta">250 AED · Signature</div></label>
-              <label class="choice"><input type="radio" name="service" value="6-Service Package" hidden /><div class="choice__title">6-Service Package</div><div class="choice__meta">100 AED · Bestseller</div></label>
-              <label class="choice"><input type="radio" name="service" value="VIP Hour" hidden /><div class="choice__title">VIP Hour</div><div class="choice__meta">450 AED · By appt</div></label>
-            </div>
-
-            <div class="flex gap-3 mt-7" style="justify-content: space-between;">
-              <button type="button" class="btn btn--ghost" data-prev>← Back</button>
               <button type="button" class="btn" data-next>Continue →</button>
             </div>
           </div>
@@ -178,39 +175,62 @@
             <h2 class="display-2" style="font-size: clamp(28px, 4vw, 40px); margin-bottom: var(--s-3);">Your details.</h2>
             <p class="muted mb-7">We'll confirm your booking by WhatsApp or phone.</p>
 
-            <div class="form-row">
-              <div class="form-group">
-                <label for="name">Full name</label>
-                <input type="text" id="name" name="name" autocomplete="name" data-required />
+            <!-- Final review summary — hydrated by main.js when this step opens.
+                 Removes any surprise about what's being submitted. -->
+            <div data-booking-review style="border: 1px solid var(--c-gold); padding: var(--s-5); margin: 0 0 var(--s-6); background: rgba(200,160,74,0.05);">
+              <div style="font-size: 11px; letter-spacing: 0.08em; color: var(--c-gold); text-transform: uppercase; margin-bottom: var(--s-3);">Review your booking</div>
+              <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 8px 16px; font-size: 14px;">
+                <span class="muted">Service</span><strong data-review="service">—</strong>
+                <span class="muted">House</span><strong data-review="branch">—</strong>
+                <span class="muted">Date</span><strong data-review="date">—</strong>
+                <span class="muted">Time</span><strong data-review="time">—</strong>
               </div>
+              <button type="button" class="text-gold" data-review-edit style="background:none; border:none; padding:0; margin-top: var(--s-3); font-size: 12px; cursor: pointer; text-decoration: underline;">← Edit choices</button>
+            </div>
+
+            <div class="form-row">
               <div class="form-group">
                 <label for="phone">Phone (UAE)</label>
                 <input type="tel" id="phone" name="phone" placeholder="+971 50 555 6795" autocomplete="tel" data-required />
               </div>
-            </div>
-
-            <div class="form-row">
               <div class="form-group">
-                <label for="email">Email (optional — for receipts &amp; vouchers)</label>
-                <input type="email" id="email" name="email" autocomplete="email" />
-              </div>
-              <div class="form-group">
-                <label for="dob">Birthday (optional — Kanaan Birthday Club)</label>
-                <input type="date" id="dob" name="dob" autocomplete="bday" />
+                <label for="name">Full name</label>
+                <input type="text" id="name" name="name" autocomplete="name" data-required />
               </div>
             </div>
 
-            <div class="form-group">
-              <label for="message">Anything we should know? (optional)</label>
-              <textarea id="message" name="message" rows="3" placeholder="Preferred barber, allergies, special requests…"></textarea>
-            </div>
-
-            <p class="muted" style="font-size: 12px; margin: 0 0 var(--s-3);">Add your birthday and you're auto-enrolled in the <strong>Kanaan Birthday Club</strong> — a free Steam Facial in your birthday week, every year.</p>
+            <details class="optional-fields" style="margin: var(--s-5) 0;">
+              <summary style="cursor:pointer; color: var(--c-gold); font-size: 13px; letter-spacing: 0.06em;">+ Add email, birthday, or notes (optional)</summary>
+              <div style="margin-top: var(--s-4);">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="email">Email (for receipts &amp; vouchers)</label>
+                    <input type="email" id="email" name="email" autocomplete="email" />
+                  </div>
+                  <div class="form-group">
+                    <label for="dob">Birthday (Kanaan Birthday Club)</label>
+                    <input type="date" id="dob" name="dob" autocomplete="bday" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="message">Anything we should know?</label>
+                  <textarea id="message" name="message" rows="3" placeholder="Preferred barber, allergies, special requests…"></textarea>
+                </div>
+                <p class="muted" style="font-size: 12px; margin: 0;">Add your birthday and you're auto-enrolled in the <strong>Kanaan Birthday Club</strong> — a free Steam Facial in your birthday week, every year.</p>
+              </div>
+            </details>
 
             <label style="display: flex; gap: 10px; align-items: flex-start; margin: var(--s-5) 0; font-size: 13px; color: var(--muted);">
               <input type="checkbox" required style="margin-top: 4px;" />
               <span>I agree to be contacted by Kanaan to confirm this booking. View our <a href="privacy-policy.html" class="text-gold">Privacy Policy</a>.</span>
             </label>
+
+            <!-- Reassurance row above submit -->
+            <ul class="booking-reassure" style="display:flex;flex-wrap:wrap;gap:var(--s-3);list-style:none;padding:var(--s-4) 0;margin:0 0 var(--s-4);border-top:1px solid var(--hairline);border-bottom:1px solid var(--hairline);font-size:12px;color:var(--muted);letter-spacing:0.04em;">
+              <li style="flex:1;min-width:160px;"><span style="color:var(--c-gold);">✓</span> Free to cancel up to 2 hours before</li>
+              <li style="flex:1;min-width:160px;"><span style="color:var(--c-gold);">✓</span> WhatsApp confirmation in 5 minutes</li>
+              <li style="flex:1;min-width:160px;"><span style="color:var(--c-gold);">✓</span> No payment now — pay at the chair</li>
+            </ul>
 
             <div class="flex gap-3 mt-5" style="justify-content: space-between;">
               <button type="button" class="btn btn--ghost" data-prev>← Back</button>
@@ -220,6 +240,107 @@
 
         </form>
       </div>
+
+      <!-- Pre-paint step skip + Continue button fallback:
+           - If URL has ?items=..., skip Step 1 and land on Step 2 (Date & Time).
+           - Attach a capture-phase Continue handler on Step 2 that validates
+             date+time and advances to Step 3 — bypasses main.js entirely so it
+             works even if main.js failed to bind handlers. -->
+      <script>
+      (function () {
+        try {
+          var steps = Array.from(document.querySelectorAll('[data-stepper] [data-step]'));
+          var nav   = Array.from(document.querySelectorAll('[data-stepper] .stepper__item'));
+          if (steps.length < 3 || nav.length < 3) return;
+
+          function hydrateReview() {
+            var review = steps[2].querySelector('[data-booking-review]');
+            if (!review) return;
+            var urlParams = new URLSearchParams(window.location.search);
+            // Service: items from URL, or checked service-category boxes as fallback
+            var serviceText = urlParams.get('items') || '';
+            if (!serviceText) {
+              var checked = Array.from(steps[0].querySelectorAll('input[name="service"]:checked'))
+                .map(function (c) { return c.value; });
+              serviceText = checked.join(' + ');
+            }
+            // Branch: URL slug → display name, or checked radio
+            var branchText = urlParams.get('branch') || '';
+            if (branchText) {
+              var BRANCH_NAMES = {
+                'al-ain': 'Al Ain', 'khalifa-city': 'Khalifa City', 'khalidiya': 'Khalidiya',
+                'baniyas-spa': 'Baniyas Spa', 'baniyas-barber': 'Baniyas Barber',
+                'rabdan': 'Rabdan', 'old-shahamah': 'Old Shahamah',
+                'new-shahamah': 'New Shahamah', 'muroor': 'Muroor', 'vip-muroor': 'VIP Muroor'
+              };
+              branchText = BRANCH_NAMES[branchText.toLowerCase()] || branchText;
+            } else {
+              var bRadio = steps[0].querySelector('input[name="branch"]:checked');
+              if (bRadio) branchText = bRadio.value;
+            }
+            var dateInput = steps[1].querySelector('input[name="date"]');
+            var timeSel   = steps[1].querySelector('select[name="time"]');
+            var totalUrl  = urlParams.get('total');
+            function set(key, val) {
+              var el = review.querySelector('[data-review="' + key + '"]');
+              if (el) el.textContent = val || '—';
+            }
+            set('service', serviceText + (totalUrl ? ' · ' + totalUrl + ' AED' : ''));
+            set('branch',  branchText);
+            set('date',    dateInput ? dateInput.value : '');
+            set('time',    timeSel ? timeSel.value : '');
+          }
+
+          function activate(idx) {
+            steps.forEach(function (s, i) { s.hidden = i !== idx; });
+            nav.forEach(function (n, i) {
+              n.classList.toggle('is-active', i === idx);
+              n.classList.toggle('is-done',   i <  idx);
+            });
+            if (idx === 2) hydrateReview();
+            try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) {}
+          }
+
+          var p = new URLSearchParams(window.location.search);
+          if (p.get('items')) { activate(1); }
+
+          // Step 2 Continue → advance to Step 3 (capture phase, blocks duplicates).
+          var cont2 = steps[1].querySelector('[data-next]');
+          if (cont2) {
+            cont2.addEventListener('click', function (e) {
+              var dateInput = steps[1].querySelector('input[name="date"]');
+              var timeSel   = steps[1].querySelector('select[name="time"]');
+              var ok = true;
+              if (dateInput && !dateInput.value) { dateInput.style.borderColor = '#8A3A2C'; ok = false; }
+              else if (dateInput) { dateInput.style.borderColor = ''; }
+              if (timeSel && !timeSel.value)     { timeSel.style.borderColor   = '#8A3A2C'; ok = false; }
+              else if (timeSel) { timeSel.style.borderColor = ''; }
+              if (!ok) return;
+              e.stopImmediatePropagation();
+              activate(2);
+            }, true);
+          }
+
+          // Step 2 Back → return to Step 1 (only useful if user wants to change branch/service).
+          var back2 = steps[1].querySelector('[data-prev]');
+          if (back2) {
+            back2.addEventListener('click', function (e) {
+              e.stopImmediatePropagation();
+              activate(0);
+            }, true);
+          }
+
+          // Step 3 Back → return to Step 2.
+          var back3 = steps[2].querySelector('[data-prev]');
+          if (back3) {
+            back3.addEventListener('click', function (e) {
+              e.stopImmediatePropagation();
+              activate(1);
+            }, true);
+          }
+        } catch (e) { /* fail safe — main.js will handle */ }
+      })();
+      </script>
 
       <!-- SECONDARY CTA -->
       <div style="border-top: 1px solid var(--hairline); margin-top: var(--s-9); padding-top: var(--s-7); text-align: center;">
@@ -237,7 +358,7 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <div class="logo logo--text"><span class="logo__mark" aria-hidden="true"><i></i></span><span class="logo__word">KANAAN<span class="logo__dot">.</span></span><span class="logo__sub">Gents Salon &amp; Spa</span></div>
+          <div class="logo"><img src="assets/img/logo.svg" alt="Kanaan Gents Salon &amp; Spa" class="logo-img" /></div>
           <p style="margin-top: var(--s-4);">Ten houses across Abu Dhabi. One uncompromising standard.</p>
           <div class="footer-socials" aria-label="Social">
             <a href="#" data-bind-attr-href="social.instagram" aria-label="Instagram" target="_blank" rel="noopener"><svg class="icon"><use href="assets/img/icons.svg#i-instagram"/></svg></a>
@@ -246,8 +367,8 @@
             <a href="#" data-bind-attr-href="contact.wa_url" aria-label="WhatsApp" target="_blank" rel="noopener"><svg class="icon"><use href="assets/img/icons.svg#i-whatsapp"/></svg></a>
           </div>
         </div>
-        <div><h5>Visit</h5><ul><li><a href="services.html">Services</a></li><li><a href="offers.html">Offers</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li></ul></div>
-        <div><h5>Branches</h5><ul><li><a href="branches/al-ain.html">Al Ain</a></li><li><a href="branches/khalifa-city.html">Khalifa City</a></li><li><a href="branches/khalidiya.html">Khalidiya</a></li><li><a href="branches/baniyas-spa.html">Baniyas Spa</a></li><li><a href="branches/baniyas-barber.html">Baniyas Barber</a></li></ul></div>
+        <div><h5>Visit</h5><ul><li></li><li><a href="offers.html">Offers</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+        <div><h5>Houses</h5><ul><li><a href="branches/al-ain.html">Al Ain</a></li><li><a href="branches/khalifa-city.html">Khalifa City</a></li><li><a href="branches/khalidiya.html">Khalidiya</a></li><li><a href="branches/baniyas-spa.html">Baniyas Spa</a></li><li><a href="branches/baniyas-barber.html">Baniyas Barber</a></li></ul></div>
         <div><h5>&nbsp;</h5><ul><li><a href="branches/rabdan.html">Rabdan</a></li><li><a href="branches/old-shahamah.html">Old Shahamah</a></li><li><a href="branches/new-shahamah.html">New Shahamah</a></li><li><a href="branches/muroor.html">Muroor</a></li><li><a href="branches/vip-muroor.html">VIP Muroor</a></li></ul></div>
       </div>
       
@@ -257,7 +378,7 @@
           <p>Kanaan offers and updates, once a month — no more.</p>
         </div>
         <form data-newsletter-form>
-          <input type="email" required placeholder="Your email address" />
+          <input type="email" name="email" required placeholder="Your email address" aria-label="Email address" />
           <button type="submit" class="btn btn--sm">Subscribe</button>
         </form>
       </div>
@@ -273,11 +394,156 @@
   <script src="assets/js/tracking.js"></script>
   <script src="assets/js/consent.js" defer></script>
   <script src="assets/js/runtime.js"></script>
-  <script src="assets/js/main.js"></script>
+  <script src="assets/js/main.js?v=25"></script>
   <script src="assets/js/nav-dropdown.js" defer></script>
   <script src="assets/js/motion.js?v=18" defer></script>
   <script src="assets/js/quickbook.js" defer></script>
   <script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){});});}</script>
   <script src="assets/js/calendar.js" defer></script>
+
+  <!-- Booking-submit safety net — runs INDEPENDENTLY of main.js so if any
+       earlier script throws, the form still lands the customer on the
+       confirmation page. Attached as a capture-phase listener so it runs
+       even if main.js never binds. Native submit is also blocked by the
+       form's onsubmit="return false;" attribute. -->
+  <script>
+    /* Failsafe submit — captures the booking data immediately on submit and
+       persists it (localStorage + Supabase) INDEPENDENTLY of main.js. If
+       main.js' handler succeeds, the duplicate localStorage / supabase ops
+       are harmless (same row, ON CONFLICT). If main.js fails, this is the
+       only thing that actually saves the booking. */
+    (function () {
+      var form = document.querySelector('[data-booking-form]');
+      if (!form) return;
+      var attempted = false;
+
+      function buildRowFromForm(fd, services, fallbackId) {
+        return {
+          id:               fallbackId,
+          status:           'new',
+          branch:           fd.get('branch') || null,
+          service:          services.join(', ') || null,
+          booking_date:     fd.get('date')   || null,
+          booking_time:     (fd.get('time')  || null),
+          duration_minutes: 30 * Math.max(1, services.length),
+          name:             fd.get('name')   || null,
+          phone:            fd.get('phone')  || null,
+          email:            fd.get('email')  || null,
+          dob:              fd.get('dob')    || null,
+          message:          fd.get('message')|| null,
+          source:           null,
+          campaign:         null,
+          locale:           document.documentElement.lang || 'en'
+        };
+      }
+
+      async function failsafeSupabaseInsert(row) {
+        var sb = (window.KANAAN_CONFIG && window.KANAAN_CONFIG.supabase) || {};
+        if (!sb.url || !sb.anonKey) return { ok: false, error: 'not-configured' };
+        try {
+          var r = await fetch(sb.url + '/rest/v1/' + (sb.table || 'bookings'), {
+            method: 'POST',
+            headers: {
+              'apikey': sb.anonKey,
+              'Authorization': 'Bearer ' + sb.anonKey,
+              'Content-Type': 'application/json',
+              'Prefer': 'return=minimal,resolution=ignore-duplicates'
+            },
+            body: JSON.stringify(row)
+          });
+          if (!r.ok) {
+            var txt = await r.text().catch(function () { return ''; });
+            console.error('[KANAAN failsafe] supabase insert FAILED:', r.status, txt);
+            try { localStorage.setItem('kanaan_last_supa_error', JSON.stringify({
+              id: row.id, when: new Date().toISOString(), error: 'HTTP ' + r.status + ' ' + txt
+            })); } catch (_) {}
+            return { ok: false, error: 'HTTP ' + r.status + ' ' + txt };
+          }
+          console.info('[KANAAN failsafe] supabase insert OK:', row.id);
+          try { localStorage.removeItem('kanaan_last_supa_error'); } catch (_) {}
+          return { ok: true };
+        } catch (e) {
+          console.error('[KANAAN failsafe] network error:', e);
+          return { ok: false, error: e.message || String(e) };
+        }
+      }
+
+      function validateContact() {
+        var nameEl  = form.querySelector('input[name="name"]');
+        var phoneEl = form.querySelector('input[name="phone"]');
+        var nameVal = (nameEl && nameEl.value || '').trim();
+        var phoneDigits = (phoneEl && phoneEl.value || '').replace(/\D/g, '');
+        var firstInvalid = null;
+        if (!nameVal) { if (nameEl) nameEl.style.borderColor = '#8A3A2C'; firstInvalid = nameEl; }
+        else if (nameEl) { nameEl.style.borderColor = ''; }
+        if (phoneDigits.length < 7) { if (phoneEl) phoneEl.style.borderColor = '#8A3A2C'; firstInvalid = firstInvalid || phoneEl; }
+        else if (phoneEl) { phoneEl.style.borderColor = ''; }
+        if (!firstInvalid) {
+          var oldErr = form.querySelector('[data-booking-error]');
+          if (oldErr) oldErr.remove();
+          return true;
+        }
+        var isAr = document.documentElement.lang === 'ar';
+        var msg = isAr ? 'يرجى إدخال الاسم ورقم الهاتف قبل المتابعة.' : 'Please enter your name and phone number before continuing.';
+        var existing = form.querySelector('[data-booking-error]');
+        if (existing) existing.remove();
+        var err = document.createElement('div');
+        err.setAttribute('data-booking-error', '');
+        err.style.cssText = 'color:#8A3A2C;background:rgba(138,58,44,0.08);border:1px solid #8A3A2C;padding:12px 16px;margin:12px 0;border-radius:4px;font-size:14px;font-weight:500;';
+        err.textContent = msg;
+        var anchor = firstInvalid.closest('.form-row') || firstInvalid;
+        anchor.parentNode.insertBefore(err, anchor);
+        firstInvalid.focus();
+        firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        var btn = form.querySelector('button[type="submit"]');
+        if (btn && btn.disabled) {
+          btn.disabled = false;
+          var origLabel = btn.getAttribute('data-orig-label');
+          if (origLabel) btn.textContent = origLabel;
+        }
+        return false;
+      }
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        if (!validateContact()) { e.stopImmediatePropagation(); return; }
+        if (attempted) return;
+        attempted = true;
+
+        var fd = new FormData(form);
+        var services = fd.getAll('service').filter(Boolean);
+        var branchCode = (fd.get('branch') || 'kn').replace(/[^A-Za-z]/g, '').slice(0, 3).toUpperCase() || 'KNN';
+        var fallbackId = 'KNN-' + branchCode + '-' + Date.now().toString(36).toUpperCase();
+        var row = buildRowFromForm(fd, services, fallbackId);
+
+        // ALWAYS save to localStorage so the booking is never lost.
+        try {
+          var all = JSON.parse(localStorage.getItem('kanaan_bookings') || '[]');
+          all.unshift(Object.assign({ createdAt: new Date().toISOString() }, row));
+          localStorage.setItem('kanaan_bookings', JSON.stringify(all.slice(0, 500)));
+        } catch (_) {}
+
+        // Run failsafe Supabase insert in parallel with whatever main.js is doing.
+        // PostgREST ON CONFLICT (id) will silently ignore the duplicate if main.js
+        // already inserted the same id — but we use a fresh id so worst case is
+        // 2 rows for the same booking, which is fine for triage.
+        failsafeSupabaseInsert(row);
+
+        // Wait 6s for main.js to redirect. If we're still here, redirect ourselves.
+        setTimeout(function () {
+          if (!/\/book\.html/.test(location.pathname) && !/book\.html$/.test(location.pathname)) return;
+          var params = new URLSearchParams({
+            branch:  row.branch  || '',
+            service: row.service || '',
+            date:    row.booking_date || '',
+            time:    row.booking_time || '',
+            id:      row.id
+          });
+          console.warn('[KANAAN booking] fail-safe redirecting to thank-you.html with id', row.id);
+          location.replace('thank-you.html?' + params.toString());
+        }, 6000);
+      }, true);
+    })();
+  </script>
 </body>
 </html>

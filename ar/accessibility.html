@@ -4,12 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>إمكانية الوصول | كنعان</title>
-  <link rel="canonical" href="/ar/accessibility.html" />
-  <link rel="alternate" hreflang="en" href="/accessibility.html" />
-  <link rel="alternate" hreflang="ar" href="/ar/accessibility.html" />
+  <meta name="description" content="التزام كنعان بإمكانية الوصول — أهداف WCAG 2.1 AA، التنقّل بلوحة المفاتيح، ودعم قارئات الشاشة." />
+  <link rel="canonical" href="https://kanaanspa.ae/ar/accessibility.html" />
+  <link rel="alternate" hreflang="en" href="https://kanaanspa.ae/accessibility.html" />
+  <link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/accessibility.html" />
+  <link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/accessibility.html" />
   <link rel="stylesheet" href="../assets/css/fonts.css" />
-  <link rel="stylesheet" href="../assets/css/style.css" />
-  <link rel="stylesheet" href="../assets/css/motion.css?v=18" />
+  <link rel="stylesheet" href="../assets/css/style.css?v=3" />
+  <link rel="stylesheet" href="../assets/css/motion.css?v=19" />
   <script id="motion-pre-paint">(function(){if(!window.matchMedia||!window.matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.classList.add("motion-ready");}})();</script>
 
   <meta property="og:type" content="website" />
@@ -31,7 +33,7 @@
   <a href="#main" class="skip-link">Skip to content</a>
   <header class="site-header">
     <div class="site-header__inner">
-      <a href="index.html" class="logo logo--text"><span class="logo__mark" aria-hidden="true"><i></i></span><span class="logo__word">KANAAN<span class="logo__dot">.</span></span><span class="logo__sub">Gents Salon &amp; Spa</span></a>
+      <a href="index.html" class="logo" aria-label="كنعان — صالون وسبا للرجال"><img src="../assets/img/logo.svg" alt="كنعان صالون وسبا للرجال" class="logo-img" /></a>
       <nav class="main-nav"><a href="index.html">الرئيسية</a><a href="contact.html">تواصل</a></nav>
       <div class="header-actions"><a href="../accessibility.html" class="lang-switch">EN</a></div>
     </div>
@@ -41,12 +43,20 @@
     <div class="container" style="max-width: 760px;">
       <div class="breadcrumb"><a href="index.html">الرئيسية</a><span class="sep">/</span><span>إمكانية الوصول</span></div>
       <h1 class="display-2">بيان إمكانية الوصول</h1>
+      <nav data-legal-toc aria-label="محتوى الصفحة" style="margin: var(--s-5) 0 var(--s-7); padding: var(--s-4) var(--s-5); border: 1px solid var(--c-smoke); background: rgba(255,255,255,0.02);">
+        <strong style="display: block; font-family: var(--f-display); color: var(--c-gold); font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: var(--s-3);">محتوى الصفحة</strong>
+        <ol style="margin: 0; padding-right: 18px; columns: 2; column-gap: var(--s-6); font-size: 14px; line-height: 1.9;">
+          <li><a href="#معيارنا" style="color: var(--c-stone); border-bottom: 1px solid transparent;">معيارنا</a></li>
+          <li><a href="#للتواصل" style="color: var(--c-stone); border-bottom: 1px solid transparent;">للتواصل</a></li>
+        </ol>
+      </nav>
+
       <p class="muted">آخر مراجعة: أبريل ٢٠٢٦</p>
       <div class="divider"></div>
 
       <p class="lede" data-reveal="up" data-scroll-text>يلتزم كنعان بأن يكون موقعه صالحاً للاستخدام من قِبل الجميع، بمن فيهم الأشخاص ذوو الإعاقات البصرية والحركية والسمعية والإدراكية.</p>
 
-      <h2 style="margin-top: var(--s-7);">معيارنا</h2>
+      <h2 style="margin-top: var(--s-7);" id="معيارنا">معيارنا</h2>
       <p>نهدف إلى الالتزام بـ <strong>WCAG 2.1 المستوى AA</strong>، ويشمل ذلك:</p>
       <ul style="line-height: 2;">
         <li>تباين ألوان كافٍ للنصّ والعناصر التفاعلية</li>
@@ -58,7 +68,7 @@
         <li>دعم كامل للغة العربية من اليمين إلى اليسار</li>
       </ul>
 
-      <h2 style="margin-top: var(--s-7);">للتواصل</h2>
+      <h2 style="margin-top: var(--s-7);" id="للتواصل">للتواصل</h2>
       <p>إن واجهت أي صعوبة في استخدام الموقع، تواصل عبر <a href="mailto:kanaansaloon@gmail.com" class="text-gold">kanaansaloon@gmail.com</a> أو واتساب — وسنبذل قصارى جهدنا لتوفير المعلومة أو الخدمة بصيغة متاحة.</p>
     </div>
   </section></main>
@@ -72,7 +82,7 @@
           <p>عروض ومستجدّات كنعان مرّة كل شهر — لا أكثر.</p>
         </div>
         <form data-newsletter-form>
-          <input type="email" required placeholder="بريدك الإلكتروني" />
+          <input type="email" name="email" required placeholder="بريدك الإلكتروني" aria-label="البريد الإلكتروني" />
           <button type="submit" class="btn btn--sm">اشترك</button>
         </form>
       </div>

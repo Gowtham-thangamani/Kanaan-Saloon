@@ -15,8 +15,10 @@
     <nav class="admin-side__nav">
       <a href="dashboard.html">Dashboard</a>
       <a href="leads.html">Leads · CRM</a>
+      <a href="scan.html">Scan booking</a>
+      <a href="blocks.html">Blocked slots</a>
       <a href="offers.html">Offers</a>
-      <a href="branches.html">Branches</a>
+      <a href="branches.html">Houses</a>
       <a href="banners.html">Banners</a>
       <a href="integrations.html">Integrations</a>
       <a href="settings.html" class="active">Settings</a>
@@ -26,14 +28,22 @@
 
   <main class="admin-main">
     <h1 class="admin-h">Settings</h1>
-    <p class="admin-sub">Admin password and Google Sheet connection.</p>
+    <p class="admin-sub" id="signedInAs">Admin account, password, and Google Sheet connection.</p>
 
     <div class="card">
       <h3>Change password</h3>
+      <p style="color: var(--muted); font-size: 13px; margin-bottom: 12px;">Updates the password on your Supabase admin account. To add or remove admins, use the Supabase dashboard → Authentication → Users.</p>
       <div class="row">
-        <div><label>New password</label><input type="password" class="input" id="pw1" /></div>
-        <div><label>Confirm</label><input type="password" class="input" id="pw2" /></div>
+        <div><label>New password</label><input type="password" class="input" id="pw1" autocomplete="new-password" /></div>
+        <div><label>Confirm</label><input type="password" class="input" id="pw2" autocomplete="new-password" /></div>
       </div>
+      <ul style="font-size: 11px; color: var(--muted); margin: 12px 0 0; padding-left: 16px; line-height: 1.6;">
+        <li id="rule-len">At least 8 characters</li>
+        <li id="rule-letter">At least one letter (A–Z)</li>
+        <li id="rule-num">At least one number (0–9)</li>
+        <li id="rule-sym">At least one symbol (! @ # $ etc)</li>
+        <li id="rule-diff">Different from your current password</li>
+      </ul>
       <div style="margin-top: 16px;"><button type="button" class="btn" id="savePw">Update password</button></div>
     </div>
 
@@ -60,15 +70,58 @@
 <script src="admin.js"></script>
 <script>
 if (KANAAN_ADMIN.requireAuth()) (function () {
+  const email = KANAAN_ADMIN.currentUserEmail();
+  if (email) document.getElementById('signedInAs').textContent = 'Signed in as ' + email + '.';
   document.getElementById('csvUrl').value = localStorage.getItem('kanaan_leads_csv_url') || '';
+
+  /* Live rule indicators on the password fields */
+  const pw1 = document.getElementById('pw1');
+  const ruleEls = {
+    len:    document.getElementById('rule-len'),
+    letter: document.getElementById('rule-letter'),
+    num:    document.getElementById('rule-num'),
+    sym:    document.getElementById('rule-sym'),
+    diff:   document.getElementById('rule-diff')
+  };
+  function paintRule(el, ok) {
+    if (!el) return;
+    el.style.color = ok ? 'var(--gold)' : 'var(--muted)';
+  }
+  if (pw1) {
+    pw1.addEventListener('input', () => {
+      const v = pw1.value;
+      paintRule(ruleEls.len,    v.length >= 8);
+      paintRule(ruleEls.letter, /[A-Za-z]/.test(v));
+      paintRule(ruleEls.num,    /\d/.test(v));
+      paintRule(ruleEls.sym,    /[^A-Za-z0-9]/.test(v));
+      // Reset the "different" rule colour while typing — confirmed at submit time.
+      paintRule(ruleEls.diff, false);
+    });
+  }
 
   document.getElementById('savePw').addEventListener('click', async () => {
     const a = document.getElementById('pw1').value, b = document.getElementById('pw2').value;
-    if (!a || a.length < 8) return KANAAN_ADMIN.toast('Use at least 8 characters');
     if (a !== b) return KANAAN_ADMIN.toast('Passwords do not match');
-    await KANAAN_ADMIN.setPassword(a);
+
+    const strength = KANAAN_ADMIN.validatePasswordStrength(a);
+    if (!strength.ok) return KANAAN_ADMIN.toast(strength.error);
+
+    // Reject if the candidate matches the current password
+    if (email) {
+      const dupCheck = await KANAAN_ADMIN.isSameAsCurrentPassword(email, a);
+      if (dupCheck.same) {
+        paintRule(ruleEls.diff, false);
+        if (ruleEls.diff) ruleEls.diff.style.color = 'var(--rust)';
+        return KANAAN_ADMIN.toast('New password must differ from your current one');
+      }
+    }
+
+    const result = await KANAAN_ADMIN.setPassword(a);
+    if (!result.ok) return KANAAN_ADMIN.toast('Update failed: ' + result.error);
     KANAAN_ADMIN.toast('Password updated');
     document.getElementById('pw1').value = ''; document.getElementById('pw2').value = '';
+    // Reset rule indicators
+    Object.values(ruleEls).forEach(el => paintRule(el, false));
   });
   document.getElementById('saveCsv').addEventListener('click', () => {
     localStorage.setItem('kanaan_leads_csv_url', document.getElementById('csvUrl').value.trim());
@@ -80,7 +133,7 @@ if (KANAAN_ADMIN.requireAuth()) (function () {
   document.getElementById('clearBranches').addEventListener('click', () => clear('content/branches.json', 'Branches draft'));
   document.getElementById('clearSite').addEventListener('click', () => clear('content/site.json', 'Site draft'));
   document.getElementById('clearAll').addEventListener('click', () => {
-    if (!confirm('Clear all admin data including login? You will need the default password again.')) return;
+    if (!confirm('Clear all local admin drafts and sign out?')) return;
     Object.keys(localStorage).filter(k => k.startsWith('kanaan_')).forEach(k => localStorage.removeItem(k));
     KANAAN_ADMIN.logout();
   });

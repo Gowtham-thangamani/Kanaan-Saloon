@@ -4,12 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Accessibility | Kanaan Gents Salon &amp; Spa</title>
-  <link rel="canonical" href="/accessibility.html" />
-  <link rel="alternate" hreflang="en" href="/accessibility.html" />
-  <link rel="alternate" hreflang="ar" href="/ar/accessibility.html" />
+  <meta name="description" content="Kanaan's accessibility commitment — WCAG 2.1 AA targets, keyboard navigation, screen-reader support, and how to request accommodations." />
+  <link rel="canonical" href="https://kanaanspa.ae/accessibility.html" />
+  <link rel="alternate" hreflang="en" href="https://kanaanspa.ae/accessibility.html" />
+  <link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/accessibility.html" />
+  <link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/accessibility.html" />
   <link rel="stylesheet" href="assets/css/fonts.css" />
-  <link rel="stylesheet" href="assets/css/style.css" />
-  <link rel="stylesheet" href="assets/css/motion.css?v=18" />
+  <link rel="stylesheet" href="assets/css/style.css?v=3" />
+  <link rel="stylesheet" href="assets/css/motion.css?v=19" />
   <script id="motion-pre-paint">(function(){if(!window.matchMedia||!window.matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.classList.add("motion-ready");}})();</script>
 
   <meta property="og:type" content="website" />
@@ -31,7 +33,7 @@
   <a href="#main" class="skip-link">Skip to content</a>
   <header class="site-header">
     <div class="site-header__inner">
-      <a href="index.html" class="logo logo--text"><span class="logo__mark" aria-hidden="true"><i></i></span><span class="logo__word">KANAAN<span class="logo__dot">.</span></span><span class="logo__sub">Gents Salon &amp; Spa</span></a>
+      <a href="index.html" class="logo" aria-label="Kanaan Gents Salon &amp; Spa — home"><img src="assets/img/logo.svg" alt="Kanaan Gents Salon &amp; Spa" class="logo-img" /></a>
       <nav class="main-nav"><a href="index.html">Home</a><a href="contact.html">Contact</a></nav>
       <div class="header-actions"><a href="ar/accessibility.html" class="lang-switch">عربي</a><a href="book.html" class="btn btn--sm">Book Now</a></div>
     </div>
@@ -41,12 +43,22 @@
     <div class="container" style="max-width: 760px;">
       <div class="breadcrumb"><a href="index.html">Home</a><span class="sep">/</span><span>Accessibility</span></div>
       <h1 class="display-2">Accessibility statement</h1>
+      <nav data-legal-toc aria-label="On this page" style="margin: var(--s-5) 0 var(--s-7); padding: var(--s-4) var(--s-5); border: 1px solid var(--c-smoke); background: rgba(255,255,255,0.02);">
+        <strong style="display: block; font-family: var(--f-display); color: var(--c-gold); font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: var(--s-3);">On this page</strong>
+        <ol style="margin: 0; padding-left: 18px; columns: 2; column-gap: var(--s-6); font-size: 14px; line-height: 1.9;">
+          <li><a href="#our-standard" style="color: var(--c-stone); border-bottom: 1px solid transparent;">Our standard</a></li>
+          <li><a href="#known-limitations" style="color: var(--c-stone); border-bottom: 1px solid transparent;">Known limitations</a></li>
+          <li><a href="#contact-us" style="color: var(--c-stone); border-bottom: 1px solid transparent;">Contact us</a></li>
+          <li><a href="#in-our-salons" style="color: var(--c-stone); border-bottom: 1px solid transparent;">In our salons</a></li>
+        </ol>
+      </nav>
+
       <p class="muted">Last reviewed: April 2026</p>
       <div class="divider"></div>
 
       <p class="lede" data-reveal="up" data-scroll-text>Kanaan is committed to making this website usable for everyone, including people with visual, motor, hearing, or cognitive disabilities.</p>
 
-      <h2 style="margin-top: var(--s-7);">Our standard</h2>
+      <h2 style="margin-top: var(--s-7);" id="our-standard">Our standard</h2>
       <p>We aim to meet <strong>WCAG 2.1 Level AA</strong>. This includes:</p>
       <ul style="line-height: 2;">
         <li>Sufficient colour contrast for text and interactive elements</li>
@@ -59,13 +71,13 @@
         <li>Forms with bound labels and accessible error messages</li>
       </ul>
 
-      <h2 style="margin-top: var(--s-7);">Known limitations</h2>
+      <h2 style="margin-top: var(--s-7);" id="known-limitations">Known limitations</h2>
       <p>We are continuously improving. If you find an accessibility barrier, please let us know — your feedback shapes our priorities.</p>
 
-      <h2 style="margin-top: var(--s-7);">Contact us</h2>
+      <h2 style="margin-top: var(--s-7);" id="contact-us">Contact us</h2>
       <p>If you experience difficulty using the site, email <a href="mailto:kanaansaloon@gmail.com" class="text-gold">kanaansaloon@gmail.com</a> or WhatsApp us — we will do our best to provide the information or service you need in an accessible format.</p>
 
-      <h2 style="margin-top: var(--s-7);">In our salons</h2>
+      <h2 style="margin-top: var(--s-7);" id="in-our-salons">In our salons</h2>
       <p>Most Kanaan houses are accessible by lift or ground-floor entry. If you have specific access needs, contact your branch in advance and we will arrange.</p>
     </div>
   </section></main>
@@ -79,7 +91,7 @@
           <p>Kanaan offers and updates, once a month — no more.</p>
         </div>
         <form data-newsletter-form>
-          <input type="email" required placeholder="Your email address" />
+          <input type="email" name="email" required placeholder="Your email address" aria-label="Email address" />
           <button type="submit" class="btn btn--sm">Subscribe</button>
         </form>
       </div>
