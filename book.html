@@ -394,7 +394,7 @@
   <script src="assets/js/tracking.js"></script>
   <script src="assets/js/consent.js" defer></script>
   <script src="assets/js/runtime.js"></script>
-  <script src="assets/js/main.js?v=25"></script>
+  <script src="assets/js/main.js?v=26"></script>
   <script src="assets/js/nav-dropdown.js" defer></script>
   <script src="assets/js/motion.js?v=18" defer></script>
   <script src="assets/js/quickbook.js" defer></script>
@@ -418,14 +418,23 @@
       var attempted = false;
 
       function buildRowFromForm(fd, services, fallbackId) {
+        // When the customer came via the branch-page menu picker
+        // (?items=A,B,C&total=N), no service checkboxes were ticked.
+        // Fall back to the items list so the admin sees what was selected.
+        var serviceVal = services.join(', ');
+        var urlParams = new URLSearchParams(window.location.search);
+        var urlItems  = urlParams.get('items');
+        var urlBranch = urlParams.get('branch');
+        if (!serviceVal && urlItems) serviceVal = urlItems;
+        var itemCount = serviceVal ? serviceVal.split(',').length : 1;
         return {
           id:               fallbackId,
           status:           'new',
-          branch:           fd.get('branch') || null,
-          service:          services.join(', ') || null,
+          branch:           fd.get('branch') || urlBranch || null,
+          service:          serviceVal || null,
           booking_date:     fd.get('date')   || null,
           booking_time:     (fd.get('time')  || null),
-          duration_minutes: 30 * Math.max(1, services.length),
+          duration_minutes: 30 * Math.max(1, itemCount),
           name:             fd.get('name')   || null,
           phone:            fd.get('phone')  || null,
           email:            fd.get('email')  || null,

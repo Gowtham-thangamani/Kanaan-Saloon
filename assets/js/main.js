@@ -892,6 +892,17 @@
       const allServices = fd.getAll('service').filter(Boolean);
       if (allServices.length > 1) data.service = allServices.join(', ');
       else if (allServices.length === 1) data.service = allServices[0];
+      // Fall back to ?items= URL param when no service checkboxes were ticked
+      // (branch-menu picker path with `?items=A,B,C&total=N`).
+      if (!data.service) {
+        const urlItems = new URLSearchParams(location.search).get('items');
+        if (urlItems) data.service = urlItems;
+      }
+      // Same fallback for branch if not in form (URL slug -> already set)
+      if (!data.branch) {
+        const urlBranch = new URLSearchParams(location.search).get('branch');
+        if (urlBranch) data.branch = urlBranch;
+      }
       data.timestamp = new Date().toISOString();
       data.userAgent = navigator.userAgent;
       data.locale = document.documentElement.lang || 'en';
