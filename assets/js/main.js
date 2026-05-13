@@ -1081,7 +1081,7 @@
         time: data.time || '',
         id: data.bookingId
       });
-      const dest = cfg.confirmRedirect || 'thank-you.html';
+      const dest = cfg.confirmRedirect || 'thank-you';
       const redirectUrl = `${dest}?${params.toString()}`;
       console.info('[KANAAN booking] redirecting to', redirectUrl, '| supaOk=', supaOk, 'supaErr=', supaErr);
       // On AR pages, stay in /ar/ — the AR thank-you mirror is a sibling, not
@@ -1090,7 +1090,7 @@
       // Safety net: if some browser quirk prevents .href from navigating
       // (e.g. an unload handler returns true), force-replace after a tick.
       setTimeout(() => {
-        if (location.pathname.endsWith('/book.html') || location.pathname.endsWith('book.html')) {
+        if (location.pathname.endsWith('/book.html') || location.pathname.endsWith('book')) {
           location.replace(redirectUrl);
         }
       }, 500);
@@ -1424,7 +1424,7 @@
         /\/admin\//.test(location.pathname)) return;
     const isAr = document.documentElement.lang === 'ar' || document.body.classList.contains('lang-ar');
     const fab = document.createElement('a');
-    fab.href = isAr ? '../book.html' : 'book.html';
+    fab.href = isAr ? '../book.html' : 'book';
     fab.className = 'fab-book';
     fab.setAttribute('data-track', 'fab_book_click');
     fab.textContent = isAr ? 'احجز' : 'Book';
@@ -1454,7 +1454,7 @@
       setTimeout(() => c.remove(), 2600);
     }
   }
-  if (location.pathname.endsWith('thank-you.html')) {
+  if (location.pathname.endsWith('thank-you')) {
     setTimeout(confetti, 400);
   }
 
@@ -1543,7 +1543,7 @@
   }
 
   // === Branch-page service picker — multi-select services on a branch detail
-  // page, then jump to /book.html?branch=<slug>&service=<csv> with everything
+  // page, then jump to /book?branch=<slug>&service=<csv> with everything
   // pre-filled. Auto-binds to any <form data-branch-service-picker="<slug>">.
   document.querySelectorAll('[data-branch-service-picker]').forEach(form => {
     const branchSlug = form.getAttribute('data-branch-service-picker');
@@ -1578,7 +1578,7 @@
       if (!services) return;
       // Branch pages live at /branches/<slug>.html (or /ar/branches/<slug>.html),
       // so ../book.html resolves correctly in both languages.
-      window.location.href = '../book.html?branch=' + encodeURIComponent(branchSlug) +
+      window.location.href = '../book?branch=' + encodeURIComponent(branchSlug) +
         '&service=' + encodeURIComponent(services);
     });
     update();
@@ -1703,7 +1703,7 @@
       if (selected.length === 0) return;
       const items = selected.map(s => s.key).join(', ');
       const total = selected.reduce((s, it) => s + it.price, 0);
-      const url = '../book.html?branch=' + encodeURIComponent(branchSlug) +
+      const url = '../book?branch=' + encodeURIComponent(branchSlug) +
         '&items=' + encodeURIComponent(items) +
         '&total=' + total;
       window.location.href = url;

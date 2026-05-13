@@ -150,7 +150,7 @@
         name: o['name_' + lang] || o.name_en,
         badge: o['badge_' + lang] || o.badge_en,
         inclusions_html: ((o['inclusions_' + lang] || o.inclusions_en) || []).map(i => `<li>${i}</li>`).join(''),
-        book_url: pathPrefix() + 'book.html?offer=' + encodeURIComponent(o.id),
+        book_url: pathPrefix() + 'book?offer=' + encodeURIComponent(o.id),
         currency: o.currency || 'AED',
         // Arabic-Indic digits for AR prices
         price: isAr ? toArDigits(o.price) : o.price,
@@ -167,8 +167,8 @@
         ...b,
         name: b['name_' + lang] || b.name_en,
         area: b['area_' + lang] || b.area_en,
-        view_url: pathPrefix() + (lang === 'ar' ? 'ar/branches/' : 'branches/') + b.id + '.html',
-        book_url: pathPrefix() + (lang === 'ar' ? 'ar/book.html?branch=' : 'book.html?branch=') + b.id,
+        view_url: pathPrefix() + (lang === 'ar' ? 'ar/branches/' : 'branches/') + b.id + '',
+        book_url: pathPrefix() + (lang === 'ar' ? 'ar/book?branch=' : 'book?branch=') + b.id,
         wa_url: 'https://wa.me/' + b.whatsapp,
         tel_url: 'tel:' + b.phone,
         // Lowercase type so filter chips (data-tags) match data-filter-chip values

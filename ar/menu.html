@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>القائمة والأسعار | كنعان صالون وسبا للرجال</title>
   <meta name="description" content="استعرض كل خدمة وكل سعر في فروع كنعان العشرة في أبوظبي. اختر الفرع، شاهد القائمة، احجز بثوانٍ." />
-  <link rel="canonical" href="https://kanaanspa.ae/ar/menu.html" />
-  <link rel="alternate" hreflang="en" href="https://kanaanspa.ae/menu.html" />
-  <link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/menu.html" />
-  <link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/menu.html" />
+  <link rel="canonical" href="https://kanaanspa.ae/ar/menu" />
+  <link rel="alternate" hreflang="en" href="https://kanaanspa.ae/menu" />
+  <link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/menu" />
+  <link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/menu" />
   <link rel="stylesheet" href="../assets/css/fonts.css" />
   <link rel="stylesheet" href="../assets/css/style.css?v=3" />
   <link rel="stylesheet" href="../assets/css/motion.css?v=19" />
@@ -105,17 +105,17 @@
   </div>
   <header class="site-header">
     <div class="site-header__inner">
-      <a href="index.html" class="logo" aria-label="كنعان — صالون وسبا للرجال"><img src="../assets/img/logo.svg" alt="كنعان صالون وسبا للرجال" class="logo-img" /></a>
+      <a href="./" class="logo" aria-label="كنعان — صالون وسبا للرجال"><img src="../assets/img/logo.svg" alt="كنعان صالون وسبا للرجال" class="logo-img" /></a>
       <nav class="main-nav">
-        <a href="index.html">الرئيسية</a>
-        <a href="about.html">عنّا</a>
-        <a href="offers.html">العروض</a>
-        <a href="../branches.html">البيوت والخدمات</a>
-        <a href="contact.html">تواصل</a>
+        <a href="./">الرئيسية</a>
+        <a href="about">عنّا</a>
+        <a href="offers">العروض</a>
+        <a href="../branches">البيوت والخدمات</a>
+        <a href="contact">تواصل</a>
       </nav>
       <div class="header-actions">
-        <a href="../menu.html" class="lang-switch">EN</a>
-        <a href="book.html" class="btn btn--sm">احجز الآن</a>
+        <a href="../menu" class="lang-switch">EN</a>
+        <a href="book" class="btn btn--sm">احجز الآن</a>
       </div>
     </div>
   </header>
@@ -126,7 +126,7 @@
         <img src="../assets/img/photos/brand-logo-wall-1600.webp" alt="قائمة كنعان" loading="eager" fetchpriority="high" decoding="async" />
       </div>
       <div class="container page-hero__content">
-        <div class="breadcrumb"><a href="index.html">الرئيسية</a><span class="sep">/</span><span>القائمة والأسعار</span></div>
+        <div class="breadcrumb"><a href="./">الرئيسية</a><span class="sep">/</span><span>القائمة والأسعار</span></div>
         <span class="eyebrow" id="heroEyebrow">القائمة والأسعار</span>
         <h1 class="page-hero__title" id="heroTitle">اختر الفرع. اختر الخدمة. احجز.</h1>
         <p class="lede" id="heroSub" style="color: var(--c-pearl);">كل خدمة، كل فرع، كل سعر. شامل الضريبة. بدون أيّ مفاجآت في الفاتورة.</p>
@@ -145,7 +145,7 @@
     <div class="container">
       <div class="footer-bottom" style="border: 0; padding-top: var(--s-6);">
         <span>© ٢٠٢٦ كنعان صالون وسبا للرجال.</span>
-        <div class="footer-bottom__links"><a href="../privacy-policy.html">الخصوصية</a><a href="../terms.html">الشروط</a><a href="../menu.html">EN</a></div>
+        <div class="footer-bottom__links"><a href="../privacy-policy">الخصوصية</a><a href="../terms">الشروط</a><a href="../menu">EN</a></div>
       </div>
     </div>
   </footer>
@@ -153,8 +153,8 @@
   <script src="../assets/js/config.js"></script>
   <script src="../assets/js/tracking.js"></script>
   <script src="../assets/js/consent.js" defer></script>
-  <script src="../assets/js/runtime.js"></script>
-  <script src="../assets/js/main.js?v=26"></script>
+  <script src="../assets/js/runtime.js?v=2"></script>
+  <script src="../assets/js/main.js?v=27"></script>
   <script src="../assets/js/motion.js?v=18" defer></script>
 
   <script>
@@ -279,7 +279,7 @@
         };
         const editorial = EDITORIAL_SLUG[c.id];
         return '<div class="menu-cat">' +
-                 '<a class="menu-cat__primary" href="menu.html?cat=' + c.id + '" aria-label="' + escapeHtml('تصفّح الفروع — ' + c.name_ar) + '">تصفّح الفروع</a>' +
+                 '<a class="menu-cat__primary" href="menu?cat=' + c.id + '" aria-label="' + escapeHtml('تصفّح الفروع — ' + c.name_ar) + '">تصفّح الفروع</a>' +
                  '<span class="menu-cat__num">' + num + ' / ' + total + '</span>' +
                  '<h3 class="menu-cat__title">' + escapeHtml(c.name_ar) + '</h3>' +
                  '<p class="menu-cat__meta">' + escapeHtml(c.desc_ar) + '<br><span style="color:var(--c-gold);">' + subtitle + '</span></p>' +
@@ -297,7 +297,7 @@
       const catLabel = catDef.name_ar;
       setHero('القائمة والأسعار', catLabel, 'اختر الفرع لرؤية الأسعار الكاملة.');
       crumbs.hidden = false;
-      crumbs.innerHTML = '<a href="menu.html">القائمة</a><span class="sep">/</span><span>' + escapeHtml(catLabel) + '</span>';
+      crumbs.innerHTML = '<a href="menu">القائمة</a><span class="sep">/</span><span>' + escapeHtml(catLabel) + '</span>';
 
       if (catDef.isPackage) return renderPackages(data, catLabel);
 
@@ -314,7 +314,7 @@
         return;
       }
       const cards = branchHits.map(b =>
-        '<a class="menu-branch" href="menu.html?cat=' + catId + '&branch=' + encodeURIComponent(b.slug) + '">' +
+        '<a class="menu-branch" href="menu?cat=' + catId + '&branch=' + encodeURIComponent(b.slug) + '">' +
           '<div>' +
             '<h3 class="menu-branch__name">' + escapeHtml(b.name) + '</h3>' +
             '<p class="menu-branch__meta">' + b.count + ' خدمات</p>' +
@@ -361,7 +361,7 @@
       const catLabel = catDef.name_ar;
       setHero('القائمة والأسعار', catLabel + ' · ' + branchName, 'اختر خدمة لتأكيد الحجز.');
       crumbs.hidden = false;
-      crumbs.innerHTML = '<a href="menu.html">القائمة</a><span class="sep">/</span><a href="menu.html?cat=' + catId + '">' + escapeHtml(catLabel) + '</a><span class="sep">/</span><span>' + escapeHtml(branchName) + '</span>';
+      crumbs.innerHTML = '<a href="menu">القائمة</a><span class="sep">/</span><a href="menu?cat=' + catId + '">' + escapeHtml(catLabel) + '</a><span class="sep">/</span><span>' + escapeHtml(branchName) + '</span>';
 
       const SERVICE_RADIO = {
         'hair-beard': 'الشعر واللحية', 'facial-skin': 'عناية بالبشرة', 'massage': 'مساج',
@@ -404,7 +404,7 @@
       const branchName = branchData.name_ar || branchData.name_en || branchSlug;
       setHero('القائمة الكاملة', branchName, 'كل خدمة، كل سعر، شامل الضريبة.');
       crumbs.hidden = false;
-      crumbs.innerHTML = '<a href="services.html">الفروع</a><span class="sep">/</span><span>' + escapeHtml(branchName) + '</span>';
+      crumbs.innerHTML = '<a href="services">الفروع</a><span class="sep">/</span><span>' + escapeHtml(branchName) + '</span>';
 
       const SERVICE_RADIO = {
         'hair-beard': 'الشعر واللحية', 'facial-skin': 'عناية بالبشرة', 'massage': 'مساج',

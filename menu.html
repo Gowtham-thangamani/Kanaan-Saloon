@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Menu &amp; Prices | Kanaan Gents Salon &amp; Spa</title>
   <meta name="description" content="Browse every service and price at all 10 Kanaan houses across Abu Dhabi. Pick a category, pick a branch, book in seconds." />
-  <link rel="canonical" href="https://kanaanspa.ae/menu.html" />
-  <link rel="alternate" hreflang="en" href="https://kanaanspa.ae/menu.html" />
-  <link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/menu.html" />
-  <link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/menu.html" />
+  <link rel="canonical" href="https://kanaanspa.ae/menu" />
+  <link rel="alternate" hreflang="en" href="https://kanaanspa.ae/menu" />
+  <link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/menu" />
+  <link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/menu" />
   <link rel="stylesheet" href="assets/css/fonts.css" />
   <link rel="stylesheet" href="assets/css/style.css?v=3" />
   <link rel="stylesheet" href="assets/css/motion.css?v=19" />
@@ -111,25 +111,25 @@
   </div>
   <header class="site-header">
     <div class="site-header__inner">
-      <a href="index.html" class="logo" aria-label="Kanaan Gents Salon &amp; Spa — home"><img src="assets/img/logo.svg" alt="Kanaan Gents Salon &amp; Spa" class="logo-img" /></a>
+      <a href="./" class="logo" aria-label="Kanaan Gents Salon &amp; Spa — home"><img src="assets/img/logo.svg" alt="Kanaan Gents Salon &amp; Spa" class="logo-img" /></a>
       <nav class="main-nav">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="offers.html">Offers</a>
-        <a href="branches.html">Houses &amp; Services</a>
-        <a href="gallery.html">Gallery</a>
-        <a href="contact.html">Contact</a>
+        <a href="./">Home</a>
+        <a href="about">About</a>
+        <a href="offers">Offers</a>
+        <a href="branches">Houses &amp; Services</a>
+        <a href="gallery">Gallery</a>
+        <a href="contact">Contact</a>
       </nav>
       <div class="header-actions">
-        <a href="ar/menu.html" class="lang-switch">عربي</a>
-        <a href="book.html" class="btn btn--sm">Book Now</a>
+        <a href="ar/menu" class="lang-switch">عربي</a>
+        <a href="book" class="btn btn--sm">Book Now</a>
         <button type="button" class="menu-toggle" aria-label="Open menu"><span></span><span></span><span></span></button>
       </div>
     </div>
     <nav class="mobile-nav">
-      <a href="index.html">Home</a><a href="about.html">About</a><a href="offers.html">Offers</a>
-      <a href="branches.html">Houses</a><a href="gallery.html">Gallery</a><a href="contact.html">Contact</a>
-      <a href="ar/menu.html">عربي</a><a href="book.html" class="btn">Book Now</a>
+      <a href="./">Home</a><a href="about">About</a><a href="offers">Offers</a>
+      <a href="branches">Houses</a><a href="gallery">Gallery</a><a href="contact">Contact</a>
+      <a href="ar/menu">عربي</a><a href="book" class="btn">Book Now</a>
     </nav>
   </header>
 
@@ -139,7 +139,7 @@
         <img src="assets/img/photos/brand-logo-wall-1600.webp" alt="Kanaan menu" loading="eager" fetchpriority="high" decoding="async" />
       </div>
       <div class="container page-hero__content">
-        <div class="breadcrumb"><a href="index.html">Home</a><span class="sep">/</span><span>Menu &amp; Prices</span></div>
+        <div class="breadcrumb"><a href="./">Home</a><span class="sep">/</span><span>Menu &amp; Prices</span></div>
         <span class="eyebrow" id="heroEyebrow">Menu &amp; Prices</span>
         <h1 class="page-hero__title" id="heroTitle">Pick what you want.<br/>Pick where. Pick when.</h1>
         <p class="lede" id="heroSub" style="color: var(--c-pearl);">Every service, every branch, every price. VAT included. No upselling at the chair.</p>
@@ -158,7 +158,7 @@
     <div class="container">
       <div class="footer-bottom" style="border: 0; padding-top: var(--s-6);">
         <span>© 2026 Kanaan Gents Salon &amp; Spa.</span>
-        <div class="footer-bottom__links"><a href="privacy-policy.html">Privacy</a><a href="terms.html">Terms</a><a href="ar/menu.html">عربي</a></div>
+        <div class="footer-bottom__links"><a href="privacy-policy">Privacy</a><a href="terms">Terms</a><a href="ar/menu">عربي</a></div>
       </div>
     </div>
   </footer>
@@ -166,8 +166,8 @@
   <script src="assets/js/config.js"></script>
   <script src="assets/js/tracking.js"></script>
   <script src="assets/js/consent.js" defer></script>
-  <script src="assets/js/runtime.js"></script>
-  <script src="assets/js/main.js?v=26"></script>
+  <script src="assets/js/runtime.js?v=2"></script>
+  <script src="assets/js/main.js?v=27"></script>
   <script src="assets/js/nav-dropdown.js" defer></script>
   <script src="assets/js/motion.js?v=18" defer></script>
 
@@ -358,7 +358,7 @@
         const readAboutLabel = isAr ? 'اقرأ المزيد ←' : 'Read about →';
         const browseLabel = isAr ? 'تصفّح الفروع' : 'Browse branches';
         return '<div class="menu-cat">' +
-                 '<a class="menu-cat__primary" href="menu.html?cat=' + c.id + '" data-track="menu_cat_' + c.id + '" aria-label="' + escapeHtml(browseLabel + ' — ' + (c['name_' + lang] || c.name_en)) + '">' + escapeHtml(browseLabel) + '</a>' +
+                 '<a class="menu-cat__primary" href="menu?cat=' + c.id + '" data-track="menu_cat_' + c.id + '" aria-label="' + escapeHtml(browseLabel + ' — ' + (c['name_' + lang] || c.name_en)) + '">' + escapeHtml(browseLabel) + '</a>' +
                  '<span class="menu-cat__num">' + num + ' / ' + total + '</span>' +
                  '<h3 class="menu-cat__title">' + escapeHtml(c['name_' + lang] || c.name_en) + '</h3>' +
                  '<p class="menu-cat__meta">' + escapeHtml(c['desc_' + lang] || c.desc_en) + '<br><span style="color:var(--c-gold);">' + subtitle + '</span></p>' +
@@ -386,7 +386,7 @@
 
       crumbs.hidden = false;
       crumbs.innerHTML =
-        '<a href="menu.html">' + (isAr ? 'القائمة' : 'Menu') + '</a>' +
+        '<a href="menu">' + (isAr ? 'القائمة' : 'Menu') + '</a>' +
         '<span class="sep">/</span><span>' + escapeHtml(catLabel) + '</span>';
 
       if (catDef.isPackage) {
@@ -414,7 +414,7 @@
       }
 
       const cards = branchHits.map(b =>
-        '<a class="menu-branch" href="menu.html?cat=' + catId + '&branch=' + encodeURIComponent(b.slug) + '" data-track="menu_branch_' + b.slug + '">' +
+        '<a class="menu-branch" href="menu?cat=' + catId + '&branch=' + encodeURIComponent(b.slug) + '" data-track="menu_branch_' + b.slug + '">' +
           '<div>' +
             '<h3 class="menu-branch__name">' + escapeHtml(b.name) + '</h3>' +
             '<p class="menu-branch__meta">' + b.count + ' ' + (isAr ? (b.count === 1 ? 'خدمة' : 'خدمات') : (b.count === 1 ? 'service' : 'services')) + '</p>' +
@@ -478,8 +478,8 @@
 
       crumbs.hidden = false;
       crumbs.innerHTML =
-        '<a href="menu.html">' + (isAr ? 'القائمة' : 'Menu') + '</a>' +
-        '<span class="sep">/</span><a href="menu.html?cat=' + catId + '">' + escapeHtml(catLabel) + '</a>' +
+        '<a href="menu">' + (isAr ? 'القائمة' : 'Menu') + '</a>' +
+        '<span class="sep">/</span><a href="menu?cat=' + catId + '">' + escapeHtml(catLabel) + '</a>' +
         '<span class="sep">/</span><span>' + escapeHtml(branchName) + '</span>';
 
       const items = itemsForBranchCategory(branchData, catDef);
@@ -548,7 +548,7 @@
 
       crumbs.hidden = false;
       crumbs.innerHTML =
-        '<a href="services.html">' + (isAr ? 'الفروع' : 'Branches') + '</a>' +
+        '<a href="services">' + (isAr ? 'الفروع' : 'Branches') + '</a>' +
         '<span class="sep">/</span><span>' + escapeHtml(branchName) + '</span>';
 
       const SERVICE_RADIO = {

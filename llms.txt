@@ -6,31 +6,31 @@
 - Name: Kanaan Gents Salon & Spa
 - Languages: English (en), Arabic (ar) — RTL
 - Locale: UAE (Abu Dhabi + Al Ain)
-- Booking: online (kanaanspa.ae/book.html), WhatsApp, walk-in
+- Booking: online (kanaanspa.ae/book), WhatsApp, walk-in
 - Confirmation SLA: 30 minutes during open hours
 
 ## Branches (10)
 
-- [Al Ain](/branches/al-ain.html) — neighbourhood Kanaan house, full menu
-- [Khalifa City](/branches/khalifa-city.html) — modern house in Khalifa City A
-- [Khalidiya](/branches/khalidiya.html) — central Abu Dhabi house
-- [Baniyas Spa](/branches/baniyas-spa.html) — flagship spa house with hammam
-- [Baniyas Barber](/branches/baniyas-barber.html) — master barber room
-- [Rabdan](/branches/rabdan.html) — quiet, refined, full-service
-- [Old Shahamah](/branches/old-shahamah.html) — classic Kanaan service
-- [New Shahamah](/branches/new-shahamah.html) — contemporary house
-- [Muroor](/branches/muroor.html) — easy access on Muroor Road
-- [VIP Muroor](/branches/vip-muroor.html) — private suites, by appointment
+- [Al Ain](/branches/al-ain) — neighbourhood Kanaan house, full menu
+- [Khalifa City](/branches/khalifa-city) — modern house in Khalifa City A
+- [Khalidiya](/branches/khalidiya) — central Abu Dhabi house
+- [Baniyas Spa](/branches/baniyas-spa) — flagship spa house with hammam
+- [Baniyas Barber](/branches/baniyas-barber) — master barber room
+- [Rabdan](/branches/rabdan) — quiet, refined, full-service
+- [Old Shahamah](/branches/old-shahamah) — classic Kanaan service
+- [New Shahamah](/branches/new-shahamah) — contemporary house
+- [Muroor](/branches/muroor) — easy access on Muroor Road
+- [VIP Muroor](/branches/vip-muroor) — private suites, by appointment
 
 ## Services (7 categories)
 
-- [Hair & Beard](/services/hair-beard.html) — haircuts, hot-towel shaves, beard sculpts (from 60 AED)
-- [Facial & Skin Care](/services/facial-skin-care.html) — Express, Signature, Hydra, Anti-Fatigue, Premium (from 120 AED)
-- [Massage](/services/massage.html) — Swedish, deep-tissue, sports recovery, hot stone (from 150 AED)
-- [Moroccan Bath](/services/moroccan-bath.html) — traditional hammam ritual, only at Baniyas Spa + VIP Muroor (from 130 AED)
-- [Manicure & Pedicure](/services/manicure-pedicure.html) — sterilised single-use tools (from 70 AED)
-- [Hair Treatment](/services/hair-treatment.html) — protein, keratin, scalp therapy (from 180 AED)
-- [Grooming Packages](/services/grooming-packages.html) — multi-service bundles (100, 220, 250, 320, 450 AED)
+- [Hair & Beard](/services/hair-beard) — haircuts, hot-towel shaves, beard sculpts (from 60 AED)
+- [Facial & Skin Care](/services/facial-skin-care) — Express, Signature, Hydra, Anti-Fatigue, Premium (from 120 AED)
+- [Massage](/services/massage) — Swedish, deep-tissue, sports recovery, hot stone (from 150 AED)
+- [Moroccan Bath](/services/moroccan-bath) — traditional hammam ritual, only at Baniyas Spa + VIP Muroor (from 130 AED)
+- [Manicure & Pedicure](/services/manicure-pedicure) — sterilised single-use tools (from 70 AED)
+- [Hair Treatment](/services/hair-treatment) — protein, keratin, scalp therapy (from 180 AED)
+- [Grooming Packages](/services/grooming-packages) — multi-service bundles (100, 220, 250, 320, 450 AED)
 
 ## Featured offers
 
@@ -59,9 +59,9 @@
 
 ## Insights (blog)
 
-- [A Moroccan bath, properly explained](/blog/moroccan-bath-guide.html) — what the ritual is, the 4 steps, frequency
-- [Beard care in Abu Dhabi's climate](/blog/beard-care-abu-dhabi.html) — practical care for heat, dust, AC
-- [Choosing the right facial for UAE skin](/blog/choosing-the-right-facial.html) — when to pick each facial type
+- [A Moroccan bath, properly explained](/blog/moroccan-bath-guide) — what the ritual is, the 4 steps, frequency
+- [Beard care in Abu Dhabi's climate](/blog/beard-care-abu-dhabi) — practical care for heat, dust, AC
+- [Choosing the right facial for UAE skin](/blog/choosing-the-right-facial) — when to pick each facial type
 
 ## For AI agents
 
