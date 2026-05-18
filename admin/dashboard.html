@@ -101,7 +101,7 @@
 </div>
 
 <script src="admin.js"></script>
-<script src="../assets/js/config.js"></script>
+<script src="../assets/js/config.js?v=2"></script>
 <script>
   if (!KANAAN_ADMIN.requireAuth()) { /* redirected */ } else {
     (async function () {
@@ -165,7 +165,35 @@
       document.getElementById('h-meta').outerHTML = ok(cfg.tracking.metaPixelId);
       document.getElementById('h-tt').outerHTML = ok(cfg.tracking.tiktokPixelId);
       document.getElementById('h-snap').outerHTML = ok(cfg.tracking.snapPixelId);
-      document.getElementById('h-sheet').outerHTML = ok((cfg.leadsSheet && cfg.leadsSheet.csvUrl) || localStorage.getItem('kanaan_leads_csv_url'));
+      // Leads Sheet — actually fetch the CSV so we catch revoked publish links,
+      // bad URLs, and Google rate-limit errors, not just "URL string present".
+      (async function() {
+        const node = document.getElementById('h-sheet');
+        const sheetUrl = (cfg.leadsSheet && cfg.leadsSheet.csvUrl) || localStorage.getItem('kanaan_leads_csv_url') || '';
+        if (!sheetUrl) {
+          node.outerHTML = '<span class="pill pill--rust">not set</span>';
+          return;
+        }
+        node.outerHTML = '<span id="h-sheet" class="pill">checking…</span>';
+        try {
+          const r = await fetch(sheetUrl, { cache: 'no-store' });
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          const txt = await r.text();
+          // When a publish link is revoked, Google serves an HTML error page
+          // instead of CSV. Detect that by sniffing the body + content type.
+          const ct = (r.headers.get('content-type') || '').toLowerCase();
+          const looksHtml = txt.trimStart().startsWith('<');
+          if (looksHtml || (ct && !ct.includes('csv') && !ct.includes('text/plain'))) {
+            throw new Error('non-CSV response');
+          }
+          const rows = txt.trim().split(/\r?\n/).length;
+          document.getElementById('h-sheet').outerHTML =
+            '<span class="pill pill--sage" title="' + rows + ' row(s) including header">configured</span>';
+        } catch (e) {
+          document.getElementById('h-sheet').outerHTML =
+            '<span class="pill pill--rust" title="' + (e.message || e) + '">broken</span>';
+        }
+      })();
     })();
   }
 </script>
