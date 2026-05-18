@@ -49,11 +49,12 @@
       <a href="./" class="logo" aria-label="كنعان — صالون وسبا للرجال"><img src="../assets/img/logo.svg" alt="كنعان صالون وسبا للرجال" class="logo-img" /></a>
       <nav class="main-nav" aria-label="Primary">
         <a href="./" class="is-active">الرئيسية</a>
-        <a href="../about">عن كنعان</a>
-        <a href="../offers">العروض</a>
-        <a href="../branches">البيوت والخدمات</a>
-        <a href="../gallery">المعرض</a>
-        <a href="../contact">تواصل</a>
+        <a href="about">عن كنعان</a>
+        <a href="offers">العروض</a>
+        <a href="branches">البيوت والخدمات</a>
+        <a href="gallery">المعرض</a>
+        <a href="blog">المقالات</a>
+        <a href="contact">تواصل</a>
       </nav>
       <div class="header-actions">
         <a href="../" class="lang-switch">EN</a>
@@ -61,15 +62,16 @@
         <button type="button" class="menu-toggle" aria-label="القائمة"><span></span><span></span><span></span></button>
       </div>
     </div>
-    <nav class="mobile-nav">
-      <a href="./">الرئيسية</a>
-      <a href="../about">عن كنعان</a>
-      <a href="../offers">العروض</a>
-      <a href="../branches">البيوت والخدمات</a>
-      <a href="../gallery">المعرض</a>
-      <a href="../contact">تواصل</a>
-      <a href="../">EN</a>
-      <a href="book" class="btn">احجز الآن</a>
+    <nav class="mobile-nav" aria-label="Mobile">
+      <a href="./" class="is-active">الرئيسية</a>
+      <a href="about">عن كنعان</a>
+      <a href="offers">العروض</a>
+      <a href="branches">البيوت والخدمات</a>
+      <a href="gallery">المعرض</a>
+      <a href="blog">المقالات</a>
+      <a href="contact">تواصل</a>
+      <a href="../" class="lang-switch">EN</a>
+      <a href="book" class="btn btn--sm">احجز الآن</a>
     </nav>
   </header>
 
@@ -101,8 +103,8 @@
         <a href="../branches" class="btn btn--ghost btn--lg">اعرض الفروع</a>
       </div>
     </div>
-    <div class="hero__dots" role="tablist" aria-label="عرض الشرائح">
-      <button class="hero__dot is-active" aria-label="الشريحة 1" aria-selected="true" type="button"></button>
+    <div class="hero__dots" role="group" aria-label="عرض الشرائح">
+      <button class="hero__dot is-active" aria-label="الشريحة 1" aria-current="true" type="button"></button>
       <button class="hero__dot" aria-label="الشريحة 2" type="button"></button>
       <button class="hero__dot" aria-label="الشريحة 3" type="button"></button>
       <button class="hero__dot" aria-label="الشريحة 4" type="button"></button>
@@ -117,7 +119,7 @@
         <span class="eyebrow">حجز سريع</span>
         <h2 class="quick-book__title">احجز بنقرتين.</h2>
         <p class="quick-book__sub">اختر الفرع والخدمة — أكّد التفاصيل في الشاشة التالية.</p>
-        <form class="quick-book__row" onsubmit="event.preventDefault(); var qs=new URLSearchParams(); ['qb-branch','qb-service','qb-date','qb-time'].forEach(function(id){var el=document.getElementById(id); if(el && el.value) qs.set(id.replace('qb-',''), el.value);}); window.location.href='book.html?'+qs.toString();">
+        <form class="quick-book__row" onsubmit="event.preventDefault(); var qs=new URLSearchParams(); ['qb-branch','qb-service','qb-date','qb-time'].forEach(function(id){var el=document.getElementById(id); if(el && el.value) qs.set(id.replace('qb-',''), el.value);}); window.location.href='book?'+qs.toString();">
           <select id="qb-branch" required aria-label="الفرع">
             <option value="">الفرع…</option>
             <option>العين</option><option>مدينة خليفة</option><option>الخالدية</option>
@@ -172,41 +174,41 @@
       </div>
 
       <div class="service-grid">
-        <div class="service-card">
+        <a href="services/hair-beard" class="service-card" data-track="service_card_click">
           <span class="service-card__num">٠١ / ٠٧</span>
           <h3 class="service-card__title">الشعر واللحية</h3>
           <p class="service-card__desc">قصّات دقيقة، حلاقة كلاسيكية، ونحت لحية على يد حلّاقين محترفين.</p>
-        </div>
-        <div class="service-card">
+        </a>
+        <a href="services/facial-skin-care" class="service-card" data-track="service_card_click">
           <span class="service-card__num">٠٢ / ٠٧</span>
           <h3 class="service-card__title">العناية بالبشرة</h3>
           <p class="service-card__desc">جلسات وجه مخصّصة لكل نوع بشرة — تنقية، ترطيب، وانتعاش.</p>
-        </div>
-        <div class="service-card">
+        </a>
+        <a href="services/massage" class="service-card" data-track="service_card_click">
           <span class="service-card__num">٠٣ / ٠٧</span>
           <h3 class="service-card__title">المساج</h3>
           <p class="service-card__desc">مساج عميق، تدليك استرخاء، وجلسات استشفاء على يد معالجين مدرّبين.</p>
-        </div>
-        <div class="service-card">
+        </a>
+        <a href="services/moroccan-bath" class="service-card" data-track="service_card_click">
           <span class="service-card__num">٠٤ / ٠٧</span>
           <h3 class="service-card__title">الحمّام المغربي</h3>
           <p class="service-card__desc">طقس مغربي أصيل — تقشير، بخار، وزيت أرجان في النهاية.</p>
-        </div>
-        <div class="service-card">
+        </a>
+        <a href="services/manicure-pedicure" class="service-card" data-track="service_card_click">
           <span class="service-card__num">٠٥ / ٠٧</span>
           <h3 class="service-card__title">العناية بالأظافر</h3>
           <p class="service-card__desc">عناية باليدين والقدمين بأدوات معقّمة وأدق التفاصيل.</p>
-        </div>
-        <div class="service-card">
+        </a>
+        <a href="services/hair-treatment" class="service-card" data-track="service_card_click">
           <span class="service-card__num">٠٦ / ٠٧</span>
           <h3 class="service-card__title">علاجات الشعر</h3>
           <p class="service-card__desc">بروتين، كيراتين، وعلاجات فروة الرأس لشعر أقوى وأكثر صحّة.</p>
-        </div>
-        <div class="service-card">
+        </a>
+        <a href="services/grooming-packages" class="service-card" data-track="service_card_click">
           <span class="service-card__num">٠٧ / ٠٧</span>
           <h3 class="service-card__title">باقات العناية</h3>
           <p class="service-card__desc">باقات مختارة تجمع أكثر من خدمة — أفضل قيمة وتجربة كاملة.</p>
-        </div>
+        </a>
         <a href="../services" class="service-card" style="background: var(--c-gold); color:#0E0F11;">
           <span class="service-card__num" style="color:#0E0F11;">عرض الكل</span>
           <h3 class="service-card__title" style="color:#0E0F11;">جميع<br/>الخدمات</h3>
@@ -364,10 +366,11 @@
             <a href="#" data-bind-attr-href="social.instagram" aria-label="Instagram" target="_blank" rel="noopener"><svg class="icon"><use href="../assets/img/icons.svg#i-instagram"/></svg></a>
             <a href="#" data-bind-attr-href="social.tiktok" aria-label="TikTok" target="_blank" rel="noopener"><svg class="icon"><use href="../assets/img/icons.svg#i-tiktok"/></svg></a>
             <a href="#" data-bind-attr-href="social.snapchat" aria-label="Snapchat" target="_blank" rel="noopener"><svg class="icon"><use href="../assets/img/icons.svg#i-snapchat"/></svg></a>
+            <a href="#" data-bind-attr-href="social.facebook" aria-label="Facebook" target="_blank" rel="noopener"><svg class="icon"><use href="../assets/img/icons.svg#i-facebook"/></svg></a>
             <a href="#" data-bind-attr-href="contact.wa_url" aria-label="WhatsApp" target="_blank" rel="noopener"><svg class="icon"><use href="../assets/img/icons.svg#i-whatsapp"/></svg></a>
           </div>
         </div>
-        <div><h5>زرنا</h5><ul><li></li><li><a href="../offers">العروض</a></li><li><a href="../gallery">المعرض</a></li><li><a href="../about">عن كنعان</a></li><li><a href="../contact">تواصل</a></li></ul></div>
+        <div><h5>زرنا</h5><ul><li></li><li><a href="../offers">العروض</a></li><li><a href="../gallery">المعرض</a></li><li><a href="../about">عن كنعان</a></li><li><a href="../blog">المقالات</a></li><li><a href="../contact">تواصل</a></li></ul></div>
         <div><h5>الفروع</h5><ul><li><a href="../branches/al-ain">العين</a></li><li><a href="../branches/khalifa-city">مدينة خليفة</a></li><li><a href="../branches/khalidiya">الخالدية</a></li><li><a href="../branches/baniyas-spa">بنياس سبا</a></li><li><a href="../branches/baniyas-barber">بنياس باربر</a></li></ul></div>
         <div><h5>&nbsp;</h5><ul><li><a href="../branches/rabdan">ربدان</a></li><li><a href="../branches/old-shahamah">الشهامة القديمة</a></li><li><a href="../branches/new-shahamah">الشهامة الجديدة</a></li><li><a href="../branches/muroor">المرور</a></li><li><a href="../branches/vip-muroor">VIP المرور</a></li></ul></div>
       </div>
@@ -400,8 +403,8 @@
   <script src="../assets/js/config.js"></script>
   <script src="../assets/js/tracking.js"></script>
   <script src="../assets/js/consent.js" defer></script>
-  <script src="../assets/js/runtime.js?v=2"></script>
-  <script src="../assets/js/main.js?v=27"></script>
+  <script src="../assets/js/runtime.js?v=3"></script>
+  <script src="../assets/js/main.js?v=30"></script>
   <script src="assets/js/nav-dropdown.js" defer></script>
   <script src="../assets/js/motion.js?v=18" defer></script>
   <script src="../assets/js/quickbook.js" defer></script>
@@ -417,10 +420,10 @@
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
     function show(i) {
       slides[current].classList.remove('is-active');
-      if (dots[current]) { dots[current].classList.remove('is-active'); dots[current].removeAttribute('aria-selected'); }
+      if (dots[current]) { dots[current].classList.remove('is-active'); dots[current].removeAttribute('aria-current'); }
       current = (i + slides.length) % slides.length;
       slides[current].classList.add('is-active');
-      if (dots[current]) { dots[current].classList.add('is-active'); dots[current].setAttribute('aria-selected', 'true'); }
+      if (dots[current]) { dots[current].classList.add('is-active'); dots[current].setAttribute('aria-current', 'true'); }
     }
     function start() { stop(); if (!reduce.matches) timer = setInterval(function(){ show(current + 1); }, 4000); }
     function stop() { if (timer) { clearInterval(timer); timer = null; } }

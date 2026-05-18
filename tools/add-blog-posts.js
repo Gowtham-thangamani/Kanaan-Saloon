@@ -1,0 +1,92 @@
+#!/usr/bin/env node
+/**
+ * Adds 4 substantive blog posts to content/blog.json. Idempotent —
+ * re-running skips IDs that already exist.
+ */
+const fs = require('fs');
+const path = require('path');
+const blogPath = path.resolve(__dirname, '..', 'content', 'blog.json');
+const data = JSON.parse(fs.readFileSync(blogPath, 'utf8'));
+
+const NEW_POSTS = [
+  {
+    id: 'how-to-talk-to-your-barber',
+    slug: 'how-to-talk-to-your-barber',
+    title: 'How to talk to your barber.',
+    excerpt: 'The 30-second consultation that gets you the haircut you actually wanted.',
+    category: 'Grooming',
+    read_minutes: 4,
+    hero_image: '/assets/img/photos/service-hair-brand-wall-1600.webp',
+    hero_alt: 'Master barber chair and product wall at Kanaan',
+    publish_date: '2026-05-15',
+    author: 'Master Barber’s Desk',
+    tldr: 'Bring a photo. Use clipper numbers (1-8) for the sides — not "short." Say what you don’t want, not just what you want. Mention your hair pattern (cowlicks, double crown). Be specific about how long you want the cut to last.',
+    lede: 'Most miscommunication between a man and his barber happens in the first 60 seconds. The fix isn’t to use barber jargon — it’s to be specific about three things.',
+    body_html: '<h2>1. Bring a photo</h2><p>This is the single most useful thing you can do. Even if your hair will never look exactly like the photo (it won’t — different hair, different face, different lighting), the photo tells your barber the <em>shape</em> you’re aiming for. "Short on the sides, longer on top" describes 70% of men’s haircuts.</p><p>If you don’t have a photo, point at the barber’s reference book or open Instagram in the chair. No shame in it.</p><h2>2. Use clipper numbers for the sides</h2><p>Barbers think in clipper guard sizes (1 to 8). "Short" means nothing — to one barber it’s a #2, to another a #4. The difference is significant on the day-of look.</p><ul><li><strong>#1</strong> — very close, almost shaved</li><li><strong>#2</strong> — short fade, visible scalp through hair</li><li><strong>#3</strong> — classic short side, the most common ask</li><li><strong>#4</strong> — short but blended, not stark</li><li><strong>#5+</strong> — longer side, scissor finish often better</li></ul><p>If you don’t know the number, ask the barber what you had last time and adjust from there.</p><h2>3. Say what you don’t want</h2><p>"Don’t fade it all the way down" is more useful than "medium fade." "Leave some weight in the back" is clearer than "not too short."</p><p>The barber’s job is to navigate between your description and what the hair will actually do. Negative descriptions ("not this") are sometimes more informative than positive ones.</p><h2>4. Mention your hair pattern</h2><p>If you have a double crown, a strong cowlick, or a part that won’t behave, tell us upfront. We’ll see it eventually, but knowing in advance changes how we plan the cut — especially the top length.</p><h2>5. Tell us when your next visit is</h2><p>"I’m coming back in 3 weeks" lets us cut for that specific window. "I want this to last 6 weeks" means we leave more length so it grows out cleanly. Without that information, we default to the average — which may be the wrong call for you.</p><h2>The follow-up</h2><p>If something didn’t work, tell us at the next visit — or before, on <a href="https://wa.me/971505556795" class="text-gold">WhatsApp</a>. We’d rather you tell us "it was too short last time" than try to guess what you want.</p><p><a href="/book?service=hair-beard" class="text-gold">Book a haircut</a> at any Kanaan branch.</p>',
+    active: true
+  },
+  {
+    id: 'haircut-frequency',
+    slug: 'haircut-frequency',
+    title: 'How often should a man get a haircut?',
+    excerpt: 'Every 3 weeks? Every 6 weeks? Depends on what you want your hair to do.',
+    category: 'Grooming',
+    read_minutes: 4,
+    hero_image: '/assets/img/photos/service-hair-barber-stations-1600.webp',
+    hero_alt: 'Inside a Kanaan barber room with master barber stations',
+    publish_date: '2026-05-08',
+    author: 'Master Barber’s Desk',
+    tldr: 'Skin fade or tight taper: 2-3 weeks. Short crop: 3-4 weeks. Mid-length textured: 5-6 weeks. Growing out / long hair: 6-8 weeks (still needs trims). Beards: every 3-4 weeks. If it’s been over 3 months, book a "shape-up" instead of a full cut.',
+    lede: 'It’s the question every man asks his barber within 90 seconds of sitting down. The answer is less about a calendar and more about what your hair is doing — and what you want it to do next.',
+    body_html: '<h2>The honest answer</h2><p>If you keep a short, defined cut — fade, taper, sharp side part, anything where the lines need to read clean — you’ll feel it grow out in week three. Most men in this category settle on a 3-week rhythm. By week four it’s looking shaggy under a cap and your barber spends half the session catching up.</p><p>If your style is a longer crop or textured top, you can stretch to 5-6 weeks before the shape starts to fight you. Past that, the cut isn’t growing out — it’s becoming a different cut.</p><h2>Five honest categories</h2><h3>Buzz, skin fade, or tight taper</h3><p>Every 2-3 weeks. The whole point of these cuts is the contrast at the line. The moment it blurs, the cut looks unintentional.</p><h3>Short crop with definition</h3><p>Every 3-4 weeks. The top holds for longer; the sides give it away first.</p><h3>Mid-length, textured, or messy on purpose</h3><p>Every 5-6 weeks. Forgiving cuts that look better with a little weight on top.</p><h3>Growing out / long hair</h3><p>Every 6-8 weeks. Counterintuitive — you still need a trim. Without one, the ends split and the whole length starts to look thin.</p><h3>The "I’ll just deal with it later" approach</h3><p>Don’t. Three months between visits means your barber is rebuilding the cut from scratch every time, and you never get to enjoy the version that actually works.</p><h2>Beards follow a different rhythm</h2><p>Most beards need a maintenance trim every 3-4 weeks. The shape blurs faster than head hair, especially around the cheek line and neckline. A 15-minute beard sculpt at Kanaan starts at 35 AED.</p><h2>If you’re between visits</h2><p>If you can’t get to Kanaan for a full cut, book a 30-minute shape-up — cleans up the perimeter (neckline, sides, around the ears) without changing the cut. Buys you another two weeks easily.</p><p><a href="/book?service=hair-beard" class="text-gold">Book a haircut</a> or <a href="/branches" class="text-gold">find your nearest Kanaan branch</a>.</p>',
+    active: true
+  },
+  {
+    id: 'choosing-your-massage',
+    slug: 'choosing-your-massage',
+    title: 'Choosing your massage.',
+    excerpt: 'Swedish, deep tissue, hot stone, sports recovery. Which one your body actually needs.',
+    category: 'Spa',
+    read_minutes: 5,
+    hero_image: '/assets/img/photos/service-massage-tools-1600.webp',
+    hero_alt: 'Massage tools and oils laid out at Kanaan Baniyas Spa',
+    publish_date: '2026-04-25',
+    author: 'Kanaan Editorial',
+    tldr: 'Swedish = recovery and relaxation. Deep tissue = chronic tension. Hot stone = stress relief in cold/AC environments. Sports = post-workout recovery. Hot herbal = aromatic ritual. All five at 150 AED for 60 minutes at any Kanaan branch with a massage room.',
+    lede: 'Most men book a massage by guessing. The names sound similar enough that picking feels arbitrary. It isn’t. Each style is designed for a different body and a different week.',
+    body_html: '<h2>Swedish — the all-rounder</h2><p>Long, flowing strokes at moderate pressure. The default choice for a reason — it covers most of what people want from a massage: tension release, circulation, parasympathetic-nervous-system reset. If you don’t have a specific complaint and just want to unwind, this is the one.</p><p><strong>Choose if:</strong> first-time massage, general stress, want to relax without thinking too hard about it.</p><h2>Deep tissue — for chronic tightness</h2><p>Slower pressure, focused on specific muscle groups (shoulders, lower back, hamstrings). The therapist holds pressure on knots until they release. It can be uncomfortable in the moment; it’s not supposed to hurt, but it’s not Swedish either.</p><p><strong>Choose if:</strong> desk job, recurring back tension, neck stiffness, posture-related issues.<br><strong>Skip if:</strong> you’re in the mood to relax — this requires you to breathe through pressure points.</p><h2>Hot stone — temperature does half the work</h2><p>Heated basalt stones placed along the spine and used as massage tools. Heat penetrates deeper than hands can, which means less pressure for the same release. Excellent in winter and over-AC’d offices.</p><p><strong>Choose if:</strong> you find regular massage too rough, cold-prone, want maximum relaxation.</p><h2>Sports recovery — for the gym crowd</h2><p>Combines compression, stretching, and friction over muscle groups that have been worked. Best done within 48 hours of a hard session.</p><p><strong>Choose if:</strong> you train consistently and want recovery acceleration, not relaxation.</p><h2>Hot herbal — the aromatic version</h2><p>Muslin compresses filled with herbs (lemongrass, ginger, eucalyptus) are steamed and pressed along the body. Therapeutic and aromatic in equal measure.</p><p><strong>Choose if:</strong> you want the experience, the smell, the ritual. Excellent introduction if you’re not sure spa is for you.</p><h2>How long</h2><p>60 minutes is the standard and what most men should book. 90 minutes if you have specific tension that needs working through. 30 minutes if it’s a focused area only — head and shoulders after a long flight, for example.</p><p><a href="/book?service=massage" class="text-gold">Book a massage</a> — all five styles available at Baniyas Spa, Khalifa City, Al Ain, Khalidiya, Old Shahamah, and VIP Muroor. 150 AED for 60 minutes.</p>',
+    active: true
+  },
+  {
+    id: 'pre-wedding-grooming',
+    slug: 'pre-wedding-grooming',
+    title: 'A 14-day pre-wedding grooming plan.',
+    excerpt: 'Two weeks out from the wedding — the grooming schedule that means you look right in every photo.',
+    category: 'Editorial',
+    read_minutes: 6,
+    hero_image: '/assets/img/photos/arch-staircase-lemon-1600.webp',
+    hero_alt: 'Editorial interior at Kanaan — marble staircase, lemon-gold light',
+    publish_date: '2026-04-12',
+    author: 'Kanaan Editorial',
+    tldr: 'Day 14: keratin + first facial. Day 10: haircut (it grows in by the day). Day 7: full grooming reset. Day 3: second facial. Day 2: beard shape + manicure + pedicure. Wedding morning: hot-towel shave only. Book the same barber and therapist across all sessions for consistency.',
+    lede: 'Wedding photos last. The way you look in the close-ups will not be a thing you reshoot. A 14-day plan is the single highest-leverage prep most grooms skip — and the difference is unmistakable in print.',
+    body_html: '<h2>Why 14 days, not 14 hours</h2><p>Skin needs time to settle after a facial. Hair needs time to grow into a cut. A keratin treatment looks best a week in. Doing everything in the 48 hours before the wedding gives you the opposite of what you want: red skin, a too-fresh cut, products still being absorbed. The plan below sequences each step at the right interval.</p><h2>Day 14 — the foundation</h2><p>If your hair takes treatment, this is when to do <a href="/services/hair-treatment" class="text-gold">keratin</a>. It softens texture and adds shine — by the wedding day it’s settled and looks natural in photos.</p><p>Book your first <a href="/services/facial-skin-care" class="text-gold">facial</a> the same week. Pick a Hydra-Facial if your skin tends to look dull, Signature if you just want a general reset. The reason for booking now: your skin recovers and you’ll see what your face actually looks like clean for the next planning step.</p><h2>Day 10 — the haircut</h2><p>This is when the cut goes in. By the wedding day it will have grown out by ~2mm, which is exactly where most cuts look best — not still-from-the-chair fresh, not shaggy. Tell your barber it’s for a wedding and ask them to err on the conservative side of length.</p><h2>Day 7 — the full reset</h2><p>One week out, book a complete grooming session: haircut touch-up if needed, beard shape, facial, manicure. The point of this session is to identify anything that needs attention. Dry patches you didn’t notice. A scar healing slowly. The barber and therapist will tell you what to do at home for the next 6 days.</p><h2>Day 3 — second facial</h2><p>A second facial 3 days out gives the skin one more chance to look its best on the day. Skip if your skin is sensitive or has reacted to anything in the previous week.</p><h2>Day 2 — shape-up + nails</h2><p>Beard sculpt, hairline shape-up, full manicure and pedicure. Nails matter in the ring-exchange close-up. Don’t trim too aggressively — leave a sliver of white.</p><h2>Wedding morning — hot-towel shave</h2><p>One service only: a proper hot-towel shave (or a beard final-touch if you wear one). Skin will look its best 60-90 minutes after, and you avoid the unfocused look of doing too much same-day.</p><h2>Tell us in advance</h2><p>Book early — we can dedicate the same barber and therapist across all 14 days so the plan is consistent. WhatsApp us at <a href="https://wa.me/971505556795" class="text-gold">+971 50 555 6795</a> and ask for the pre-wedding programme.</p>',
+    active: true
+  }
+];
+
+let added = 0;
+for (const post of NEW_POSTS) {
+  if (data.posts.find(p => p.id === post.id)) {
+    console.log('skip (exists):', post.id);
+    continue;
+  }
+  data.posts.push(post);
+  added++;
+}
+
+// Sort newest first so the admin list shows fresh entries at the top
+data.posts.sort((a, b) => (b.publish_date || '').localeCompare(a.publish_date || ''));
+
+fs.writeFileSync(blogPath, JSON.stringify(data, null, 2));
+console.log('Added', added, 'posts. Total now:', data.posts.length);

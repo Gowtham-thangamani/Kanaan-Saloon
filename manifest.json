@@ -1,7 +1,7 @@
 {
   "name": "Kanaan Gents Salon & Spa",
   "short_name": "Kanaan",
-  "description": "Premium men's grooming, barbering and spa across 10 houses in Abu Dhabi.",
+  "description": "Premium men's grooming, barbering and spa across 10 branches in Abu Dhabi.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
@@ -18,8 +18,8 @@
     { "src": "/assets/img/icon-512.svg", "sizes": "512x512", "type": "image/svg+xml", "purpose": "any" }
   ],
   "shortcuts": [
-    { "name": "Book Now", "url": "/book.html", "description": "Book your chair at Kanaan" },
-    { "name": "Find a Branch", "url": "/branches.html", "description": "10 branches across Abu Dhabi" },
-    { "name": "Offers", "url": "/offers.html", "description": "Curated grooming packages" }
+    { "name": "Book Now", "url": "/book", "description": "Book your chair at Kanaan" },
+    { "name": "Find a Branch", "url": "/branches", "description": "10 branches across Abu Dhabi" },
+    { "name": "Offers", "url": "/offers", "description": "Curated grooming packages" }
   ]
 }

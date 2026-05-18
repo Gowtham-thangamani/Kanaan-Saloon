@@ -18,8 +18,9 @@
       <a href="scan">Scan booking</a>
       <a href="blocks">Blocked slots</a>
       <a href="offers">Offers</a>
-      <a href="branches">Houses</a>
+      <a href="branches">Branches</a>
       <a href="banners">Banners</a>
+      <a href="blog">Blog</a>
       <a href="integrations">Integrations</a>
       <a href="settings">Settings</a>
     </nav>
@@ -56,7 +57,7 @@
       <div class="card">
         <h3>Recent leads</h3>
         <table id="recentLeads">
-          <thead><tr><th>Date</th><th>Name</th><th>House</th><th>Service</th><th>Source</th></tr></thead>
+          <thead><tr><th>Date</th><th>Name</th><th>Branch</th><th>Service</th><th>Source</th></tr></thead>
           <tbody><tr><td colspan="5" style="color: var(--muted);">Connect a Google Sheet in Settings to see leads.</td></tr></tbody>
         </table>
         <div style="margin-top: 16px;"><a href="leads" class="btn btn--ghost btn--sm">View all leads →</a></div>
@@ -164,7 +165,7 @@
       document.getElementById('h-meta').outerHTML = ok(cfg.tracking.metaPixelId);
       document.getElementById('h-tt').outerHTML = ok(cfg.tracking.tiktokPixelId);
       document.getElementById('h-snap').outerHTML = ok(cfg.tracking.snapPixelId);
-      document.getElementById('h-sheet').outerHTML = ok(localStorage.getItem('kanaan_leads_csv_url'));
+      document.getElementById('h-sheet').outerHTML = ok((cfg.leadsSheet && cfg.leadsSheet.csvUrl) || localStorage.getItem('kanaan_leads_csv_url'));
     })();
   }
 </script>

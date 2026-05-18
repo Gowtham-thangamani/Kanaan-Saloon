@@ -161,30 +161,37 @@
     revealEls.forEach(el => el.classList.add('is-visible'));
   }
 
-  // Open Now / Closed status (uses data-hours JSON on element)
-  document.querySelectorAll('[data-hours]').forEach(el => {
-    try {
-      const hours = JSON.parse(el.getAttribute('data-hours'));
-      const now = new Date();
-      const dayKey = ['sun','mon','tue','wed','thu','fri','sat'][now.getDay()];
-      const today = hours[dayKey];
-      let open = false;
-      if (today && today.open && today.close) {
-        const [oh, om] = today.open.split(':').map(Number);
-        const [ch, cm] = today.close.split(':').map(Number);
-        const cur = now.getHours() * 60 + now.getMinutes();
-        const oMin = oh * 60 + om;
-        let cMin = ch * 60 + cm;
-        // handle past-midnight close (e.g. closes at 02:00)
-        if (cMin <= oMin) cMin += 24 * 60;
-        const curAdj = cur < oMin ? cur + 24 * 60 : cur;
-        open = curAdj >= oMin && curAdj < cMin;
-      }
-      el.classList.toggle('status-pill--closed', !open);
-      const isAr = document.body.classList.contains('lang-ar');
-      el.textContent = open ? (isAr ? 'مفتوح الآن' : 'Open Now') : (isAr ? 'مغلق' : 'Closed');
-    } catch (e) { /* silent */ }
-  });
+  // Open Now / Closed status (uses data-hours JSON on element).
+  // Runs once now for any statically-rendered pills (single-branch pages have
+  // their hours baked in), and again whenever runtime.js fires
+  // `branches:rendered` after async-rendering the /branches index cards.
+  function updateBranchStatusPills() {
+    document.querySelectorAll('[data-hours]').forEach(el => {
+      try {
+        const hours = JSON.parse(el.getAttribute('data-hours'));
+        const now = new Date();
+        const dayKey = ['sun','mon','tue','wed','thu','fri','sat'][now.getDay()];
+        const today = hours[dayKey];
+        let open = false;
+        if (today && today.open && today.close) {
+          const [oh, om] = today.open.split(':').map(Number);
+          const [ch, cm] = today.close.split(':').map(Number);
+          const cur = now.getHours() * 60 + now.getMinutes();
+          const oMin = oh * 60 + om;
+          let cMin = ch * 60 + cm;
+          // handle past-midnight close (e.g. closes at 02:00)
+          if (cMin <= oMin) cMin += 24 * 60;
+          const curAdj = cur < oMin ? cur + 24 * 60 : cur;
+          open = curAdj >= oMin && curAdj < cMin;
+        }
+        el.classList.toggle('status-pill--closed', !open);
+        const isAr = document.body.classList.contains('lang-ar');
+        el.textContent = open ? (isAr ? 'مفتوح الآن' : 'Open Now') : (isAr ? 'مغلق' : 'Closed');
+      } catch (e) { /* silent */ }
+    });
+  }
+  updateBranchStatusPills();
+  document.addEventListener('branches:rendered', updateBranchStatusPills);
 
   // Booking — geolocation auto-suggest nearest branch on step 1.
   // Branch coordinates (approximate centres; replace with real from content/branches.json).
@@ -668,7 +675,7 @@
       // confirm/pick branch & service. Only nudges to step 1 when step 0 is
       // already complete (both branch + service set).
       if (presetDate && /^\d{4}-\d{2}-\d{2}$/.test(presetDate)) {
-        const dateInput = form && form.querySelector('input[name="date"]');
+        const dateInput = document.querySelector('[data-booking-form] input[name="date"]');
         if (dateInput) {
           dateInput.value = presetDate;
           dateInput.dispatchEvent(new Event('change', { bubbles: true }));
@@ -704,7 +711,7 @@
 
         // Pre-fill the message field so staff sees the exact items + total
         // when reviewing the booking in admin.
-        const msg = form && form.querySelector('[name="message"]');
+        const msg = document.querySelector('[data-booking-form] [name="message"]');
         if (msg) {
           const noteLines = [];
           if (presetItems)      noteLines.push((isAr ? 'الخدمات المختارة: ' : 'Selected services: ') + presetItems);
@@ -1359,7 +1366,7 @@
 
   // -------- Recently viewed branches (localStorage) --------
   (function trackBranchView() {
-    const m = location.pathname.match(/\/branches\/([^/]+)\.html$/);
+    const m = location.pathname.match(/\/branches\/([^/]+?)(?:\.html)?$/);
     if (!m) return;
     let recent;
     try { recent = JSON.parse(localStorage.getItem('kanaan_recent_branches') || '[]'); } catch (_) { recent = []; }
@@ -1419,12 +1426,12 @@
   (function mobileFab() {
     if (document.querySelector('.fab-book')) return;
     // Don't add the "Book" FAB on the booking page itself or the confirmation page.
-    if (/(?:^|\/)book\.html$/.test(location.pathname) ||
-        /thank-you\.html$/.test(location.pathname) ||
+    if (/(?:^|\/)book(?:\.html)?$/.test(location.pathname) ||
+        /thank-you(?:\.html)?$/.test(location.pathname) ||
         /\/admin\//.test(location.pathname)) return;
     const isAr = document.documentElement.lang === 'ar' || document.body.classList.contains('lang-ar');
     const fab = document.createElement('a');
-    fab.href = isAr ? '../book.html' : 'book';
+    fab.href = isAr ? '../book' : 'book';
     fab.className = 'fab-book';
     fab.setAttribute('data-track', 'fab_book_click');
     fab.textContent = isAr ? 'احجز' : 'Book';
@@ -1454,7 +1461,7 @@
       setTimeout(() => c.remove(), 2600);
     }
   }
-  if (location.pathname.endsWith('thank-you')) {
+  if (/thank-you(?:\.html)?$/.test(location.pathname)) {
     setTimeout(confetti, 400);
   }
 
@@ -1590,7 +1597,7 @@
   (function initMenuPicker() {
     const rates = document.getElementById('rates');
     if (!rates) return;
-    const pathMatch = location.pathname.match(/\/(?:ar\/)?branches\/([a-z0-9-]+)\.html/);
+    const pathMatch = location.pathname.match(/\/(?:ar\/)?branches\/([a-z0-9-]+?)(?:\.html)?$/);
     if (!pathMatch) return;
     const branchSlug = pathMatch[1];
     const isAr = document.documentElement.lang === 'ar' || document.body.classList.contains('lang-ar');

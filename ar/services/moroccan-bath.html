@@ -47,12 +47,13 @@
   <header class="site-header">
     <div class="site-header__inner">
       <a href="../" class="logo" aria-label="كنعان — صالون وسبا للرجال"><img src="../../assets/img/logo.svg" alt="كنعان صالون وسبا للرجال" class="logo-img" /></a>
-      <nav class="main-nav">
+      <nav class="main-nav" aria-label="Primary">
         <a href="../">الرئيسية</a>
         <a href="../about">عن كنعان</a>
         <a href="../offers">العروض</a>
-        <a href="../../branches">البيوت والخدمات</a>
+        <a href="../branches" class="is-active">البيوت والخدمات</a>
         <a href="../gallery">المعرض</a>
+        <a href="../blog">المقالات</a>
         <a href="../contact">تواصل</a>
       </nav>
       <div class="header-actions">
@@ -61,11 +62,16 @@
         <button type="button" class="menu-toggle" aria-label="القائمة"><span></span><span></span><span></span></button>
       </div>
     </div>
-    <nav class="mobile-nav">
+    <nav class="mobile-nav" aria-label="Mobile">
       <a href="../">الرئيسية</a>
-      <a href="../offers">العروض</a><a href="../../branches">البيوت والخدمات</a>
-      <a href="../contact">تواصل</a><a href="../../services/moroccan-bath">EN</a>
-      <a href="../book?service=moroccan-bath" class="btn">احجز الآن</a>
+      <a href="../about">عن كنعان</a>
+      <a href="../offers">العروض</a>
+      <a href="../branches" class="is-active">البيوت والخدمات</a>
+      <a href="../gallery">المعرض</a>
+      <a href="../blog">المقالات</a>
+      <a href="../contact">تواصل</a>
+      <a href="../../" class="lang-switch">EN</a>
+      <a href="../book?service=moroccan-bath" class="btn btn--sm">احجز الآن</a>
     </nav>
   </header>
 
@@ -78,7 +84,7 @@
       </div>
       <span class="eyebrow">فئة ٠٤ / ٠٧</span>
       <h1 class="page-hero__title" data-split="lines">الحمّام المغربي</h1>
-      <p class="lede" data-reveal="up" style="color: var(--c-pearl); margin-top: var(--s-4);" data-scroll-text>طقس حمّام مغربي أصيل — تقشير، بخار، وانتعاش.</p>
+      <p class="lede" data-reveal="up" style="color: var(--c-pearl); margin-top: var(--s-4);" data-scroll-text>طقس حمّام مغربي أصيل — تقشير، بخار، وانتعاش. ثلاث فئات تبدأ من ١٣٠ درهم.</p>
     </div>
   </section>
   <section class="section section--tight" style="padding: var(--s-5) 0;">
@@ -111,7 +117,7 @@
           <span class="eyebrow">عن هذه الفئة</span>
           <h2 class="display-2">طقس عريق،<br/>يُؤدَّى كما يجب.</h2>
           <div class="divider"></div>
-          <p class="muted">الحمّام المغربي من أعرق طقوس العناية في المنطقة. نُؤدّيه كما يجب أن يُؤدَّى — صابون أسود، بخار، تقشير بكيس الكسة، قناع، وانتهاء بزيت الأرجان. متوفّر في بيوت السبا (بنياس سبا، VIP المرور).</p>
+          <p class="muted">الحمّام المغربي من أعرق طقوس العناية في المنطقة. نُؤدّيه كما يجب أن يُؤدَّى — صابون أسود، بخار، تقشير بكيس الكسة، قناع، وانتهاء بزيت الأرجان. متوفّر في ستة فروع كنعان في أبوظبي والعين.</p>
         </div>
         <div class="split__media" data-hover-zoom data-reveal="scale" data-parallax="bg" data-speed="0.25"><img src="../../assets/img/photos/service-hair-barber-stations-1600.webp" alt="Kanaan Gents Salon &amp; Spa" loading="lazy" decoding="async" /></div>
       </div>
@@ -145,6 +151,95 @@
     </div>
   </section>
 
+  <!-- Pricing tiers — three Moroccan bath rituals. -->
+  <section class="section section--light">
+    <div class="container">
+      <div class="section-head" data-reveal="up">
+        <span class="eyebrow" data-parallax="text" data-speed="0.22">ثلاث فئات</span>
+        <h2 class="section-head__title display-2" data-parallax="text" data-speed="0.15">اختر حمّامك.</h2>
+        <p class="section-head__lede" data-scroll-text>من تنظيف عميق إلى طقس ملكي كامل — اختر الفئة المناسبة لزيارتك.</p>
+      </div>
+
+      <div class="grid grid-3" data-reveal-stagger style="gap: var(--s-5); align-items: stretch;">
+
+        <article style="border: 1px solid var(--hairline); padding: var(--s-6); display: flex; flex-direction: column; gap: var(--s-4);">
+          <header>
+            <span class="eyebrow">عادي</span>
+            <h3 class="display-3" style="font-size: 36px; margin-top: var(--s-3); color: var(--c-gold);">١٣٠ درهم</h3>
+            <p class="muted" style="margin-top: var(--s-3);">تجربة حمّام مغربي تقليدية لتنظيف الجسم بعمق وانتعاش البشرة.</p>
+          </header>
+          <ul class="muted" style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; font-size: 14px;">
+            <li>· جلسة بخار لفتح المسام واسترخاء الجسم</li>
+            <li>· وضع الصابون المغربي الأصلي</li>
+            <li>· تقشير كامل للجسم باستخدام كيس الكسة التقليدي (الليفة)</li>
+            <li>· إزالة خلايا الجلد الميتة لشعور بالنعومة والانتعاش</li>
+          </ul>
+          <p class="muted" style="font-size: 13px; font-style: italic; margin-top: auto;">مثالي لتجربة حمّام مغربي كلاسيكي مع تنظيف عميق واسترخاء.</p>
+          <a href="../book?service=Moroccan%20Bath%20-%20Normal&amp;price=130" class="btn btn--ghost btn--sm">احجز العادي</a>
+        </article>
+
+        <article style="border: 1px solid var(--c-gold); padding: var(--s-6); display: flex; flex-direction: column; gap: var(--s-4); position: relative; background: rgba(200,160,74,0.04);">
+          <span style="position: absolute; top: -10px; right: var(--s-6); background: var(--c-gold); color: #0E0F11; font-size: 10px; letter-spacing: 0.12em; padding: 4px 10px; font-weight: 600;">الأكثر طلباً</span>
+          <header>
+            <span class="eyebrow">خاص</span>
+            <h3 class="display-3" style="font-size: 36px; margin-top: var(--s-3); color: var(--c-gold);">١٨٠ درهم</h3>
+            <p class="muted" style="margin-top: var(--s-3);">تجربة حمّام مغربي راقية تجمع بين التنظيف العميق وطقوس العناية الفاخرة.</p>
+          </header>
+          <ul class="muted" style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; font-size: 14px;">
+            <li>· جلسة بخار استرخاء</li>
+            <li>· علاج بالصابون المغربي الأصلي</li>
+            <li>· تقشير كامل للجسم بكيس الكسة</li>
+            <li>· سكراب كامل للجسم لبشرة أنعم وأكثر إشراقاً</li>
+            <li>· خلطة العود والعنبر الحصرية</li>
+            <li>· قناع للوجه لبشرة منتعشة ومشرقة</li>
+            <li>· علاج بقناع الشعر للترطيب والنعومة</li>
+          </ul>
+          <p class="muted" style="font-size: 13px; font-style: italic; margin-top: auto;">خيار مثالي للضيوف الباحثين عن تجربة سبا أكثر فخامة وانتعاشاً.</p>
+          <a href="../book?service=Moroccan%20Bath%20-%20Special&amp;price=180" class="btn btn--sm">احجز الخاص</a>
+        </article>
+
+        <article style="border: 1px solid var(--hairline); padding: var(--s-6); display: flex; flex-direction: column; gap: var(--s-4);">
+          <header>
+            <span class="eyebrow">ملكي</span>
+            <h3 class="display-3" style="font-size: 36px; margin-top: var(--s-3); color: var(--c-gold);">٣٠٠ درهم</h3>
+            <p class="muted" style="margin-top: var(--s-3);">تجربتنا الأكثر فخامة، صُمّمت لاسترخاء كامل، عناية مميّزة بالبشرة، وتجديد الجسم بالكامل.</p>
+          </header>
+          <ul class="muted" style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; font-size: 14px;">
+            <li>· جلسة بخار علاجي لتحضير واسترخاء الجسم</li>
+            <li>· وضع الصابون المغربي الأصلي</li>
+            <li>· تقشير بكيس الكسة المغربي التقليدي</li>
+            <li>· علاج سكراب كامل للجسم</li>
+            <li>· خلطة العود والعنبر المميّزة</li>
+            <li>· علاج الطين والملح الطبيعي للتنقية العميقة</li>
+            <li>· قناع وجه فاخر للبشرة المشرقة</li>
+            <li>· علاج قناع شعر للترطيب العميق</li>
+          </ul>
+          <p class="muted" style="font-size: 13px; font-style: italic; margin-top: auto;">تجربة سبا ملكية لمن يقدّر الفخامة والعناية المميّزة.</p>
+          <a href="../book?service=Moroccan%20Bath%20-%20Royal&amp;price=300" class="btn btn--ghost btn--sm">احجز الملكي</a>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head section-head--left" data-reveal="up">
+        <span class="eyebrow" data-parallax="text" data-speed="0.22">متوفّر في</span>
+        <h2 class="section-head__title display-2" data-parallax="text" data-speed="0.15">ستة فروع.</h2>
+        <p class="section-head__lede" data-scroll-text>بنياس سبا ومدينة خليفة هما بيتا السبا الرئيسيان. الطقس متوفّر أيضاً في العين، الخالدية، الشهامة القديمة، وVIP المرور.</p>
+      </div>
+      <div class="flex gap-3" style="flex-wrap: wrap;">
+        <a href="../branches/baniyas-spa" class="btn btn--ghost btn--sm">بنياس سبا</a>
+        <a href="../branches/khalifa-city" class="btn btn--ghost btn--sm">مدينة خليفة</a>
+        <a href="../branches/al-ain" class="btn btn--ghost btn--sm">العين</a>
+        <a href="../branches/khalidiya" class="btn btn--ghost btn--sm">الخالدية</a>
+        <a href="../branches/old-shahamah" class="btn btn--ghost btn--sm">الشهامة القديمة</a>
+        <a href="../branches/vip-muroor" class="btn btn--ghost btn--sm">VIP المرور</a>
+      </div>
+    </div>
+  </section>
+
   <section class="cta-band" data-reveal="up">
     <h2 class="cta-band__title" data-parallax="text" data-speed="0.35">أول مرة في الحمّام المغربي؟</h2>
     <p class="cta-band__sub" data-scroll-text>الأمر أبسط مما يبدو. راسلنا — سنشرح لك الطقس قبل وصولك.</p>
@@ -153,7 +248,14 @@
 
   <footer class="site-footer">
     <div class="container">
-      
+      <div class="footer-socials" aria-label="Social">
+        <a href="#" data-bind-attr-href="social.instagram" aria-label="Instagram" target="_blank" rel="noopener"><svg class="icon"><use href="../../assets/img/icons.svg#i-instagram"/></svg></a>
+        <a href="#" data-bind-attr-href="social.tiktok" aria-label="TikTok" target="_blank" rel="noopener"><svg class="icon"><use href="../../assets/img/icons.svg#i-tiktok"/></svg></a>
+        <a href="#" data-bind-attr-href="social.snapchat" aria-label="Snapchat" target="_blank" rel="noopener"><svg class="icon"><use href="../../assets/img/icons.svg#i-snapchat"/></svg></a>
+        <a href="#" data-bind-attr-href="social.facebook" aria-label="Facebook" target="_blank" rel="noopener"><svg class="icon"><use href="../../assets/img/icons.svg#i-facebook"/></svg></a>
+        <a href="#" data-bind-attr-href="contact.wa_url" aria-label="WhatsApp" target="_blank" rel="noopener"><svg class="icon"><use href="../../assets/img/icons.svg#i-whatsapp"/></svg></a>
+      </div>
+
       <div class="footer-newsletter">
         <div>
           <h5>النشرة</h5>
@@ -180,8 +282,8 @@
   <script src="../../assets/js/config.js"></script>
   <script src="../../assets/js/tracking.js"></script>
   <script src="../../assets/js/consent.js" defer></script>
-  <script src="../../assets/js/runtime.js?v=2"></script>
-  <script src="../../assets/js/main.js?v=27"></script>
+  <script src="../../assets/js/runtime.js?v=3"></script>
+  <script src="../../assets/js/main.js?v=30"></script>
   <script src="../assets/js/nav-dropdown.js" defer></script>
   <script src="../../assets/js/motion.js?v=18" defer></script>
   <script src="../../assets/js/quickbook.js" defer></script>

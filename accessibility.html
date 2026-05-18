@@ -16,13 +16,13 @@
 
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Accessibility | Kanaan Gents Salon &amp; Spa" />
-  <meta property="og:description" content="Ten houses across Abu Dhabi. One uncompromising standard." />
+  <meta property="og:description" content="Ten branches across Abu Dhabi. One uncompromising standard." />
   <meta property="og:url" content="https://kanaanspa.ae/accessibility" />
   <meta property="og:image" content="https://kanaanspa.ae/assets/img/og-default.svg" />
   <meta property="og:locale" content="en_US" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Accessibility | Kanaan Gents Salon &amp; Spa" />
-  <meta name="twitter:description" content="Ten houses across Abu Dhabi. One uncompromising standard." />
+  <meta name="twitter:description" content="Ten branches across Abu Dhabi. One uncompromising standard." />
   <meta name="twitter:image" content="https://kanaanspa.ae/assets/img/og-default.svg" />
   <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg" />
   <link rel="apple-touch-icon" href="assets/img/favicon.svg" />
@@ -34,7 +34,15 @@
   <header class="site-header">
     <div class="site-header__inner">
       <a href="./" class="logo" aria-label="Kanaan Gents Salon &amp; Spa — home"><img src="assets/img/logo.svg" alt="Kanaan Gents Salon &amp; Spa" class="logo-img" /></a>
-      <nav class="main-nav"><a href="./">Home</a><a href="contact">Contact</a></nav>
+      <nav class="main-nav" aria-label="Primary">
+        <a href="./">Home</a>
+        <a href="about">About</a>
+        <a href="offers">Offers</a>
+        <a href="branches">Branches &amp; Services</a>
+        <a href="gallery">Gallery</a>
+        <a href="blog">Insights</a>
+        <a href="contact">Contact</a>
+      </nav>
       <div class="header-actions"><a href="ar/accessibility" class="lang-switch">عربي</a><a href="book" class="btn btn--sm">Book Now</a></div>
     </div>
   </header>
@@ -78,13 +86,20 @@
       <p>If you experience difficulty using the site, email <a href="mailto:kanaansaloon@gmail.com" class="text-gold">kanaansaloon@gmail.com</a> or WhatsApp us — we will do our best to provide the information or service you need in an accessible format.</p>
 
       <h2 style="margin-top: var(--s-7);" id="in-our-salons">In our salons</h2>
-      <p>Most Kanaan houses are accessible by lift or ground-floor entry. If you have specific access needs, contact your branch in advance and we will arrange.</p>
+      <p>Most Kanaan branches are accessible by lift or ground-floor entry. If you have specific access needs, contact your branch in advance and we will arrange.</p>
     </div>
   </section></main>
 
   <footer class="site-footer">
     <div class="container">
-      
+      <div class="footer-socials" aria-label="Social">
+        <a href="#" data-bind-attr-href="social.instagram" aria-label="Instagram" target="_blank" rel="noopener"><svg class="icon"><use href="assets/img/icons.svg#i-instagram"/></svg></a>
+        <a href="#" data-bind-attr-href="social.tiktok" aria-label="TikTok" target="_blank" rel="noopener"><svg class="icon"><use href="assets/img/icons.svg#i-tiktok"/></svg></a>
+        <a href="#" data-bind-attr-href="social.snapchat" aria-label="Snapchat" target="_blank" rel="noopener"><svg class="icon"><use href="assets/img/icons.svg#i-snapchat"/></svg></a>
+        <a href="#" data-bind-attr-href="social.facebook" aria-label="Facebook" target="_blank" rel="noopener"><svg class="icon"><use href="assets/img/icons.svg#i-facebook"/></svg></a>
+        <a href="#" data-bind-attr-href="contact.wa_url" aria-label="WhatsApp" target="_blank" rel="noopener"><svg class="icon"><use href="assets/img/icons.svg#i-whatsapp"/></svg></a>
+      </div>
+
       <div class="footer-newsletter">
         <div>
           <h5>Newsletter</h5>
@@ -101,7 +116,7 @@
       </div>
     </div>
   </footer>
-  <script src="assets/js/runtime.js?v=2"></script>
+  <script src="assets/js/runtime.js?v=3"></script>
   <script src="assets/js/config.js"></script>
   <script src="assets/js/tracking.js"></script>
   <script src="assets/js/consent.js" defer></script>

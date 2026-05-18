@@ -9,7 +9,9 @@
   <link rel="stylesheet" href="admin.css" />
   <style>
     /* Leads table — consolidated row layout with status-colored left border. */
-    .leads-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 13px; }
+    .leads-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 13px; table-layout: fixed; }
+    .leads-table td, .leads-table th { word-wrap: break-word; overflow-wrap: anywhere; }
+    .leads-table td.leads-service { white-space: normal; line-height: 1.5; }
     .leads-table thead th {
       text-align: left; padding: 12px 14px; font-size: 11px; letter-spacing: 0.08em;
       text-transform: uppercase; color: var(--muted); font-weight: 500;
@@ -73,8 +75,9 @@
       <a href="scan">Scan booking</a>
       <a href="blocks">Blocked slots</a>
       <a href="offers">Offers</a>
-      <a href="branches">Houses</a>
+      <a href="branches">Branches</a>
       <a href="banners">Banners</a>
+      <a href="blog">Blog</a>
       <a href="integrations">Integrations</a>
       <a href="settings">Settings</a>
     </nav>
@@ -121,15 +124,31 @@
     </div>
 
     <div class="card" id="data" style="display: none;">
-      <table>
-        <thead>
-          <tr>
-            <th>Date</th><th>Name</th><th>Phone</th><th>House</th><th>Service</th>
-            <th>When</th><th>Source</th><th>Booking ID</th><th>State</th><th>Quick</th><th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="rows"></tbody>
-      </table>
+      <div class="leads-table-wrap" style="overflow-x: auto;">
+        <table class="leads-table">
+          <colgroup>
+            <col style="width: 14%;" />
+            <col style="width: 14%;" />
+            <col style="width: 10%;" />
+            <col style="width: 26%;" />
+            <col style="width: 14%;" />
+            <col style="width: 10%;" />
+            <col style="width: 12%;" />
+          </colgroup>
+          <thead>
+            <tr>
+              <th>When</th>
+              <th>Customer</th>
+              <th>Branch</th>
+              <th>Service</th>
+              <th>Booking</th>
+              <th>Status</th>
+              <th style="text-align: right;">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
       <p id="count" style="color: var(--muted); font-size: 12px; margin-top: 16px;"></p>
     </div>
   </main>
@@ -338,18 +357,30 @@
         const eId = esc(id);
         const eSource = esc(l.utm_source||l.Source||l.source||'direct');
         const eTs = esc((l.timestamp||l.createdAt||'').slice(0,16).replace('T',' '));
-        return `<tr>
-        <td>${eTs}</td>
-        <td>${eName||'—'}</td>
-        <td>${ePhone ? `<a href="tel:${ePhone}">${ePhone}</a>` : '—'}</td>
-        <td>${eBranch||'—'}</td>
-        <td>${eService||'—'}</td>
-        <td>${eDate+' '+eTime}</td>
-        <td><span class="pill pill--gold">${eSource}</span></td>
-        <td style="font-family: monospace; font-size: 11px;">${eId||'—'}</td>
-        <td><span class="pill pill--${stateColor}">${stateLabel}</span></td>
+        return `<tr class="leads-row leads-row--${state}">
         <td>
-          <select class="sel" data-state-select="${eId}" style="width: 130px; height: 32px; padding: 0 8px; font-size: 12px;">
+          <div class="leads-cell-stack">
+            <span class="leads-cell-stack__primary">${eDate || '—'}</span>
+            <span class="leads-cell-stack__sub">${eTime || ''}</span>
+            <span class="leads-cell-stack__sub" style="font-size: 11px;">Submitted ${eTs || '—'}</span>
+          </div>
+        </td>
+        <td>
+          <div class="leads-cell-stack">
+            <span class="leads-cell-stack__primary">${eName || '—'}</span>
+            ${ePhone ? `<a class="leads-cell-stack__sub" href="tel:${ePhone}">${ePhone}</a>` : ''}
+          </div>
+        </td>
+        <td>${eBranch || '—'}</td>
+        <td class="leads-service">${eService || '—'}</td>
+        <td>
+          <div class="leads-cell-stack">
+            <span class="leads-cell-stack__secondary">${eId || '—'}</span>
+            <span class="leads-source">${eSource}</span>
+          </div>
+        </td>
+        <td>
+          <select class="sel leads-status-select is-${state}" data-state-select="${eId}">
             <option value="new" ${state==='new'?'selected':''}>New</option>
             <option value="confirmed" ${state==='confirmed'?'selected':''}>Confirmed</option>
             <option value="completed" ${state==='completed'?'selected':''}>Completed</option>
@@ -357,12 +388,14 @@
             <option value="cancelled" ${state==='cancelled'?'selected':''}>Cancelled</option>
           </select>
         </td>
-        <td style="white-space: nowrap;">
-          ${state==='new' ? `<button type="button" class="btn btn--sm" data-approve="${eId}" title="Approve and mark Confirmed">✓ Approve</button>` : ''}
-          ${state==='new' || state==='confirmed' ? `<button type="button" class="btn btn--ghost btn--sm" data-reject="${eId}" title="Cancel booking">✗ Cancel</button>` : ''}
-          ${wa ? `<a class="btn btn--ghost btn--sm" href="${esc(wa)}" target="_blank" rel="noopener" title="WhatsApp the customer">WA</a>` : ''}
-          ${ml ? `<a class="btn btn--ghost btn--sm" href="${esc(ml)}" title="Email the customer">✉</a>` : ''}
-          <button type="button" class="btn btn--ghost btn--sm" data-delete="${eId}" title="Delete booking">🗑</button>
+        <td>
+          <div class="leads-actions">
+            ${state==='new' ? `<button type="button" class="btn btn--sm" data-approve="${eId}" title="Approve">✓</button>` : ''}
+            ${state==='new' || state==='confirmed' ? `<button type="button" class="btn btn--ghost btn--sm leads-action--danger" data-reject="${eId}" title="Cancel">✗</button>` : ''}
+            ${wa ? `<a class="btn btn--ghost btn--sm" href="${esc(wa)}" target="_blank" rel="noopener" title="WhatsApp">WA</a>` : ''}
+            ${ml ? `<a class="btn btn--ghost btn--sm" href="${esc(ml)}" title="Email">✉</a>` : ''}
+            <button type="button" class="btn btn--ghost btn--sm leads-action--danger" data-delete="${eId}" title="Delete">🗑</button>
+          </div>
         </td>
       </tr>`;
       }).join('');

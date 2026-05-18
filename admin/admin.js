@@ -317,7 +317,8 @@
         }
       }
 
-      const url = localStorage.getItem('kanaan_leads_csv_url') || '';
+      const cfgUrl = (window.KANAAN_CONFIG && window.KANAAN_CONFIG.leadsSheet && window.KANAAN_CONFIG.leadsSheet.csvUrl) || '';
+      const url = cfgUrl || localStorage.getItem('kanaan_leads_csv_url') || '';
       if (url) {
         try {
           const r = await fetch(url);
@@ -396,6 +397,70 @@
         }
         return await r.json();
       } catch (e) { return []; }
+    },
+
+    /* === Blog posts — Supabase-backed CRUD ===
+       The blog_posts table is read by both anon visitors (live website) and
+       authenticated admins. RLS handles the filtering: anon only sees rows
+       where active=true, admins see drafts too. */
+    async loadBlogPosts() {
+      const sb = supaCfg();
+      if (!sb.url || !sb.anonKey) return [];
+      try {
+        const r = await fetch(sb.url + '/rest/v1/blog_posts?select=*&order=publish_date.desc.nullslast,created_at.desc&limit=1000', {
+          headers: authHeaders(true)
+        });
+        if (!r.ok) {
+          if (r.status === 401) { clearSession(); location.href = 'index.html'; }
+          return [];
+        }
+        return await r.json();
+      } catch (e) { return []; }
+    },
+
+    /* Upsert (insert or update by id) — uses PostgREST's on_conflict + merge prefer. */
+    async saveBlogPost(post) {
+      const sb = supaCfg();
+      if (!sb.url || !sb.anonKey) return { ok: false, error: 'Supabase not configured' };
+      if (!this.isLoggedIn()) return { ok: false, error: 'Not signed in' };
+      // Strip server-managed timestamps so PostgREST regenerates them.
+      const { created_at, updated_at, ...payload } = post || {};
+      try {
+        const r = await fetch(sb.url + '/rest/v1/blog_posts?on_conflict=id', {
+          method: 'POST',
+          headers: Object.assign({}, authHeaders(true), {
+            'Prefer': 'resolution=merge-duplicates,return=representation'
+          }),
+          body: JSON.stringify(payload)
+        });
+        if (!r.ok) {
+          const txt = await r.text().catch(() => '');
+          return { ok: false, error: 'HTTP ' + r.status + ' ' + txt };
+        }
+        const rows = await r.json();
+        return { ok: true, post: rows[0] };
+      } catch (e) {
+        return { ok: false, error: e.message || String(e) };
+      }
+    },
+
+    async deleteBlogPost(id) {
+      const sb = supaCfg();
+      if (!sb.url || !sb.anonKey) return { ok: false, error: 'Supabase not configured' };
+      if (!this.isLoggedIn()) return { ok: false, error: 'Not signed in' };
+      try {
+        const r = await fetch(sb.url + '/rest/v1/blog_posts?id=eq.' + encodeURIComponent(id), {
+          method: 'DELETE',
+          headers: Object.assign({}, authHeaders(true), { 'Prefer': 'return=minimal' })
+        });
+        if (!r.ok) {
+          const txt = await r.text().catch(() => '');
+          return { ok: false, error: 'HTTP ' + r.status + ' ' + txt };
+        }
+        return { ok: true };
+      } catch (e) {
+        return { ok: false, error: e.message || String(e) };
+      }
     },
 
     /* === Supabase usage stats — for the 500 MB cap monitor === */

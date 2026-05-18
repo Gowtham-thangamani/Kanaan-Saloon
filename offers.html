@@ -33,7 +33,7 @@
 
   <div class="utility-bar">
     <div class="utility-bar__inner">
-      <span class="utility-bar__pitch">Ten houses in Abu Dhabi · One standard</span>
+      <span class="utility-bar__pitch">Ten branches in Abu Dhabi · One standard</span>
       <div class="utility-bar__actions">
         <a href="tel:+971505556795" data-track="call_click">☏ <span data-bind="contact.centralPhone">+971 50 555 6795</span></a>
         <a href="https://wa.me/971505556795?text=Hi%20Kanaan%2C%20I'm%20interested%20in%20one%20of%20your%20current%20offers.%20Which%20branch%20would%20you%20recommend%3F" data-bind-attr-href="contact.wa_url" data-track="whatsapp_click">✉ WhatsApp</a>
@@ -44,24 +44,31 @@
   <header class="site-header">
     <div class="site-header__inner">
       <a href="./" class="logo" aria-label="Kanaan Gents Salon &amp; Spa — home"><img src="assets/img/logo.svg" alt="Kanaan Gents Salon &amp; Spa" class="logo-img" /></a>
-      <nav class="main-nav">
+      <nav class="main-nav" aria-label="Primary">
         <a href="./">Home</a>
         <a href="about">About</a>
         <a href="offers" class="is-active">Offers</a>
-        <a href="branches">Houses &amp; Services</a>
+        <a href="branches">Branches &amp; Services</a>
         <a href="gallery">Gallery</a>
+        <a href="blog">Insights</a>
         <a href="contact">Contact</a>
       </nav>
       <div class="header-actions">
         <a href="ar/offers" class="lang-switch">عربي</a>
         <a href="book" class="btn btn--sm">Book Now</a>
-        <button type="button" class="menu-toggle"><span></span><span></span><span></span></button>
+        <button type="button" class="menu-toggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
       </div>
     </div>
-    <nav class="mobile-nav">
-      <a href="./">Home</a><a href="offers">Offers</a>
-      <a href="branches">Houses &amp; Services</a><a href="contact">Contact</a>
-      <a href="book" class="btn">Book Now</a>
+    <nav class="mobile-nav" aria-label="Mobile">
+      <a href="./">Home</a>
+      <a href="about">About</a>
+      <a href="offers" class="is-active">Offers</a>
+      <a href="branches">Branches &amp; Services</a>
+      <a href="gallery">Gallery</a>
+      <a href="blog">Insights</a>
+      <a href="contact">Contact</a>
+      <a href="ar/" class="lang-switch">عربي</a>
+      <a href="book" class="btn btn--sm">Book Now</a>
     </nav>
   </header>
 
@@ -115,17 +122,18 @@
       <div class="footer-grid">
         <div class="footer-brand">
           <div class="logo"><img src="assets/img/logo.svg" alt="Kanaan Gents Salon &amp; Spa" class="logo-img" /></div>
-          <p style="margin-top: var(--s-4);">Ten houses across Abu Dhabi. One uncompromising standard.</p>
+          <p style="margin-top: var(--s-4);">Ten branches across Abu Dhabi. One uncompromising standard.</p>
           <div class="footer-socials" aria-label="Social">
             <a href="#" data-bind-attr-href="social.instagram" aria-label="Instagram" target="_blank" rel="noopener"><svg class="icon"><use href="assets/img/icons.svg#i-instagram"/></svg></a>
             <a href="#" data-bind-attr-href="social.tiktok" aria-label="TikTok" target="_blank" rel="noopener"><svg class="icon"><use href="assets/img/icons.svg#i-tiktok"/></svg></a>
             <a href="#" data-bind-attr-href="social.snapchat" aria-label="Snapchat" target="_blank" rel="noopener"><svg class="icon"><use href="assets/img/icons.svg#i-snapchat"/></svg></a>
+            <a href="#" data-bind-attr-href="social.facebook" aria-label="Facebook" target="_blank" rel="noopener"><svg class="icon"><use href="assets/img/icons.svg#i-facebook"/></svg></a>
             <a href="#" data-bind-attr-href="contact.wa_url" aria-label="WhatsApp" target="_blank" rel="noopener"><svg class="icon"><use href="assets/img/icons.svg#i-whatsapp"/></svg></a>
           </div>
         </div>
-        <div><h5>Visit</h5><ul><li></li><li><a href="offers">Offers</a></li><li><a href="gallery">Gallery</a></li><li><a href="about">About</a></li><li><a href="contact">Contact</a></li></ul></div>
-        <div><h5>Houses</h5><ul><li><a href="branches/al-ain">Al Ain</a></li><li><a href="branches/khalifa-city">Khalifa City</a></li><li><a href="branches/khalidiya">Khalidiya</a></li><li><a href="branches/baniyas-spa">Baniyas Spa</a></li><li><a href="branches/baniyas-barber">Baniyas Barber</a></li></ul></div>
-        <div><h5>&nbsp;</h5><ul><li><a href="branches/rabdan">Rabdan</a></li><li><a href="branches/old-shahamah">Old Shahamah</a></li><li><a href="branches/new-shahamah">New Shahamah</a></li><li><a href="branches/muroor">Muroor</a></li><li><a href="branches/vip-muroor">VIP Muroor</a></li></ul></div>
+        <div><h5>Visit</h5><ul><li></li><li><a href="offers">Offers</a></li><li><a href="gallery">Gallery</a></li><li><a href="about">About</a></li><li><a href="blog">Insights</a></li><li><a href="contact">Contact</a></li></ul></div>
+        <div><h5>Branches</h5><ul><li><a href="branches/al-ain">Al Ain</a></li><li><a href="branches/khalifa-city">Khalifa City</a></li><li><a href="branches/khalidiya">Khalidiya</a></li><li><a href="branches/baniyas-spa">Baniyas Spa</a></li><li><a href="branches/baniyas-barber">Baniyas Barber</a></li></ul></div>
+        <div><h5>&nbsp;</h5><ul><li><a href="branches/rabdan">Rabdan</a></li><li><a href="branches/old-shahamah">Old Shahamah</a></li><li><a href="branches/new-shahamah">New Shahamah</a></li><li><a href="branches/muroor">Muroor Barber</a></li><li><a href="branches/vip-muroor">VIP Muroor</a></li></ul></div>
       </div>
       <div class="footer-newsletter">
         <div><h5>Newsletter</h5><p>Kanaan offers and updates, once a month.</p></div>
@@ -147,8 +155,8 @@
   <script src="assets/js/config.js"></script>
   <script src="assets/js/tracking.js"></script>
   <script src="assets/js/consent.js" defer></script>
-  <script src="assets/js/runtime.js?v=2"></script>
-  <script src="assets/js/main.js?v=27"></script>
+  <script src="assets/js/runtime.js?v=3"></script>
+  <script src="assets/js/main.js?v=30"></script>
   <script src="assets/js/nav-dropdown.js" defer></script>
   <script src="assets/js/motion.js?v=18" defer></script>
   <script src="assets/js/quickbook.js" defer></script>

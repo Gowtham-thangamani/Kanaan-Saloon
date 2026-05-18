@@ -106,11 +106,13 @@
   <header class="site-header">
     <div class="site-header__inner">
       <a href="./" class="logo" aria-label="كنعان — صالون وسبا للرجال"><img src="../assets/img/logo.svg" alt="كنعان صالون وسبا للرجال" class="logo-img" /></a>
-      <nav class="main-nav">
+      <nav class="main-nav" aria-label="Primary">
         <a href="./">الرئيسية</a>
-        <a href="about">عنّا</a>
+        <a href="about">عن كنعان</a>
         <a href="offers">العروض</a>
-        <a href="../branches">البيوت والخدمات</a>
+        <a href="branches">البيوت والخدمات</a>
+        <a href="gallery">المعرض</a>
+        <a href="blog">المقالات</a>
         <a href="contact">تواصل</a>
       </nav>
       <div class="header-actions">
@@ -143,6 +145,14 @@
 
   <footer class="site-footer">
     <div class="container">
+      <div class="footer-socials" aria-label="Social">
+        <a href="#" data-bind-attr-href="social.instagram" aria-label="Instagram" target="_blank" rel="noopener"><svg class="icon"><use href="../assets/img/icons.svg#i-instagram"/></svg></a>
+        <a href="#" data-bind-attr-href="social.tiktok" aria-label="TikTok" target="_blank" rel="noopener"><svg class="icon"><use href="../assets/img/icons.svg#i-tiktok"/></svg></a>
+        <a href="#" data-bind-attr-href="social.snapchat" aria-label="Snapchat" target="_blank" rel="noopener"><svg class="icon"><use href="../assets/img/icons.svg#i-snapchat"/></svg></a>
+        <a href="#" data-bind-attr-href="social.facebook" aria-label="Facebook" target="_blank" rel="noopener"><svg class="icon"><use href="../assets/img/icons.svg#i-facebook"/></svg></a>
+        <a href="#" data-bind-attr-href="contact.wa_url" aria-label="WhatsApp" target="_blank" rel="noopener"><svg class="icon"><use href="../assets/img/icons.svg#i-whatsapp"/></svg></a>
+      </div>
+
       <div class="footer-bottom" style="border: 0; padding-top: var(--s-6);">
         <span>© ٢٠٢٦ كنعان صالون وسبا للرجال.</span>
         <div class="footer-bottom__links"><a href="../privacy-policy">الخصوصية</a><a href="../terms">الشروط</a><a href="../menu">EN</a></div>
@@ -153,8 +163,8 @@
   <script src="../assets/js/config.js"></script>
   <script src="../assets/js/tracking.js"></script>
   <script src="../assets/js/consent.js" defer></script>
-  <script src="../assets/js/runtime.js?v=2"></script>
-  <script src="../assets/js/main.js?v=27"></script>
+  <script src="../assets/js/runtime.js?v=3"></script>
+  <script src="../assets/js/main.js?v=30"></script>
   <script src="../assets/js/motion.js?v=18" defer></script>
 
   <script>
@@ -335,7 +345,7 @@
         const name = o.name_ar || o.name_en;
         const badge = o.badge_ar || o.badge_en;
         const incl = o.inclusions_ar || o.inclusions_en || [];
-        const bookHref = 'book.html?service=' + encodeURIComponent(o.name_ar || o.name_en) + (o.branches && o.branches[0] && o.branches[0] !== 'all' ? '&branch=' + encodeURIComponent(o.branches[0]) : '');
+        const bookHref = 'book?service=' + encodeURIComponent(o.name_ar || o.name_en) + (o.branches && o.branches[0] && o.branches[0] !== 'all' ? '&branch=' + encodeURIComponent(o.branches[0]) : '');
         return '<div class="menu-pack">' +
                  '<div>' +
                    (badge ? '<span class="menu-pack__badge">' + escapeHtml(badge) + '</span>' : '') +
@@ -379,7 +389,7 @@
         const nameAr = it.name_ar || it.name_en;
         const nameEn = it.name_en || '';
         const duration = it.duration_minutes ? (it.duration_minutes + ' دقيقة') : '';
-        const bookHref = 'book.html?service=' + encodeURIComponent(serviceRadio) +
+        const bookHref = 'book?service=' + encodeURIComponent(serviceRadio) +
                          '&branch=' + encodeURIComponent(branchName) +
                          '&item=' + encodeURIComponent(nameEn) +
                          '&price=' + encodeURIComponent(it.price);
@@ -422,7 +432,7 @@
           const nameAr = it.name_ar || it.name_en;
           const nameEn = it.name_en || '';
           const duration = it.duration_minutes ? (it.duration_minutes + ' دقيقة') : '';
-          const bookHref = 'book.html?service=' + encodeURIComponent(radio) +
+          const bookHref = 'book?service=' + encodeURIComponent(radio) +
                            '&branch=' + encodeURIComponent(branchName) +
                            '&item=' + encodeURIComponent(nameEn) +
                            '&price=' + encodeURIComponent(it.price);

@@ -47,11 +47,14 @@
   <header class="site-header">
     <div class="site-header__inner">
       <a href="./" class="logo" aria-label="كنعان — صالون وسبا للرجال"><img src="../assets/img/logo.svg" alt="كنعان صالون وسبا للرجال" class="logo-img" /></a>
-      <nav class="main-nav">
+      <nav class="main-nav" aria-label="Primary">
         <a href="./">الرئيسية</a>
-        <a href="../about">عن كنعان</a>
-        <a href="../offers">العروض</a>
-        <a href="../branches">البيوت والخدمات</a>
+        <a href="about">عن كنعان</a>
+        <a href="offers">العروض</a>
+        <a href="branches">البيوت والخدمات</a>
+        <a href="gallery">المعرض</a>
+        <a href="blog">المقالات</a>
+        <a href="contact">تواصل</a>
       </nav>
       <div class="header-actions">
         <a href="../book" class="lang-switch">EN</a>
@@ -59,11 +62,16 @@
         <button type="button" class="menu-toggle" aria-label="القائمة"><span></span><span></span><span></span></button>
       </div>
     </div>
-    <nav class="mobile-nav">
+    <nav class="mobile-nav" aria-label="Mobile">
       <a href="./">الرئيسية</a>
-      <a href="../about">عن كنعان</a>
-      <a href="../branches">البيوت والخدمات</a>
-      <a href="../book">EN</a>
+      <a href="about">عن كنعان</a>
+      <a href="offers">العروض</a>
+      <a href="branches">البيوت والخدمات</a>
+      <a href="gallery">المعرض</a>
+      <a href="blog">المقالات</a>
+      <a href="contact">تواصل</a>
+      <a href="../" class="lang-switch">EN</a>
+      <a href="book" class="btn btn--sm">احجز الآن</a>
     </nav>
   </header>
 
@@ -121,22 +129,23 @@
             <h2 class="display-2" style="font-size: clamp(28px, 4vw, 40px); margin-bottom: var(--s-3);">اختر الفرع.</h2>
             <p class="muted mb-7">حدّد فرع كنعان الأقرب لك. نقترح الأقرب إذا سمحت بالموقع.</p>
 
-            <h3 class="eyebrow" style="margin-top: var(--s-3);">أبوظبي · ٩ بيوت</h3>
+            <h3 class="eyebrow" style="margin-top: var(--s-3);" data-branch-section="abu-dhabi">أبوظبي · <span data-branch-count="abu-dhabi">٩</span> بيوت</h3>
+            <p class="muted" id="offerBranchNotice" style="display:none; margin: var(--s-2) 0 var(--s-3); font-size: 13px;"></p>
             <div class="choice-grid" style="margin-top: var(--s-3);">
-              <label class="choice"><input type="radio" name="branch" value="مدينة خليفة" hidden data-required /><div class="choice__title">مدينة خليفة</div><div class="choice__meta">حتى ٢٣:٠٠</div></label>
-              <label class="choice"><input type="radio" name="branch" value="الخالدية" hidden data-required /><div class="choice__title">الخالدية</div><div class="choice__meta">حتى ٢٣:٠٠</div></label>
-              <label class="choice"><input type="radio" name="branch" value="بنياس سبا" hidden data-required /><div class="choice__title">بنياس سبا</div><div class="choice__meta">فرع السبا</div></label>
-              <label class="choice"><input type="radio" name="branch" value="بنياس باربر" hidden data-required /><div class="choice__title">بنياس باربر</div><div class="choice__meta">حلاقة كلاسيكية</div></label>
-              <label class="choice"><input type="radio" name="branch" value="ربدان" hidden data-required /><div class="choice__title">ربدان</div><div class="choice__meta">حتى ٢٣:٠٠</div></label>
-              <label class="choice"><input type="radio" name="branch" value="الشهامة القديمة" hidden data-required /><div class="choice__title">الشهامة القديمة</div><div class="choice__meta">حتى ٢٣:٠٠</div></label>
-              <label class="choice"><input type="radio" name="branch" value="الشهامة الجديدة" hidden data-required /><div class="choice__title">الشهامة الجديدة</div><div class="choice__meta">حتى ٢٣:٠٠</div></label>
-              <label class="choice"><input type="radio" name="branch" value="المرور" hidden data-required /><div class="choice__title">المرور</div><div class="choice__meta">حلاقة كلاسيكية</div></label>
-              <label class="choice"><input type="radio" name="branch" value="VIP المرور" hidden data-required /><div class="choice__title">VIP المرور</div><div class="choice__meta">جناح خاص · بحجز مسبق</div></label>
+              <label class="choice" data-branch-id="khalifa-city"><input type="radio" name="branch" value="مدينة خليفة" hidden data-required /><div class="choice__title">مدينة خليفة</div><div class="choice__meta">حتى ٢٣:٠٠</div></label>
+              <label class="choice" data-branch-id="khalidiya"><input type="radio" name="branch" value="الخالدية" hidden data-required /><div class="choice__title">الخالدية</div><div class="choice__meta">حتى ٢٣:٠٠</div></label>
+              <label class="choice" data-branch-id="baniyas-spa"><input type="radio" name="branch" value="بنياس سبا" hidden data-required /><div class="choice__title">بنياس سبا</div><div class="choice__meta">فرع السبا</div></label>
+              <label class="choice" data-branch-id="baniyas-barber"><input type="radio" name="branch" value="بنياس باربر" hidden data-required /><div class="choice__title">بنياس باربر</div><div class="choice__meta">حلاقة كلاسيكية</div></label>
+              <label class="choice" data-branch-id="rabdan"><input type="radio" name="branch" value="ربدان" hidden data-required /><div class="choice__title">ربدان</div><div class="choice__meta">حتى ٢٣:٠٠</div></label>
+              <label class="choice" data-branch-id="old-shahamah"><input type="radio" name="branch" value="الشهامة القديمة" hidden data-required /><div class="choice__title">الشهامة القديمة</div><div class="choice__meta">حتى ٢٣:٠٠</div></label>
+              <label class="choice" data-branch-id="new-shahamah"><input type="radio" name="branch" value="الشهامة الجديدة" hidden data-required /><div class="choice__title">الشهامة الجديدة</div><div class="choice__meta">حتى ٢٣:٠٠</div></label>
+              <label class="choice" data-branch-id="muroor"><input type="radio" name="branch" value="المرور" hidden data-required /><div class="choice__title">المرور</div><div class="choice__meta">حلاقة كلاسيكية</div></label>
+              <label class="choice" data-branch-id="vip-muroor"><input type="radio" name="branch" value="VIP المرور" hidden data-required /><div class="choice__title">VIP المرور</div><div class="choice__meta">جناح خاص · بحجز مسبق</div></label>
             </div>
 
-            <h3 class="eyebrow" style="margin-top: var(--s-7);">العين · بيت واحد</h3>
-            <div class="choice-grid" style="margin-top: var(--s-3);">
-              <label class="choice"><input type="radio" name="branch" value="العين" hidden data-required /><div class="choice__title">العين</div><div class="choice__meta">حتى ٢٣:٠٠</div></label>
+            <h3 class="eyebrow" style="margin-top: var(--s-7);" data-branch-section="al-ain">العين · بيت واحد</h3>
+            <div class="choice-grid" style="margin-top: var(--s-3);" data-branch-section="al-ain">
+              <label class="choice" data-branch-id="al-ain"><input type="radio" name="branch" value="العين" hidden data-required /><div class="choice__title">العين</div><div class="choice__meta">حتى ٢٣:٠٠</div></label>
             </div>
 
             <div class="flex gap-3 mt-7" style="justify-content: space-between;">
@@ -310,7 +319,14 @@
 
   <footer class="site-footer">
     <div class="container">
-      
+      <div class="footer-socials" aria-label="Social">
+        <a href="#" data-bind-attr-href="social.instagram" aria-label="Instagram" target="_blank" rel="noopener"><svg class="icon"><use href="../assets/img/icons.svg#i-instagram"/></svg></a>
+        <a href="#" data-bind-attr-href="social.tiktok" aria-label="TikTok" target="_blank" rel="noopener"><svg class="icon"><use href="../assets/img/icons.svg#i-tiktok"/></svg></a>
+        <a href="#" data-bind-attr-href="social.snapchat" aria-label="Snapchat" target="_blank" rel="noopener"><svg class="icon"><use href="../assets/img/icons.svg#i-snapchat"/></svg></a>
+        <a href="#" data-bind-attr-href="social.facebook" aria-label="Facebook" target="_blank" rel="noopener"><svg class="icon"><use href="../assets/img/icons.svg#i-facebook"/></svg></a>
+        <a href="#" data-bind-attr-href="contact.wa_url" aria-label="WhatsApp" target="_blank" rel="noopener"><svg class="icon"><use href="../assets/img/icons.svg#i-whatsapp"/></svg></a>
+      </div>
+
       <div class="footer-newsletter">
         <div>
           <h5>النشرة</h5>
@@ -332,13 +348,66 @@
   <script src="../assets/js/config.js"></script>
   <script src="../assets/js/tracking.js"></script>
   <script src="../assets/js/consent.js" defer></script>
-  <script src="../assets/js/runtime.js?v=2"></script>
-  <script src="../assets/js/main.js?v=27"></script>
+  <script src="../assets/js/runtime.js?v=3"></script>
+  <script src="../assets/js/main.js?v=30"></script>
   <script src="assets/js/nav-dropdown.js" defer></script>
   <script src="../assets/js/motion.js?v=18" defer></script>
   <script src="../assets/js/quickbook.js" defer></script>
   <script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("../sw.js").catch(function(){});});}</script>
   <script src="../assets/js/calendar.js" defer></script>
+
+  <!-- Offer-based branch filter (AR mirror of book.html).
+       When ?offer=<id> is in the URL, fetch offers.json and hide branches
+       not in that offer's `branches` array. -->
+  <script>
+  (function () {
+    const params = new URLSearchParams(location.search);
+    const offerId = params.get('offer');
+    if (!offerId) return;
+    const AR_DIGITS = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+    const toAr = n => String(n).replace(/[0-9]/g, d => AR_DIGITS[+d]);
+    fetch('../content/offers.json', { cache: 'no-cache' })
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (!data || !Array.isArray(data.offers)) return;
+        const offer = data.offers.find(o => o.id === offerId);
+        if (!offer || !Array.isArray(offer.branches)) return;
+        const allowed = offer.branches;
+        if (allowed.includes('all')) return;
+        const allowSet = new Set(allowed);
+        let abuCount = 0;
+        let alAinShown = false;
+        document.querySelectorAll('[data-branch-id]').forEach(el => {
+          const id = el.getAttribute('data-branch-id');
+          if (allowSet.has(id)) {
+            if (id === 'al-ain') alAinShown = true;
+            else abuCount++;
+          } else {
+            el.style.display = 'none';
+            const radio = el.querySelector('input[type="radio"]');
+            if (radio) { radio.checked = false; radio.disabled = true; }
+          }
+        });
+        const counter = document.querySelector('[data-branch-count="abu-dhabi"]');
+        if (counter) counter.textContent = toAr(abuCount);
+        if (abuCount === 0) {
+          document.querySelectorAll('[data-branch-section="abu-dhabi"]').forEach(el => el.style.display = 'none');
+          const abuLabel = document.querySelector('label[data-branch-id="khalifa-city"]');
+          if (abuLabel && abuLabel.parentElement) abuLabel.parentElement.style.display = 'none';
+        }
+        if (!alAinShown) {
+          document.querySelectorAll('[data-branch-section="al-ain"]').forEach(el => el.style.display = 'none');
+        }
+        const notice = document.getElementById('offerBranchNotice');
+        if (notice) {
+          const offerName = offer.name_ar || offer.name_en || 'هذا العرض';
+          notice.textContent = 'تُعرض فقط البيوت التي تقدّم "' + offerName + '". اختر عرضًا آخر أو تصفّح /branches لخيارات أخرى.';
+          notice.style.display = '';
+        }
+      })
+      .catch(() => { /* silent — leaves all branches visible */ });
+  })();
+  </script>
 
   <!-- Safety net: prevents native form submission + force-redirects to thank-you
        after 6s if main.js' handler never picked up the submit. -->
@@ -385,7 +454,7 @@
         if (!validateContact()) { e.stopImmediatePropagation(); return; }
         if (attempted) return;
         setTimeout(function () {
-          if (!/\/book\.html/.test(location.pathname) && !/book\.html$/.test(location.pathname)) return;
+          if (!/(?:^|\/)book(?:\.html)?$/.test(location.pathname)) return;
           var fd = new FormData(form);
           var services = fd.getAll('service').filter(Boolean);
           var branchCode = (fd.get('branch') || 'kn').replace(/[^A-Za-z؀-ۿ]/g, '').slice(0, 3).toUpperCase() || 'KNN';
@@ -397,8 +466,8 @@
             time:    fd.get('time')    || '',
             id:      fallbackId
           });
-          console.warn('[KANAAN booking] fail-safe redirecting to thank-you.html');
-          location.replace('thank-you.html?' + params.toString());
+          console.warn('[KANAAN booking] fail-safe redirecting to thank-you');
+          location.replace('thank-you?' + params.toString());
         }, 6000);
         attempted = true;
       }, true);

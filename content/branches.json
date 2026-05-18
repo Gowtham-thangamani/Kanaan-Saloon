@@ -118,7 +118,7 @@
         },
         {
           "q": "Do you offer Moroccan bath at Khalifa City?",
-          "a": "Moroccan bath is only at Baniyas Spa and VIP Muroor. Khalifa City offers all other services including hair, beard, facial, mani/pedi."
+          "a": "Yes — Khalifa City is one of our flagship spa branches with a full Moroccan bath menu (Normal 130 AED, Special 180 AED, Royal 300 AED). The complete service catalogue is on the menu page."
         },
         {
           "q": "Friday hours?",
@@ -263,7 +263,7 @@
         },
         {
           "q": "Do you have steam rooms?",
-          "a": "Yes — Baniyas Spa is our flagship spa house with steam, hammam, and a full grooming menu."
+          "a": "Yes — Baniyas Spa is our flagship spa branch with steam, hammam, and a full grooming menu."
         }
       ],
       "amenities": [
@@ -402,7 +402,7 @@
       "faqs": [
         {
           "q": "Discreet entrance?",
-          "a": "Yes — Rabdan house has a private side entrance for clients who value discretion."
+          "a": "Yes — Rabdan branch has a private side entrance for clients who value discretion."
         },
         {
           "q": "Do you take corporate accounts?",
@@ -545,7 +545,7 @@
       "faqs": [
         {
           "q": "Difference between New and Old Shahamah branches?",
-          "a": "Same Kanaan standard, different locations. New Shahamah is the contemporary house with newer fit-out; Old Shahamah serves the established neighbourhood."
+          "a": "Same Kanaan standard, different locations. New Shahamah is the contemporary branch with newer fit-out; Old Shahamah serves the established neighbourhood."
         },
         {
           "q": "Free parking?",
@@ -575,8 +575,8 @@
     },
     {
       "id": "muroor",
-      "name_en": "Muroor",
-      "name_ar": "المرور",
+      "name_en": "Muroor Barber",
+      "name_ar": "المرور باربر",
       "area_en": "Muroor, Abu Dhabi",
       "area_ar": "المرور، أبوظبي",
       "address_en": "Muroor Road, Abu Dhabi",
@@ -621,8 +621,8 @@
           "a": "Generous chair count — wait times are minimal even on Friday evenings."
         },
         {
-          "q": "What sets Muroor apart from VIP Muroor?",
-          "a": "Muroor is our standard full-service house with the complete menu. VIP Muroor is a private-suite, by-appointment-only experience."
+          "q": "What sets Muroor Barber apart from VIP Muroor?",
+          "a": "Muroor Barber is our master-barber room — focused on haircuts, beard work, and hot-towel shaves. VIP Muroor is the spa branch in the same area: private suites, full facial and massage menu, by appointment only."
         }
       ],
       "amenities": [
@@ -668,7 +668,7 @@
         "fri": "14:00-23:00",
         "sat": "11:00-23:00"
       },
-      "image": "/assets/img/branches/vip-muroor/vip-muroor-5-1600.webp",
+      "image": "/assets/img/branches/vip-muroor/vip-muroor-3-1600.webp",
       "maps_query": "24.4400772,54.4122623",
       "google_business": "https://maps.app.goo.gl/5KeDv3Bd9fLQuk6N6",
       "geo": {

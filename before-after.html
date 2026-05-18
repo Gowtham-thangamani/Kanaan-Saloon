@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Before &amp; After | Kanaan Gents Salon &amp; Spa</title>
-  <meta name="description" content="Real results from Kanaan chairs — haircut transformations, beard sculpts, and hair-treatment outcomes from across our houses." />
+  <meta name="description" content="Real results from Kanaan chairs — haircut transformations, beard sculpts, and hair-treatment outcomes from across our branches." />
   <link rel="canonical" href="https://kanaanspa.ae/before-after" />
   <link rel="alternate" hreflang="en" href="https://kanaanspa.ae/before-after" />
   <link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/before-after" />
@@ -39,7 +39,7 @@
 
   <div class="utility-bar">
     <div class="utility-bar__inner">
-      <span class="utility-bar__pitch">Ten houses in Abu Dhabi · One standard</span>
+      <span class="utility-bar__pitch">Ten branches in Abu Dhabi · One standard</span>
       <div class="utility-bar__actions">
         <a href="tel:+971505556795" data-bind-attr-href="contact.tel_url" data-track="call_click">☏ <span data-bind="contact.centralPhone">+971 50 555 6795</span></a>
         <a href="https://wa.me/971505556795?text=Hi%20Kanaan%2C%20I'd%20like%20to%20book.%20Please%20share%20nearest%20branch%20%2B%20available%20times." data-bind-attr-href="contact.wa_url" data-track="whatsapp_click">✉ WhatsApp</a>
@@ -50,11 +50,13 @@
   <header class="site-header">
     <div class="site-header__inner">
       <a href="./" class="logo" aria-label="Kanaan Gents Salon &amp; Spa — home"><img src="assets/img/logo.svg" alt="Kanaan Gents Salon &amp; Spa" class="logo-img" /></a>
-      <nav class="main-nav">
+      <nav class="main-nav" aria-label="Primary">
         <a href="./">Home</a>
+        <a href="about">About</a>
+        <a href="offers">Offers</a>
+        <a href="branches">Branches &amp; Services</a>
         <a href="gallery">Gallery</a>
-        <a href="before-after" class="is-active">Before &amp; After</a>
-        <a href="branches">Houses &amp; Services</a>
+        <a href="blog">Insights</a>
         <a href="contact">Contact</a>
       </nav>
       <div class="header-actions">
@@ -135,7 +137,14 @@
 
   <footer class="site-footer">
     <div class="container">
-      
+      <div class="footer-socials" aria-label="Social">
+        <a href="#" data-bind-attr-href="social.instagram" aria-label="Instagram" target="_blank" rel="noopener"><svg class="icon"><use href="assets/img/icons.svg#i-instagram"/></svg></a>
+        <a href="#" data-bind-attr-href="social.tiktok" aria-label="TikTok" target="_blank" rel="noopener"><svg class="icon"><use href="assets/img/icons.svg#i-tiktok"/></svg></a>
+        <a href="#" data-bind-attr-href="social.snapchat" aria-label="Snapchat" target="_blank" rel="noopener"><svg class="icon"><use href="assets/img/icons.svg#i-snapchat"/></svg></a>
+        <a href="#" data-bind-attr-href="social.facebook" aria-label="Facebook" target="_blank" rel="noopener"><svg class="icon"><use href="assets/img/icons.svg#i-facebook"/></svg></a>
+        <a href="#" data-bind-attr-href="contact.wa_url" aria-label="WhatsApp" target="_blank" rel="noopener"><svg class="icon"><use href="assets/img/icons.svg#i-whatsapp"/></svg></a>
+      </div>
+
       <div class="footer-newsletter">
         <div>
           <h5>Newsletter</h5>
@@ -172,7 +181,7 @@
   </script>
   <script src="assets/js/config.js"></script>
   <script src="assets/js/tracking.js"></script>
-  <script src="assets/js/runtime.js?v=2"></script>
+  <script src="assets/js/runtime.js?v=3"></script>
   <script src="assets/js/consent.js" defer></script>
   <script src="assets/js/nav-dropdown.js" defer></script>
   <script src="assets/js/motion.js?v=18" defer></script>

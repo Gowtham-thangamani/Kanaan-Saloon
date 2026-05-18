@@ -57,6 +57,30 @@
     }
   }
 
+  /* Blog posts live in Supabase (admin-managed via /admin/blog.html).
+     Read with the anon key — RLS policy "public read published" restricts
+     anon SELECTs to rows where active = true, so drafts stay hidden.
+     Falls back to content/blog.json on any network/config failure. */
+  async function loadBlogPosts() {
+    const cfg = window.KANAAN_CONFIG && window.KANAAN_CONFIG.supabase;
+    if (cfg && cfg.url && cfg.anonKey) {
+      try {
+        const r = await fetch(
+          cfg.url + '/rest/v1/blog_posts?select=*&active=eq.true&order=publish_date.desc.nullslast,created_at.desc',
+          { headers: { apikey: cfg.anonKey, Authorization: 'Bearer ' + cfg.anonKey } }
+        );
+        if (r.ok) {
+          const rows = await r.json();
+          if (Array.isArray(rows)) return { posts: rows };
+        }
+        throw new Error('HTTP ' + r.status);
+      } catch (e) {
+        console.warn('[KANAAN runtime] blog Supabase fetch failed, falling back to JSON', e);
+      }
+    }
+    return await loadJSON('blog.json');
+  }
+
   function applyBindings(root, ctx) {
     // Walk both the root element and its descendants so bindings on a list
     // template's *root* element (e.g. `<a data-bind-attr-href="book_url">`) are
@@ -122,15 +146,16 @@
   // BOOTSTRAP — load all data, then bind page-specific blocks.
   // ============================================================
   async function init() {
-    const [site, offers, branches, testimonials] = await Promise.all([
+    const [site, offers, branches, testimonials, blog] = await Promise.all([
       loadJSON('site.json'),
       loadJSON('offers.json'),
       loadJSON('branches.json'),
-      loadJSON('testimonials.json')
+      loadJSON('testimonials.json'),
+      loadBlogPosts()
     ]);
 
     // Stash on window for ad-hoc access
-    window.KANAAN_DATA = { site, offers, branches, testimonials };
+    window.KANAAN_DATA = { site, offers, branches, testimonials, blog };
 
     // Site-wide bindings (footer, header, contact links etc.)
     if (site) applyBindings(document, site);
@@ -181,6 +206,66 @@
         })))
       }));
       renderList(branchesList, localized, 'branch');
+      // Notify main.js so it can run the Open/Closed status check on the
+      // newly-added cards. Without this, the `data-hours` attribute is set
+      // after main.js already finished its one-time scan, so the pills stay
+      // stuck on "Checking…".
+      document.dispatchEvent(new CustomEvent('branches:rendered'));
+    }
+
+    // Blog posts — /blog.html index lists every active post
+    const postsList = document.querySelector('[data-bind-list="posts"]');
+    if (postsList && blog && Array.isArray(blog.posts)) {
+      const visible = blog.posts
+        .filter(p => p.active !== false)
+        .sort((a, b) => (b.publish_date || '').localeCompare(a.publish_date || ''));
+      const localized = visible.map(p => ({
+        ...p,
+        view_url: pathPrefix() + (lang === 'ar' ? 'ar/blog/' : 'blog/') + p.slug,
+        meta_line: (p.category || '') + (p.read_minutes ? ' · ' + p.read_minutes + ' min read' : '')
+      }));
+      renderList(postsList, localized, 'post');
+    }
+
+    // Single blog post — when the page has any [data-blog-*] markers, look the
+    // post up in blog.json by URL slug and fill the markers. This lets admin
+    // edits to title / hero / lede / tldr / body reach the live page after
+    // re-uploading blog.json, without anyone touching the HTML file.
+    if (blog && Array.isArray(blog.posts) &&
+        document.querySelector('[data-blog-body],[data-blog-title],[data-blog-hero],[data-blog-lede],[data-blog-tldr],[data-blog-meta]')) {
+      const m = location.pathname.match(/\/blog\/([^/]+?)(?:\.html)?\/?$/);
+      const slug = m && m[1];
+      const post = slug && blog.posts.find(p => p.slug === slug || p.id === slug);
+      if (post) {
+        const setText = (sel, val) => {
+          document.querySelectorAll(sel).forEach(el => { if (val != null) el.textContent = val; });
+        };
+        const setHTML = (sel, val) => {
+          document.querySelectorAll(sel).forEach(el => { if (val != null) el.innerHTML = val; });
+        };
+        setText('[data-blog-title]', post.title);
+        setText('[data-blog-lede]', post.lede);
+        setText('[data-blog-tldr]', post.tldr);
+        setText('[data-blog-meta]',
+          (post.category || '') + (post.read_minutes ? ' · ' + post.read_minutes + ' min read' : ''));
+        setHTML('[data-blog-body]', post.body_html);
+        document.querySelectorAll('[data-blog-hero]').forEach(el => {
+          if (el.tagName === 'IMG' && post.hero_image) {
+            el.src = post.hero_image;
+            if (post.hero_alt) el.alt = post.hero_alt;
+          }
+        });
+        // Reveal a hidden TL;DR block only if the post actually has one
+        document.querySelectorAll('[data-blog-tldr-wrap]').forEach(el => {
+          el.hidden = !post.tldr;
+        });
+        // Update document title + meta description so SEO + browser tab match
+        if (post.title && /\/blog\/_post/.test(location.pathname) === false) {
+          // Only override on a real post URL — leaves the static title intact
+          // on the generic template when it's loaded raw (no slug)
+        }
+        if (post.title) document.title = post.title + ' | Kanaan Insights';
+      }
     }
 
     // Testimonials list

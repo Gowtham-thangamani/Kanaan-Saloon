@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Book Online | Kanaan Gents Salon &amp; Spa</title>
-  <meta name="description" content="Book your chair at any of the 10 Kanaan houses across Abu Dhabi. Two minutes online — confirmation by your branch." />
+  <meta name="description" content="Book your chair at any of the 10 Kanaan branches across Abu Dhabi. Two minutes online — confirmation by your branch." />
   <link rel="stylesheet" href="assets/css/fonts.css" />
   <link rel="stylesheet" href="assets/css/style.css?v=3" />
   <link rel="stylesheet" href="assets/css/motion.css?v=19" />
@@ -17,13 +17,13 @@
 
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Book Online | Kanaan Gents Salon &amp; Spa" />
-  <meta property="og:description" content="Book your chair at any of the 10 Kanaan houses across Abu Dhabi. Two minutes online — confirmation by your branch." />
+  <meta property="og:description" content="Book your chair at any of the 10 Kanaan branches across Abu Dhabi. Two minutes online — confirmation by your branch." />
   <meta property="og:url" content="https://kanaanspa.ae/book" />
   <meta property="og:image" content="https://kanaanspa.ae/assets/img/og-default.svg" />
   <meta property="og:locale" content="en_US" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Book Online | Kanaan Gents Salon &amp; Spa" />
-  <meta name="twitter:description" content="Book your chair at any of the 10 Kanaan houses across Abu Dhabi. Two minutes online — confirmation by your branch." />
+  <meta name="twitter:description" content="Book your chair at any of the 10 Kanaan branches across Abu Dhabi. Two minutes online — confirmation by your branch." />
   <meta name="twitter:image" content="https://kanaanspa.ae/assets/img/og-default.svg" />
   <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg" />
   <link rel="apple-touch-icon" href="assets/img/favicon.svg" />
@@ -37,7 +37,7 @@
   
   <div class="utility-bar">
     <div class="utility-bar__inner">
-      <span class="utility-bar__pitch">Ten houses in Abu Dhabi · One standard</span>
+      <span class="utility-bar__pitch">Ten branches in Abu Dhabi · One standard</span>
       <div class="utility-bar__actions">
         <a href="tel:+971505556795" data-bind-attr-href="contact.tel_url" data-track="call_click">☏ <span data-bind="contact.centralPhone">+971 50 555 6795</span></a>
         <a href="https://wa.me/971505556795?text=Hi%20Kanaan%2C%20I'd%20like%20to%20book.%20Please%20share%20nearest%20branch%20%2B%20available%20times." data-bind-attr-href="contact.wa_url" data-track="whatsapp_click">✉ WhatsApp</a>
@@ -47,12 +47,13 @@
   <header class="site-header">
     <div class="site-header__inner">
       <a href="./" class="logo" aria-label="Kanaan Gents Salon &amp; Spa — home"><img src="assets/img/logo.svg" alt="Kanaan Gents Salon &amp; Spa" class="logo-img" /></a>
-      <nav class="main-nav">
+      <nav class="main-nav" aria-label="Primary">
         <a href="./">Home</a>
         <a href="about">About</a>
         <a href="offers">Offers</a>
-        <a href="branches">Houses &amp; Services</a>
+        <a href="branches">Branches &amp; Services</a>
         <a href="gallery">Gallery</a>
+        <a href="blog">Insights</a>
         <a href="contact">Contact</a>
       </nav>
       <div class="header-actions">
@@ -61,10 +62,16 @@
         <button type="button" class="menu-toggle" aria-label="Open menu"><span></span><span></span><span></span></button>
       </div>
     </div>
-    <nav class="mobile-nav">
-      <a href="./">Home</a><a href="about">About</a>
-      <a href="offers">Offers</a><a href="branches">Houses &amp; Services</a><a href="gallery">Gallery</a>
-      <a href="contact">Contact</a><a href="ar/book">عربي</a>
+    <nav class="mobile-nav" aria-label="Mobile">
+      <a href="./">Home</a>
+      <a href="about">About</a>
+      <a href="offers">Offers</a>
+      <a href="branches">Branches &amp; Services</a>
+      <a href="gallery">Gallery</a>
+      <a href="blog">Insights</a>
+      <a href="contact">Contact</a>
+      <a href="ar/" class="lang-switch">عربي</a>
+      <a href="book" class="btn btn--sm">Book Now</a>
     </nav>
   </header>
 
@@ -96,24 +103,25 @@
           <!-- STEP 1: BRANCH + SERVICE — combined for fewer clicks. -->
           <div data-step>
             <h2 class="display-2" style="font-size: clamp(28px, 4vw, 40px); margin-bottom: var(--s-3);">Where and what.</h2>
-            <p class="muted mb-7">Pick the Kanaan house most convenient for you, then choose one or more services. The branch confirms final pricing.</p>
+            <p class="muted mb-7">Pick the Kanaan branch most convenient for you, then choose one or more services. The branch confirms final pricing.</p>
 
-            <h3 class="eyebrow" style="margin-top: var(--s-3);">Branch · Abu Dhabi · 9 houses</h3>
+            <h3 class="eyebrow" style="margin-top: var(--s-3);" data-branch-section="abu-dhabi">Branch · Abu Dhabi · <span data-branch-count="abu-dhabi">9</span> branches</h3>
+            <p class="muted" id="offerBranchNotice" style="display:none; margin: var(--s-2) 0 var(--s-3); font-size: 13px;"></p>
             <div class="choice-grid" style="margin-top: var(--s-3);">
-              <label class="choice"><input type="radio" name="branch" value="Khalifa City" hidden data-required /><div class="choice__title">Khalifa City</div><div class="choice__meta">Open until 23:00</div></label>
-              <label class="choice"><input type="radio" name="branch" value="Khalidiya" hidden data-required /><div class="choice__title">Khalidiya</div><div class="choice__meta">Open until 23:00</div></label>
-              <label class="choice"><input type="radio" name="branch" value="Baniyas Spa" hidden data-required /><div class="choice__title">Baniyas Spa</div><div class="choice__meta">Spa-led house</div></label>
-              <label class="choice"><input type="radio" name="branch" value="Baniyas Barber" hidden data-required /><div class="choice__title">Baniyas Barber</div><div class="choice__meta">Master barber</div></label>
-              <label class="choice"><input type="radio" name="branch" value="Rabdan" hidden data-required /><div class="choice__title">Rabdan</div><div class="choice__meta">Open until 23:00</div></label>
-              <label class="choice"><input type="radio" name="branch" value="Old Shahamah" hidden data-required /><div class="choice__title">Old Shahamah</div><div class="choice__meta">Open until 23:00</div></label>
-              <label class="choice"><input type="radio" name="branch" value="New Shahamah" hidden data-required /><div class="choice__title">New Shahamah</div><div class="choice__meta">Open until 23:00</div></label>
-              <label class="choice"><input type="radio" name="branch" value="Muroor" hidden data-required /><div class="choice__title">Muroor</div><div class="choice__meta">Master barber</div></label>
-              <label class="choice"><input type="radio" name="branch" value="VIP Muroor" hidden data-required /><div class="choice__title">VIP Muroor</div><div class="choice__meta">Private suite · by appointment</div></label>
+              <label class="choice" data-branch-id="khalifa-city"><input type="radio" name="branch" value="Khalifa City" hidden data-required /><div class="choice__title">Khalifa City</div><div class="choice__meta">Open until 23:00</div></label>
+              <label class="choice" data-branch-id="khalidiya"><input type="radio" name="branch" value="Khalidiya" hidden data-required /><div class="choice__title">Khalidiya</div><div class="choice__meta">Open until 23:00</div></label>
+              <label class="choice" data-branch-id="baniyas-spa"><input type="radio" name="branch" value="Baniyas Spa" hidden data-required /><div class="choice__title">Baniyas Spa</div><div class="choice__meta">Spa-led branch</div></label>
+              <label class="choice" data-branch-id="baniyas-barber"><input type="radio" name="branch" value="Baniyas Barber" hidden data-required /><div class="choice__title">Baniyas Barber</div><div class="choice__meta">Master barber</div></label>
+              <label class="choice" data-branch-id="rabdan"><input type="radio" name="branch" value="Rabdan" hidden data-required /><div class="choice__title">Rabdan</div><div class="choice__meta">Open until 23:00</div></label>
+              <label class="choice" data-branch-id="old-shahamah"><input type="radio" name="branch" value="Old Shahamah" hidden data-required /><div class="choice__title">Old Shahamah</div><div class="choice__meta">Open until 23:00</div></label>
+              <label class="choice" data-branch-id="new-shahamah"><input type="radio" name="branch" value="New Shahamah" hidden data-required /><div class="choice__title">New Shahamah</div><div class="choice__meta">Open until 23:00</div></label>
+              <label class="choice" data-branch-id="muroor"><input type="radio" name="branch" value="Muroor Barber" hidden data-required /><div class="choice__title">Muroor Barber</div><div class="choice__meta">Master barber</div></label>
+              <label class="choice" data-branch-id="vip-muroor"><input type="radio" name="branch" value="VIP Muroor" hidden data-required /><div class="choice__title">VIP Muroor</div><div class="choice__meta">Private suite · by appointment</div></label>
             </div>
 
-            <h3 class="eyebrow" style="margin-top: var(--s-5);">Branch · Al Ain · 1 house</h3>
-            <div class="choice-grid" style="margin-top: var(--s-3);">
-              <label class="choice"><input type="radio" name="branch" value="Al Ain" hidden data-required /><div class="choice__title">Al Ain</div><div class="choice__meta">Open until 23:00</div></label>
+            <h3 class="eyebrow" style="margin-top: var(--s-5);" data-branch-section="al-ain">Branch · Al Ain · 1 branch</h3>
+            <div class="choice-grid" style="margin-top: var(--s-3);" data-branch-section="al-ain">
+              <label class="choice" data-branch-id="al-ain"><input type="radio" name="branch" value="Al Ain" hidden data-required /><div class="choice__title">Al Ain</div><div class="choice__meta">Open until 23:00</div></label>
             </div>
 
             <hr style="border:none; border-top:1px solid var(--hairline); margin: var(--s-7) 0;" />
@@ -181,7 +189,7 @@
               <div style="font-size: 11px; letter-spacing: 0.08em; color: var(--c-gold); text-transform: uppercase; margin-bottom: var(--s-3);">Review your booking</div>
               <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 8px 16px; font-size: 14px;">
                 <span class="muted">Service</span><strong data-review="service">—</strong>
-                <span class="muted">House</span><strong data-review="branch">—</strong>
+                <span class="muted">Branch</span><strong data-review="branch">—</strong>
                 <span class="muted">Date</span><strong data-review="date">—</strong>
                 <span class="muted">Time</span><strong data-review="time">—</strong>
               </div>
@@ -359,17 +367,18 @@
       <div class="footer-grid">
         <div class="footer-brand">
           <div class="logo"><img src="assets/img/logo.svg" alt="Kanaan Gents Salon &amp; Spa" class="logo-img" /></div>
-          <p style="margin-top: var(--s-4);">Ten houses across Abu Dhabi. One uncompromising standard.</p>
+          <p style="margin-top: var(--s-4);">Ten branches across Abu Dhabi. One uncompromising standard.</p>
           <div class="footer-socials" aria-label="Social">
             <a href="#" data-bind-attr-href="social.instagram" aria-label="Instagram" target="_blank" rel="noopener"><svg class="icon"><use href="assets/img/icons.svg#i-instagram"/></svg></a>
             <a href="#" data-bind-attr-href="social.tiktok" aria-label="TikTok" target="_blank" rel="noopener"><svg class="icon"><use href="assets/img/icons.svg#i-tiktok"/></svg></a>
             <a href="#" data-bind-attr-href="social.snapchat" aria-label="Snapchat" target="_blank" rel="noopener"><svg class="icon"><use href="assets/img/icons.svg#i-snapchat"/></svg></a>
+            <a href="#" data-bind-attr-href="social.facebook" aria-label="Facebook" target="_blank" rel="noopener"><svg class="icon"><use href="assets/img/icons.svg#i-facebook"/></svg></a>
             <a href="#" data-bind-attr-href="contact.wa_url" aria-label="WhatsApp" target="_blank" rel="noopener"><svg class="icon"><use href="assets/img/icons.svg#i-whatsapp"/></svg></a>
           </div>
         </div>
-        <div><h5>Visit</h5><ul><li></li><li><a href="offers">Offers</a></li><li><a href="gallery">Gallery</a></li><li><a href="about">About</a></li><li><a href="contact">Contact</a></li></ul></div>
-        <div><h5>Houses</h5><ul><li><a href="branches/al-ain">Al Ain</a></li><li><a href="branches/khalifa-city">Khalifa City</a></li><li><a href="branches/khalidiya">Khalidiya</a></li><li><a href="branches/baniyas-spa">Baniyas Spa</a></li><li><a href="branches/baniyas-barber">Baniyas Barber</a></li></ul></div>
-        <div><h5>&nbsp;</h5><ul><li><a href="branches/rabdan">Rabdan</a></li><li><a href="branches/old-shahamah">Old Shahamah</a></li><li><a href="branches/new-shahamah">New Shahamah</a></li><li><a href="branches/muroor">Muroor</a></li><li><a href="branches/vip-muroor">VIP Muroor</a></li></ul></div>
+        <div><h5>Visit</h5><ul><li></li><li><a href="offers">Offers</a></li><li><a href="gallery">Gallery</a></li><li><a href="about">About</a></li><li><a href="blog">Insights</a></li><li><a href="contact">Contact</a></li></ul></div>
+        <div><h5>Branches</h5><ul><li><a href="branches/al-ain">Al Ain</a></li><li><a href="branches/khalifa-city">Khalifa City</a></li><li><a href="branches/khalidiya">Khalidiya</a></li><li><a href="branches/baniyas-spa">Baniyas Spa</a></li><li><a href="branches/baniyas-barber">Baniyas Barber</a></li></ul></div>
+        <div><h5>&nbsp;</h5><ul><li><a href="branches/rabdan">Rabdan</a></li><li><a href="branches/old-shahamah">Old Shahamah</a></li><li><a href="branches/new-shahamah">New Shahamah</a></li><li><a href="branches/muroor">Muroor Barber</a></li><li><a href="branches/vip-muroor">VIP Muroor</a></li></ul></div>
       </div>
       
       <div class="footer-newsletter">
@@ -393,13 +402,72 @@
   <script src="assets/js/config.js"></script>
   <script src="assets/js/tracking.js"></script>
   <script src="assets/js/consent.js" defer></script>
-  <script src="assets/js/runtime.js?v=2"></script>
-  <script src="assets/js/main.js?v=27"></script>
+  <script src="assets/js/runtime.js?v=3"></script>
+  <script src="assets/js/main.js?v=30"></script>
   <script src="assets/js/nav-dropdown.js" defer></script>
   <script src="assets/js/motion.js?v=18" defer></script>
   <script src="assets/js/quickbook.js" defer></script>
   <script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){});});}</script>
   <script src="assets/js/calendar.js" defer></script>
+
+  <!-- Offer-based branch filter.
+       When the URL has ?offer=<id>, fetch offers.json, find the matching offer,
+       and hide any branch choices that aren't in that offer's `branches` array.
+       Without ?offer=, all branches stay visible (default behaviour). -->
+  <script>
+  (function () {
+    const params = new URLSearchParams(location.search);
+    const offerId = params.get('offer');
+    if (!offerId) return;
+    fetch('content/offers.json', { cache: 'no-cache' })
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (!data || !Array.isArray(data.offers)) return;
+        const offer = data.offers.find(o => o.id === offerId);
+        if (!offer || !Array.isArray(offer.branches)) return;
+        // ['all'] (or empty) means no filter — show every branch.
+        const allowed = offer.branches;
+        if (allowed.includes('all')) return;
+        const allowSet = new Set(allowed);
+        const choices = document.querySelectorAll('[data-branch-id]');
+        let abuCount = 0;
+        let alAinShown = false;
+        choices.forEach(el => {
+          const id = el.getAttribute('data-branch-id');
+          if (allowSet.has(id)) {
+            if (id === 'al-ain') alAinShown = true;
+            else abuCount++;
+          } else {
+            el.style.display = 'none';
+            const radio = el.querySelector('input[type="radio"]');
+            if (radio) { radio.checked = false; radio.disabled = true; }
+          }
+        });
+        // Update Abu Dhabi count
+        const counter = document.querySelector('[data-branch-count="abu-dhabi"]');
+        if (counter) counter.textContent = String(abuCount);
+        // Hide the Abu Dhabi heading and grid entirely if zero
+        if (abuCount === 0) {
+          document.querySelectorAll('[data-branch-section="abu-dhabi"]').forEach(el => el.style.display = 'none');
+          // Also hide the choice-grid that contains the (now all hidden) Abu Dhabi labels
+          const abuLabel = document.querySelector('label[data-branch-id="khalifa-city"]');
+          if (abuLabel && abuLabel.parentElement) abuLabel.parentElement.style.display = 'none';
+        }
+        // Hide the Al Ain heading + grid if Al Ain isn't allowed
+        if (!alAinShown) {
+          document.querySelectorAll('[data-branch-section="al-ain"]').forEach(el => el.style.display = 'none');
+        }
+        // Show a small notice above the grid
+        const notice = document.getElementById('offerBranchNotice');
+        if (notice) {
+          const offerName = offer.name_en || 'this offer';
+          notice.textContent = 'Showing only branches that offer "' + offerName + '". To pick a different branch, choose another offer or visit /branches.';
+          notice.style.display = '';
+        }
+      })
+      .catch(() => { /* silent — leaves all branches visible */ });
+  })();
+  </script>
 
   <!-- Booking-submit safety net — runs INDEPENDENTLY of main.js so if any
        earlier script throws, the form still lands the customer on the
@@ -540,7 +608,7 @@
 
         // Wait 6s for main.js to redirect. If we're still here, redirect ourselves.
         setTimeout(function () {
-          if (!/\/book\.html/.test(location.pathname) && !/book\.html$/.test(location.pathname)) return;
+          if (!/(?:^|\/)book(?:\.html)?$/.test(location.pathname)) return;
           var params = new URLSearchParams({
             branch:  row.branch  || '',
             service: row.service || '',
@@ -548,8 +616,8 @@
             time:    row.booking_time || '',
             id:      row.id
           });
-          console.warn('[KANAAN booking] fail-safe redirecting to thank-you.html with id', row.id);
-          location.replace('thank-you.html?' + params.toString());
+          console.warn('[KANAAN booking] fail-safe redirecting to thank-you with id', row.id);
+          location.replace('thank-you?' + params.toString());
         }, 6000);
       }, true);
     })();

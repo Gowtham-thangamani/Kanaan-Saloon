@@ -10,8 +10,24 @@
   ExpiresByType image/svg+xml "access plus 1 year"
   ExpiresByType image/png "access plus 1 year"
   ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/avif "access plus 1 year"
+  ExpiresByType image/x-icon "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType font/woff "access plus 1 year"
+  ExpiresByType application/font-woff2 "access plus 1 year"
+  ExpiresByType application/font-woff "access plus 1 year"
   ExpiresByType application/json "access plus 5 minutes"
   ExpiresByType text/html "access plus 5 minutes"
+</IfModule>
+
+# Cache-Control matches Expires (some CDNs/proxies prefer this).
+# JS is intentionally excluded — left at the 1-day Expires default so site code
+# updates without forcing every visitor to bump the ?v= query string.
+<IfModule mod_headers.c>
+  <FilesMatch "\.(?:css|svg|png|jpe?g|webp|avif|ico|woff2?)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
 </IfModule>
 
 # Compression
@@ -36,6 +52,9 @@
 #   Require valid-user
 # </Directory>
 
+# Disable directory listing (prevents /services/, /assets/, etc. exposing file lists)
+Options -Indexes
+
 # Pretty 404
 ErrorDocument 404 /404.html
 
@@ -50,6 +69,11 @@ ErrorDocument 404 /404.html
 <IfModule mod_rewrite.c>
   RewriteEngine On
 
+  # Stop Apache's mod_dir from auto-adding a trailing slash to directories
+  # whose name also matches a sibling .html (e.g. /branches → /branches/),
+  # because that would race with our redirect rule below and cause a loop.
+  DirectorySlash Off
+
   # 1. Redirect /foo/index.html  ->  /foo/   (and /index.html -> /)
   RewriteCond %{THE_REQUEST} \s/+(.*/)?index\.html[\s?] [NC]
   RewriteRule ^ /%1 [R=301,L,NE]
@@ -58,10 +82,37 @@ ErrorDocument 404 /404.html
   RewriteCond %{THE_REQUEST} \s/+([^\s?]+?)\.html[\s?] [NC]
   RewriteRule ^ /%1 [R=301,L,NE]
 
+  # 2b. Redirect /foo/  ->  /foo  when /foo.html exists and /foo/index.html does NOT.
+  # Covers people who manually type the trailing slash (no internal links do).
+  RewriteCond %{REQUEST_URI} ^/(.+)/$
+  RewriteCond %{DOCUMENT_ROOT}/%1.html -f
+  RewriteCond %{DOCUMENT_ROOT}/%1/index.html !-f
+  RewriteRule ^ /%1 [R=301,L,NE]
+
   # 3. Internally serve /foo.html when /foo is requested and the file exists.
+  # We intentionally do NOT include `!-d` so `/branches` (a folder that also has
+  # a sibling `branches.html`) gets served as the merged HTML, not the folder.
+  # For real folders like /admin/, /ar/, this rule won't fire because there's
+  # no sibling .html.
   RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
   RewriteCond %{REQUEST_FILENAME}.html -f
   RewriteRule ^(.+?)/?$ $1.html [L]
+
+  # 4. If we get here and the path is a real directory with an index.html
+  # (/admin/, /ar/, etc.), serve it normally. DirectorySlash Off above means
+  # we have to redirect /admin -> /admin/ ourselves.
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteCond %{REQUEST_FILENAME}/index.html -f
+  RewriteCond %{REQUEST_URI} !/$
+  RewriteRule ^ %{REQUEST_URI}/ [R=301,L,NE]
+
+  # 5. Blog catch-all — any /blog/<slug> (or /ar/blog/<slug>) without a matching
+  # .html file gets served by the generic template, which fills itself in from
+  # blog.json. Lets admins publish new posts by editing JSON only (no per-post
+  # file upload). Excludes _post itself so the raw template stays viewable.
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME}.html !-f
+  RewriteCond %{DOCUMENT_ROOT}/blog/_post.html -f
+  RewriteRule ^(?:ar/)?blog/([a-z0-9][a-z0-9-]*)/?$ /blog/_post.html [L]
 </IfModule>
 

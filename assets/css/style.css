@@ -199,7 +199,7 @@ body.lang-ar .eyebrow { letter-spacing: 0; }
 }
 .btn:hover { background: transparent; color: var(--c-gold); }
 .btn--ghost { background: transparent; color: var(--text); border-color: var(--text); }
-.btn--ghost:hover { background: var(--text); color: var(--c-obsidian); }
+.btn--ghost:hover { background: var(--text); color: var(--bg); }
 .btn--gold-ghost { background: transparent; color: var(--c-gold); }
 .btn--gold-ghost:hover { background: var(--c-gold); color: #0E0F11; }
 .btn--sm { padding: 10px 18px; font-size: 12px; }

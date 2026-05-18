@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="../assets/css/fonts.css" />
   <link rel="stylesheet" href="../assets/css/style.css?v=3" />
   <link rel="stylesheet" href="../assets/css/motion.css?v=19" />
+  <link rel="stylesheet" href="../assets/css/blog.css?v=1" />
   <script id="motion-pre-paint">(function(){if(!window.matchMedia||!window.matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.classList.add("motion-ready");}})();</script>
   <link rel="preload" as="image" href="../assets/img/photos/service-moroccan-bath-1600.webp" fetchpriority="high" />
   <script type="application/ld+json">
@@ -47,7 +48,7 @@
   
   <div class="utility-bar">
     <div class="utility-bar__inner">
-      <span class="utility-bar__pitch">Ten houses in Abu Dhabi · One standard</span>
+      <span class="utility-bar__pitch">Ten branches in Abu Dhabi · One standard</span>
       <div class="utility-bar__actions">
         <a href="tel:+971505556795" data-bind-attr-href="contact.tel_url" data-track="call_click">☏ <span data-bind="contact.centralPhone">+971 50 555 6795</span></a>
         <a href="https://wa.me/971505556795?text=Hi%20Kanaan%2C%20I'd%20like%20to%20book.%20Please%20share%20nearest%20branch%20%2B%20available%20times." data-bind-attr-href="contact.wa_url" data-track="whatsapp_click">✉ WhatsApp</a>
@@ -57,9 +58,13 @@
   <header class="site-header">
     <div class="site-header__inner">
       <a href="../" class="logo" aria-label="Kanaan Gents Salon &amp; Spa — home"><img src="../assets/img/logo.svg" alt="Kanaan Gents Salon &amp; Spa" class="logo-img" /></a>
-      <nav class="main-nav">
+      <nav class="main-nav" aria-label="Primary">
         <a href="../">Home</a>
-        <a href="../branches">Houses &amp; Services</a><a href="../blog">Insights</a>
+        <a href="../about">About</a>
+        <a href="../offers">Offers</a>
+        <a href="../branches">Branches &amp; Services</a>
+        <a href="../gallery">Gallery</a>
+        <a href="../blog" class="is-active">Insights</a>
         <a href="../contact">Contact</a>
       </nav>
       <div class="header-actions">
@@ -69,30 +74,33 @@
     </div>
   </header>
 
-  <article>
+  <div class="reading-progress" id="readingProgress" aria-hidden="true"></div>
+
+  <article class="blog-article">
     <section class="page-hero">
-      <div class="page-hero__media" data-reveal="mask" data-parallax="bg" data-speed="0.50"><img src="../assets/img/photos/service-moroccan-bath-1600.webp" alt="Spa interior at Kanaan Baniyas Spa" loading="eager" fetchpriority="high" decoding="async" /></div>
+      <div class="page-hero__media" data-reveal="mask" data-parallax="bg" data-speed="0.50"><img data-blog-hero src="../assets/img/photos/service-moroccan-bath-1600.webp" alt="Spa interior at Kanaan Baniyas Spa" loading="eager" fetchpriority="high" decoding="async" /></div>
       <div class="container page-hero__content">
         <div class="breadcrumb">
           <a href="../">Home</a><span class="sep">/</span>
           <a href="../blog">Insights</a><span class="sep">/</span>
           <span>Moroccan Bath</span>
         </div>
-        <span class="eyebrow">Spa Craft · 6 min read · April 2026</span>
-        <h1 class="page-hero__title" data-split="lines">A Moroccan bath, properly explained.</h1>
+        <span class="eyebrow" data-blog-meta>Spa Craft · 6 min read · April 2026</span>
+        <h1 class="page-hero__title" data-blog-title data-split="lines">A Moroccan bath, properly explained.</h1>
         <p class="byline" style="color: var(--c-stone); font-size: 13px; letter-spacing: 0.06em; margin-top: var(--s-4);">By the Kanaan spa desk · Reviewed by our hammam masters at Baniyas Spa</p>
       </div>
     </section>
 
     <section class="section">
       <div class="container" style="max-width: 720px;">
-              <aside class="tldr">
+              <aside class="tldr" data-blog-tldr-wrap>
         <span class="tldr__label">TL;DR</span>
-        <p class="tldr__body">A Moroccan bath is a 4-step ritual: 12-15 min steam, black-soap cleanse, kessa-glove exfoliation, and a hydrating mask + argan-oil finish. Best every 4-6 weeks. Available at Kanaan Baniyas Spa and VIP Muroor for 180-280 AED.</p>
+        <p class="tldr__body" data-blog-tldr>A Moroccan bath is a 4-step ritual: 12-15 min steam, black-soap cleanse, kessa-glove exfoliation, and a hydrating mask + argan-oil finish. Best every 4-6 weeks. Available at Kanaan Baniyas Spa and VIP Muroor for 180-280 AED.</p>
       </aside>
 
-        <p class="lede" data-reveal="up" data-scroll-text>If you've never had a Moroccan bath, the first time can feel unfamiliar. The room is hotter than expected. There is steam. There is black soap. There is a glove that looks more like a kitchen tool than a spa one. And there is a person — usually one you've never met — who treats your skin with a gentle but committed firmness. Then you leave, somehow lighter, and you understand why men have been coming back for centuries.</p>
+        <p class="lede" data-blog-lede data-reveal="up" data-scroll-text>If you've never had a Moroccan bath, the first time can feel unfamiliar. The room is hotter than expected. There is steam. There is black soap. There is a glove that looks more like a kitchen tool than a spa one. And there is a person — usually one you've never met — who treats your skin with a gentle but committed firmness. Then you leave, somehow lighter, and you understand why men have been coming back for centuries.</p>
 
+        <div data-blog-body>
         <p>Here is what's actually happening, and how to get the most from a visit at Kanaan.</p>
 
         <h2 style="margin-top: var(--s-7);">The four steps</h2>
@@ -115,9 +123,10 @@
         <p>Disposable underwear and a robe are provided. Bring nothing — leave watches, jewellery, phones in the locker. Hydrate well in the hour before your appointment. Don't shave the same day; the skin will be sensitive after the kessa.</p>
 
         <h2 style="margin-top: var(--s-7);">Where to book</h2>
-        <p>The Moroccan bath is offered at our spa-led houses — <a href="../branches/baniyas-spa" class="text-gold">Baniyas Spa</a> and <a href="../branches/vip-muroor" class="text-gold">VIP Muroor</a>. The classic ritual is 180 AED; the royal version (with extended argan and head massage) is 280 AED.</p>
+        <p>The Moroccan bath is offered at six Kanaan branches: <a href="../branches/baniyas-spa" class="text-gold">Baniyas Spa</a> and <a href="../branches/khalifa-city" class="text-gold">Khalifa City</a> (our flagship spa houses), plus <a href="../branches/al-ain" class="text-gold">Al Ain</a>, <a href="../branches/khalidiya" class="text-gold">Khalidiya</a>, <a href="../branches/old-shahamah" class="text-gold">Old Shahamah</a>, and <a href="../branches/vip-muroor" class="text-gold">VIP Muroor</a>. Three tiers: Normal 130 AED, Special 180 AED, Royal 300 AED.</p>
 
         <p style="margin-top: var(--s-7);"><a href="../book?service=moroccan-bath" class="btn">Book a Moroccan Bath</a></p>
+        </div>
       </div>
     </section>
         <div class="share-bar">
@@ -138,7 +147,14 @@
 
   <footer class="site-footer">
     <div class="container">
-      
+      <div class="footer-socials" aria-label="Social">
+        <a href="#" data-bind-attr-href="social.instagram" aria-label="Instagram" target="_blank" rel="noopener"><svg class="icon"><use href="../assets/img/icons.svg#i-instagram"/></svg></a>
+        <a href="#" data-bind-attr-href="social.tiktok" aria-label="TikTok" target="_blank" rel="noopener"><svg class="icon"><use href="../assets/img/icons.svg#i-tiktok"/></svg></a>
+        <a href="#" data-bind-attr-href="social.snapchat" aria-label="Snapchat" target="_blank" rel="noopener"><svg class="icon"><use href="../assets/img/icons.svg#i-snapchat"/></svg></a>
+        <a href="#" data-bind-attr-href="social.facebook" aria-label="Facebook" target="_blank" rel="noopener"><svg class="icon"><use href="../assets/img/icons.svg#i-facebook"/></svg></a>
+        <a href="#" data-bind-attr-href="contact.wa_url" aria-label="WhatsApp" target="_blank" rel="noopener"><svg class="icon"><use href="../assets/img/icons.svg#i-whatsapp"/></svg></a>
+      </div>
+
       <div class="footer-newsletter">
         <div>
           <h5>Newsletter</h5>
@@ -165,7 +181,7 @@
   <script src="../assets/js/config.js"></script>
   <script src="../assets/js/tracking.js"></script>
   <script src="../assets/js/consent.js" defer></script>
-  <script src="../assets/js/runtime.js?v=2"></script>
+  <script src="../assets/js/runtime.js?v=3"></script>
   <script src="../assets/js/nav-dropdown.js" defer></script>
   <script src="../assets/js/motion.js?v=18" defer></script>
   <script src="../assets/js/quickbook.js" defer></script>

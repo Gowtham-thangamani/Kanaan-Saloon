@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Menu &amp; Prices | Kanaan Gents Salon &amp; Spa</title>
-  <meta name="description" content="Browse every service and price at all 10 Kanaan houses across Abu Dhabi. Pick a category, pick a branch, book in seconds." />
+  <meta name="description" content="Browse every service and price at all 10 Kanaan branches across Abu Dhabi. Pick a category, pick a branch, book in seconds." />
   <link rel="canonical" href="https://kanaanspa.ae/menu" />
   <link rel="alternate" hreflang="en" href="https://kanaanspa.ae/menu" />
   <link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/menu" />
@@ -102,7 +102,7 @@
 
   <div class="utility-bar">
     <div class="utility-bar__inner">
-      <span class="utility-bar__pitch">Ten houses in Abu Dhabi · One standard</span>
+      <span class="utility-bar__pitch">Ten branches in Abu Dhabi · One standard</span>
       <div class="utility-bar__actions">
         <a href="tel:+971505556795" data-bind-attr-href="contact.tel_url" data-track="call_click">☏ <span data-bind="contact.centralPhone">+971 50 555 6795</span></a>
         <a href="https://wa.me/971505556795" data-bind-attr-href="contact.wa_url" data-track="whatsapp_click">✉ WhatsApp</a>
@@ -112,12 +112,13 @@
   <header class="site-header">
     <div class="site-header__inner">
       <a href="./" class="logo" aria-label="Kanaan Gents Salon &amp; Spa — home"><img src="assets/img/logo.svg" alt="Kanaan Gents Salon &amp; Spa" class="logo-img" /></a>
-      <nav class="main-nav">
+      <nav class="main-nav" aria-label="Primary">
         <a href="./">Home</a>
         <a href="about">About</a>
         <a href="offers">Offers</a>
-        <a href="branches">Houses &amp; Services</a>
+        <a href="branches">Branches &amp; Services</a>
         <a href="gallery">Gallery</a>
+        <a href="blog">Insights</a>
         <a href="contact">Contact</a>
       </nav>
       <div class="header-actions">
@@ -126,10 +127,16 @@
         <button type="button" class="menu-toggle" aria-label="Open menu"><span></span><span></span><span></span></button>
       </div>
     </div>
-    <nav class="mobile-nav">
-      <a href="./">Home</a><a href="about">About</a><a href="offers">Offers</a>
-      <a href="branches">Houses</a><a href="gallery">Gallery</a><a href="contact">Contact</a>
-      <a href="ar/menu">عربي</a><a href="book" class="btn">Book Now</a>
+    <nav class="mobile-nav" aria-label="Mobile">
+      <a href="./">Home</a>
+      <a href="about">About</a>
+      <a href="offers">Offers</a>
+      <a href="branches">Branches &amp; Services</a>
+      <a href="gallery">Gallery</a>
+      <a href="blog">Insights</a>
+      <a href="contact">Contact</a>
+      <a href="ar/" class="lang-switch">عربي</a>
+      <a href="book" class="btn btn--sm">Book Now</a>
     </nav>
   </header>
 
@@ -156,6 +163,14 @@
 
   <footer class="site-footer">
     <div class="container">
+      <div class="footer-socials" aria-label="Social">
+        <a href="#" data-bind-attr-href="social.instagram" aria-label="Instagram" target="_blank" rel="noopener"><svg class="icon"><use href="assets/img/icons.svg#i-instagram"/></svg></a>
+        <a href="#" data-bind-attr-href="social.tiktok" aria-label="TikTok" target="_blank" rel="noopener"><svg class="icon"><use href="assets/img/icons.svg#i-tiktok"/></svg></a>
+        <a href="#" data-bind-attr-href="social.snapchat" aria-label="Snapchat" target="_blank" rel="noopener"><svg class="icon"><use href="assets/img/icons.svg#i-snapchat"/></svg></a>
+        <a href="#" data-bind-attr-href="social.facebook" aria-label="Facebook" target="_blank" rel="noopener"><svg class="icon"><use href="assets/img/icons.svg#i-facebook"/></svg></a>
+        <a href="#" data-bind-attr-href="contact.wa_url" aria-label="WhatsApp" target="_blank" rel="noopener"><svg class="icon"><use href="assets/img/icons.svg#i-whatsapp"/></svg></a>
+      </div>
+
       <div class="footer-bottom" style="border: 0; padding-top: var(--s-6);">
         <span>© 2026 Kanaan Gents Salon &amp; Spa.</span>
         <div class="footer-bottom__links"><a href="privacy-policy">Privacy</a><a href="terms">Terms</a><a href="ar/menu">عربي</a></div>
@@ -166,8 +181,8 @@
   <script src="assets/js/config.js"></script>
   <script src="assets/js/tracking.js"></script>
   <script src="assets/js/consent.js" defer></script>
-  <script src="assets/js/runtime.js?v=2"></script>
-  <script src="assets/js/main.js?v=27"></script>
+  <script src="assets/js/runtime.js?v=3"></script>
+  <script src="assets/js/main.js?v=30"></script>
   <script src="assets/js/nav-dropdown.js" defer></script>
   <script src="assets/js/motion.js?v=18" defer></script>
 
@@ -441,7 +456,7 @@
         const name = o['name_' + lang] || o.name_en;
         const badge = o['badge_' + lang] || o.badge_en;
         const incl = o['inclusions_' + lang] || o.inclusions_en || [];
-        const bookHref = 'book.html?service=' + encodeURIComponent(o.name_en) + (o.branches && o.branches[0] && o.branches[0] !== 'all' ? '&branch=' + encodeURIComponent(o.branches[0]) : '');
+        const bookHref = 'book?service=' + encodeURIComponent(o.name_en) + (o.branches && o.branches[0] && o.branches[0] !== 'all' ? '&branch=' + encodeURIComponent(o.branches[0]) : '');
         return '<div class="menu-pack">' +
                  '<div>' +
                    (badge ? '<span class="menu-pack__badge">' + escapeHtml(badge) + '</span>' : '') +
@@ -508,7 +523,7 @@
         const primary = isAr ? (nameAr || nameEn) : nameEn;
         const secondary = isAr ? nameEn : nameAr;
         const duration = it.duration_minutes ? (it.duration_minutes + ' ' + (isAr ? 'دقيقة' : 'min')) : '';
-        const bookHref = 'book.html?service=' + encodeURIComponent(serviceRadio) +
+        const bookHref = 'book?service=' + encodeURIComponent(serviceRadio) +
                          '&branch=' + encodeURIComponent(branchName) +
                          '&item=' + encodeURIComponent(nameEn) +
                          '&price=' + encodeURIComponent(it.price);
@@ -576,7 +591,7 @@
           const primary = isAr ? (nameAr || nameEn) : nameEn;
           const secondary = isAr ? nameEn : nameAr;
           const duration = it.duration_minutes ? (it.duration_minutes + ' ' + (isAr ? 'دقيقة' : 'min')) : '';
-          const bookHref = 'book.html?service=' + encodeURIComponent(radio) +
+          const bookHref = 'book?service=' + encodeURIComponent(radio) +
                            '&branch=' + encodeURIComponent(branchName) +
                            '&item=' + encodeURIComponent(nameEn) +
                            '&price=' + encodeURIComponent(it.price);

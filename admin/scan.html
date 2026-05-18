@@ -54,8 +54,9 @@
       <a href="scan" class="active">Scan booking</a>
       <a href="blocks">Blocked slots</a>
       <a href="offers">Offers</a>
-      <a href="branches">Houses</a>
+      <a href="branches">Branches</a>
       <a href="banners">Banners</a>
+      <a href="blog">Blog</a>
       <a href="integrations">Integrations</a>
       <a href="settings">Settings</a>
     </nav>
@@ -289,7 +290,7 @@ if (KANAAN_ADMIN.requireAuth()) (function () {
         <h3>${escapeHtml(b.name || 'Unnamed')}</h3>
         <dl>
           <dt>Booking</dt><dd style="font-family: monospace;">${escapeHtml(b.id)}</dd>
-          <dt>House</dt><dd>${escapeHtml(b.branch || '—')}</dd>
+          <dt>Branch</dt><dd>${escapeHtml(b.branch || '—')}</dd>
           <dt>Service</dt><dd>${escapeHtml(b.service || '—')}</dd>
           <dt>When</dt><dd>${escapeHtml((b.booking_date || '') + ' ' + (b.booking_time || ''))}</dd>
           <dt>Phone</dt><dd>${phone ? '<a href="tel:' + escapeHtml(phone) + '">' + escapeHtml(phone) + '</a>' : '—'}</dd>

@@ -1,6 +1,6 @@
 # Kanaan Gents Salon & Spa
 
-> Premium men's grooming, barbering and spa group across 10 houses in Abu Dhabi and Al Ain, UAE. Service-led, master-trained, spa-grade hygiene. Bilingual English / Arabic.
+> Premium men's grooming, barbering and spa group across 10 branches in Abu Dhabi and Al Ain, UAE. Service-led, master-trained, spa-grade hygiene. Bilingual English / Arabic.
 
 ## Brand
 - Name: Kanaan Gents Salon & Spa
@@ -11,23 +11,23 @@
 
 ## Branches (10)
 
-- [Al Ain](/branches/al-ain) — neighbourhood Kanaan house, full menu
-- [Khalifa City](/branches/khalifa-city) — modern house in Khalifa City A
-- [Khalidiya](/branches/khalidiya) — central Abu Dhabi house
-- [Baniyas Spa](/branches/baniyas-spa) — flagship spa house with hammam
+- [Al Ain](/branches/al-ain) — neighbourhood Kanaan branch, full menu
+- [Khalifa City](/branches/khalifa-city) — modern branch in Khalifa City A
+- [Khalidiya](/branches/khalidiya) — central Abu Dhabi branch
+- [Baniyas Spa](/branches/baniyas-spa) — flagship spa branch with hammam
 - [Baniyas Barber](/branches/baniyas-barber) — master barber room
 - [Rabdan](/branches/rabdan) — quiet, refined, full-service
 - [Old Shahamah](/branches/old-shahamah) — classic Kanaan service
-- [New Shahamah](/branches/new-shahamah) — contemporary house
-- [Muroor](/branches/muroor) — easy access on Muroor Road
-- [VIP Muroor](/branches/vip-muroor) — private suites, by appointment
+- [New Shahamah](/branches/new-shahamah) — contemporary branch
+- [Muroor Barber](/branches/muroor) — master barber room on Muroor Road
+- [VIP Muroor](/branches/vip-muroor) — private spa suites in the Muroor area, by appointment
 
 ## Services (7 categories)
 
 - [Hair & Beard](/services/hair-beard) — haircuts, hot-towel shaves, beard sculpts (from 60 AED)
 - [Facial & Skin Care](/services/facial-skin-care) — Express, Signature, Hydra, Anti-Fatigue, Premium (from 120 AED)
 - [Massage](/services/massage) — Swedish, deep-tissue, sports recovery, hot stone (from 150 AED)
-- [Moroccan Bath](/services/moroccan-bath) — traditional hammam ritual, only at Baniyas Spa + VIP Muroor (from 130 AED)
+- [Moroccan Bath](/services/moroccan-bath) — traditional hammam ritual in 3 tiers (Normal 130 / Special 180 / Royal 300 AED), available at 6 branches: Baniyas Spa, Khalifa City, Al Ain, Khalidiya, Old Shahamah, VIP Muroor
 - [Manicure & Pedicure](/services/manicure-pedicure) — sterilised single-use tools (from 70 AED)
 - [Hair Treatment](/services/hair-treatment) — protein, keratin, scalp therapy (from 180 AED)
 - [Grooming Packages](/services/grooming-packages) — multi-service bundles (100, 220, 250, 320, 450 AED)
@@ -36,7 +36,7 @@
 
 - 8-Service Signature Package — 250 AED — at all branches
 - 6-Service Essential Package — 100 AED — at all branches
-- Moroccan Bath Ritual — 180 AED — Baniyas Spa, VIP Muroor only
+- Moroccan Bath — 130 / 180 / 300 AED (Normal / Special / Royal tiers) — at 6 branches (Baniyas Spa, Khalifa City, Al Ain, Khalidiya, Old Shahamah, VIP Muroor)
 - VIP Gentleman's Hour — 450 AED — VIP Muroor only
 - Eid Premium Package — 320 AED — limited time
 - Father & Son Ritual — 220 AED — at all branches
@@ -68,7 +68,7 @@
 - Booking system: enquiry-style with branch confirmation within 30 minutes during open hours
 - Hours: Sat–Thu 10:00–23:00; Fri 14:00–23:00; VIP Muroor opens 11:00 weekdays
 - Pricing: starts from 60 AED (beard sculpt), most-requested signature package 250 AED
-- Branches that offer Moroccan bath: Baniyas Spa, VIP Muroor only
+- Branches that offer Moroccan bath (6): Baniyas Spa, Khalifa City, Al Ain, Khalidiya, Old Shahamah, VIP Muroor. (Muroor Barber, Baniyas Barber, Rabdan, New Shahamah do NOT offer it.)
 - VIP Muroor: by appointment only, private suite
 
 ## Sitemap

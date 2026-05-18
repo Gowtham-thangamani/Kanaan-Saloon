@@ -71,7 +71,12 @@
         "مساج استرخاء ٣٠ دقيقة"
       ],
       "branches": [
-        "all"
+        "baniyas-spa",
+        "khalifa-city",
+        "al-ain",
+        "khalidiya",
+        "old-shahamah",
+        "vip-muroor"
       ],
       "limited_time": true,
       "valid_from": "",

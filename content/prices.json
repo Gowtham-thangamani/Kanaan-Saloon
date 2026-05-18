@@ -215,14 +215,14 @@
               "duration_minutes": 60
             },
             {
-              "name_en": "Moroccan Bath",
-              "name_ar": "حمام مغربي",
+              "name_en": "Normal Moroccan Bath",
+              "name_ar": "حمام مغربي عادي",
               "price": 150,
               "duration_minutes": 60
             },
             {
-              "name_en": "Private Moroccan Bath",
-              "name_ar": "حمام خاص",
+              "name_en": "Special Moroccan Bath",
+              "name_ar": "حمام مغربي خاص",
               "price": 200,
               "duration_minutes": 60
             },
@@ -450,14 +450,14 @@
               "duration_minutes": 60
             },
             {
-              "name_en": "Moroccan Bath",
-              "name_ar": "حمام مغربي",
+              "name_en": "Normal Moroccan Bath",
+              "name_ar": "حمام مغربي عادي",
               "price": 130,
               "duration_minutes": 60
             },
             {
-              "name_en": "Private Moroccan Bath",
-              "name_ar": "حمام خاص",
+              "name_en": "Special Moroccan Bath",
+              "name_ar": "حمام مغربي خاص",
               "price": 180,
               "duration_minutes": 60
             },
@@ -725,8 +725,8 @@
       ]
     },
     "muroor": {
-      "name_en": "Muroor",
-      "name_ar": "المرور",
+      "name_en": "Muroor Barber",
+      "name_ar": "المرور باربر",
       "categories": [
         {
           "id": "main-services",
@@ -1586,14 +1586,14 @@
               "duration_minutes": 60
             },
             {
-              "name_en": "Moroccan Bath",
-              "name_ar": "حمام مغربي",
+              "name_en": "Normal Moroccan Bath",
+              "name_ar": "حمام مغربي عادي",
               "price": 130,
               "duration_minutes": 60
             },
             {
-              "name_en": "Private Moroccan Bath",
-              "name_ar": "حمام خاص",
+              "name_en": "Special Moroccan Bath",
+              "name_ar": "حمام مغربي خاص",
               "price": 180,
               "duration_minutes": 60
             },
@@ -1816,14 +1816,14 @@
               "duration_minutes": 60
             },
             {
-              "name_en": "Moroccan Bath",
-              "name_ar": "حمام مغربي",
+              "name_en": "Normal Moroccan Bath",
+              "name_ar": "حمام مغربي عادي",
               "price": 130,
               "duration_minutes": 60
             },
             {
-              "name_en": "Private Moroccan Bath",
-              "name_ar": "حمام خاص",
+              "name_en": "Special Moroccan Bath",
+              "name_ar": "حمام مغربي خاص",
               "price": 180,
               "duration_minutes": 60
             },

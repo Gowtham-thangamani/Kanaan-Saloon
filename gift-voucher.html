@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Gift Vouchers | Kanaan Gents Salon &amp; Spa</title>
-  <meta name="description" content="The grooming gift that always fits. Kanaan vouchers — pick an amount, send by WhatsApp, redeem at any of 10 houses." />
+  <meta name="description" content="The grooming gift that always fits. Kanaan vouchers — pick an amount, send by WhatsApp, redeem at any of 10 branches." />
   <link rel="stylesheet" href="assets/css/fonts.css" />
   <link rel="stylesheet" href="assets/css/style.css?v=3" />
   <link rel="stylesheet" href="assets/css/motion.css?v=19" />
@@ -19,7 +19,7 @@
 
   <div class="utility-bar">
     <div class="utility-bar__inner">
-      <span class="utility-bar__pitch">Ten houses in Abu Dhabi · One standard</span>
+      <span class="utility-bar__pitch">Ten branches in Abu Dhabi · One standard</span>
       <div class="utility-bar__actions">
         <a href="tel:+971505556795">☏ +971 50 555 6795</a>
         <a href="https://wa.me/971505556795?text=Hi%20Kanaan%2C%20I'd%20like%20to%20purchase%20a%20gift%20voucher.">✉ WhatsApp</a>
@@ -30,10 +30,13 @@
   <header class="site-header">
     <div class="site-header__inner">
       <a href="./" class="logo" aria-label="Kanaan Gents Salon &amp; Spa — home"><img src="assets/img/logo.svg" alt="Kanaan Gents Salon &amp; Spa" class="logo-img" /></a>
-      <nav class="main-nav">
+      <nav class="main-nav" aria-label="Primary">
         <a href="./">Home</a>
+        <a href="about">About</a>
         <a href="offers">Offers</a>
-        <a href="branches">Houses &amp; Services</a>
+        <a href="branches">Branches &amp; Services</a>
+        <a href="gallery">Gallery</a>
+        <a href="blog">Insights</a>
         <a href="contact">Contact</a>
       </nav>
       <div class="header-actions">
@@ -51,7 +54,7 @@
         <div class="breadcrumb"><a href="./">Home</a><span class="sep">/</span><span>Gift Vouchers</span></div>
         <span class="eyebrow">Give the Standard</span>
         <h1 class="page-hero__title" data-split="lines">A gift that always fits.</h1>
-        <p class="lede" data-reveal="up" data-scroll-text>Kanaan vouchers redeem against any service at any of our ten houses. Pick an amount, write a note, send by WhatsApp.</p>
+        <p class="lede" data-reveal="up" data-scroll-text>Kanaan vouchers redeem against any service at any of our ten branches. Pick an amount, write a note, send by WhatsApp.</p>
       </div>
     </section>
 
@@ -98,7 +101,7 @@
             <input type="tel" name="phone" required placeholder="+971 50 ..." />
           </label>
           <button type="submit" class="btn btn--lg" style="margin-top: var(--s-6); width: 100%;">Send via WhatsApp →</button>
-          <p class="muted" style="font-size:13px; margin-top: var(--s-4);">Voucher is digital — we send a branded PDF to your WhatsApp within 30 minutes during open hours. Valid 12 months. Redeemable at all 10 houses.</p>
+          <p class="muted" style="font-size:13px; margin-top: var(--s-4);">Voucher is digital — we send a branded PDF to your WhatsApp within 30 minutes during open hours. Valid 12 months. Redeemable at all 10 branches.</p>
         </form>
       </div>
     </section>
@@ -106,6 +109,14 @@
 
   <footer class="site-footer">
     <div class="container">
+      <div class="footer-socials" aria-label="Social">
+        <a href="#" data-bind-attr-href="social.instagram" aria-label="Instagram" target="_blank" rel="noopener"><svg class="icon"><use href="assets/img/icons.svg#i-instagram"/></svg></a>
+        <a href="#" data-bind-attr-href="social.tiktok" aria-label="TikTok" target="_blank" rel="noopener"><svg class="icon"><use href="assets/img/icons.svg#i-tiktok"/></svg></a>
+        <a href="#" data-bind-attr-href="social.snapchat" aria-label="Snapchat" target="_blank" rel="noopener"><svg class="icon"><use href="assets/img/icons.svg#i-snapchat"/></svg></a>
+        <a href="#" data-bind-attr-href="social.facebook" aria-label="Facebook" target="_blank" rel="noopener"><svg class="icon"><use href="assets/img/icons.svg#i-facebook"/></svg></a>
+        <a href="#" data-bind-attr-href="contact.wa_url" aria-label="WhatsApp" target="_blank" rel="noopener"><svg class="icon"><use href="assets/img/icons.svg#i-whatsapp"/></svg></a>
+      </div>
+
       <div class="footer-bottom">
         <span>© 2026 Kanaan Gents Salon &amp; Spa.</span>
         <div class="footer-bottom__links"><a href="privacy-policy">Privacy</a><a href="terms">Terms</a></div>
@@ -114,8 +125,8 @@
   </footer>
 
   <script src="assets/js/config.js"></script>
-  <script src="assets/js/runtime.js?v=2"></script>
-  <script src="assets/js/main.js?v=27"></script>
+  <script src="assets/js/runtime.js?v=3"></script>
+  <script src="assets/js/main.js?v=30"></script>
   <script src="assets/js/motion.js?v=18" defer></script>
   <script src="assets/js/quickbook.js" defer></script>
 

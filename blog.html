@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="assets/css/fonts.css" />
   <link rel="stylesheet" href="assets/css/style.css?v=3" />
   <link rel="stylesheet" href="assets/css/motion.css?v=19" />
+  <link rel="stylesheet" href="assets/css/blog.css?v=1" />
   <script id="motion-pre-paint">(function(){if(!window.matchMedia||!window.matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.classList.add("motion-ready");}})();</script>
   <link rel="preload" as="image" href="assets/img/photos/arch-marble-staircase-1600.webp" fetchpriority="high" />
 
@@ -36,7 +37,7 @@
   
   <div class="utility-bar">
     <div class="utility-bar__inner">
-      <span class="utility-bar__pitch">Ten houses in Abu Dhabi · One standard</span>
+      <span class="utility-bar__pitch">Ten branches in Abu Dhabi · One standard</span>
       <div class="utility-bar__actions">
         <a href="tel:+971505556795" data-bind-attr-href="contact.tel_url" data-track="call_click">☏ <span data-bind="contact.centralPhone">+971 50 555 6795</span></a>
         <a href="https://wa.me/971505556795?text=Hi%20Kanaan%2C%20I'd%20like%20to%20book.%20Please%20share%20nearest%20branch%20%2B%20available%20times." data-bind-attr-href="contact.wa_url" data-track="whatsapp_click">✉ WhatsApp</a>
@@ -46,21 +47,31 @@
   <header class="site-header">
     <div class="site-header__inner">
       <a href="./" class="logo" aria-label="Kanaan Gents Salon &amp; Spa — home"><img src="assets/img/logo.svg" alt="Kanaan Gents Salon &amp; Spa" class="logo-img" /></a>
-      <nav class="main-nav">
-        <a href="./">Home</a><a href="about">About</a><a href="offers">Offers</a>
-        <a href="branches">Houses &amp; Services</a><a href="blog" class="is-active">Insights</a>
+      <nav class="main-nav" aria-label="Primary">
+        <a href="./">Home</a>
+        <a href="about">About</a>
+        <a href="offers">Offers</a>
+        <a href="branches">Branches &amp; Services</a>
+        <a href="gallery">Gallery</a>
+        <a href="blog" class="is-active">Insights</a>
         <a href="contact">Contact</a>
       </nav>
       <div class="header-actions">
         <a href="ar/blog" class="lang-switch">عربي</a>
         <a href="book" class="btn btn--sm">Book Now</a>
-        <button type="button" class="menu-toggle"><span></span><span></span><span></span></button>
+        <button type="button" class="menu-toggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
       </div>
     </div>
-    <nav class="mobile-nav">
-      <a href="./">Home</a><a href="branches">Houses &amp; Services</a>
-      <a href="blog">Insights</a><a href="contact">Contact</a>
-      <a href="book" class="btn">Book Now</a>
+    <nav class="mobile-nav" aria-label="Mobile">
+      <a href="./">Home</a>
+      <a href="about">About</a>
+      <a href="offers">Offers</a>
+      <a href="branches">Branches &amp; Services</a>
+      <a href="gallery">Gallery</a>
+      <a href="blog" class="is-active">Insights</a>
+      <a href="contact">Contact</a>
+      <a href="ar/" class="lang-switch">عربي</a>
+      <a href="book" class="btn btn--sm">Book Now</a>
     </nav>
   </header>
 
@@ -76,29 +87,13 @@
 
   <section class="section">
     <div class="container">
-      <div class="grid grid-3" data-reveal-stagger>
-        <a href="blog/moroccan-bath-guide" class="branch-card">
-          <div class="branch-card__media" data-hover-zoom><img src="assets/img/photos/service-facial-overview-1000.webp" alt="Spa interior at Kanaan Baniyas Spa" loading="lazy" decoding="async" /></div>
+      <div class="grid grid-3" data-reveal-stagger data-bind-list="posts">
+        <a data-bind-template data-bind-attr-href="view_url" class="branch-card">
+          <div class="branch-card__media" data-hover-zoom><img src="" alt="" data-bind-attr-src="hero_image" data-bind-attr-alt="hero_alt" loading="lazy" decoding="async" /></div>
           <div class="branch-card__body">
-            <span class="branch-card__area">Spa Craft · 6 min read</span>
-            <h3 class="branch-card__title" style="font-size: 24px;">A Moroccan bath, properly explained.</h3>
-            <p class="branch-card__meta">What it is, why men love it, and how to get the most from your visit.</p>
-          </div>
-        </a>
-        <a href="blog/moroccan-bath-guide" class="branch-card" style="opacity: 0.5; pointer-events: none;">
-          <div class="branch-card__media" data-hover-zoom><img src="assets/img/photos/service-massage-pink-1000.webp" alt="Master barber at work in Kanaan" loading="lazy" decoding="async" /></div>
-          <div class="branch-card__body">
-            <span class="branch-card__area">Coming Soon</span>
-            <h3 class="branch-card__title" style="font-size: 24px;">Beard care in Abu Dhabi's climate.</h3>
-            <p class="branch-card__meta">Heat, dust, AC. How to keep your beard healthy through it all.</p>
-          </div>
-        </a>
-        <a href="blog/moroccan-bath-guide" class="branch-card" style="opacity: 0.5; pointer-events: none;">
-          <div class="branch-card__media" data-hover-zoom><img src="assets/img/photos/standard-pedicure-onyx-1000.webp" alt="Spa products at Kanaan" loading="lazy" decoding="async" /></div>
-          <div class="branch-card__body">
-            <span class="branch-card__area">Coming Soon</span>
-            <h3 class="branch-card__title" style="font-size: 24px;">The right facial for UAE skin.</h3>
-            <p class="branch-card__meta">Choosing between hydra, signature, and anti-fatigue.</p>
+            <span class="branch-card__area" data-bind="meta_line"></span>
+            <h3 class="branch-card__title" style="font-size: 24px;" data-bind="title"></h3>
+            <p class="branch-card__meta" data-bind="excerpt"></p>
           </div>
         </a>
       </div>
@@ -112,7 +107,14 @@
 
   <footer class="site-footer">
     <div class="container">
-      
+      <div class="footer-socials" aria-label="Social">
+        <a href="#" data-bind-attr-href="social.instagram" aria-label="Instagram" target="_blank" rel="noopener"><svg class="icon"><use href="assets/img/icons.svg#i-instagram"/></svg></a>
+        <a href="#" data-bind-attr-href="social.tiktok" aria-label="TikTok" target="_blank" rel="noopener"><svg class="icon"><use href="assets/img/icons.svg#i-tiktok"/></svg></a>
+        <a href="#" data-bind-attr-href="social.snapchat" aria-label="Snapchat" target="_blank" rel="noopener"><svg class="icon"><use href="assets/img/icons.svg#i-snapchat"/></svg></a>
+        <a href="#" data-bind-attr-href="social.facebook" aria-label="Facebook" target="_blank" rel="noopener"><svg class="icon"><use href="assets/img/icons.svg#i-facebook"/></svg></a>
+        <a href="#" data-bind-attr-href="contact.wa_url" aria-label="WhatsApp" target="_blank" rel="noopener"><svg class="icon"><use href="assets/img/icons.svg#i-whatsapp"/></svg></a>
+      </div>
+
       <div class="footer-newsletter">
         <div>
           <h5>Newsletter</h5>
@@ -132,7 +134,7 @@
 
   <script src="assets/js/config.js"></script>
   <script src="assets/js/tracking.js"></script>
-  <script src="assets/js/runtime.js?v=2"></script>
+  <script src="assets/js/runtime.js?v=3"></script>
   <script src="assets/js/consent.js" defer></script>
   <script src="assets/js/nav-dropdown.js" defer></script>
   <script src="assets/js/motion.js?v=18" defer></script>

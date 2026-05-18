@@ -59,7 +59,7 @@ window.KANAAN_CONFIG = {
     // If supabase.url is set below, Supabase is used instead.
     webhookUrl: '',
     fallbackEmail: 'kanaansaloon@gmail.com',
-    confirmRedirect: 'thank-you.html'
+    confirmRedirect: 'thank-you'
   },
 
   /* ============================================================
@@ -72,6 +72,19 @@ window.KANAAN_CONFIG = {
     anonKey:  'sb_publishable_UQDMxcrZKcQBJc2UQffe0Q_NLTnuyjh',
     table:    'bookings',
     maxSizeMB: 500
+  },
+
+  /* ============================================================
+     LEADS SHEET — optional CSV-published Google Sheet whose rows are
+     merged into the admin dashboard alongside Supabase bookings.
+     Used for ad-platform leads (Meta/TikTok Lead Ads), walk-ins, and
+     manual entries. Expected header row (in this exact order):
+       bookingId, timestamp, status, branch, service, date, time,
+       name, phone, email, dob, message, source, campaign
+     Set csvUrl to a Google Sheet "Publish to web → .csv" URL.
+     ============================================================ */
+  leadsSheet: {
+    csvUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR_o492-nQXb5R87_M48BrrPrzJzGlWj6sYNoYvkiiEc8TBUwuSWtwuOVDtYfRFFriSRVAxRi60sNLF/pub?gid=0&single=true&output=csv'
   },
 
   /* ============================================================

@@ -441,11 +441,17 @@ const tpl = (s) => `<!DOCTYPE html>
         <div class="footer-brand">
           <div class="logo">KANAAN<span>.</span></div>
           <p style="margin-top: var(--s-4);">Ten houses across Abu Dhabi. One uncompromising standard.</p>
-          <div class="footer-socials"><a href="#">IG</a><a href="#">TT</a><a href="#">WA</a></div>
+          <div class="footer-socials" aria-label="Social">
+            <a href="#" data-bind-attr-href="social.instagram" aria-label="Instagram" target="_blank" rel="noopener"><svg class="icon"><use href="../assets/img/icons.svg#i-instagram"/></svg></a>
+            <a href="#" data-bind-attr-href="social.tiktok" aria-label="TikTok" target="_blank" rel="noopener"><svg class="icon"><use href="../assets/img/icons.svg#i-tiktok"/></svg></a>
+            <a href="#" data-bind-attr-href="social.snapchat" aria-label="Snapchat" target="_blank" rel="noopener"><svg class="icon"><use href="../assets/img/icons.svg#i-snapchat"/></svg></a>
+            <a href="#" data-bind-attr-href="social.facebook" aria-label="Facebook" target="_blank" rel="noopener"><svg class="icon"><use href="../assets/img/icons.svg#i-facebook"/></svg></a>
+            <a href="#" data-bind-attr-href="contact.wa_url" aria-label="WhatsApp" target="_blank" rel="noopener"><svg class="icon"><use href="../assets/img/icons.svg#i-whatsapp"/></svg></a>
+          </div>
         </div>
         <div><h5>Visit</h5><ul><li><a href="../services.html">Services</a></li><li><a href="../offers.html">Offers</a></li><li><a href="../gallery.html">Gallery</a></li><li><a href="../about.html">About</a></li><li><a href="../contact.html">Contact</a></li></ul></div>
         <div><h5>Branches</h5><ul><li><a href="../branches/al-ain.html">Al Ain</a></li><li><a href="../branches/khalifa-city.html">Khalifa City</a></li><li><a href="../branches/khalidiya.html">Khalidiya</a></li><li><a href="../branches/baniyas-spa.html">Baniyas Spa</a></li><li><a href="../branches/baniyas-barber.html">Baniyas Barber</a></li></ul></div>
-        <div><h5>&nbsp;</h5><ul><li><a href="../branches/rabdan.html">Rabdan</a></li><li><a href="../branches/old-shahamah.html">Old Shahamah</a></li><li><a href="../branches/new-shahamah.html">New Shahamah</a></li><li><a href="../branches/muroor.html">Muroor</a></li><li><a href="../branches/vip-muroor.html">VIP Muroor</a></li></ul></div>
+        <div><h5>&nbsp;</h5><ul><li><a href="../branches/rabdan.html">Rabdan</a></li><li><a href="../branches/old-shahamah.html">Old Shahamah</a></li><li><a href="../branches/new-shahamah.html">New Shahamah</a></li><li><a href="../branches/muroor.html">Muroor Barber</a></li><li><a href="../branches/vip-muroor.html">VIP Muroor</a></li></ul></div>
       </div>
       <div class="footer-bottom">
         <span>© 2026 Kanaan Gents Salon &amp; Spa.</span>

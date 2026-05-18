@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Houses &amp; Services | Kanaan Gents Salon &amp; Spa Abu Dhabi</title>
-  <meta name="description" content="Ten Kanaan houses across Abu Dhabi and Al Ain, with seven service categories at every location — haircuts, facials, massage, Moroccan bath, hair treatment, manicure &amp; pedicure, and grooming packages." />
+  <title>Branches &amp; Services | Kanaan Gents Salon &amp; Spa Abu Dhabi</title>
+  <meta name="description" content="Ten Kanaan branches across Abu Dhabi and Al Ain, with seven service categories at every location — haircuts, facials, massage, Moroccan bath, hair treatment, manicure &amp; pedicure, and grooming packages." />
   <link rel="stylesheet" href="assets/css/fonts.css" />
   <link rel="stylesheet" href="assets/css/style.css?v=3" />
   <link rel="stylesheet" href="assets/css/motion.css?v=19" />
@@ -22,14 +22,14 @@
   </style>
 
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Houses &amp; Services | Kanaan Gents Salon &amp; Spa Abu Dhabi" />
-  <meta property="og:description" content="Ten Kanaan houses across Abu Dhabi and Al Ain, with seven service categories at every location." />
+  <meta property="og:title" content="Branches &amp; Services | Kanaan Gents Salon &amp; Spa Abu Dhabi" />
+  <meta property="og:description" content="Ten Kanaan branches across Abu Dhabi and Al Ain, with seven service categories at every location." />
   <meta property="og:url" content="https://kanaanspa.ae/branches" />
   <meta property="og:image" content="https://kanaanspa.ae/assets/img/og-default.svg" />
   <meta property="og:locale" content="en_US" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Houses &amp; Services | Kanaan Gents Salon &amp; Spa Abu Dhabi" />
-  <meta name="twitter:description" content="Ten Kanaan houses across Abu Dhabi and Al Ain, with seven service categories at every location." />
+  <meta name="twitter:title" content="Branches &amp; Services | Kanaan Gents Salon &amp; Spa Abu Dhabi" />
+  <meta name="twitter:description" content="Ten Kanaan branches across Abu Dhabi and Al Ain, with seven service categories at every location." />
   <meta name="twitter:image" content="https://kanaanspa.ae/assets/img/og-default.svg" />
   <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg" />
   <link rel="apple-touch-icon" href="assets/img/favicon.svg" />
@@ -43,7 +43,7 @@
   
   <div class="utility-bar">
     <div class="utility-bar__inner">
-      <span class="utility-bar__pitch">Ten houses in Abu Dhabi · One standard</span>
+      <span class="utility-bar__pitch">Ten branches in Abu Dhabi · One standard</span>
       <div class="utility-bar__actions">
         <a href="tel:+971505556795" data-bind-attr-href="contact.tel_url" data-track="call_click">☏ <span data-bind="contact.centralPhone">+971 50 555 6795</span></a>
         <a href="https://wa.me/971505556795?text=Hi%20Kanaan%2C%20I'd%20like%20to%20book.%20Please%20share%20nearest%20branch%20%2B%20available%20times." data-bind-attr-href="contact.wa_url" data-track="whatsapp_click">✉ WhatsApp</a>
@@ -53,12 +53,13 @@
   <header class="site-header">
     <div class="site-header__inner">
       <a href="./" class="logo" aria-label="Kanaan Gents Salon &amp; Spa — home"><img src="assets/img/logo.svg" alt="Kanaan Gents Salon &amp; Spa" class="logo-img" /></a>
-      <nav class="main-nav">
+      <nav class="main-nav" aria-label="Primary">
         <a href="./">Home</a>
         <a href="about">About</a>
         <a href="offers">Offers</a>
-        <a href="branches">Houses &amp; Services</a>
+        <a href="branches" class="is-active">Branches &amp; Services</a>
         <a href="gallery">Gallery</a>
+        <a href="blog">Insights</a>
         <a href="contact">Contact</a>
       </nav>
       <div class="header-actions">
@@ -67,11 +68,16 @@
         <button type="button" class="menu-toggle" aria-label="Open menu"><span></span><span></span><span></span></button>
       </div>
     </div>
-    <nav class="mobile-nav">
-      <a href="./">Home</a><a href="about">About</a>
-      <a href="offers">Offers</a><a href="branches">Houses &amp; Services</a><a href="gallery">Gallery</a>
-      <a href="contact">Contact</a><a href="ar/">عربي</a>
-      <a href="book" class="btn">Book Now</a>
+    <nav class="mobile-nav" aria-label="Mobile">
+      <a href="./">Home</a>
+      <a href="about">About</a>
+      <a href="offers">Offers</a>
+      <a href="branches" class="is-active">Branches &amp; Services</a>
+      <a href="gallery">Gallery</a>
+      <a href="blog">Insights</a>
+      <a href="contact">Contact</a>
+      <a href="ar/" class="lang-switch">عربي</a>
+      <a href="book" class="btn btn--sm">Book Now</a>
     </nav>
   </header>
 
@@ -80,9 +86,9 @@
       <img src="assets/img/photos/service-hair-barber-stations-1600.webp" alt="Inside a Kanaan salon chair" loading="eager" fetchpriority="high" decoding="async" />
     </div>
     <div class="container page-hero__content">
-      <div class="breadcrumb"><a href="./">Home</a><span class="sep">/</span><span>Houses &amp; Services</span></div>
+      <div class="breadcrumb"><a href="./">Home</a><span class="sep">/</span><span>Branches &amp; Services</span></div>
       <span class="eyebrow">Find Your Kanaan</span>
-      <h1 class="page-hero__title" data-split="lines">Ten houses.<br/>Seven services.<br/>One standard.</h1>
+      <h1 class="page-hero__title" data-split="lines">Ten branches.<br/>Seven services.<br/>One standard.</h1>
     </div>
   </section>
 
@@ -104,7 +110,7 @@
               <span class="status-pill" data-bind-attr-data-hours="hours_json">Checking…</span>
               <span class="availability-pill" data-availability-for data-bind-attr-data-availability-for="name" style="font-size: 11px; color: var(--c-stone); letter-spacing: 0.04em;"></span>
             </div>
-            <div class="branch-card__actions" style="margin-top: 12px;"><span class="btn btn--sm branch-card__view">View house &amp; services →</span></div>
+            <div class="branch-card__actions" style="margin-top: 12px;"><span class="btn btn--sm branch-card__view">View branch &amp; services →</span></div>
           </div>
         </a>
 
@@ -117,7 +123,7 @@
       <div class="section-head section-head--left" data-reveal="up">
         <span class="eyebrow">Treatments</span>
         <h2 class="section-head__title display-2">Our services.</h2>
-        <p class="section-head__lede">Seven service categories — available at every house. Click any service to read the details.</p>
+        <p class="section-head__lede">Seven service categories — available at every branch. Click any service to read the details.</p>
       </div>
 
       <div class="service-grid">
@@ -198,7 +204,7 @@
 
   <section class="cta-band" data-reveal="up">
     <h2 class="cta-band__title" data-parallax="text" data-speed="0.35">Closer than you think.</h2>
-    <p class="cta-band__sub" data-scroll-text>Pick the house most convenient for you — book in two minutes.</p>
+    <p class="cta-band__sub" data-scroll-text>Pick the branch most convenient for you — book in two minutes.</p>
     <a href="book" class="btn btn--lg">Book Now</a>
   </section></main>
 
@@ -207,17 +213,18 @@
       <div class="footer-grid">
         <div class="footer-brand">
           <div class="logo"><img src="assets/img/logo.svg" alt="Kanaan Gents Salon &amp; Spa" class="logo-img" /></div>
-          <p style="margin-top: var(--s-4);">Ten houses across Abu Dhabi. One uncompromising standard.</p>
+          <p style="margin-top: var(--s-4);">Ten branches across Abu Dhabi. One uncompromising standard.</p>
           <div class="footer-socials" aria-label="Social">
             <a href="#" data-bind-attr-href="social.instagram" aria-label="Instagram" target="_blank" rel="noopener"><svg class="icon"><use href="assets/img/icons.svg#i-instagram"/></svg></a>
             <a href="#" data-bind-attr-href="social.tiktok" aria-label="TikTok" target="_blank" rel="noopener"><svg class="icon"><use href="assets/img/icons.svg#i-tiktok"/></svg></a>
             <a href="#" data-bind-attr-href="social.snapchat" aria-label="Snapchat" target="_blank" rel="noopener"><svg class="icon"><use href="assets/img/icons.svg#i-snapchat"/></svg></a>
+            <a href="#" data-bind-attr-href="social.facebook" aria-label="Facebook" target="_blank" rel="noopener"><svg class="icon"><use href="assets/img/icons.svg#i-facebook"/></svg></a>
             <a href="#" data-bind-attr-href="contact.wa_url" aria-label="WhatsApp" target="_blank" rel="noopener"><svg class="icon"><use href="assets/img/icons.svg#i-whatsapp"/></svg></a>
           </div>
         </div>
-        <div><h5>Visit</h5><ul><li></li><li><a href="offers">Offers</a></li><li><a href="gallery">Gallery</a></li><li><a href="about">About</a></li><li><a href="contact">Contact</a></li></ul></div>
-        <div><h5>Houses</h5><ul><li><a href="branches/al-ain">Al Ain</a></li><li><a href="branches/khalifa-city">Khalifa City</a></li><li><a href="branches/khalidiya">Khalidiya</a></li><li><a href="branches/baniyas-spa">Baniyas Spa</a></li><li><a href="branches/baniyas-barber">Baniyas Barber</a></li></ul></div>
-        <div><h5>&nbsp;</h5><ul><li><a href="branches/rabdan">Rabdan</a></li><li><a href="branches/old-shahamah">Old Shahamah</a></li><li><a href="branches/new-shahamah">New Shahamah</a></li><li><a href="branches/muroor">Muroor</a></li><li><a href="branches/vip-muroor">VIP Muroor</a></li></ul></div>
+        <div><h5>Visit</h5><ul><li></li><li><a href="offers">Offers</a></li><li><a href="gallery">Gallery</a></li><li><a href="about">About</a></li><li><a href="blog">Insights</a></li><li><a href="contact">Contact</a></li></ul></div>
+        <div><h5>Branches</h5><ul><li><a href="branches/al-ain">Al Ain</a></li><li><a href="branches/khalifa-city">Khalifa City</a></li><li><a href="branches/khalidiya">Khalidiya</a></li><li><a href="branches/baniyas-spa">Baniyas Spa</a></li><li><a href="branches/baniyas-barber">Baniyas Barber</a></li></ul></div>
+        <div><h5>&nbsp;</h5><ul><li><a href="branches/rabdan">Rabdan</a></li><li><a href="branches/old-shahamah">Old Shahamah</a></li><li><a href="branches/new-shahamah">New Shahamah</a></li><li><a href="branches/muroor">Muroor Barber</a></li><li><a href="branches/vip-muroor">VIP Muroor</a></li></ul></div>
       </div>
       
       <div class="footer-newsletter">
@@ -247,8 +254,8 @@
   <script src="assets/js/config.js"></script>
   <script src="assets/js/tracking.js"></script>
   <script src="assets/js/consent.js" defer></script>
-  <script src="assets/js/runtime.js?v=2"></script>
-  <script src="assets/js/main.js?v=27"></script>
+  <script src="assets/js/runtime.js?v=3"></script>
+  <script src="assets/js/main.js?v=30"></script>
   <script src="assets/js/nav-dropdown.js" defer></script>
   <script src="assets/js/motion.js?v=18" defer></script>
   <script src="assets/js/quickbook.js" defer></script>

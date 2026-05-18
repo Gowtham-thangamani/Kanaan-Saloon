@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Blog · Kanaan Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="admin.css" />
+  <style>
+    .blog-grid { display: grid; grid-template-columns: 320px 1fr; gap: var(--s-5); align-items: start; }
+    @media (max-width: 900px) { .blog-grid { grid-template-columns: 1fr; } }
+    .blog-list { display: flex; flex-direction: column; gap: 8px; }
+    .blog-list__item {
+      padding: 12px 14px; border: 1px solid var(--hairline); cursor: pointer;
+      transition: border-color 120ms, background 120ms;
+    }
+    .blog-list__item:hover { border-color: var(--gold); }
+    .blog-list__item.is-active { border-color: var(--gold); background: rgba(200,160,74,0.06); }
+    .blog-list__title { font-weight: 600; font-size: 14px; margin: 0 0 4px; }
+    .blog-list__meta { font-size: 11px; color: var(--muted); letter-spacing: 0.04em; text-transform: uppercase; }
+    .blog-list__inactive { opacity: 0.5; }
+    .blog-form .row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-4); }
+    .blog-form label { display: block; font-size: 11px; text-transform: uppercase;
+      letter-spacing: 0.06em; color: var(--muted); margin: 0 0 6px; }
+    .blog-form .input, .blog-form .ta { width: 100%; }
+    .blog-form .ta { min-height: 80px; font-family: inherit; }
+    .blog-form .ta--body { min-height: 360px; font-family: 'Courier New', monospace; font-size: 13px; }
+    .blog-form .full { grid-column: 1 / -1; }
+    .blog-form .field-help { font-size: 11px; color: var(--muted); margin: 4px 0 0; }
+  </style>
+</head>
+<body>
+<div class="admin-shell">
+  <aside class="admin-side">
+    <div class="admin-side__brand">KANAAN<span>.</span></div>
+    <nav class="admin-side__nav">
+      <a href="dashboard">Dashboard</a>
+      <a href="leads">Leads · CRM</a>
+      <a href="scan">Scan booking</a>
+      <a href="blocks">Blocked slots</a>
+      <a href="offers">Offers</a>
+      <a href="branches">Branches</a>
+      <a href="banners">Banners</a>
+      <a href="blog" class="active">Blog</a>
+      <a href="integrations">Integrations</a>
+      <a href="settings">Settings</a>
+    </nav>
+    <div class="admin-side__user">Signed in · <button type="button" onclick="KANAAN_ADMIN.logout()">Sign out</button></div>
+  </aside>
+
+  <main class="admin-main">
+    <h1 class="admin-h">Blog posts</h1>
+    <p class="admin-sub">Add or edit posts — changes save directly to Supabase and appear on the live site immediately. Use <strong>Status: Draft</strong> to hide a post from visitors while you work on it.</p>
+
+    <div class="bar">
+      <button type="button" class="btn btn--sm" id="newPost">+ New post</button>
+      <span class="spacer"></span>
+      <button type="button" class="btn btn--ghost btn--sm" id="reload">Refresh from server</button>
+      <button type="button" class="btn btn--ghost btn--sm" id="download">⬇ Export backup (JSON)</button>
+    </div>
+
+    <div class="blog-grid">
+      <div class="blog-list" id="postList"></div>
+      <div id="editor"></div>
+    </div>
+  </main>
+</div>
+
+<script src="../assets/js/config.js"></script>
+<script src="admin.js"></script>
+<script>
+if (KANAAN_ADMIN.requireAuth()) (async function () {
+  let posts = [];           // Array of post objects (live mirror of Supabase blog_posts)
+  let selectedId = null;
+  const dirtyIds = new Set(); // Tracks posts with unsaved edits
+
+  async function load() {
+    posts = await KANAAN_ADMIN.loadBlogPosts();
+    if (!selectedId && posts[0]) selectedId = posts[0].id;
+    render();
+  }
+
+  function esc(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function renderList() {
+    const list = document.getElementById('postList');
+    list.innerHTML = posts.map(p => `
+      <div class="blog-list__item ${p.id === selectedId ? 'is-active' : ''} ${p.active === false ? 'blog-list__inactive' : ''}" data-pick="${esc(p.id)}">
+        <p class="blog-list__title">${esc(p.title || '(untitled)')}${dirtyIds.has(p.id) ? ' <span style="color:var(--gold);">•</span>' : ''}</p>
+        <p class="blog-list__meta">${esc(p.publish_date || '')} · ${esc(p.category || '')} ${p.active === false ? '· DRAFT' : ''}</p>
+      </div>`).join('') || '<p class="muted" style="padding: 12px;">No posts yet. Click "+ New post" to start.</p>';
+    list.querySelectorAll('[data-pick]').forEach(el => {
+      el.addEventListener('click', () => {
+        if (dirtyIds.has(selectedId) && !confirm('You have unsaved changes on the current post. Switch anyway?')) return;
+        selectedId = el.dataset.pick;
+        render();
+      });
+    });
+  }
+
+  function renderEditor() {
+    const ed = document.getElementById('editor');
+    const post = posts.find(p => p.id === selectedId);
+    if (!post) {
+      ed.innerHTML = '<p class="muted" style="padding: var(--s-5);">Select a post on the left, or click "+ New post" to start.</p>';
+      return;
+    }
+    const isDirty = dirtyIds.has(post.id);
+    ed.innerHTML = `
+      <div class="card blog-form">
+        <div class="row">
+          <div><label>Title</label><input class="input" data-k="title" value="${esc(post.title)}" /></div>
+          <div><label>Slug (URL piece)</label><input class="input" data-k="slug" value="${esc(post.slug)}" />
+            <p class="field-help">URL: /blog/<strong>${esc(post.slug || '(slug)')}</strong></p></div>
+          <div class="full"><label>Excerpt (shown on blog index)</label>
+            <textarea class="ta" data-k="excerpt">${esc(post.excerpt)}</textarea></div>
+          <div><label>Category</label><input class="input" data-k="category" value="${esc(post.category)}" /></div>
+          <div><label>Read time (minutes)</label><input class="input" type="number" data-k="read_minutes" value="${esc(post.read_minutes)}" /></div>
+          <div><label>Publish date (YYYY-MM-DD)</label><input class="input" type="date" data-k="publish_date" value="${esc(post.publish_date)}" /></div>
+          <div><label>Author</label><input class="input" data-k="author" value="${esc(post.author)}" /></div>
+          <div class="full"><label>Hero image URL</label><input class="input" data-k="hero_image" value="${esc(post.hero_image)}" />
+            <p class="field-help">Use a path like <code>/assets/img/photos/your-image.webp</code></p></div>
+          <div class="full"><label>Hero image alt text</label><input class="input" data-k="hero_alt" value="${esc(post.hero_alt)}" /></div>
+          <div class="full"><label>TL;DR (optional summary above lede)</label>
+            <textarea class="ta" data-k="tldr">${esc(post.tldr)}</textarea></div>
+          <div class="full"><label>Lede paragraph</label>
+            <textarea class="ta" data-k="lede">${esc(post.lede)}</textarea></div>
+          <div class="full"><label>Body (HTML)</label>
+            <textarea class="ta ta--body" data-k="body_html">${esc(post.body_html)}</textarea>
+            <p class="field-help">Use HTML tags: <code>&lt;h2&gt;</code>, <code>&lt;h3&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;a href="..."&gt;</code>, <code>&lt;strong&gt;</code>, <code>&lt;em&gt;</code>. Internal links: <code>&lt;a href="/branches/al-ain"&gt;</code>.</p></div>
+          <div><label>Status</label>
+            <select class="sel" data-k="active">
+              <option value="true" ${post.active !== false ? 'selected' : ''}>Published (visible on /blog)</option>
+              <option value="false" ${post.active === false ? 'selected' : ''}>Draft (hidden from visitors)</option>
+            </select></div>
+        </div>
+        <div class="bar" style="margin-top: var(--s-5); border-top: 1px solid var(--hairline); padding-top: var(--s-4);">
+          <button type="button" class="btn btn--ghost btn--sm" id="del">🗑 Delete this post</button>
+          <span class="spacer"></span>
+          <span class="muted" id="saveStatus" style="margin-right: 12px; font-size: 12px;">${isDirty ? 'Unsaved changes' : 'All changes saved'}</span>
+          <button type="button" class="btn btn--sm" id="save">💾 Save & publish</button>
+        </div>
+      </div>`;
+
+    ed.querySelectorAll('[data-k]').forEach(el => {
+      el.addEventListener('input', () => {
+        let v = el.value;
+        if (el.dataset.k === 'active') v = (v === 'true');
+        else if (el.dataset.k === 'read_minutes') v = parseInt(v, 10) || 0;
+        post[el.dataset.k] = v;
+        // Keep id in sync with slug (slug is the public URL piece)
+        if (el.dataset.k === 'slug') post.id = v;
+        dirtyIds.add(post.id);
+        const status = document.getElementById('saveStatus');
+        if (status) status.textContent = 'Unsaved changes';
+        renderList();   // refresh dirty-dot in sidebar
+      });
+    });
+
+    document.getElementById('save').addEventListener('click', async () => {
+      // Quick validation — slug must be URL-safe.
+      const slugOk = /^[a-z0-9][a-z0-9-]*$/.test(post.slug || '');
+      if (!slugOk) {
+        alert('Slug must be lowercase, hyphenated, no spaces or special characters. Example: "spring-grooming-tips"');
+        return;
+      }
+      if (!post.title || !post.title.trim()) {
+        alert('Title is required.');
+        return;
+      }
+      const btn = document.getElementById('save');
+      btn.disabled = true; btn.textContent = '⏳ Saving…';
+      const res = await KANAAN_ADMIN.saveBlogPost(post);
+      btn.disabled = false; btn.textContent = '💾 Save & publish';
+      if (res.ok) {
+        if (res.post) Object.assign(post, res.post);
+        dirtyIds.delete(post.id);
+        KANAAN_ADMIN.toast(post.active === false ? 'Saved as draft' : 'Published — live on /blog/' + post.slug);
+        render();
+      } else {
+        KANAAN_ADMIN.toast('Save failed: ' + (res.error || 'unknown error'));
+      }
+    });
+
+    document.getElementById('del').addEventListener('click', async () => {
+      if (!confirm('Delete "' + (post.title || 'this post') + '"? This removes it from the live site immediately and cannot be undone.')) return;
+      const btn = document.getElementById('del');
+      btn.disabled = true; btn.textContent = '⏳ Deleting…';
+      const res = await KANAAN_ADMIN.deleteBlogPost(post.id);
+      btn.disabled = false;
+      if (res.ok) {
+        posts = posts.filter(p => p.id !== selectedId);
+        selectedId = posts[0] ? posts[0].id : null;
+        dirtyIds.delete(post.id);
+        KANAAN_ADMIN.toast('Deleted');
+        render();
+      } else {
+        btn.textContent = '🗑 Delete this post';
+        KANAAN_ADMIN.toast('Delete failed: ' + (res.error || 'unknown error'));
+      }
+    });
+  }
+
+  function render() {
+    renderList();
+    renderEditor();
+  }
+
+  document.getElementById('newPost').addEventListener('click', () => {
+    if (dirtyIds.size && !confirm('You have unsaved changes. Start a new post anyway?')) return;
+    const id = 'new-post-' + Date.now().toString(36);
+    posts.unshift({
+      id, slug: id,
+      title: 'New post',
+      excerpt: '',
+      category: 'Insights',
+      read_minutes: 5,
+      hero_image: '/assets/img/photos/service-facial-overview-1000.webp',
+      hero_alt: '',
+      publish_date: new Date().toISOString().slice(0, 10),
+      author: 'Kanaan Editorial',
+      tldr: '',
+      lede: '',
+      body_html: '<p>Start writing here…</p>',
+      active: false   // New posts start as drafts
+    });
+    selectedId = id;
+    dirtyIds.add(id);
+    render();
+  });
+
+  document.getElementById('reload').addEventListener('click', async () => {
+    if (dirtyIds.size && !confirm('You have unsaved changes. Refresh from server anyway?')) return;
+    selectedId = null;
+    dirtyIds.clear();
+    await load();
+    KANAAN_ADMIN.toast('Refreshed from Supabase');
+  });
+
+  document.getElementById('download').addEventListener('click', () => {
+    // Backup export — matches blog.json shape so it can be restored manually if needed.
+    const data = {
+      _NOTE: 'Backup snapshot of blog_posts table from Supabase. The live site reads from Supabase directly, not this file.',
+      _exported_at: new Date().toISOString(),
+      posts: posts
+    };
+    KANAAN_ADMIN.download('blog.json', data);
+  });
+
+  await load();
+})();
+</script>
+</body>
+</html>

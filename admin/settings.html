@@ -18,8 +18,9 @@
       <a href="scan">Scan booking</a>
       <a href="blocks">Blocked slots</a>
       <a href="offers">Offers</a>
-      <a href="branches">Houses</a>
+      <a href="branches">Branches</a>
       <a href="banners">Banners</a>
+      <a href="blog">Blog</a>
       <a href="integrations">Integrations</a>
       <a href="settings" class="active">Settings</a>
     </nav>
@@ -72,7 +73,8 @@
 if (KANAAN_ADMIN.requireAuth()) (function () {
   const email = KANAAN_ADMIN.currentUserEmail();
   if (email) document.getElementById('signedInAs').textContent = 'Signed in as ' + email + '.';
-  document.getElementById('csvUrl').value = localStorage.getItem('kanaan_leads_csv_url') || '';
+  const cfgCsv = (window.KANAAN_CONFIG && window.KANAAN_CONFIG.leadsSheet && window.KANAAN_CONFIG.leadsSheet.csvUrl) || '';
+  document.getElementById('csvUrl').value = localStorage.getItem('kanaan_leads_csv_url') || cfgCsv;
 
   /* Live rule indicators on the password fields */
   const pw1 = document.getElementById('pw1');

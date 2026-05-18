@@ -18,8 +18,9 @@
       <a href="scan">Scan booking</a>
       <a href="blocks" class="active">Blocked slots</a>
       <a href="offers">Offers</a>
-      <a href="branches">Houses</a>
+      <a href="branches">Branches</a>
       <a href="banners">Banners</a>
+      <a href="blog">Blog</a>
       <a href="integrations">Integrations</a>
       <a href="settings">Settings</a>
     </nav>
@@ -35,7 +36,7 @@
       <p style="color: var(--muted); font-size: 13px; margin-bottom: 16px;">All times are local (Abu Dhabi). The block applies in 30-minute increments.</p>
       <div class="row" style="gap: 12px;">
         <div style="flex: 1; min-width: 160px;">
-          <label for="b-branch">House</label>
+          <label for="b-branch">Branch</label>
           <select class="sel" id="b-branch">
             <option>Al Ain</option>
             <option>Khalifa City</option>
@@ -45,7 +46,7 @@
             <option>Rabdan</option>
             <option>Old Shahamah</option>
             <option>New Shahamah</option>
-            <option>Muroor</option>
+            <option>Muroor Barber</option>
             <option>VIP Muroor</option>
           </select>
         </div>
@@ -84,7 +85,7 @@
         <option value="">All branches</option>
         <option>Al Ain</option><option>Khalifa City</option><option>Khalidiya</option>
         <option>Baniyas Spa</option><option>Baniyas Barber</option><option>Rabdan</option>
-        <option>Old Shahamah</option><option>New Shahamah</option><option>Muroor</option>
+        <option>Old Shahamah</option><option>New Shahamah</option><option>Muroor Barber</option>
         <option>VIP Muroor</option>
       </select>
       <input class="input" type="date" id="f-from" aria-label="From date" title="From date" />
@@ -103,7 +104,7 @@
       <table>
         <thead>
           <tr>
-            <th>House</th><th>Date</th><th>Start</th><th>Duration</th><th>Reason</th><th>Added</th><th></th>
+            <th>Branch</th><th>Date</th><th>Start</th><th>Duration</th><th>Reason</th><th>Added</th><th></th>
           </tr>
         </thead>
         <tbody id="rows"></tbody>

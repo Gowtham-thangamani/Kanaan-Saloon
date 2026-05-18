@@ -19,13 +19,13 @@
     "privacyEmail": "kanaansaloon@gmail.com"
   },
   "social": {
-    "instagram": "",
-    "instagram_handle": "",
-    "tiktok": "",
-    "tiktok_handle": "",
-    "snapchat": "",
+    "instagram": "https://www.instagram.com/kanaan.gents.saloon.spa/",
+    "instagram_handle": "@kanaan.gents.saloon.spa",
+    "tiktok": "https://www.tiktok.com/@kanaan_gents_saloon",
+    "tiktok_handle": "@kanaan_gents_saloon",
+    "snapchat": "https://snapchat.com/t/4lybTVD9",
     "snapchat_handle": "",
-    "facebook": "",
+    "facebook": "https://www.facebook.com/share/1D2xutvckv/",
     "youtube": "",
     "google_business": ""
   },
@@ -34,7 +34,7 @@
     "headline_ar": "عناية، بمعيار راقٍ.",
     "headline_html_en": "Grooming,<br/>Refined.",
     "headline_html_ar": "عناية،<br/>بمعيار راقٍ.",
-    "sub_en": "Ten houses across Abu Dhabi and Al Ain. One uncompromising standard of barbering, grooming and spa craft — held by master practitioners since the day we opened.",
+    "sub_en": "Ten branches across Abu Dhabi and Al Ain. One uncompromising standard of barbering, grooming and spa craft — held by master practitioners since the day we opened.",
     "sub_ar": "عشرة فروع في أبوظبي والعين. معيار واحد لا يتغيّر في الحلاقة والعناية والسبا — تصنعه أيدٍ مدرّبة منذ يومنا الأول.",
     "image": "/assets/img/photos/arch-staircase-lemon-1600.webp",
     "primary_cta_en": "Book Your Chair",

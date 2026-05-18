@@ -47,12 +47,13 @@
   <header class="site-header">
     <div class="site-header__inner">
       <a href="./" class="logo" aria-label="كنعان — صالون وسبا للرجال"><img src="../assets/img/logo.svg" alt="كنعان صالون وسبا للرجال" class="logo-img" /></a>
-      <nav class="main-nav">
+      <nav class="main-nav" aria-label="Primary">
         <a href="./">الرئيسية</a>
         <a href="about" class="is-active">عن كنعان</a>
         <a href="offers">العروض</a>
-        <a href="../branches">البيوت والخدمات</a>
+        <a href="branches">البيوت والخدمات</a>
         <a href="gallery">المعرض</a>
+        <a href="blog">المقالات</a>
         <a href="contact">تواصل</a>
       </nav>
       <div class="header-actions">
@@ -61,11 +62,16 @@
         <button type="button" class="menu-toggle" aria-label="القائمة"><span></span><span></span><span></span></button>
       </div>
     </div>
-    <nav class="mobile-nav">
-      <a href="./">الرئيسية</a><a href="about">عن كنعان</a>
-      <a href="offers">العروض</a><a href="../branches">البيوت والخدمات</a><a href="gallery">المعرض</a>
-      <a href="contact">تواصل</a><a href="../about">EN</a>
-      <a href="book" class="btn">احجز الآن</a>
+    <nav class="mobile-nav" aria-label="Mobile">
+      <a href="./">الرئيسية</a>
+      <a href="about" class="is-active">عن كنعان</a>
+      <a href="offers">العروض</a>
+      <a href="branches">البيوت والخدمات</a>
+      <a href="gallery">المعرض</a>
+      <a href="blog">المقالات</a>
+      <a href="contact">تواصل</a>
+      <a href="../" class="lang-switch">EN</a>
+      <a href="book" class="btn btn--sm">احجز الآن</a>
     </nav>
   </header>
 
@@ -127,7 +133,14 @@
 
   <footer class="site-footer">
     <div class="container">
-      
+      <div class="footer-socials" aria-label="Social">
+        <a href="#" data-bind-attr-href="social.instagram" aria-label="Instagram" target="_blank" rel="noopener"><svg class="icon"><use href="../assets/img/icons.svg#i-instagram"/></svg></a>
+        <a href="#" data-bind-attr-href="social.tiktok" aria-label="TikTok" target="_blank" rel="noopener"><svg class="icon"><use href="../assets/img/icons.svg#i-tiktok"/></svg></a>
+        <a href="#" data-bind-attr-href="social.snapchat" aria-label="Snapchat" target="_blank" rel="noopener"><svg class="icon"><use href="../assets/img/icons.svg#i-snapchat"/></svg></a>
+        <a href="#" data-bind-attr-href="social.facebook" aria-label="Facebook" target="_blank" rel="noopener"><svg class="icon"><use href="../assets/img/icons.svg#i-facebook"/></svg></a>
+        <a href="#" data-bind-attr-href="contact.wa_url" aria-label="WhatsApp" target="_blank" rel="noopener"><svg class="icon"><use href="../assets/img/icons.svg#i-whatsapp"/></svg></a>
+      </div>
+
       <div class="footer-newsletter">
         <div>
           <h5>النشرة</h5>
@@ -154,8 +167,8 @@
   <script src="../assets/js/config.js"></script>
   <script src="../assets/js/tracking.js"></script>
   <script src="../assets/js/consent.js" defer></script>
-  <script src="../assets/js/runtime.js?v=2"></script>
-  <script src="../assets/js/main.js?v=27"></script>
+  <script src="../assets/js/runtime.js?v=3"></script>
+  <script src="../assets/js/main.js?v=30"></script>
   <script src="assets/js/nav-dropdown.js" defer></script>
   <script src="../assets/js/motion.js?v=18" defer></script>
   <script src="../assets/js/quickbook.js" defer></script>

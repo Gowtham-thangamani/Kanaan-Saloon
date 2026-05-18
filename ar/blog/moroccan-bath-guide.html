@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="../../assets/css/fonts.css" />
   <link rel="stylesheet" href="../../assets/css/style.css?v=3" />
   <link rel="stylesheet" href="../../assets/css/motion.css?v=19" />
+  <link rel="stylesheet" href="../../assets/css/blog.css?v=1" />
   <script id="motion-pre-paint">(function(){if(!window.matchMedia||!window.matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.classList.add("motion-ready");}})();</script>
   <link rel="preload" as="image" href="../../assets/img/photos/service-moroccan-bath-1600.webp" fetchpriority="high" />
 
@@ -46,9 +47,14 @@
   <header class="site-header">
     <div class="site-header__inner">
       <a href="../" class="logo" aria-label="كنعان — صالون وسبا للرجال"><img src="../../assets/img/logo.svg" alt="كنعان صالون وسبا للرجال" class="logo-img" /></a>
-      <nav class="main-nav">
+      <nav class="main-nav" aria-label="Primary">
         <a href="../">الرئيسية</a>
-        <a href="../../branches">البيوت والخدمات</a><a href="../blog">المقالات</a>
+        <a href="../about">عن كنعان</a>
+        <a href="../offers">العروض</a>
+        <a href="../branches">البيوت والخدمات</a>
+        <a href="../gallery">المعرض</a>
+        <a href="../blog" class="is-active">المقالات</a>
+        <a href="../contact">تواصل</a>
       </nav>
       <div class="header-actions">
         <a href="../../blog/moroccan-bath-guide" class="lang-switch">EN</a>
@@ -57,7 +63,9 @@
     </div>
   </header>
 
-  <article>
+  <div class="reading-progress" id="readingProgress" aria-hidden="true"></div>
+
+  <article class="blog-article">
     <section class="page-hero">
       <div class="page-hero__media" data-reveal="mask" data-parallax="bg" data-speed="0.50"><img src="../../assets/img/photos/service-hair-barber-stations-1600.webp" alt="Spa interior at Kanaan Baniyas Spa" loading="eager" fetchpriority="high" decoding="async" /></div>
       <div class="container page-hero__content">
@@ -115,7 +123,14 @@
 
   <footer class="site-footer">
     <div class="container">
-      
+      <div class="footer-socials" aria-label="Social">
+        <a href="#" data-bind-attr-href="social.instagram" aria-label="Instagram" target="_blank" rel="noopener"><svg class="icon"><use href="../../assets/img/icons.svg#i-instagram"/></svg></a>
+        <a href="#" data-bind-attr-href="social.tiktok" aria-label="TikTok" target="_blank" rel="noopener"><svg class="icon"><use href="../../assets/img/icons.svg#i-tiktok"/></svg></a>
+        <a href="#" data-bind-attr-href="social.snapchat" aria-label="Snapchat" target="_blank" rel="noopener"><svg class="icon"><use href="../../assets/img/icons.svg#i-snapchat"/></svg></a>
+        <a href="#" data-bind-attr-href="social.facebook" aria-label="Facebook" target="_blank" rel="noopener"><svg class="icon"><use href="../../assets/img/icons.svg#i-facebook"/></svg></a>
+        <a href="#" data-bind-attr-href="contact.wa_url" aria-label="WhatsApp" target="_blank" rel="noopener"><svg class="icon"><use href="../../assets/img/icons.svg#i-whatsapp"/></svg></a>
+      </div>
+
       <div class="footer-newsletter">
         <div>
           <h5>النشرة</h5>
@@ -129,7 +144,7 @@
       <div class="footer-bottom"><span>© ٢٠٢٦ كنعان.</span><div class="footer-bottom__links"><a href="../../gift-voucher">Gift Vouchers</a><a href="../../corporate">Corporate</a><a href="../../blog/moroccan-bath-guide">EN</a></div></div>
     </div>
   </footer>
-  <script src="../../assets/js/runtime.js?v=2"></script>
+  <script src="../../assets/js/runtime.js?v=3"></script>
   <script src="../../assets/js/config.js"></script>
   <script src="../../assets/js/tracking.js"></script>
   <script src="../../assets/js/consent.js" defer></script>
