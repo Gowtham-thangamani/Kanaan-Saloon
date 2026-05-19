@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Testimonials · Kanaan Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+<div class="admin-shell">
+  <aside class="admin-side">
+    <div class="admin-side__brand">KANAAN<span>.</span></div>
+    <nav class="admin-side__nav">
+      <a href="dashboard">Dashboard</a>
+      <a href="leads">Leads · CRM</a>
+      <a href="scan">Scan booking</a>
+      <a href="blocks">Blocked slots</a>
+      <a href="offers">Offers</a>
+      <a href="branches">Branches</a>
+      <a href="banners">Banners</a>
+      <a href="testimonials" class="active">Testimonials</a>
+      <a href="blog">Blog</a>
+      <a href="integrations">Integrations</a>
+      <a href="settings">Settings</a>
+    </nav>
+    <div class="admin-side__user">Signed in as admin · <button type="button" onclick="KANAAN_ADMIN.logout()">Sign out</button></div>
+  </aside>
+
+  <main class="admin-main">
+    <h1 class="admin-h">Testimonials</h1>
+    <p class="admin-sub">Customer quotes shown on the homepage and About page. Bilingual (English + Arabic). Inactive testimonials stay in the list but don't show on the live site.</p>
+
+    <div class="bar">
+      <button type="button" class="btn btn--ghost btn--sm" id="addBtn">+ Add testimonial</button>
+      <span class="spacer"></span>
+      <span class="muted" id="saveStatus" style="margin-right: 12px; font-size: 12px;">All changes saved</span>
+      <button type="button" class="btn btn--ghost btn--sm" id="reload">Refresh from server</button>
+      <button type="button" class="btn btn--ghost btn--sm" id="download">⬇ Export backup (JSON)</button>
+      <button type="button" class="btn btn--sm" id="save">💾 Save &amp; publish</button>
+    </div>
+
+    <div id="list"></div>
+  </main>
+</div>
+
+<script src="../assets/js/config.js?v=2"></script>
+<script src="admin.js"></script>
+<script>
+if (KANAAN_ADMIN.requireAuth()) (async function () {
+  let data;
+  let dirty = false;
+  const status = () => document.getElementById('saveStatus');
+  function markDirty() { dirty = true; const s = status(); if (s) s.textContent = 'Unsaved changes'; }
+  function markClean() { dirty = false; const s = status(); if (s) s.textContent = 'All changes saved'; }
+
+  function esc(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  async function load() {
+    const remote = await KANAAN_ADMIN.loadContentSection('testimonials');
+    if (remote && Array.isArray(remote.testimonials)) {
+      data = remote;
+    } else {
+      data = await KANAAN_ADMIN.loadJSON('content/testimonials.json');
+      if (!data || !Array.isArray(data.testimonials)) data = { testimonials: [] };
+    }
+    markClean();
+    render();
+  }
+
+  function render() {
+    const list = document.getElementById('list');
+    list.innerHTML = data.testimonials.map((t, i) => `
+      <div class="card">
+        <div class="bar">
+          <span class="pill pill--gold">${esc(t.id || 't' + (i+1))}</span>
+          ${t.active !== false ? '<span class="pill pill--sage">active</span>' : '<span class="pill pill--rust">hidden</span>'}
+          <span class="pill">★ ${esc(t.rating || 5)}</span>
+          <span class="spacer"></span>
+          <button type="button" class="btn btn--ghost btn--sm" data-toggle="${i}">${t.active !== false ? 'Hide' : 'Show'}</button>
+          <button type="button" class="btn btn--danger btn--sm" data-del="${i}">Delete</button>
+        </div>
+        <div class="row">
+          <div><label>Customer name</label><input class="input" value="${esc(t.name)}" data-i="${i}" data-k="name" /></div>
+          <div><label>Branch (slug)</label><input class="input" value="${esc(t.branch)}" data-i="${i}" data-k="branch" placeholder="e.g. khalifa-city" /></div>
+          <div><label>Rating (1–5)</label><input type="number" min="1" max="5" class="input" value="${esc(t.rating || 5)}" data-i="${i}" data-k="rating" /></div>
+          <div><label>ID (kebab-case)</label><input class="input" value="${esc(t.id)}" data-i="${i}" data-k="id" /></div>
+          <div class="full"><label>Quote (English)</label><textarea class="ta" data-i="${i}" data-k="quote_en">${esc(t.quote_en)}</textarea></div>
+          <div class="full"><label>Quote (Arabic)</label><textarea class="ta" data-i="${i}" data-k="quote_ar" dir="rtl">${esc(t.quote_ar)}</textarea></div>
+        </div>
+      </div>
+    `).join('') || '<p class="muted" style="padding: 12px;">No testimonials yet. Click "+ Add testimonial" to start.</p>';
+
+    list.querySelectorAll('[data-k]').forEach(el => {
+      el.addEventListener('input', () => {
+        const i = +el.dataset.i, k = el.dataset.k;
+        let v = el.value;
+        if (k === 'rating') v = parseInt(v, 10) || 5;
+        data.testimonials[i][k] = v;
+        markDirty();
+      });
+    });
+    list.querySelectorAll('[data-del]').forEach(b => b.addEventListener('click', () => {
+      if (!confirm('Delete this testimonial?')) return;
+      data.testimonials.splice(+b.dataset.del, 1);
+      markDirty(); render();
+    }));
+    list.querySelectorAll('[data-toggle]').forEach(b => b.addEventListener('click', () => {
+      const i = +b.dataset.toggle;
+      data.testimonials[i].active = !(data.testimonials[i].active !== false);
+      markDirty(); render();
+    }));
+  }
+
+  document.getElementById('addBtn').addEventListener('click', () => {
+    data.testimonials.unshift({
+      id: 't' + Date.now().toString(36),
+      quote_en: '',
+      quote_ar: '',
+      name: '',
+      branch: '',
+      rating: 5,
+      active: true
+    });
+    markDirty();
+    render();
+  });
+
+  document.getElementById('save').addEventListener('click', async () => {
+    const btn = document.getElementById('save');
+    btn.disabled = true; btn.textContent = '⏳ Saving…';
+    const res = await KANAAN_ADMIN.saveContentSection('testimonials', data);
+    btn.disabled = false; btn.textContent = '💾 Save & publish';
+    if (res.ok) { markClean(); KANAAN_ADMIN.toast('Testimonials published — live now'); }
+    else        { KANAAN_ADMIN.toast('Save failed: ' + (res.error || 'unknown')); }
+  });
+  document.getElementById('download').addEventListener('click', () => KANAAN_ADMIN.download('testimonials.json', data));
+  document.getElementById('reload').addEventListener('click', () => {
+    if (dirty && !confirm('Discard unsaved changes?')) return;
+    load();
+    KANAAN_ADMIN.toast('Refreshed from server');
+  });
+
+  load();
+})();
+</script>
+  <script src="../assets/js/tracking.js"></script>
+  <script src="../assets/js/consent.js" defer></script>
+</body>
+</html>

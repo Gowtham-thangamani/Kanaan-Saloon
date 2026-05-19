@@ -1,47 +1,54 @@
-Phase A: rich-text editor + Supabase image upload for blog admin
+Phase B: convert JSON-file admins to live Supabase save
 
-WHAT
-admin/blog now ships with Quill (CDN, snow theme) replacing the raw
-HTML textarea. The toolbar has:
-  - Headings (H2, H3) + paragraph
-  - Bold / italic / underline
-  - Blockquote
-  - Ordered + bullet lists
-  - Alignment (left / center / right / justify)
-  - Link
-  - Image (uploads to Supabase Storage, see below)
-  - Clean (strip formatting)
+Replaces the "edit -> download JSON -> manually upload" workflow with
+live save to a new content_sections table (one JSONB row per section).
+Admin pages affected: offers, branches, banners (site config), and a
+brand-new testimonials editor.
 
-A "Raw HTML" toggle is still available for power users — switches between
-the visual editor and the existing textarea without losing content.
+NEW
+- supabase/migrations/20260519200000_content_sections.sql
+  Single table keyed by section name with a jsonb data column. Public
+  read so the live site can render without auth; authenticated insert/
+  update/delete for admins. Same RLS pattern as blog_posts.
 
-IMAGE UPLOAD
-New `uploadBlogImage(file)` helper on KANAAN_ADMIN posts the file to a
-new `blog-images` Supabase Storage bucket (public read, authenticated
-write). The Quill image button calls this helper, then inserts the
-public URL into the editor — no base64 embedding.
+- admin.js: loadContentSection(key) + saveContentSection(key, data)
+  Generic helpers reused by every content admin page.
 
-The Hero image field also gets an "⬆ Upload" button and a live preview
-thumbnail so the admin can replace the hero with a single file pick.
+- assets/js/runtime.js: loadSection(key, jsonFile)
+  Prefers Supabase content_sections[key]; falls back to the bundled
+  JSON file when Supabase is unreachable, the migration hasn't been
+  applied yet, or the section hasn't been saved through the admin.
+  This means the live site keeps working even with zero migration
+  steps on the user's side — Supabase is purely additive.
 
-DEPLOY STEP
-Run the new migration in the Supabase SQL editor to create the bucket
-and RLS policies:
-  supabase/migrations/20260519100000_blog_images_bucket.sql
+- admin/testimonials.html (NEW)
+  Add / edit / hide / delete bilingual customer quotes. Replaces the
+  previous "no UI, edit testimonials.json by hand" gap.
 
-The 5 MB / image-types limits are enforced both client-side (in
-uploadBlogImage) and server-side (bucket config).
+- Sidebar nav: Testimonials link added to all 9 admin pages.
 
-CSS
-assets/css/blog.css now styles Quill's alignment classes
-(.ql-align-center / -right / -justify) and inline images so admin-typed
-formatting renders correctly on /blog and /blog/<slug>.
+CONVERTED (live save replaces "Save locally" + "Download JSON")
+- admin/offers.html
+- admin/branches.html
+- admin/banners.html  (edits the 'site' content_section — homepage hero,
+                       brand, contact, social)
 
-NOTE ON SCOPE
-This is Phase A of the user's bigger "everything editable" ask. The
-storage bucket + upload helper are reusable — subsequent phases (offers,
-branches, banners, testimonials, site config, service pages, etc.) can
-reuse the same upload mechanism for their own images without a new
-bucket per area.
+Each conversion preserves the existing field layout exactly; only the
+save mechanism changed. The Export backup (JSON) button is still there
+for safety snapshots.
+
+DEPLOY
+1. Run supabase/migrations/20260519200000_content_sections.sql in the
+   Supabase SQL editor. (One-time setup, idempotent.)
+2. Upload changed files to Hostinger.
+3. Open each admin (offers/branches/banners/testimonials), Save & publish
+   once so Supabase has the current content. Until then, the live site
+   keeps reading the JSON files in /content as it always did.
+
+PHASE STATUS
+[x] Phase A — blog Quill + image upload (commit 0a4bc13)
+[x] Phase B — JSON admins -> live Supabase save (this commit)
+[ ] Phase C — generic body editor for service / branch / static pages
+[ ] Phase D — homepage / about / FAQ editable sections
 
 Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>

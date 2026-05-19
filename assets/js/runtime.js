@@ -57,6 +57,30 @@
     }
   }
 
+  /* Try Supabase's content_sections table first, fall back to the JSON file.
+     Each admin-managed section (offers, branches, testimonials, site, banners)
+     lives as one JSONB row keyed by its name. Public read; admin write.
+     Returns the same shape as loadJSON(file). */
+  async function loadSection(key, jsonFile) {
+    const cfg = window.KANAAN_CONFIG && window.KANAAN_CONFIG.supabase;
+    if (cfg && cfg.url && cfg.anonKey) {
+      try {
+        const r = await fetch(
+          cfg.url + '/rest/v1/content_sections?select=data&key=eq.' + encodeURIComponent(key),
+          { headers: { apikey: cfg.anonKey, Authorization: 'Bearer ' + cfg.anonKey } }
+        );
+        if (r.ok) {
+          const rows = await r.json();
+          if (rows && rows[0] && rows[0].data) return rows[0].data;
+          // Empty row OR no row — fall through to JSON file (admin hasn't saved yet).
+        }
+      } catch (e) {
+        console.warn('[KANAAN runtime] section', key, 'Supabase fetch failed, falling back to JSON', e);
+      }
+    }
+    return await loadJSON(jsonFile);
+  }
+
   /* Blog posts live in Supabase (admin-managed via /admin/blog.html).
      Read with the anon key — RLS policy "public read published" restricts
      anon SELECTs to rows where active = true, so drafts stay hidden.
@@ -147,10 +171,10 @@
   // ============================================================
   async function init() {
     const [site, offers, branches, testimonials, blog] = await Promise.all([
-      loadJSON('site.json'),
-      loadJSON('offers.json'),
-      loadJSON('branches.json'),
-      loadJSON('testimonials.json'),
+      loadSection('site', 'site.json'),
+      loadSection('offers', 'offers.json'),
+      loadSection('branches', 'branches.json'),
+      loadSection('testimonials', 'testimonials.json'),
       loadBlogPosts()
     ]);
 

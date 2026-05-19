@@ -20,6 +20,7 @@
       <a href="offers" class="active">Offers</a>
       <a href="branches">Branches</a>
       <a href="banners">Banners</a>
+      <a href="testimonials">Testimonials</a>
       <a href="blog">Blog</a>
       <a href="integrations">Integrations</a>
       <a href="settings">Settings</a>
@@ -34,15 +35,16 @@
     <div class="bar">
       <button type="button" class="btn btn--ghost btn--sm" id="addOffer">+ Add new offer</button>
       <span class="spacer"></span>
-      <button type="button" class="btn btn--ghost btn--sm" id="reload">Reset from file</button>
-      <button type="button" class="btn btn--sm" id="save">💾 Save locally</button>
-      <button type="button" class="btn btn--sm" id="download">⬇ Download offers.json</button>
+      <span class="muted" id="saveStatus" style="margin-right: 12px; font-size: 12px;">All changes saved</span>
+      <button type="button" class="btn btn--ghost btn--sm" id="reload">Refresh from server</button>
+      <button type="button" class="btn btn--ghost btn--sm" id="download">⬇ Export backup (JSON)</button>
+      <button type="button" class="btn btn--sm" id="save">💾 Save &amp; publish</button>
     </div>
 
     <div id="list"></div>
 
     <p style="color: var(--muted); font-size: 12px; margin-top: 24px;">
-      <strong>Workflow:</strong> Edit → Save locally (preserved in your browser) → Download offers.json → upload to <code>content/offers.json</code> on your server (or commit to Git).
+      Edits save to Supabase and appear on the live site immediately. The export button downloads a JSON backup of the current state.
     </p>
   </main>
 </div>
@@ -51,9 +53,21 @@
 <script>
 if (KANAAN_ADMIN.requireAuth()) (async function () {
   let data;
-  async function load(reset = false) {
-    if (reset) localStorage.removeItem('kanaan_content_content/offers.json');
-    data = await KANAAN_ADMIN.loadJSON('content/offers.json');
+  let dirty = false;
+  const status = () => document.getElementById('saveStatus');
+  function markDirty() { dirty = true; const s = status(); if (s) s.textContent = 'Unsaved changes'; }
+  function markClean() { dirty = false; const s = status(); if (s) s.textContent = 'All changes saved'; }
+
+  async function load() {
+    // Prefer Supabase content_sections; fall back to bundled JSON file the
+    // first time (before any admin save has happened).
+    const remote = await KANAAN_ADMIN.loadContentSection('offers');
+    if (remote && Array.isArray(remote.offers)) {
+      data = remote;
+    } else {
+      data = await KANAAN_ADMIN.loadJSON('content/offers.json');
+    }
+    markClean();
     render();
   }
   function render() {
@@ -133,14 +147,15 @@ if (KANAAN_ADMIN.requireAuth()) (async function () {
         else if (k === 'limited_time') v = (v === 'true');
         else if (k === 'price') v = +v;
         data.offers[i][k] = v;
+        markDirty();
       });
     });
     list.querySelectorAll('[data-del]').forEach(b => b.addEventListener('click', () => {
       if (!confirm('Delete this offer?')) return;
-      data.offers.splice(+b.dataset.del, 1); render();
+      data.offers.splice(+b.dataset.del, 1); markDirty(); render();
     }));
     list.querySelectorAll('[data-toggle]').forEach(b => b.addEventListener('click', () => {
-      const i = +b.dataset.toggle; data.offers[i].active = !data.offers[i].active; render();
+      const i = +b.dataset.toggle; data.offers[i].active = !data.offers[i].active; markDirty(); render();
     }));
   }
   document.getElementById('addOffer').addEventListener('click', () => {
@@ -154,11 +169,23 @@ if (KANAAN_ADMIN.requireAuth()) (async function () {
       branches: ['all'], limited_time: false,
       valid_from: '', valid_to: '', tags: [], active: true
     });
+    markDirty();
     render();
   });
-  document.getElementById('save').addEventListener('click', () => KANAAN_ADMIN.saveJSON('content/offers.json', data));
-  document.getElementById('download').addEventListener('click', () => KANAAN_ADMIN.download('content/offers.json', data));
-  document.getElementById('reload').addEventListener('click', () => { if (confirm('Discard unsaved changes?')) load(true); });
+  document.getElementById('save').addEventListener('click', async () => {
+    const btn = document.getElementById('save');
+    btn.disabled = true; btn.textContent = '⏳ Saving…';
+    const res = await KANAAN_ADMIN.saveContentSection('offers', data);
+    btn.disabled = false; btn.textContent = '💾 Save & publish';
+    if (res.ok) { markClean(); KANAAN_ADMIN.toast('Offers published — live now'); }
+    else        { KANAAN_ADMIN.toast('Save failed: ' + (res.error || 'unknown')); }
+  });
+  document.getElementById('download').addEventListener('click', () => KANAAN_ADMIN.download('offers.json', data));
+  document.getElementById('reload').addEventListener('click', () => {
+    if (dirty && !confirm('Discard unsaved changes?')) return;
+    load();
+    KANAAN_ADMIN.toast('Refreshed from server');
+  });
   load();
 })();
 </script>

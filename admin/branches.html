@@ -20,6 +20,7 @@
       <a href="offers">Offers</a>
       <a href="branches" class="active">Branches</a>
       <a href="banners">Banners</a>
+      <a href="testimonials">Testimonials</a>
       <a href="blog">Blog</a>
       <a href="integrations">Integrations</a>
       <a href="settings">Settings</a>
@@ -33,15 +34,16 @@
 
     <div class="bar">
       <span class="spacer"></span>
-      <button type="button" class="btn btn--ghost btn--sm" id="reload">Reset from file</button>
-      <button type="button" class="btn btn--sm" id="save">💾 Save locally</button>
-      <button type="button" class="btn btn--sm" id="download">⬇ Download branches.json</button>
+      <span class="muted" id="saveStatus" style="margin-right: 12px; font-size: 12px;">All changes saved</span>
+      <button type="button" class="btn btn--ghost btn--sm" id="reload">Refresh from server</button>
+      <button type="button" class="btn btn--ghost btn--sm" id="download">⬇ Export backup (JSON)</button>
+      <button type="button" class="btn btn--sm" id="save">💾 Save &amp; publish</button>
     </div>
 
     <div id="list"></div>
 
     <p style="color: var(--muted); font-size: 12px; margin-top: 24px;">
-      <strong>After download:</strong> overwrite <code>content/branches.json</code> on your server, then run <code>node generate-branches.js</code> to rebuild the 10 branch detail HTML pages with the new data.
+      Edits save to Supabase and appear on the live site immediately. The 10 branch detail HTML pages render their content live from the same data, so they update without re-generating.
     </p>
   </main>
 </div>
@@ -50,9 +52,19 @@
 <script>
 if (KANAAN_ADMIN.requireAuth()) (async function () {
   let data;
-  async function load(reset = false) {
-    if (reset) localStorage.removeItem('kanaan_content_content/branches.json');
-    data = await KANAAN_ADMIN.loadJSON('content/branches.json');
+  let dirty = false;
+  const status = () => document.getElementById('saveStatus');
+  function markDirty() { dirty = true; const s = status(); if (s) s.textContent = 'Unsaved changes'; }
+  function markClean() { dirty = false; const s = status(); if (s) s.textContent = 'All changes saved'; }
+
+  async function load() {
+    const remote = await KANAAN_ADMIN.loadContentSection('branches');
+    if (remote && Array.isArray(remote.branches)) {
+      data = remote;
+    } else {
+      data = await KANAAN_ADMIN.loadJSON('content/branches.json');
+    }
+    markClean();
     render();
   }
   function render() {
@@ -98,15 +110,27 @@ if (KANAAN_ADMIN.requireAuth()) (async function () {
         } else {
           data.branches[i][k] = el.value;
         }
+        markDirty();
       });
     });
     list.querySelectorAll('[data-toggle]').forEach(b => b.addEventListener('click', () => {
-      const i = +b.dataset.toggle; data.branches[i].active = !data.branches[i].active; render();
+      const i = +b.dataset.toggle; data.branches[i].active = !data.branches[i].active; markDirty(); render();
     }));
   }
-  document.getElementById('save').addEventListener('click', () => KANAAN_ADMIN.saveJSON('content/branches.json', data));
-  document.getElementById('download').addEventListener('click', () => KANAAN_ADMIN.download('content/branches.json', data));
-  document.getElementById('reload').addEventListener('click', () => { if (confirm('Discard unsaved changes?')) load(true); });
+  document.getElementById('save').addEventListener('click', async () => {
+    const btn = document.getElementById('save');
+    btn.disabled = true; btn.textContent = '⏳ Saving…';
+    const res = await KANAAN_ADMIN.saveContentSection('branches', data);
+    btn.disabled = false; btn.textContent = '💾 Save & publish';
+    if (res.ok) { markClean(); KANAAN_ADMIN.toast('Branches published — live now'); }
+    else        { KANAAN_ADMIN.toast('Save failed: ' + (res.error || 'unknown')); }
+  });
+  document.getElementById('download').addEventListener('click', () => KANAAN_ADMIN.download('branches.json', data));
+  document.getElementById('reload').addEventListener('click', () => {
+    if (dirty && !confirm('Discard unsaved changes?')) return;
+    load();
+    KANAAN_ADMIN.toast('Refreshed from server');
+  });
   load();
 })();
 </script>

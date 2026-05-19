@@ -20,6 +20,7 @@
       <a href="offers">Offers</a>
       <a href="branches">Branches</a>
       <a href="banners" class="active">Banners</a>
+      <a href="testimonials">Testimonials</a>
       <a href="blog">Blog</a>
       <a href="integrations">Integrations</a>
       <a href="settings">Settings</a>
@@ -29,13 +30,14 @@
 
   <main class="admin-main">
     <h1 class="admin-h">Homepage banner &amp; brand text</h1>
-    <p class="admin-sub">Edit the homepage hero, taglines, and central contact. Changes save to <code>content/site.json</code>.</p>
+    <p class="admin-sub">Edit the homepage hero, taglines, contact, and social. Changes save to Supabase and appear on the live site immediately.</p>
 
     <div class="bar">
       <span class="spacer"></span>
-      <button type="button" class="btn btn--ghost btn--sm" id="reload">Reset from file</button>
-      <button type="button" class="btn btn--sm" id="save">💾 Save locally</button>
-      <button type="button" class="btn btn--sm" id="download">⬇ Download site.json</button>
+      <span class="muted" id="saveStatus" style="margin-right: 12px; font-size: 12px;">All changes saved</span>
+      <button type="button" class="btn btn--ghost btn--sm" id="reload">Refresh from server</button>
+      <button type="button" class="btn btn--ghost btn--sm" id="download">⬇ Export backup (JSON)</button>
+      <button type="button" class="btn btn--sm" id="save">💾 Save &amp; publish</button>
     </div>
 
     <div id="form"></div>
@@ -46,9 +48,21 @@
 <script>
 if (KANAAN_ADMIN.requireAuth()) (async function () {
   let data;
-  async function load(reset = false) {
-    if (reset) localStorage.removeItem('kanaan_content_content/site.json');
-    data = await KANAAN_ADMIN.loadJSON('content/site.json');
+  let dirty = false;
+  const status = () => document.getElementById('saveStatus');
+  function markDirty() { dirty = true; const s = status(); if (s) s.textContent = 'Unsaved changes'; }
+  function markClean() { dirty = false; const s = status(); if (s) s.textContent = 'All changes saved'; }
+
+  async function load() {
+    // Prefer Supabase content_sections['site']; fall back to bundled JSON file
+    // the first time (before any admin save).
+    const remote = await KANAAN_ADMIN.loadContentSection('site');
+    if (remote && typeof remote === 'object' && remote.brand) {
+      data = remote;
+    } else {
+      data = await KANAAN_ADMIN.loadJSON('content/site.json');
+    }
+    markClean();
     render();
   }
   function render() {
@@ -108,14 +122,29 @@ if (KANAAN_ADMIN.requireAuth()) (async function () {
       el.addEventListener('input', () => {
         const path = el.dataset.k.split('.');
         let cur = data;
-        for (let i = 0; i < path.length - 1; i++) cur = cur[path[i]];
+        for (let i = 0; i < path.length - 1; i++) {
+          if (cur[path[i]] == null) cur[path[i]] = {};
+          cur = cur[path[i]];
+        }
         cur[path[path.length - 1]] = el.value;
+        markDirty();
       });
     });
   }
-  document.getElementById('save').addEventListener('click', () => KANAAN_ADMIN.saveJSON('content/site.json', data));
-  document.getElementById('download').addEventListener('click', () => KANAAN_ADMIN.download('content/site.json', data));
-  document.getElementById('reload').addEventListener('click', () => { if (confirm('Discard unsaved changes?')) load(true); });
+  document.getElementById('save').addEventListener('click', async () => {
+    const btn = document.getElementById('save');
+    btn.disabled = true; btn.textContent = '⏳ Saving…';
+    const res = await KANAAN_ADMIN.saveContentSection('site', data);
+    btn.disabled = false; btn.textContent = '💾 Save & publish';
+    if (res.ok) { markClean(); KANAAN_ADMIN.toast('Site config published — live now'); }
+    else        { KANAAN_ADMIN.toast('Save failed: ' + (res.error || 'unknown')); }
+  });
+  document.getElementById('download').addEventListener('click', () => KANAAN_ADMIN.download('site.json', data));
+  document.getElementById('reload').addEventListener('click', () => {
+    if (dirty && !confirm('Discard unsaved changes?')) return;
+    load();
+    KANAAN_ADMIN.toast('Refreshed from server');
+  });
   load();
 })();
 </script>
