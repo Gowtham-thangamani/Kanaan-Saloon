@@ -1,39 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
   <channel>
-    <title>Kanaan Insights</title>
-    <link>https://kanaanspa.ae/blog.html</link>
+    <title>Kanaan Blog</title>
+    <link>https://kanaanspa.ae/blog</link>
     <atom:link href="https://kanaanspa.ae/blog/feed.xml" rel="self" type="application/rss+xml"/>
     <description>Notes from the chair — grooming, skin and salon craft from Kanaan Gents Salon &amp; Spa.</description>
     <language>en</language>
     <copyright>© 2026 Kanaan Gents Salon &amp; Spa</copyright>
-    <pubDate>Thu, 01 May 2026 00:00:00 +0400</pubDate>
+    <pubDate>Tue, 19 May 2026 09:00:00 +0400</pubDate>
 
     <item>
-      <title>Choosing the right facial for UAE skin</title>
-      <link>https://kanaanspa.ae/blog/choosing-the-right-facial.html</link>
-      <guid>https://kanaanspa.ae/blog/choosing-the-right-facial.html</guid>
-      <pubDate>Wed, 29 Apr 2026 09:00:00 +0400</pubDate>
-      <dc:creator>Kanaan</dc:creator>
-      <description>Hydra, signature, anti-fatigue, anti-ageing — which facial is right for your skin? An honest, no-fluff guide from Kanaan therapists.</description>
+      <title>Where men's grooming is heading in the UAE, 2026</title>
+      <link>https://kanaanspa.ae/blog/uae-grooming-trends-2026</link>
+      <guid>https://kanaanspa.ae/blog/uae-grooming-trends-2026</guid>
+      <pubDate>Tue, 19 May 2026 09:00:00 +0400</pubDate>
+      <dc:creator>Kanaan Editorial</dc:creator>
+      <description>Three shifts changing how the salon industry works in Abu Dhabi — and what they mean for the chair you sit in.</description>
     </item>
 
     <item>
-      <title>Beard care in Abu Dhabi's climate</title>
-      <link>https://kanaanspa.ae/blog/beard-care-abu-dhabi.html</link>
-      <guid>https://kanaanspa.ae/blog/beard-care-abu-dhabi.html</guid>
-      <pubDate>Tue, 22 Apr 2026 09:00:00 +0400</pubDate>
-      <dc:creator>Kanaan</dc:creator>
-      <description>Heat, dust, AC, and beard care — practical advice from our master barbers on keeping a healthy beard in UAE conditions.</description>
+      <title>The hot-towel shave, properly done</title>
+      <link>https://kanaanspa.ae/blog/the-hot-towel-shave</link>
+      <guid>https://kanaanspa.ae/blog/the-hot-towel-shave</guid>
+      <pubDate>Tue, 12 May 2026 09:00:00 +0400</pubDate>
+      <dc:creator>Master Barber's Desk</dc:creator>
+      <description>A proper shave is six steps and thirty minutes — not seven minutes and a Mach 3.</description>
     </item>
 
     <item>
-      <title>A Moroccan bath, properly explained</title>
-      <link>https://kanaanspa.ae/blog/moroccan-bath-guide.html</link>
-      <guid>https://kanaanspa.ae/blog/moroccan-bath-guide.html</guid>
-      <pubDate>Tue, 15 Apr 2026 09:00:00 +0400</pubDate>
-      <dc:creator>Kanaan</dc:creator>
-      <description>What a Moroccan bath actually is, why it works for men, and how to get the most from your first visit.</description>
+      <title>Is the skin fade fading?</title>
+      <link>https://kanaanspa.ae/blog/skin-fade-fading</link>
+      <guid>https://kanaanspa.ae/blog/skin-fade-fading</guid>
+      <pubDate>Sat, 02 May 2026 09:00:00 +0400</pubDate>
+      <dc:creator>Master Barber's Desk</dc:creator>
+      <description>After six years of dominance, what men are asking for in the chair is starting to shift.</description>
+    </item>
+
+    <item>
+      <title>A grooming schedule for Ramadan</title>
+      <link>https://kanaanspa.ae/blog/ramadan-grooming-schedule</link>
+      <guid>https://kanaanspa.ae/blog/ramadan-grooming-schedule</guid>
+      <pubDate>Thu, 30 Apr 2026 09:00:00 +0400</pubDate>
+      <dc:creator>Kanaan Editorial</dc:creator>
+      <description>When to book, what changes for your skin and beard, and how to plan Eid grooming without leaving it to Chand Raat.</description>
+    </item>
+
+    <item>
+      <title>Hair colour for men, done conservatively</title>
+      <link>https://kanaanspa.ae/blog/hair-colour-for-men</link>
+      <guid>https://kanaanspa.ae/blog/hair-colour-for-men</guid>
+      <pubDate>Mon, 20 Apr 2026 09:00:00 +0400</pubDate>
+      <dc:creator>Kanaan Editorial</dc:creator>
+      <description>Henna, grey blend, or full coverage — which one suits the look you actually want.</description>
+    </item>
+
+    <item>
+      <title>Inside VIP Muroor</title>
+      <link>https://kanaanspa.ae/blog/vip-muroor-explained</link>
+      <guid>https://kanaanspa.ae/blog/vip-muroor-explained</guid>
+      <pubDate>Wed, 08 Apr 2026 09:00:00 +0400</pubDate>
+      <dc:creator>Kanaan Editorial</dc:creator>
+      <description>One suite, one client at a time, one master practitioner. What that actually means for the visit.</description>
+    </item>
+
+    <item>
+      <title>What's changed in barbering since 2020</title>
+      <link>https://kanaanspa.ae/blog/barbering-since-2020</link>
+      <guid>https://kanaanspa.ae/blog/barbering-since-2020</guid>
+      <pubDate>Sun, 22 Mar 2026 09:00:00 +0400</pubDate>
+      <dc:creator>Master Barber's Desk</dc:creator>
+      <description>Six years of quiet change in men's grooming, told from the chair.</description>
     </item>
   </channel>
 </rss>

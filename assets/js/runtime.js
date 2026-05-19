@@ -264,7 +264,7 @@
           // Only override on a real post URL — leaves the static title intact
           // on the generic template when it's loaded raw (no slug)
         }
-        if (post.title) document.title = post.title + ' | Kanaan Insights';
+        if (post.title) document.title = post.title + ' | Kanaan Blog';
       }
     }
 

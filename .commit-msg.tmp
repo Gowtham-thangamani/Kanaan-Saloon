@@ -1,0 +1,51 @@
+Blog rewrite: 7 new posts + rename "Insights" to "Blog"
+
+CONTENT
+Replaced the 7 original seed posts with 7 fresh ones chosen by the user,
+balanced between practical and industry-pulse pieces:
+
+  1. Where men's grooming is heading in the UAE, 2026  (Industry, 6 min)
+  2. The hot-towel shave, properly done                (Grooming, 5 min)
+  3. Is the skin fade fading?                          (Industry, 4 min)
+  4. A grooming schedule for Ramadan                   (Editorial, 5 min)
+  5. Hair colour for men, done conservatively          (Hair, 5 min)
+  6. Inside VIP Muroor                                 (Editorial, 5 min)
+  7. What's changed in barbering since 2020            (Industry, 5 min)
+
+Updated content/blog.json (the fallback source) and generated a new
+Supabase migration via tools/generate-blog-migration.js that deletes the
+old 7 post IDs and upserts the new 7. admin/blog already lets the admin
+edit, draft, or delete any of these.
+
+NAV / LABELS
+Renamed "Insights" to "Blog" in the header via
+tools/rename-insights-to-blog.js (41 EN pages, 96 occurrences). Also:
+  - blog.html: title, og/twitter meta, breadcrumb, hero h1
+  - blog/_post.html: title, meta, back-link, JS share title
+  - assets/js/runtime.js: page-title suffix on individual posts
+  - search.html: drop 3 dead blog URLs, add 7 new ones
+  - admin/blog.html: default category for new posts (Insights -> Editorial)
+  - sitemap.xml: replaced 3 old blog URLs with 7 new ones
+  - blog/feed.xml: regenerated with new channel title + 7 items
+
+AR pages already use the Arabic word so they were left alone.
+
+CLEANUP
+Deleted 4 legacy individual blog HTML files now that .htaccess routes
+unknown /blog/<slug> URLs to blog/_post.html, which fills from Supabase
+or blog.json by slug:
+  - blog/beard-care-abu-dhabi.html
+  - blog/choosing-the-right-facial.html
+  - blog/moroccan-bath-guide.html
+  - ar/blog/moroccan-bath-guide.html
+
+DEPLOY STEPS (live site)
+  1. Upload changed files to Hostinger (content/blog.json, all HTML,
+     sitemap.xml, blog/feed.xml, assets/js/runtime.js).
+  2. Run supabase/migrations/20260519000000_blog_rewrite.sql in the
+     Supabase SQL editor to replace the database copies. The live site
+     reads Supabase first, falls back to blog.json.
+  3. Verify admin/blog edit flow (Refresh from server, pick a post,
+     edit, Save and publish).
+
+Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>

@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Loading… | Kanaan Insights</title>
-  <meta name="description" content="A Kanaan Insights post." />
+  <title>Loading… | Kanaan Blog</title>
+  <meta name="description" content="A Kanaan Blog post." />
   <meta name="robots" content="index, follow" />
   <link rel="stylesheet" href="../assets/css/fonts.css" />
   <link rel="stylesheet" href="../assets/css/style.css?v=3" />
@@ -44,7 +44,7 @@
         <a href="../offers">Offers</a>
         <a href="../branches">Branches &amp; Services</a>
         <a href="../gallery">Gallery</a>
-        <a href="../blog" class="is-active">Insights</a>
+        <a href="../blog" class="is-active">Blog</a>
         <a href="../contact">Contact</a>
       </nav>
       <div class="header-actions">
@@ -64,7 +64,7 @@
         <div class="container page-hero__content">
           <div class="breadcrumb">
             <a href="../">Home</a><span class="sep">/</span>
-            <a href="../blog">Insights</a>
+            <a href="../blog">Blog</a>
           </div>
           <span class="eyebrow" data-blog-meta>Loading…</span>
           <h1 class="page-hero__title" data-split="lines" data-blog-title>Loading…</h1>
@@ -115,7 +115,7 @@
             <a href="../book" class="btn btn--lg">Book Now</a>
           </div>
 
-          <a href="../blog" class="blog-back">← All Insights</a>
+          <a href="../blog" class="blog-back">← All posts</a>
 
           <!-- Related posts — filled in by JS -->
           <section class="blog-related" id="relatedPosts" hidden>
@@ -211,7 +211,7 @@
 
       // Wire share buttons
       var url = encodeURIComponent(location.href);
-      var title = encodeURIComponent(post.title || 'Kanaan Insights');
+      var title = encodeURIComponent(post.title || 'Kanaan Blog');
       document.querySelectorAll('[data-share]').forEach(function (a) {
         var kind = a.dataset.share;
         if (kind === 'whatsapp') a.href = 'https://wa.me/?text=' + title + '%20' + url;
