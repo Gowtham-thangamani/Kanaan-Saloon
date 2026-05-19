@@ -7,6 +7,9 @@
   <title>Blog · Kanaan Admin</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="admin.css" />
+  <!-- Quill rich-text editor for the body field. Loaded from jsdelivr CDN. -->
+  <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
   <style>
     .blog-grid { display: grid; grid-template-columns: 320px 1fr; gap: var(--s-5); align-items: start; }
     @media (max-width: 900px) { .blog-grid { grid-template-columns: 1fr; } }
@@ -28,6 +31,18 @@
     .blog-form .ta--body { min-height: 360px; font-family: 'Courier New', monospace; font-size: 13px; }
     .blog-form .full { grid-column: 1 / -1; }
     .blog-form .field-help { font-size: 11px; color: var(--muted); margin: 4px 0 0; }
+    /* Quill editor styling — match the admin form aesthetic. */
+    .quill-host { background: #fff; border: 1px solid var(--hairline); }
+    .quill-host .ql-toolbar.ql-snow { border: none; border-bottom: 1px solid var(--hairline); }
+    .quill-host .ql-container.ql-snow { border: none; min-height: 360px; font-family: inherit; font-size: 14px; }
+    .quill-host .ql-editor { min-height: 360px; line-height: 1.55; }
+    .quill-host .ql-editor h2 { font-family: 'Cormorant Garamond', serif; font-size: 22px; margin: 16px 0 8px; }
+    .quill-host .ql-editor h3 { font-family: 'Cormorant Garamond', serif; font-size: 18px; margin: 14px 0 6px; }
+    .quill-host .ql-editor img { max-width: 100%; height: auto; }
+    .editor-toggle { display: flex; justify-content: flex-end; margin-bottom: 6px; }
+    .hero-upload-row { display: flex; gap: 8px; align-items: stretch; }
+    .hero-upload-row .input { flex: 1; }
+    .hero-thumb { display: block; max-width: 200px; max-height: 100px; margin-top: 8px; border: 1px solid var(--hairline); }
   </style>
 </head>
 <body>
@@ -123,16 +138,27 @@ if (KANAAN_ADMIN.requireAuth()) (async function () {
           <div><label>Read time (minutes)</label><input class="input" type="number" data-k="read_minutes" value="${esc(post.read_minutes)}" /></div>
           <div><label>Publish date (YYYY-MM-DD)</label><input class="input" type="date" data-k="publish_date" value="${esc(post.publish_date)}" /></div>
           <div><label>Author</label><input class="input" data-k="author" value="${esc(post.author)}" /></div>
-          <div class="full"><label>Hero image URL</label><input class="input" data-k="hero_image" value="${esc(post.hero_image)}" />
-            <p class="field-help">Use a path like <code>/assets/img/photos/your-image.webp</code></p></div>
+          <div class="full"><label>Hero image</label>
+            <div class="hero-upload-row">
+              <input class="input" data-k="hero_image" id="heroImageInput" value="${esc(post.hero_image)}" placeholder="/assets/img/photos/your-image.webp or paste a URL" />
+              <button type="button" class="btn btn--sm" id="heroUpload">⬆ Upload</button>
+            </div>
+            ${post.hero_image ? `<img class="hero-thumb" id="heroThumb" src="${esc(post.hero_image)}" alt="hero preview" onerror="this.style.display='none'" />` : `<img class="hero-thumb" id="heroThumb" style="display:none" alt="hero preview" />`}
+            <p class="field-help">Click "Upload" to add a new image from your computer (saved to Supabase Storage), or paste a path like <code>/assets/img/photos/your-image.webp</code>.</p></div>
           <div class="full"><label>Hero image alt text</label><input class="input" data-k="hero_alt" value="${esc(post.hero_alt)}" /></div>
           <div class="full"><label>TL;DR (optional summary above lede)</label>
             <textarea class="ta" data-k="tldr">${esc(post.tldr)}</textarea></div>
           <div class="full"><label>Lede paragraph</label>
             <textarea class="ta" data-k="lede">${esc(post.lede)}</textarea></div>
-          <div class="full"><label>Body (HTML)</label>
-            <textarea class="ta ta--body" data-k="body_html">${esc(post.body_html)}</textarea>
-            <p class="field-help">Use HTML tags: <code>&lt;h2&gt;</code>, <code>&lt;h3&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;a href="..."&gt;</code>, <code>&lt;strong&gt;</code>, <code>&lt;em&gt;</code>. Internal links: <code>&lt;a href="/branches/al-ain"&gt;</code>.</p></div>
+          <div class="full">
+            <div class="editor-toggle">
+              <label style="margin: 0;">Body</label>
+              <span class="spacer"></span>
+              <button type="button" class="btn btn--ghost btn--sm" id="toggleRawHtml" title="Switch between visual editor and raw HTML">&lt;/&gt; Raw HTML</button>
+            </div>
+            <div class="quill-host" id="quillHost"></div>
+            <textarea class="ta ta--body" data-k="body_html" id="bodyTextarea" style="display:none;">${esc(post.body_html)}</textarea>
+            <p class="field-help">Use the toolbar for headings, bold/italic, lists, alignment, links, and images. Switch to Raw HTML for advanced edits like custom classes.</p></div>
           <div><label>Status</label>
             <select class="sel" data-k="active">
               <option value="true" ${post.active !== false ? 'selected' : ''}>Published (visible on /blog)</option>
@@ -155,12 +181,138 @@ if (KANAAN_ADMIN.requireAuth()) (async function () {
         post[el.dataset.k] = v;
         // Keep id in sync with slug (slug is the public URL piece)
         if (el.dataset.k === 'slug') post.id = v;
+        // Hero image input: live-update the preview thumb.
+        if (el.dataset.k === 'hero_image') {
+          const thumb = document.getElementById('heroThumb');
+          if (thumb) {
+            if (v) { thumb.src = v; thumb.style.display = ''; }
+            else   { thumb.style.display = 'none'; }
+          }
+        }
         dirtyIds.add(post.id);
         const status = document.getElementById('saveStatus');
         if (status) status.textContent = 'Unsaved changes';
         renderList();   // refresh dirty-dot in sidebar
       });
     });
+
+    // === Quill rich-text editor for the body ===
+    // Mounted on #quillHost; raw HTML mirrored in #bodyTextarea so the existing
+    // data-k="body_html" binding stays the single source of truth for the post.
+    let quill = null;
+    const quillHost = document.getElementById('quillHost');
+    const bodyTextarea = document.getElementById('bodyTextarea');
+    if (quillHost && typeof Quill !== 'undefined') {
+      quill = new Quill(quillHost, {
+        modules: {
+          toolbar: {
+            container: [
+              [{ header: [2, 3, false] }],
+              ['bold', 'italic', 'underline'],
+              ['blockquote'],
+              [{ list: 'ordered' }, { list: 'bullet' }],
+              [{ align: [] }],
+              ['link', 'image'],
+              ['clean']
+            ],
+            handlers: {
+              // Replace Quill's default base64-embed with a Supabase Storage upload.
+              image: function () {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = 'image/*';
+                input.onchange = async () => {
+                  const file = input.files && input.files[0];
+                  if (!file) return;
+                  KANAAN_ADMIN.toast('Uploading image…');
+                  const res = await KANAAN_ADMIN.uploadBlogImage(file);
+                  if (!res.ok) {
+                    KANAAN_ADMIN.toast('Upload failed: ' + (res.error || 'unknown'));
+                    return;
+                  }
+                  const range = quill.getSelection(true) || { index: quill.getLength() };
+                  quill.insertEmbed(range.index, 'image', res.url, Quill.sources.USER);
+                  quill.setSelection(range.index + 1, Quill.sources.SILENT);
+                  KANAAN_ADMIN.toast('Image inserted');
+                };
+                input.click();
+              }
+            }
+          }
+        },
+        theme: 'snow',
+        placeholder: 'Write your post here…'
+      });
+      // Load existing content. Use clipboard.dangerouslyPasteHTML so links / lists
+      // come through, rather than Quill silently sanitising the markup.
+      const initialHtml = post.body_html || '';
+      if (initialHtml) quill.clipboard.dangerouslyPasteHTML(initialHtml, Quill.sources.SILENT);
+      // Sync Quill -> hidden textarea -> post.body_html (and dirty state).
+      quill.on('text-change', (_, __, source) => {
+        if (source === Quill.sources.SILENT) return;
+        const html = quill.getSemanticHTML ? quill.getSemanticHTML() : quill.root.innerHTML;
+        bodyTextarea.value = html;
+        post.body_html = html;
+        dirtyIds.add(post.id);
+        const status = document.getElementById('saveStatus');
+        if (status) status.textContent = 'Unsaved changes';
+        renderList();
+      });
+    }
+
+    // === Raw HTML toggle ===
+    const toggleRaw = document.getElementById('toggleRawHtml');
+    if (toggleRaw) {
+      toggleRaw.addEventListener('click', () => {
+        const inRaw = bodyTextarea.style.display !== 'none';
+        if (inRaw) {
+          // Going back to Quill — push textarea content in.
+          if (quill) quill.clipboard.dangerouslyPasteHTML(bodyTextarea.value, Quill.sources.SILENT);
+          quillHost.style.display = '';
+          bodyTextarea.style.display = 'none';
+          toggleRaw.innerHTML = '&lt;/&gt; Raw HTML';
+        } else {
+          // Going to raw — Quill already syncs on text-change, but make sure
+          // we have the latest before exposing the textarea.
+          if (quill) bodyTextarea.value = quill.getSemanticHTML ? quill.getSemanticHTML() : quill.root.innerHTML;
+          bodyTextarea.style.display = '';
+          quillHost.style.display = 'none';
+          toggleRaw.textContent = '✓ Visual editor';
+        }
+      });
+    }
+
+    // === Hero image upload button ===
+    const heroBtn = document.getElementById('heroUpload');
+    if (heroBtn) {
+      heroBtn.addEventListener('click', () => {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        input.onchange = async () => {
+          const file = input.files && input.files[0];
+          if (!file) return;
+          const orig = heroBtn.textContent;
+          heroBtn.disabled = true; heroBtn.textContent = '⏳ Uploading…';
+          const res = await KANAAN_ADMIN.uploadBlogImage(file);
+          heroBtn.disabled = false; heroBtn.textContent = orig;
+          if (!res.ok) {
+            KANAAN_ADMIN.toast('Upload failed: ' + (res.error || 'unknown'));
+            return;
+          }
+          const heroInput = document.getElementById('heroImageInput');
+          const thumb = document.getElementById('heroThumb');
+          heroInput.value = res.url;
+          post.hero_image = res.url;
+          if (thumb) { thumb.src = res.url; thumb.style.display = ''; }
+          dirtyIds.add(post.id);
+          document.getElementById('saveStatus').textContent = 'Unsaved changes';
+          renderList();
+          KANAAN_ADMIN.toast('Hero image uploaded');
+        };
+        input.click();
+      });
+    }
 
     document.getElementById('save').addEventListener('click', async () => {
       // Quick validation — slug must be URL-safe.

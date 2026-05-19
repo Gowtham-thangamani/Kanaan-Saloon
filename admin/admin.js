@@ -463,6 +463,55 @@
       }
     },
 
+    /* Upload a blog image to the Supabase Storage bucket `blog-images`.
+       Returns { ok, url, path, error }. The bucket is public, so the
+       returned URL is directly usable as an <img src>. RLS only allows
+       authenticated admins to write — see 20260519100000_blog_images_bucket.sql. */
+    async uploadBlogImage(file) {
+      const sb = supaCfg();
+      if (!sb.url || !sb.anonKey) return { ok: false, error: 'Supabase not configured' };
+      if (!this.isLoggedIn())     return { ok: false, error: 'Not signed in' };
+      if (!file || !file.type || !file.type.startsWith('image/')) {
+        return { ok: false, error: 'Not an image file' };
+      }
+      if (file.size > 5 * 1024 * 1024) {
+        return { ok: false, error: 'Image too large (max 5 MB)' };
+      }
+      const session = readSession();
+      if (!session || !session.access_token) return { ok: false, error: 'No session' };
+
+      // Build a safe, deterministic path: YYYY-MM-DD/HHMMSS-<slug>.<ext>
+      const extMatch = file.name.match(/\.([a-zA-Z0-9]+)$/);
+      const ext = (extMatch ? extMatch[1] : (file.type.split('/')[1] || 'bin')).toLowerCase();
+      const now = new Date();
+      const date = now.toISOString().slice(0, 10);
+      const time = now.toISOString().slice(11, 19).replace(/:/g, '');
+      const baseName = file.name.replace(/\.[^.]+$/, '').toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40) || 'image';
+      const path = `${date}/${time}-${baseName}.${ext}`;
+
+      try {
+        const r = await fetch(sb.url + '/storage/v1/object/blog-images/' + path, {
+          method: 'POST',
+          headers: {
+            'apikey': sb.anonKey,
+            'Authorization': 'Bearer ' + session.access_token,
+            'x-upsert': 'false',
+            'Content-Type': file.type
+          },
+          body: file
+        });
+        if (!r.ok) {
+          const txt = await r.text().catch(() => '');
+          return { ok: false, error: 'HTTP ' + r.status + ' ' + txt };
+        }
+        const publicUrl = sb.url + '/storage/v1/object/public/blog-images/' + path;
+        return { ok: true, url: publicUrl, path: path };
+      } catch (e) {
+        return { ok: false, error: e.message || String(e) };
+      }
+    },
+
     /* === Supabase usage stats — for the 500 MB cap monitor === */
     async loadSupabaseUsage() {
       const sb = supaCfg();

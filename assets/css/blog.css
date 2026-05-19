@@ -146,3 +146,22 @@
   color: var(--muted); letter-spacing: 0.04em; text-transform: uppercase;
 }
 .blog-back:hover { color: var(--c-gold); }
+
+/* Quill output classes — admin's rich-text editor emits these for alignment
+   and (rarely) inline-image sizing. Without these, "center"/"right" aligned
+   paragraphs typed in the admin would render left-aligned on the live site. */
+.blog-article .ql-align-center,
+[data-blog-body] .ql-align-center { text-align: center; }
+.blog-article .ql-align-right,
+[data-blog-body] .ql-align-right  { text-align: right; }
+.blog-article .ql-align-justify,
+[data-blog-body] .ql-align-justify { text-align: justify; }
+
+/* Inline images uploaded via admin (Supabase Storage URLs). Keep them
+   responsive and visually consistent with the article column width. */
+.blog-article img,
+[data-blog-body] img {
+  max-width: 100%; height: auto; display: block;
+  margin: var(--s-5) auto;
+  border: 1px solid var(--hairline);
+}

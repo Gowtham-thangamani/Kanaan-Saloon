@@ -1,51 +1,47 @@
-Blog rewrite: 7 new posts + rename "Insights" to "Blog"
+Phase A: rich-text editor + Supabase image upload for blog admin
 
-CONTENT
-Replaced the 7 original seed posts with 7 fresh ones chosen by the user,
-balanced between practical and industry-pulse pieces:
+WHAT
+admin/blog now ships with Quill (CDN, snow theme) replacing the raw
+HTML textarea. The toolbar has:
+  - Headings (H2, H3) + paragraph
+  - Bold / italic / underline
+  - Blockquote
+  - Ordered + bullet lists
+  - Alignment (left / center / right / justify)
+  - Link
+  - Image (uploads to Supabase Storage, see below)
+  - Clean (strip formatting)
 
-  1. Where men's grooming is heading in the UAE, 2026  (Industry, 6 min)
-  2. The hot-towel shave, properly done                (Grooming, 5 min)
-  3. Is the skin fade fading?                          (Industry, 4 min)
-  4. A grooming schedule for Ramadan                   (Editorial, 5 min)
-  5. Hair colour for men, done conservatively          (Hair, 5 min)
-  6. Inside VIP Muroor                                 (Editorial, 5 min)
-  7. What's changed in barbering since 2020            (Industry, 5 min)
+A "Raw HTML" toggle is still available for power users — switches between
+the visual editor and the existing textarea without losing content.
 
-Updated content/blog.json (the fallback source) and generated a new
-Supabase migration via tools/generate-blog-migration.js that deletes the
-old 7 post IDs and upserts the new 7. admin/blog already lets the admin
-edit, draft, or delete any of these.
+IMAGE UPLOAD
+New `uploadBlogImage(file)` helper on KANAAN_ADMIN posts the file to a
+new `blog-images` Supabase Storage bucket (public read, authenticated
+write). The Quill image button calls this helper, then inserts the
+public URL into the editor — no base64 embedding.
 
-NAV / LABELS
-Renamed "Insights" to "Blog" in the header via
-tools/rename-insights-to-blog.js (41 EN pages, 96 occurrences). Also:
-  - blog.html: title, og/twitter meta, breadcrumb, hero h1
-  - blog/_post.html: title, meta, back-link, JS share title
-  - assets/js/runtime.js: page-title suffix on individual posts
-  - search.html: drop 3 dead blog URLs, add 7 new ones
-  - admin/blog.html: default category for new posts (Insights -> Editorial)
-  - sitemap.xml: replaced 3 old blog URLs with 7 new ones
-  - blog/feed.xml: regenerated with new channel title + 7 items
+The Hero image field also gets an "⬆ Upload" button and a live preview
+thumbnail so the admin can replace the hero with a single file pick.
 
-AR pages already use the Arabic word so they were left alone.
+DEPLOY STEP
+Run the new migration in the Supabase SQL editor to create the bucket
+and RLS policies:
+  supabase/migrations/20260519100000_blog_images_bucket.sql
 
-CLEANUP
-Deleted 4 legacy individual blog HTML files now that .htaccess routes
-unknown /blog/<slug> URLs to blog/_post.html, which fills from Supabase
-or blog.json by slug:
-  - blog/beard-care-abu-dhabi.html
-  - blog/choosing-the-right-facial.html
-  - blog/moroccan-bath-guide.html
-  - ar/blog/moroccan-bath-guide.html
+The 5 MB / image-types limits are enforced both client-side (in
+uploadBlogImage) and server-side (bucket config).
 
-DEPLOY STEPS (live site)
-  1. Upload changed files to Hostinger (content/blog.json, all HTML,
-     sitemap.xml, blog/feed.xml, assets/js/runtime.js).
-  2. Run supabase/migrations/20260519000000_blog_rewrite.sql in the
-     Supabase SQL editor to replace the database copies. The live site
-     reads Supabase first, falls back to blog.json.
-  3. Verify admin/blog edit flow (Refresh from server, pick a post,
-     edit, Save and publish).
+CSS
+assets/css/blog.css now styles Quill's alignment classes
+(.ql-align-center / -right / -justify) and inline images so admin-typed
+formatting renders correctly on /blog and /blog/<slug>.
+
+NOTE ON SCOPE
+This is Phase A of the user's bigger "everything editable" ask. The
+storage bucket + upload helper are reusable — subsequent phases (offers,
+branches, banners, testimonials, site config, service pages, etc.) can
+reuse the same upload mechanism for their own images without a new
+bucket per area.
 
 Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>
