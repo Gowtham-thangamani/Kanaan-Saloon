@@ -555,6 +555,82 @@
       }
     },
 
+    /* === Page overrides (services/branches/static pages) ===
+       One row per page path, keyed by URL path (no leading slash, no .html).
+       A row exists only if the admin overrode that page; missing rows mean
+       the hard-coded HTML on the live site is the source of truth. */
+    async listPages() {
+      const sb = supaCfg();
+      if (!sb.url || !sb.anonKey) return [];
+      try {
+        const r = await fetch(
+          sb.url + '/rest/v1/pages?select=path,title,updated_at&order=path.asc',
+          { headers: authHeaders(true) }
+        );
+        if (!r.ok) {
+          if (r.status === 401) { clearSession(); location.href = 'index.html'; }
+          return [];
+        }
+        return await r.json();
+      } catch (e) { return []; }
+    },
+
+    async loadPage(path) {
+      const sb = supaCfg();
+      if (!sb.url || !sb.anonKey) return null;
+      try {
+        const r = await fetch(
+          sb.url + '/rest/v1/pages?select=*&path=eq.' + encodeURIComponent(path),
+          { headers: authHeaders(true) }
+        );
+        if (!r.ok) return null;
+        const rows = await r.json();
+        return rows && rows[0] ? rows[0] : null;
+      } catch (e) { return null; }
+    },
+
+    async savePage(page) {
+      const sb = supaCfg();
+      if (!sb.url || !sb.anonKey) return { ok: false, error: 'Supabase not configured' };
+      if (!this.isLoggedIn())     return { ok: false, error: 'Not signed in' };
+      const { updated_at, ...payload } = page || {};
+      try {
+        const r = await fetch(sb.url + '/rest/v1/pages?on_conflict=path', {
+          method: 'POST',
+          headers: Object.assign({}, authHeaders(true), {
+            'Prefer': 'resolution=merge-duplicates,return=representation'
+          }),
+          body: JSON.stringify(payload)
+        });
+        if (!r.ok) {
+          const txt = await r.text().catch(() => '');
+          return { ok: false, error: 'HTTP ' + r.status + ' ' + txt };
+        }
+        return { ok: true };
+      } catch (e) {
+        return { ok: false, error: e.message || String(e) };
+      }
+    },
+
+    async deletePage(path) {
+      const sb = supaCfg();
+      if (!sb.url || !sb.anonKey) return { ok: false, error: 'Supabase not configured' };
+      if (!this.isLoggedIn())     return { ok: false, error: 'Not signed in' };
+      try {
+        const r = await fetch(sb.url + '/rest/v1/pages?path=eq.' + encodeURIComponent(path), {
+          method: 'DELETE',
+          headers: Object.assign({}, authHeaders(true), { 'Prefer': 'return=minimal' })
+        });
+        if (!r.ok) {
+          const txt = await r.text().catch(() => '');
+          return { ok: false, error: 'HTTP ' + r.status + ' ' + txt };
+        }
+        return { ok: true };
+      } catch (e) {
+        return { ok: false, error: e.message || String(e) };
+      }
+    },
+
     /* === Supabase usage stats — for the 500 MB cap monitor === */
     async loadSupabaseUsage() {
       const sb = supaCfg();

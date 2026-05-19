@@ -166,10 +166,49 @@
     return true;
   }
 
+  /* Per-page override: if the current path has a row in public.pages, swap
+     the [data-page-body] region with the DB body_html. The check is keyed by
+     normalised path ("services/hair-beard", "about", "branches/al-ain" — no
+     leading slash, no .html, no trailing slash). Missing row -> page stays
+     as the bundled HTML, so this is fully additive and safe. */
+  function currentPagePath() {
+    let p = (location.pathname || '/').replace(/^\/+/, '').replace(/\/+$/, '');
+    p = p.replace(/\.html$/i, '');
+    if (p === '' || p === 'index') return 'index';
+    return p;
+  }
+  async function applyPageOverride() {
+    const target = document.querySelector('[data-page-body]');
+    if (!target) return;
+    const cfg = window.KANAAN_CONFIG && window.KANAAN_CONFIG.supabase;
+    if (!cfg || !cfg.url || !cfg.anonKey) return;
+    const path = currentPagePath();
+    try {
+      const r = await fetch(
+        cfg.url + '/rest/v1/pages?select=body_html,title,meta_description&path=eq.' + encodeURIComponent(path),
+        { headers: { apikey: cfg.anonKey, Authorization: 'Bearer ' + cfg.anonKey } }
+      );
+      if (!r.ok) return;
+      const rows = await r.json();
+      if (!rows || !rows[0]) return;
+      const page = rows[0];
+      if (page.body_html) target.innerHTML = page.body_html;
+      if (page.title) document.title = page.title;
+      if (page.meta_description) {
+        let m = document.querySelector('meta[name="description"]');
+        if (!m) { m = document.createElement('meta'); m.name = 'description'; document.head.appendChild(m); }
+        m.setAttribute('content', page.meta_description);
+      }
+    } catch (e) { /* fall through to hard-coded HTML */ }
+  }
+
   // ============================================================
   // BOOTSTRAP — load all data, then bind page-specific blocks.
   // ============================================================
   async function init() {
+    // Fire-and-forget page override; doesn't block the rest of init.
+    applyPageOverride();
+
     const [site, offers, branches, testimonials, blog] = await Promise.all([
       loadSection('site', 'site.json'),
       loadSection('offers', 'offers.json'),

@@ -1,54 +1,58 @@
-Phase B: convert JSON-file admins to live Supabase save
+Phase C: generic page-body editor (services, branches, static pages)
 
-Replaces the "edit -> download JSON -> manually upload" workflow with
-live save to a new content_sections table (one JSONB row per section).
-Admin pages affected: offers, branches, banners (site config), and a
-brand-new testimonials editor.
+Lets the admin override the body of any service / branch / static
+content page with a Quill rich-text editor + image upload, without
+touching the bundled HTML.
 
-NEW
-- supabase/migrations/20260519200000_content_sections.sql
-  Single table keyed by section name with a jsonb data column. Public
-  read so the live site can render without auth; authenticated insert/
-  update/delete for admins. Same RLS pattern as blog_posts.
+ARCHITECTURE
+- public.pages — new Supabase table keyed by URL path. A row exists
+  only when the admin has overridden a page; missing rows mean the
+  hardcoded HTML stays as the source of truth. Fully additive.
 
-- admin.js: loadContentSection(key) + saveContentSection(key, data)
-  Generic helpers reused by every content admin page.
+- assets/js/runtime.js — new applyPageOverride() runs on every page
+  load. If a row matches the current URL path AND the page has a
+  <div data-page-body>, the bundled HTML inside that div is replaced
+  with the DB body_html. Page title + meta description are also
+  swapped if set.
 
-- assets/js/runtime.js: loadSection(key, jsonFile)
-  Prefers Supabase content_sections[key]; falls back to the bundled
-  JSON file when Supabase is unreachable, the migration hasn't been
-  applied yet, or the section hasn't been saved through the admin.
-  This means the live site keeps working even with zero migration
-  steps on the user's side — Supabase is purely additive.
+- admin/pages.html (NEW) — page picker grouped by category (Services,
+  Branches, Top-level, Legal). Click a page to edit; saved rows get
+  a gold dot in the sidebar. Editor has the same Quill toolbar as
+  the blog (headings, lists, alignment, link, image upload) plus
+  title + meta-description fields. "Revert to default" deletes the
+  override.
 
-- admin/testimonials.html (NEW)
-  Add / edit / hide / delete bilingual customer quotes. Replaces the
-  previous "no UI, edit testimonials.json by hand" gap.
+- admin.js — listPages / loadPage / savePage / deletePage helpers.
 
-- Sidebar nav: Testimonials link added to all 9 admin pages.
+INSTRUMENTATION
+- 30 HTML pages got <div data-page-body> markers via
+  tools/add-page-body-marker.js: all service pages, all 10 branch
+  pages, plus about/contact/careers/corporate/gift-voucher/menu/
+  offers/branches/blog/before-after/gallery/book.
 
-CONVERTED (live save replaces "Save locally" + "Download JSON")
-- admin/offers.html
-- admin/branches.html
-- admin/banners.html  (edits the 'site' content_section — homepage hero,
-                       brand, contact, social)
-
-Each conversion preserves the existing field layout exactly; only the
-save mechanism changed. The Export backup (JSON) button is still there
-for safety snapshots.
+  Pages that don't have a page-hero section (services index, legal
+  pages) were skipped — they'd need a manual marker before they can
+  be overridden. Listed for future cleanup.
 
 DEPLOY
-1. Run supabase/migrations/20260519200000_content_sections.sql in the
-   Supabase SQL editor. (One-time setup, idempotent.)
-2. Upload changed files to Hostinger.
-3. Open each admin (offers/branches/banners/testimonials), Save & publish
-   once so Supabase has the current content. Until then, the live site
-   keeps reading the JSON files in /content as it always did.
+1. Run supabase/migrations/20260519300000_pages.sql in the Supabase
+   SQL editor. Idempotent.
+2. Upload the changed files to Hostinger.
+3. Visit /admin/pages, pick a page, type content, Save & publish.
+
+NOTE
+The admin/banners page is functionally a Site Config editor
+(it edits content_sections['site']) — renaming the nav label to
+"Site config" is a UI-only cleanup, deferred to keep this commit
+focused.
 
 PHASE STATUS
-[x] Phase A — blog Quill + image upload (commit 0a4bc13)
-[x] Phase B — JSON admins -> live Supabase save (this commit)
-[ ] Phase C — generic body editor for service / branch / static pages
-[ ] Phase D — homepage / about / FAQ editable sections
+[x] Phase A — blog Quill + image upload          (0a4bc13)
+[x] Phase B — JSON admins -> Supabase live save  (08e4af1)
+[x] Phase C — generic page-body editor           (this commit)
+[ ] Phase D — homepage section-level editing      (largely covered
+    by Phase B's banners/offers/testimonials/branches admins; the
+    deeper "every section editable" hook needs a different model
+    and is best handled as a follow-up)
 
 Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>

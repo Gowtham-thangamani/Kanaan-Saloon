@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Pages · Kanaan Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="admin.css" />
+  <!-- Quill -->
+  <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+  <style>
+    .pages-grid { display: grid; grid-template-columns: 280px 1fr; gap: var(--s-5); align-items: start; }
+    @media (max-width: 900px) { .pages-grid { grid-template-columns: 1fr; } }
+    .pages-list { display: flex; flex-direction: column; gap: 4px; }
+    .pages-group { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); padding: 12px 6px 4px; }
+    .pages-item {
+      padding: 8px 12px; border: 1px solid var(--hairline); cursor: pointer;
+      font-size: 13px; font-family: 'Courier New', monospace;
+    }
+    .pages-item:hover { border-color: var(--gold); }
+    .pages-item.is-active { border-color: var(--gold); background: rgba(200,160,74,0.06); }
+    .pages-item .pages-item__badge { float: right; font-size: 10px; color: var(--gold); }
+    .pages-form .row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-4); }
+    .pages-form .full { grid-column: 1 / -1; }
+    .pages-form label { display: block; font-size: 11px; text-transform: uppercase;
+      letter-spacing: 0.06em; color: var(--muted); margin: 0 0 6px; }
+    .pages-form .input, .pages-form .ta { width: 100%; }
+    .pages-form .field-help { font-size: 11px; color: var(--muted); margin: 4px 0 0; }
+    .quill-host { background: #fff; border: 1px solid var(--hairline); }
+    .quill-host .ql-toolbar.ql-snow { border: none; border-bottom: 1px solid var(--hairline); }
+    .quill-host .ql-container.ql-snow { border: none; min-height: 360px; font-family: inherit; font-size: 14px; }
+    .quill-host .ql-editor { min-height: 360px; line-height: 1.55; }
+    .quill-host .ql-editor h2 { font-family: 'Cormorant Garamond', serif; font-size: 22px; margin: 16px 0 8px; }
+    .quill-host .ql-editor h3 { font-family: 'Cormorant Garamond', serif; font-size: 18px; margin: 14px 0 6px; }
+    .quill-host .ql-editor img { max-width: 100%; height: auto; }
+  </style>
+</head>
+<body>
+<div class="admin-shell">
+  <aside class="admin-side">
+    <div class="admin-side__brand">KANAAN<span>.</span></div>
+    <nav class="admin-side__nav">
+      <a href="dashboard">Dashboard</a>
+      <a href="leads">Leads · CRM</a>
+      <a href="scan">Scan booking</a>
+      <a href="blocks">Blocked slots</a>
+      <a href="offers">Offers</a>
+      <a href="branches">Branches</a>
+      <a href="banners">Banners</a>
+      <a href="testimonials">Testimonials</a>
+      <a href="blog">Blog</a>
+      <a href="pages" class="active">Pages</a>
+      <a href="integrations">Integrations</a>
+      <a href="settings">Settings</a>
+    </nav>
+    <div class="admin-side__user">Signed in · <button type="button" onclick="KANAAN_ADMIN.logout()">Sign out</button></div>
+  </aside>
+
+  <main class="admin-main">
+    <h1 class="admin-h">Pages</h1>
+    <p class="admin-sub">Edit the body of any service / branch / static page. Saves are <strong>overrides</strong> — the bundled HTML stays as the default, and your edit is applied on top at page load. Delete the row to revert to default.</p>
+
+    <div class="pages-grid">
+      <div class="pages-list" id="pagesList"></div>
+      <div id="editor"></div>
+    </div>
+  </main>
+</div>
+
+<script src="../assets/js/config.js?v=2"></script>
+<script src="admin.js"></script>
+<script>
+if (KANAAN_ADMIN.requireAuth()) (async function () {
+  // Master list of editable paths. Grouped for the sidebar.
+  const KNOWN_PAGES = [
+    { group: 'Top-level', items: [
+      { path: 'index',            label: '/ (homepage)' },
+      { path: 'about',            label: '/about' },
+      { path: 'contact',          label: '/contact' },
+      { path: 'careers',          label: '/careers' },
+      { path: 'corporate',        label: '/corporate' },
+      { path: 'gift-voucher',     label: '/gift-voucher' },
+      { path: 'gallery',          label: '/gallery' },
+      { path: 'menu',             label: '/menu' },
+      { path: 'offers',           label: '/offers' },
+      { path: 'branches',         label: '/branches' },
+      { path: 'before-after',     label: '/before-after' },
+      { path: 'blog',             label: '/blog' }
+    ]},
+    { group: 'Services', items: [
+      { path: 'services',                       label: '/services' },
+      { path: 'services/hair-beard',            label: '/services/hair-beard' },
+      { path: 'services/facial-skin-care',      label: '/services/facial-skin-care' },
+      { path: 'services/massage',               label: '/services/massage' },
+      { path: 'services/moroccan-bath',         label: '/services/moroccan-bath' },
+      { path: 'services/manicure-pedicure',     label: '/services/manicure-pedicure' },
+      { path: 'services/hair-treatment',        label: '/services/hair-treatment' },
+      { path: 'services/grooming-packages',     label: '/services/grooming-packages' }
+    ]},
+    { group: 'Branches', items: [
+      { path: 'branches/al-ain',          label: '/branches/al-ain' },
+      { path: 'branches/khalifa-city',    label: '/branches/khalifa-city' },
+      { path: 'branches/khalidiya',       label: '/branches/khalidiya' },
+      { path: 'branches/baniyas-spa',     label: '/branches/baniyas-spa' },
+      { path: 'branches/baniyas-barber',  label: '/branches/baniyas-barber' },
+      { path: 'branches/rabdan',          label: '/branches/rabdan' },
+      { path: 'branches/old-shahamah',    label: '/branches/old-shahamah' },
+      { path: 'branches/new-shahamah',    label: '/branches/new-shahamah' },
+      { path: 'branches/muroor',          label: '/branches/muroor' },
+      { path: 'branches/vip-muroor',      label: '/branches/vip-muroor' }
+    ]},
+    { group: 'Legal', items: [
+      { path: 'privacy-policy',   label: '/privacy-policy' },
+      { path: 'terms',            label: '/terms' },
+      { path: 'cookie-policy',    label: '/cookie-policy' },
+      { path: 'accessibility',    label: '/accessibility' }
+    ]}
+  ];
+
+  let overrides = [];   // [{ path, title, updated_at }]
+  let selectedPath = null;
+  let currentPage  = null;     // { path, title, meta_description, body_html }
+  let dirty = false;
+  let quill = null;
+
+  function esc(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+  const overridenSet = () => new Set(overrides.map(o => o.path));
+
+  function renderList() {
+    const list = document.getElementById('pagesList');
+    const has = overridenSet();
+    list.innerHTML = KNOWN_PAGES.map(g => `
+      <div class="pages-group">${esc(g.group)}</div>
+      ${g.items.map(it => `
+        <div class="pages-item ${it.path === selectedPath ? 'is-active' : ''}" data-pick="${esc(it.path)}">
+          ${esc(it.label)}
+          ${has.has(it.path) ? '<span class="pages-item__badge">●</span>' : ''}
+        </div>`).join('')}
+    `).join('');
+    list.querySelectorAll('[data-pick]').forEach(el => {
+      el.addEventListener('click', async () => {
+        if (dirty && !confirm('Discard unsaved changes on the current page?')) return;
+        selectedPath = el.dataset.pick;
+        await loadSelected();
+        render();
+      });
+    });
+  }
+
+  async function loadSelected() {
+    if (!selectedPath) { currentPage = null; return; }
+    const row = await KANAAN_ADMIN.loadPage(selectedPath);
+    currentPage = row || { path: selectedPath, title: '', meta_description: '', body_html: '' };
+    dirty = false;
+  }
+
+  function renderEditor() {
+    const ed = document.getElementById('editor');
+    if (!currentPage) {
+      ed.innerHTML = '<p class="muted" style="padding: var(--s-5);">Select a page on the left to edit its body content.</p>';
+      return;
+    }
+    const has = overridenSet().has(currentPage.path);
+    ed.innerHTML = `
+      <div class="card pages-form">
+        <div class="bar" style="margin-bottom: var(--s-4);">
+          <span class="pill pill--gold">${esc(currentPage.path)}</span>
+          ${has ? '<span class="pill pill--sage">override active</span>' : '<span class="pill">default (bundled HTML)</span>'}
+          <span class="spacer"></span>
+          ${has ? '<button type="button" class="btn btn--ghost btn--sm" id="revert">↺ Revert to default</button>' : ''}
+          <span class="muted" id="saveStatus" style="margin-left: 8px; font-size: 12px;">All changes saved</span>
+          <button type="button" class="btn btn--sm" id="save">💾 Save &amp; publish</button>
+        </div>
+        <div class="row">
+          <div class="full"><label>Page title (browser tab + SEO)</label>
+            <input class="input" data-k="title" value="${esc(currentPage.title)}" placeholder="Leave blank to keep the page's default title" /></div>
+          <div class="full"><label>Meta description</label>
+            <textarea class="ta" data-k="meta_description">${esc(currentPage.meta_description)}</textarea>
+            <p class="field-help">Used by Google + when the page is shared. Leave blank to keep the page's default.</p></div>
+          <div class="full">
+            <label>Body content</label>
+            <div class="quill-host" id="quillHost"></div>
+            <p class="field-help">This replaces the <code>&lt;div data-page-body&gt;</code> region on the live page. Leave the page un-saved to keep the bundled HTML.</p>
+          </div>
+        </div>
+      </div>`;
+
+    // Wire scalar inputs
+    ed.querySelectorAll('[data-k]').forEach(el => {
+      el.addEventListener('input', () => {
+        currentPage[el.dataset.k] = el.value;
+        markDirty();
+      });
+    });
+
+    // Init Quill
+    quill = new Quill('#quillHost', {
+      modules: {
+        toolbar: {
+          container: [
+            [{ header: [2, 3, false] }],
+            ['bold', 'italic', 'underline'],
+            ['blockquote'],
+            [{ list: 'ordered' }, { list: 'bullet' }],
+            [{ align: [] }],
+            ['link', 'image'],
+            ['clean']
+          ],
+          handlers: {
+            image: function () {
+              const input = document.createElement('input');
+              input.type = 'file'; input.accept = 'image/*';
+              input.onchange = async () => {
+                const file = input.files && input.files[0]; if (!file) return;
+                KANAAN_ADMIN.toast('Uploading image…');
+                const res = await KANAAN_ADMIN.uploadBlogImage(file);
+                if (!res.ok) { KANAAN_ADMIN.toast('Upload failed: ' + (res.error || 'unknown')); return; }
+                const range = quill.getSelection(true) || { index: quill.getLength() };
+                quill.insertEmbed(range.index, 'image', res.url, Quill.sources.USER);
+                quill.setSelection(range.index + 1, Quill.sources.SILENT);
+              };
+              input.click();
+            }
+          }
+        }
+      },
+      theme: 'snow',
+      placeholder: 'Type to override this page\'s body. Leave blank to keep the bundled HTML.'
+    });
+    if (currentPage.body_html) {
+      quill.clipboard.dangerouslyPasteHTML(currentPage.body_html, Quill.sources.SILENT);
+    }
+    quill.on('text-change', (_, __, source) => {
+      if (source === Quill.sources.SILENT) return;
+      currentPage.body_html = quill.getSemanticHTML ? quill.getSemanticHTML() : quill.root.innerHTML;
+      markDirty();
+    });
+
+    document.getElementById('save').addEventListener('click', async () => {
+      // If everything is blank, just delete the override so the bundled HTML wins.
+      const allBlank = !(currentPage.title || '').trim()
+                    && !(currentPage.meta_description || '').trim()
+                    && !(currentPage.body_html || '').replace(/<p>(<br>|\s)*<\/p>/g, '').trim();
+      const btn = document.getElementById('save');
+      btn.disabled = true; btn.textContent = '⏳ Saving…';
+      let res;
+      if (allBlank && overridenSet().has(currentPage.path)) {
+        res = await KANAAN_ADMIN.deletePage(currentPage.path);
+      } else {
+        res = await KANAAN_ADMIN.savePage({
+          path: currentPage.path,
+          title: currentPage.title || '',
+          meta_description: currentPage.meta_description || '',
+          body_html: currentPage.body_html || ''
+        });
+      }
+      btn.disabled = false; btn.textContent = '💾 Save & publish';
+      if (res.ok) {
+        markClean();
+        overrides = await KANAAN_ADMIN.listPages();
+        KANAAN_ADMIN.toast(allBlank ? 'Reverted to default' : 'Page published — live now');
+        renderList();
+      } else {
+        KANAAN_ADMIN.toast('Save failed: ' + (res.error || 'unknown'));
+      }
+    });
+
+    const revertBtn = document.getElementById('revert');
+    if (revertBtn) revertBtn.addEventListener('click', async () => {
+      if (!confirm('Revert this page to the bundled HTML? Your saved override will be deleted.')) return;
+      const res = await KANAAN_ADMIN.deletePage(currentPage.path);
+      if (res.ok) {
+        currentPage = { path: currentPage.path, title: '', meta_description: '', body_html: '' };
+        overrides = await KANAAN_ADMIN.listPages();
+        markClean();
+        renderList();
+        renderEditor();
+        KANAAN_ADMIN.toast('Reverted to default');
+      } else {
+        KANAAN_ADMIN.toast('Revert failed: ' + (res.error || 'unknown'));
+      }
+    });
+  }
+
+  const status = () => document.getElementById('saveStatus');
+  function markDirty() { dirty = true; const s = status(); if (s) s.textContent = 'Unsaved changes'; }
+  function markClean() { dirty = false; const s = status(); if (s) s.textContent = 'All changes saved'; }
+
+  function render() {
+    renderList();
+    renderEditor();
+  }
+
+  // Initial load
+  overrides = await KANAAN_ADMIN.listPages();
+  render();
+})();
+</script>
+  <script src="../assets/js/tracking.js"></script>
+  <script src="../assets/js/consent.js" defer></script>
+</body>
+</html>
