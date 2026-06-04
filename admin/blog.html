@@ -31,14 +31,40 @@
     .blog-form .ta--body { min-height: 360px; font-family: 'Courier New', monospace; font-size: 13px; }
     .blog-form .full { grid-column: 1 / -1; }
     .blog-form .field-help { font-size: 11px; color: var(--muted); margin: 4px 0 0; }
-    /* Quill editor styling — match the admin form aesthetic. */
-    .quill-host { background: #fff; border: 1px solid var(--hairline); }
-    .quill-host .ql-toolbar.ql-snow { border: none; border-bottom: 1px solid var(--hairline); }
-    .quill-host .ql-container.ql-snow { border: none; min-height: 360px; font-family: inherit; font-size: 14px; }
-    .quill-host .ql-editor { min-height: 360px; line-height: 1.55; }
-    .quill-host .ql-editor h2 { font-family: 'Cormorant Garamond', serif; font-size: 22px; margin: 16px 0 8px; }
-    .quill-host .ql-editor h3 { font-family: 'Cormorant Garamond', serif; font-size: 18px; margin: 14px 0 6px; }
+    /* Quill editor styling — force a light "paper" surface regardless of the
+       admin dark/light theme so the editor content is always high-contrast.
+       Without this, dark-mode admins inherit `--text` (light cream) on the
+       editor's white background and the body text becomes invisible. */
+    .quill-host { background: #fff !important; color: #15171A; border: 1px solid var(--line); }
+    .blog-form .ql-toolbar.ql-snow {
+      border: none; border-bottom: 1px solid #e5e5e5;
+      background: #fafafa !important;
+    }
+    /* Toolbar icons + dropdowns: dark strokes/fills so they're visible on the
+       light toolbar (Quill's defaults are #444, but admin's dark theme can
+       inherit-override them). */
+    .blog-form .ql-toolbar .ql-stroke         { stroke: #444 !important; }
+    .blog-form .ql-toolbar .ql-fill           { fill:   #444 !important; }
+    .blog-form .ql-toolbar .ql-picker         { color:  #444 !important; }
+    .blog-form .ql-toolbar .ql-picker-label   { color:  #444 !important; }
+    .blog-form .ql-toolbar .ql-picker-options { background: #fff; color: #15171A; }
+    .blog-form .ql-toolbar button:hover .ql-stroke,
+    .blog-form .ql-toolbar button.ql-active .ql-stroke { stroke: #06c !important; }
+    .blog-form .ql-toolbar button:hover .ql-fill,
+    .blog-form .ql-toolbar button.ql-active .ql-fill   { fill:   #06c !important; }
+    .blog-form .ql-container.ql-snow {
+      border: none; height: auto; min-height: 360px; font-family: inherit; font-size: 14px;
+      background: #fff !important; color: #15171A !important;
+    }
+    .quill-host .ql-editor { min-height: 360px; line-height: 1.55; color: #15171A; }
+    .quill-host .ql-editor p,
+    .quill-host .ql-editor li,
+    .quill-host .ql-editor blockquote { color: #15171A; }
+    .quill-host .ql-editor h2 { font-family: 'Cormorant Garamond', serif; font-size: 22px; margin: 16px 0 8px; color: #15171A; }
+    .quill-host .ql-editor h3 { font-family: 'Cormorant Garamond', serif; font-size: 18px; margin: 14px 0 6px; color: #15171A; }
+    .quill-host .ql-editor a { color: #8E6A2A; }
     .quill-host .ql-editor img { max-width: 100%; height: auto; }
+    .quill-host .ql-editor.ql-blank::before { color: #888; font-style: normal; }
     .editor-toggle { display: flex; justify-content: flex-end; margin-bottom: 6px; }
     .hero-upload-row { display: flex; gap: 8px; align-items: stretch; }
     .hero-upload-row .input { flex: 1; }
