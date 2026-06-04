@@ -23,6 +23,10 @@
     .masonry > a:hover img { transform: scale(1.04); }
     @media (max-width: 900px) { .masonry { columns: 2; } }
     @media (max-width: 600px) { .masonry { columns: 1; } }
+    .filter-bar { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-bottom: var(--s-7); }
+    .filter-chip { padding: 10px 20px; border: 1px solid var(--hairline); font-size: 13px; letter-spacing: 0.04em; cursor: pointer; transition: all var(--t-fast); background: transparent; color: var(--text); border-radius: 999px; }
+    .filter-chip:hover { border-color: var(--c-gold); color: var(--c-gold); }
+    .filter-chip.is-active { background: var(--c-gold); color: #0E0F11; border-color: var(--c-gold); }
     .lightbox { display: none; position: fixed; inset: 0; background: rgba(14,15,17,0.96); z-index: 1000; align-items: center; justify-content: center; padding: var(--s-5); cursor: zoom-out; }
     .lightbox.is-open { display: flex; }
     .lightbox img { max-width: 100%; max-height: 90vh; }
@@ -71,7 +75,7 @@
       </nav>
       <div class="header-actions">
         <a href="../gallery" class="lang-switch">EN</a>
-        <a href="book" class="btn btn--sm">احجز الآن</a>
+        <a href="book" class="btn btn--sm">احجز موعدك الآن</a>
         <button type="button" class="menu-toggle" aria-label="القائمة"><span></span><span></span><span></span></button>
       </div>
     </div>
@@ -83,8 +87,8 @@
       <a href="gallery" class="is-active">المعرض</a>
       <a href="blog">المقالات</a>
       <a href="contact">تواصل</a>
-      <a href="../" class="lang-switch">EN</a>
-      <a href="book" class="btn btn--sm">احجز الآن</a>
+      <a href="../gallery" class="lang-switch">EN</a>
+      <a href="book" class="btn btn--sm">احجز موعدك الآن</a>
     </nav>
   </header>
 
@@ -92,23 +96,33 @@
     <div class="page-hero__media" data-reveal="mask" data-parallax="bg" data-speed="0.50"><img src="../assets/img/photos/lounge-logo-wall-1600.webp" alt="Master barber at work in Kanaan" loading="eager" fetchpriority="high" decoding="async" width="1320" height="1737" srcset="../assets/img/photos/lounge-logo-wall-600.webp 600w, ../assets/img/photos/lounge-logo-wall-1000.webp 1000w, ../assets/img/photos/lounge-logo-wall-1600.webp 1600w" sizes="100vw" /></div>
     <div class="container page-hero__content">
       <div class="breadcrumb"><a href="./">الرئيسية</a><span class="sep">/</span><span>المعرض</span></div>
-      <span class="eyebrow">من داخل البيوت</span>
-      <h1 class="page-hero__title" data-split="lines">الأجواء، الحرفة، التفاصيل.</h1>
+      <span class="eyebrow">المعرض</span>
+      <h1 class="page-hero__title" data-split="lines">حيث تلتقي الراحة <span style="color: var(--c-gold);">بالاحترافية</span></h1>
+      <p class="hero__sub" style="margin-top: var(--s-4);">استكشف الأجواء الراقية التي صُممت لمنحك تجربة عناية لا تُنسى.</p>
     </div>
   </section>
 
   <section class="section">
     <div class="container">
+      <div class="filter-bar" data-filter=".js-photo">
+        <button type="button" class="filter-chip is-active" data-filter-chip="all">الكل</button>
+        <button type="button" class="filter-chip" data-filter-chip="reception">الاستقبال</button>
+        <button type="button" class="filter-chip" data-filter-chip="care">غرف العناية</button>
+        <button type="button" class="filter-chip" data-filter-chip="barber">الحلاقة</button>
+        <button type="button" class="filter-chip" data-filter-chip="spa">السبا والمساج</button>
+        <button type="button" class="filter-chip" data-filter-chip="moroccan">الحمام المغربي</button>
+        <button type="button" class="filter-chip" data-filter-chip="details">تفاصيلنا</button>
+      </div>
       <div class="masonry">
-        <a href="../assets/img/photos/lounge-logo-wall-1600.webp" data-lightbox-trigger><img src="../assets/img/photos/service-facial-overview-1000.webp" alt="Inside a Kanaan salon chair" loading="lazy" width="1000" height="993" /></a>
-        <a href="../assets/img/photos/service-hair-barber-stations-1600.webp" data-lightbox-trigger><img src="../assets/img/photos/service-massage-pink-1000.webp" alt="Master barber at work in Kanaan" loading="lazy" width="1000" height="648" /></a>
-        <a href="../assets/img/photos/service-facial-overview-1600.webp" data-lightbox-trigger><img src="../assets/img/photos/standard-pedicure-onyx-1000.webp" alt="Barber tools and grooming detail" loading="lazy" width="1000" height="1377" /></a>
-        <a href="../assets/img/photos/service-massage-pink-1600.webp" data-lightbox-trigger><img src="../assets/img/photos/arch-marble-staircase-1000.webp" alt="Spa interior at Kanaan Baniyas Spa" loading="lazy" width="1000" height="1319" /></a>
-        <a href="../assets/img/photos/standard-pedicure-onyx-1600.webp" data-lightbox-trigger><img src="../assets/img/photos/brand-logo-wall-1000.webp" alt="Premium grooming detail" loading="lazy" width="1000" height="659" /></a>
-        <a href="../assets/img/photos/arch-marble-staircase-1600.webp" data-lightbox-trigger><img src="../assets/img/photos/service-hair-barber-stations-1000.webp" alt="Kanaan house interior" loading="lazy" width="1000" height="655" /></a>
-        <a href="../assets/img/photos/exterior-day-bilingual-1600.webp" data-lightbox-trigger><img src="../assets/img/photos/service-facial-overview-1000.webp" alt="Kanaan Gents Salon &amp; Spa" loading="lazy" width="1000" height="993" /></a>
-        <a href="../assets/img/photos/service-hair-barber-stations-1600.webp" data-lightbox-trigger><img src="../assets/img/photos/service-massage-pink-1000.webp" alt="Kanaan Gents Salon &amp; Spa" loading="lazy" width="1000" height="648" /></a>
-        <a href="../assets/img/photos/service-facial-overview-1600.webp" data-lightbox-trigger><img src="../assets/img/photos/service-pedicure-trolley-1000.webp" alt="Kanaan VIP Muroor private suite" loading="lazy" width="1000" height="660" /></a>
+        <a href="../assets/img/photos/service-facial-overview-1600.webp" class="js-photo" data-tags="care" data-lightbox-trigger><img src="../assets/img/photos/service-facial-overview-1000.webp" alt="غرفة عناية بالبشرة في كنعان" loading="lazy" width="1000" height="993" /></a>
+        <a href="../assets/img/photos/service-massage-pink-1600.webp" class="js-photo" data-tags="spa" data-lightbox-trigger><img src="../assets/img/photos/service-massage-pink-1000.webp" alt="جلسة مساج في كنعان" loading="lazy" width="1000" height="648" /></a>
+        <a href="../assets/img/photos/standard-pedicure-onyx-1600.webp" class="js-photo" data-tags="care" data-lightbox-trigger><img src="../assets/img/photos/standard-pedicure-onyx-1000.webp" alt="العناية بالأظافر في كنعان" loading="lazy" width="1000" height="1377" /></a>
+        <a href="../assets/img/photos/arch-marble-staircase-1600.webp" class="js-photo" data-tags="reception" data-lightbox-trigger><img src="../assets/img/photos/arch-marble-staircase-1000.webp" alt="منطقة الاستقبال في كنعان" loading="lazy" width="1000" height="1319" /></a>
+        <a href="../assets/img/photos/brand-logo-wall-1600.webp" class="js-photo" data-tags="details" data-lightbox-trigger><img src="../assets/img/photos/brand-logo-wall-1000.webp" alt="تفاصيل العلامة في كنعان" loading="lazy" width="1000" height="659" /></a>
+        <a href="../assets/img/photos/service-hair-barber-stations-1600.webp" class="js-photo" data-tags="barber" data-lightbox-trigger><img src="../assets/img/photos/service-hair-barber-stations-1000.webp" alt="ركن الحلاقة في كنعان" loading="lazy" width="1000" height="655" /></a>
+        <a href="../assets/img/photos/service-facial-overview-1600.webp" class="js-photo" data-tags="care" data-lightbox-trigger><img src="../assets/img/photos/service-facial-overview-1000.webp" alt="غرفة عناية في كنعان" loading="lazy" width="1000" height="993" /></a>
+        <a href="../assets/img/photos/service-massage-pink-1600.webp" class="js-photo" data-tags="spa" data-lightbox-trigger><img src="../assets/img/photos/service-massage-pink-1000.webp" alt="السبا والمساج في كنعان" loading="lazy" width="1000" height="648" /></a>
+        <a href="../assets/img/photos/service-moroccan-bath-1600.webp" class="js-photo" data-tags="moroccan" data-lightbox-trigger><img src="../assets/img/photos/service-moroccan-bath-1000.webp" alt="الحمام المغربي في كنعان" loading="lazy" width="1000" height="660" /></a>
       </div>
     </div>
   </section>
@@ -116,8 +130,9 @@
   <div class="lightbox" data-lightbox><img src="" alt="Kanaan Gents Salon &amp; Spa" loading="lazy" decoding="async" /></div>
 
   <section class="cta-band" data-reveal="up">
-    <h2 class="cta-band__title" data-parallax="text" data-speed="0.35">زُر بيتاً منّا.</h2>
-    <a href="branches" class="btn btn--lg">اعرض الفروع</a>
+    <h2 class="cta-band__title" data-parallax="text" data-speed="0.35">اكتشف أقرب فرع إليك</h2>
+    <p class="cta-band__sub" data-scroll-text>كنعان أقرب مما تتخيل. اختر الفرع المناسب لك واستمتع بتجربة عناية متكاملة بمعايير عالمية.</p>
+    <a href="branches" class="btn btn--lg">استكشف فروعنا</a>
   </section></main>
 
   <footer class="site-footer">
@@ -148,7 +163,7 @@
   </footer>
 
   <div class="mobile-cta">
-    <a href="book" class="mobile-cta__book">احجز الآن</a>
+    <a href="book" class="mobile-cta__book">احجز موعدك الآن</a>
     <a href="https://wa.me/971505556795?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D9%83%D9%86%D8%B9%D8%A7%D9%86%D8%8C%20%D8%A3%D8%B1%D8%BA%D8%A8%20%D9%81%D9%8A%20%D8%A7%D9%84%D8%AD%D8%AC%D8%B2.%20%D8%A7%D9%84%D8%B1%D8%AC%D8%A7%D8%A1%20%D8%A5%D8%B9%D9%84%D8%A7%D9%85%D9%8A%20%D8%A8%D8%A3%D9%82%D8%B1%D8%A8%20%D9%81%D8%B1%D8%B9%20%D9%88%D8%A3%D9%88%D9%82%D8%A7%D8%AA%20%D9%85%D8%AA%D8%A7%D8%AD%D8%A9." aria-label="واتساب"><svg class="icon" aria-hidden="true"><use href="../assets/img/icons.svg#i-whatsapp"/></svg></a>
     <a href="tel:+971505556795" aria-label="اتصال"><svg class="icon" aria-hidden="true"><use href="../assets/img/icons.svg#i-phone"/></svg></a>
   </div>
