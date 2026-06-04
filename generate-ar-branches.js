@@ -2,6 +2,13 @@
 const fs = require('fs');
 const path = require('path');
 
+// Convert "HH:MM-HH:MM" range using ASCII digits into Arabic Indic digits with en-dash.
+function toArHours(range, fallback) {
+  const v = range || fallback;
+  const arDigits = { '0':'٠','1':'١','2':'٢','3':'٣','4':'٤','5':'٥','6':'٦','7':'٧','8':'٨','9':'٩' };
+  return v.replace(/[0-9]/g, d => arDigits[d]).replace('-', '–');
+}
+
 const data = JSON.parse(fs.readFileSync(path.join(__dirname, 'content', 'branches.json'), 'utf8'));
 const prices = JSON.parse(fs.readFileSync(path.join(__dirname, 'content', 'prices.json'), 'utf8'));
 
@@ -133,7 +140,7 @@ const tpl = (b) => `<!DOCTYPE html>
         </div>
         <div style="padding: var(--s-5); background: #fff;">
           <span class="eyebrow" style="color: var(--c-stone);">المواعيد</span>
-          <p style="margin: 8px 0 0; font-size: 13px; color: var(--muted);">السبت–الخميس ١٠:٠٠–٢٣:٠٠ · الجمعة ١٤:٠٠–٢٣:٠٠</p>
+          <p style="margin: 8px 0 0; font-size: 13px; color: var(--muted);">السبت–الخميس ${toArHours(b.hours && b.hours.sat, '09:00-23:00')} · الجمعة ${toArHours(b.hours && b.hours.fri, '14:30-23:00')}</p>
         </div>
         <div style="padding: var(--s-5); background: #fff;">
           <span class="eyebrow" style="color: var(--c-stone);">اتصل</span>
@@ -197,7 +204,7 @@ const tpl = (b) => `<!DOCTYPE html>
         <h2 class="section-head__title display-2">${b.area_ar}.</h2>
       </div>
       <div style="aspect-ratio: 21/9; border: 1px solid var(--hairline); overflow: hidden;">
-        <iframe src="https://www.google.com/maps?q=${b.maps_query || encodeURIComponent(b.address_en || b.area_en)}&output=embed" width="100%" height="100%" style="border:0; filter: grayscale(0.4) contrast(1.05);" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="خريطة كنعان ${b.name_ar}"></iframe>
+        <iframe src="https://www.google.com/maps?q=${encodeURIComponent(b.maps_query || b.address_en || b.area_en || '')}&output=embed" width="100%" height="100%" style="border:0; filter: grayscale(0.4) contrast(1.05);" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="خريطة كنعان ${b.name_ar}"></iframe>
       </div>
     </div>
   </section>

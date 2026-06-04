@@ -146,6 +146,163 @@ if (KANAAN_ADMIN.requireAuth()) (async function () {
     });
   }
 
+  /* ===== Live SEO health analyzer =====
+     Runs after every keystroke. Mirrors the checks a senior SEO would run:
+       focus-keyword placement (title/slug/meta/first-paragraph/H2/alt/density),
+       title and meta-description length within Google's display window,
+       content length, image-alt coverage, internal & external link presence,
+       tag count, hero/OG image dimensions, draft / noindex flags. */
+  let scheduleSeoScore;
+  (function defineSeoScore() {
+    let pending = null;
+    function stripHtml(html) {
+      const d = document.createElement('div'); d.innerHTML = html || '';
+      d.querySelectorAll('script,style').forEach(el => el.remove());
+      return d.textContent || '';
+    }
+    function wordsOf(text) {
+      return (String(text || '').match(/[A-Za-z؀-ۿ][A-Za-z0-9؀-ۿ'\-]*/g) || []);
+    }
+    function hasKeyword(haystack, kw) {
+      if (!kw) return null;
+      return new RegExp('\\b' + kw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/\s+/g, '\\s+') + '\\b', 'i').test(haystack || '');
+    }
+    function checkRow(state, label, detail) {
+      const dot = state === 'good' ? '#3a9b46' : state === 'warn' ? '#d68a1a' : state === 'bad' ? '#c44a3a' : '#9c9c9c';
+      const wt  = state === 'good' ? 600 : state === 'bad' ? 600 : 500;
+      return '<li style="display:flex; gap:10px; align-items:flex-start; line-height:1.45;">'
+           +   '<span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:' + dot + '; flex:0 0 auto; margin-top:5px;"></span>'
+           +   '<span style="font-weight:' + wt + ';">' + label + (detail ? '<span style="font-weight:400; color:#6b6b6b;"> — ' + detail + '</span>' : '') + '</span>'
+           + '</li>';
+    }
+    function run(post) {
+      const checks = document.getElementById('seoChecks');
+      const badge  = document.getElementById('seoScoreBadge');
+      const wcEl   = document.getElementById('seoWordCount');
+      if (!checks) return;
+
+      const titleStr   = (post.meta_title || post.title || '').trim();
+      const descStr    = (post.meta_description || post.excerpt || '').trim();
+      const slug       = (post.slug || '').trim();
+      const focus      = (post.focus_keyword || '').trim().toLowerCase();
+      const bodyText   = stripHtml(post.body_html);
+      const lede       = (post.lede || '').trim();
+      const firstPara  = lede || bodyText.split(/\n\n|\n/).find(p => p.trim().length > 0) || '';
+      const wordCount  = wordsOf(bodyText).length;
+      const headingHtml = (post.body_html || '').match(/<h[23][^>]*>[\s\S]*?<\/h[23]>/gi) || [];
+      const imgs       = (post.body_html || '').match(/<img\b[^>]*>/gi) || [];
+      const imgsWithAlt= imgs.filter(t => /\balt\s*=\s*"[^"]+"/i.test(t)).length;
+      const internalLinks = (post.body_html || '').match(/<a\b[^>]*href\s*=\s*"\/(?!\/)[^"]*"/gi) || [];
+      const externalLinks = (post.body_html || '').match(/<a\b[^>]*href\s*=\s*"https?:\/\/(?!kanaanspa\.ae)[^"]*"/gi) || [];
+      const tags       = Array.isArray(post.tags) ? post.tags : (post.tags ? String(post.tags).split(',').map(t => t.trim()).filter(Boolean) : []);
+      const tlen       = titleStr.length;
+      const dlen       = descStr.length;
+
+      const rows = [];
+      let good = 0, warn = 0, bad = 0;
+      function add(state, label, detail) {
+        rows.push(checkRow(state, label, detail));
+        if (state === 'good') good++; else if (state === 'warn') warn++; else if (state === 'bad') bad++;
+      }
+
+      // --- Title ---
+      if (!titleStr)                   add('bad',  'Meta title missing', 'Add a title — most important on-page field');
+      else if (tlen < 30)              add('warn', 'Meta title is short', tlen + ' chars · aim for 50–60');
+      else if (tlen > 65)              add('warn', 'Meta title is long',  tlen + ' chars · Google truncates ~60');
+      else                             add('good', 'Meta title length',   tlen + ' chars · ideal');
+
+      // --- Meta description ---
+      if (!descStr)                    add('bad',  'Meta description missing', 'Add one to control the snippet');
+      else if (dlen < 70)              add('warn', 'Meta description is short', dlen + ' chars · aim for 120–155');
+      else if (dlen > 160)             add('warn', 'Meta description is long',  dlen + ' chars · Google truncates ~155');
+      else                             add('good', 'Meta description length',   dlen + ' chars · ideal');
+
+      // --- Slug ---
+      if (!slug)                       add('bad',  'Slug missing');
+      else if (slug.length > 60)       add('warn', 'Slug is long', slug.length + ' chars · keep ≤ 60');
+      else if (!/^[a-z0-9-]+$/.test(slug)) add('bad', 'Slug has invalid characters', 'Use lowercase letters, numbers and hyphens only');
+      else                             add('good', 'Slug is URL-safe', '/blog/' + slug);
+
+      // --- Focus-keyword checks ---
+      if (focus) {
+        add(hasKeyword(titleStr, focus)   ? 'good' : 'bad',  'Focus keyword in meta title');
+        add(hasKeyword(slug.replace(/-/g,' '), focus) ? 'good' : 'warn', 'Focus keyword in slug');
+        add(hasKeyword(descStr, focus)    ? 'good' : 'warn', 'Focus keyword in meta description');
+        add(hasKeyword(firstPara, focus)  ? 'good' : 'warn', 'Focus keyword in first paragraph');
+        const inH2 = headingHtml.some(h => hasKeyword(stripHtml(h), focus));
+        add(inH2 ? 'good' : 'warn', 'Focus keyword in a subheading');
+        const re = new RegExp('\\b' + focus.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/\s+/g, '\\s+') + '\\b', 'gi');
+        const occ = (bodyText.match(re) || []).length;
+        const density = wordCount ? (occ / wordCount * 100) : 0;
+        let dState = 'warn', dDetail = occ + ' uses · ' + density.toFixed(1) + '% density';
+        if (density >= 0.5 && density <= 2.5) { dState = 'good'; dDetail += ' · in the sweet spot'; }
+        else if (density > 2.5) dDetail += ' · over-optimised — reduce';
+        else if (occ === 0)     { dState = 'bad'; dDetail = '0 uses · add the keyword to the body'; }
+        add(dState, 'Focus keyword density', dDetail);
+        if (imgs.length) {
+          const altWithKw = imgs.filter(t => {
+            const m = t.match(/\balt\s*=\s*"([^"]+)"/i);
+            return m && hasKeyword(m[1], focus);
+          }).length;
+          add(altWithKw ? 'good' : 'warn', 'Focus keyword in an image alt', altWithKw + '/' + imgs.length + ' images');
+        }
+      } else {
+        add('warn', 'No focus keyword set', 'Add one above to unlock 6 more checks');
+      }
+
+      // --- Content body ---
+      if (wordCount < 300)             add('bad',  'Content is thin', wordCount + ' words · 300+ for ranking, 600+ for depth');
+      else if (wordCount < 600)        add('warn', 'Content is OK',    wordCount + ' words · 600+ ranks stronger');
+      else                             add('good', 'Content depth',   wordCount + ' words');
+
+      if (!headingHtml.length)         add('warn', 'No H2/H3 subheadings', 'Break the post up for scannability');
+      else                             add('good', 'Subheadings present', headingHtml.length + ' headings');
+
+      // --- Images ---
+      if (imgs.length === 0)           add('warn', 'No images in body', 'Add 1–2 images to support the text');
+      else if (imgsWithAlt < imgs.length) add('bad', 'Image alt text incomplete', imgsWithAlt + '/' + imgs.length + ' have alt');
+      else                             add('good', 'All images have alt text', imgs.length + ' images');
+
+      // --- Links ---
+      add(internalLinks.length ? 'good' : 'warn', 'Internal links',
+        internalLinks.length ? internalLinks.length + ' · keeps users on site' : 'Add a link to another Kanaan page (service, branch, post)');
+      add(externalLinks.length ? 'good' : 'warn', 'External links',
+        externalLinks.length ? externalLinks.length + ' · signals authority' : 'Cite at least one reputable source');
+
+      // --- Tags ---
+      if (tags.length === 0)           add('warn', 'No tags set', 'Add 3–6 tags for categorisation');
+      else if (tags.length > 10)       add('warn', 'Too many tags', tags.length + ' · keep to 3–8');
+      else                             add('good', 'Tag count', tags.length + ' tags');
+
+      // --- Hero / OG image ---
+      if (!post.hero_image)            add('bad',  'No hero image set');
+      else                             add('good', 'Hero image set');
+      if (post.og_image && (!post.og_image_width || !post.og_image_height)) {
+        add('warn', 'OG image dimensions missing', 'Add width × height so Google reads ImageObject');
+      }
+
+      // --- Robots / draft ---
+      if (post.noindex)                add('warn', 'Post is set to NOINDEX', 'Google will not show this in search');
+      if (post.active === false)       add('warn', 'Status is DRAFT', 'Not visible on /blog yet');
+
+      checks.innerHTML = rows.join('');
+      const total = good + warn + bad;
+      const pct = total ? Math.round((good + warn * 0.5) / total * 100) : 0;
+      let band = 'Poor', bandColor = '#c44a3a';
+      if (pct >= 85)      { band = 'Excellent';  bandColor = '#3a9b46'; }
+      else if (pct >= 65) { band = 'Good';        bandColor = '#3a9b46'; }
+      else if (pct >= 45) { band = 'Needs work'; bandColor = '#d68a1a'; }
+      if (badge) badge.innerHTML = '<span style="color:' + bandColor + ';">' + band + ' · ' + pct + '%</span>';
+      if (wcEl)  wcEl.textContent  = wordCount.toLocaleString() + ' words · ~' + Math.max(1, Math.round(wordCount / 220)) + ' min read';
+    }
+    scheduleSeoScore = function () {
+      const post = posts.find(p => p.id === selectedId);
+      if (!post) return;
+      if (pending) cancelAnimationFrame(pending);
+      pending = requestAnimationFrame(() => { pending = null; run(post); });
+    };
+  })();
+
   function renderEditor() {
     const ed = document.getElementById('editor');
     const post = posts.find(p => p.id === selectedId);
@@ -193,6 +350,108 @@ if (KANAAN_ADMIN.requireAuth()) (async function () {
               <option value="false" ${post.active === false ? 'selected' : ''}>Draft (hidden from visitors)</option>
             </select></div>
         </div>
+
+        <!-- ===== SEO & social ===== -->
+        <details class="seo-block" style="margin-top: var(--s-6); padding: var(--s-5); border: 1px solid var(--hairline); background: rgba(200,160,74,0.04);" ${post.meta_title || post.meta_description || post.focus_keyword ? 'open' : ''}>
+          <summary style="cursor: pointer; color: var(--gold); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600;">SEO &amp; social sharing</summary>
+          <p style="font-size: 12px; color: var(--muted); margin: 12px 0 var(--s-4);">
+            Each field is optional — leave blank to fall back to Title / Excerpt / Hero image.
+          </p>
+          <div class="row">
+            <div class="full">
+              <label>Meta title <span class="muted" style="font-weight:normal;">(shown in Google results &amp; browser tab)</span></label>
+              <input class="input" data-k="meta_title" maxlength="70" value="${esc(post.meta_title)}" placeholder="${esc(post.title || 'Defaults to the post title')}" />
+              <p class="field-help" data-counter-for="meta_title" data-counter-ideal="60">${(post.meta_title || '').length} / 60 chars (Google truncates at ~60)</p>
+            </div>
+            <div class="full">
+              <label>Meta description <span class="muted" style="font-weight:normal;">(snippet under the title in search results)</span></label>
+              <textarea class="ta" data-k="meta_description" maxlength="180" placeholder="${esc(post.excerpt || 'Defaults to the excerpt')}">${esc(post.meta_description)}</textarea>
+              <p class="field-help" data-counter-for="meta_description" data-counter-ideal="155">${(post.meta_description || '').length} / 155 chars (Google truncates at ~155)</p>
+            </div>
+            <div>
+              <label>Focus keyword <span class="muted" style="font-weight:normal;">(internal — not rendered)</span></label>
+              <input class="input" data-k="focus_keyword" value="${esc(post.focus_keyword)}" placeholder="e.g. moroccan bath abu dhabi" />
+              <p class="field-help">Track the term you're targeting; used only inside the CMS.</p>
+            </div>
+            <div>
+              <label>Canonical URL <span class="muted" style="font-weight:normal;">(if this post lives elsewhere too)</span></label>
+              <input class="input" data-k="canonical_url" value="${esc(post.canonical_url)}" placeholder="https://kanaanspa.ae/blog/${esc(post.slug || 'slug')}" />
+              <p class="field-help">Leave blank to use /blog/&lt;slug&gt; automatically.</p>
+            </div>
+            <div class="full">
+              <label>Open Graph image <span class="muted" style="font-weight:normal;">(Facebook / WhatsApp / X preview)</span></label>
+              <input class="input" data-k="og_image" value="${esc(post.og_image)}" placeholder="${esc(post.hero_image || 'Defaults to the hero image')}" />
+              <p class="field-help">1200×630 PNG/JPG/WebP works best. Defaults to the hero image.</p>
+            </div>
+            <div>
+              <label>OG title</label>
+              <input class="input" data-k="og_title" value="${esc(post.og_title)}" placeholder="Defaults to meta title" />
+            </div>
+            <div>
+              <label>OG description</label>
+              <input class="input" data-k="og_description" value="${esc(post.og_description)}" placeholder="Defaults to meta description" />
+            </div>
+            <div>
+              <label>Schema type <span class="muted" style="font-weight:normal;">(JSON-LD)</span></label>
+              <select class="sel" data-k="schema_type">
+                ${['BlogPosting','Article','NewsArticle'].map(t =>
+                  `<option value="${t}" ${(post.schema_type || 'BlogPosting') === t ? 'selected' : ''}>${t}</option>`
+                ).join('')}
+              </select>
+              <p class="field-help">"BlogPosting" is the safe default. Use "NewsArticle" for time-sensitive announcements.</p>
+            </div>
+            <div>
+              <label>Robots</label>
+              <select class="sel" data-k="noindex">
+                <option value="false" ${!post.noindex ? 'selected' : ''}>Index, follow (normal)</option>
+                <option value="true" ${post.noindex ? 'selected' : ''}>Noindex, nofollow (hide from search)</option>
+              </select>
+              <p class="field-help">Useful for private posts you still want to share by direct link.</p>
+            </div>
+            <div class="full">
+              <label>Tags <span class="muted" style="font-weight:normal;">(comma-separated; rendered as Article keywords)</span></label>
+              <input class="input" data-k="tags" value="${esc((post.tags || []).join(', '))}" placeholder="e.g. grooming, beard care, abu dhabi" />
+              <p class="field-help">Used in JSON-LD <code>keywords</code> + the SEO score check below. 3–8 tags is the sweet spot.</p>
+            </div>
+            <div>
+              <label>OG image alt text</label>
+              <input class="input" data-k="og_image_alt" value="${esc(post.og_image_alt)}" placeholder="Defaults to hero image alt" />
+            </div>
+            <div>
+              <label>OG image dimensions (W × H)</label>
+              <div style="display: flex; gap: 8px;">
+                <input class="input" type="number" data-k="og_image_width" value="${esc(post.og_image_width)}" placeholder="1200" style="flex:1;" />
+                <input class="input" type="number" data-k="og_image_height" value="${esc(post.og_image_height)}" placeholder="630" style="flex:1;" />
+              </div>
+              <p class="field-help">Lets ImageObject declare exact size. 1200×630 is the Facebook/X recommended ratio.</p>
+            </div>
+          </div>
+
+          <!-- ===== Real-time SEO score (Yoast / RankMath style) ===== -->
+          <div id="seoScore" style="margin-top: var(--s-5); padding: var(--s-4); background: #fff; border: 1px solid var(--hairline);">
+            <div style="display:flex; align-items:baseline; gap:12px; margin-bottom: var(--s-3);">
+              <h4 style="margin: 0; color: var(--c-ink, #14161A); font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase;">SEO health</h4>
+              <span id="seoScoreBadge" style="font-weight:600; font-size:13px;"></span>
+              <span class="spacer" style="flex:1;"></span>
+              <span id="seoWordCount" style="font-size: 12px; color: var(--c-stone, #6b6b6b);"></span>
+            </div>
+            <ul id="seoChecks" style="list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; font-size: 13px; color: var(--c-ink, #14161A);"></ul>
+            <p class="field-help" style="color: var(--c-stone, #6b6b6b); margin-top: var(--s-3);">
+              Live checks. Green = good, amber = could improve, red = needs attention.
+              Use a <strong>focus keyword</strong> above to unlock keyword-placement checks.
+            </p>
+          </div>
+          <!-- Live search-result preview -->
+          <div style="margin-top: var(--s-5); padding: var(--s-4); border: 1px solid var(--hairline); background: #fff;">
+            <p style="font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0 0 8px;">Google result preview</p>
+            <div style="font-family: arial, sans-serif; max-width: 600px;">
+              <div style="color: #202124; font-size: 12px; line-height: 1.3;">kanaanspa.ae &rsaquo; blog &rsaquo; ${esc(post.slug || 'slug')}</div>
+              <div id="seoPreviewTitle" style="color: #1a0dab; font-size: 20px; line-height: 1.3; margin: 2px 0; max-width: 600px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${esc(post.meta_title || post.title || 'Post title')}</div>
+              <div id="seoPreviewDesc" style="color: #4d5156; font-size: 14px; line-height: 1.5;">${esc(post.meta_description || post.excerpt || 'Post description will appear here as you write it.')}</div>
+            </div>
+          </div>
+        </details>
+
         <div class="bar" style="margin-top: var(--s-5); border-top: 1px solid var(--hairline); padding-top: var(--s-4);">
           <button type="button" class="btn btn--ghost btn--sm" id="del">🗑 Delete this post</button>
           <span class="spacer"></span>
@@ -204,11 +463,36 @@ if (KANAAN_ADMIN.requireAuth()) (async function () {
     ed.querySelectorAll('[data-k]').forEach(el => {
       el.addEventListener('input', () => {
         let v = el.value;
-        if (el.dataset.k === 'active') v = (v === 'true');
-        else if (el.dataset.k === 'read_minutes') v = parseInt(v, 10) || 0;
+        if (el.dataset.k === 'active' || el.dataset.k === 'noindex') v = (v === 'true');
+        else if (el.dataset.k === 'read_minutes' || el.dataset.k === 'og_image_width' || el.dataset.k === 'og_image_height') {
+          v = parseInt(v, 10);
+          if (isNaN(v)) v = null;
+        }
+        else if (el.dataset.k === 'tags') {
+          // Store as a proper text[] so Supabase keeps it as an array.
+          v = String(v).split(',').map(t => t.trim()).filter(Boolean);
+        }
         post[el.dataset.k] = v;
         // Keep id in sync with slug (slug is the public URL piece)
         if (el.dataset.k === 'slug') post.id = v;
+        // Run SEO health checks on every keystroke (cheap; pure-DOM math).
+        scheduleSeoScore();
+        // SEO live-counter + Google-result preview
+        if (el.dataset.k === 'meta_title' || el.dataset.k === 'meta_description' ||
+            el.dataset.k === 'title' || el.dataset.k === 'excerpt') {
+          const counter = document.querySelector('[data-counter-for="' + el.dataset.k + '"]');
+          if (counter) {
+            const ideal = parseInt(counter.dataset.counterIdeal, 10) || 60;
+            const len = (el.value || '').length;
+            counter.firstChild.nodeValue = len + ' / ' + ideal + ' chars ';
+            counter.style.color = len > ideal ? 'var(--rust)' : (len > ideal * 0.9 ? 'var(--gold)' : 'var(--muted)');
+          }
+          // Update the Google preview using the effective values (with fallbacks).
+          const prevTitle = document.getElementById('seoPreviewTitle');
+          const prevDesc  = document.getElementById('seoPreviewDesc');
+          if (prevTitle) prevTitle.textContent = post.meta_title || post.title || 'Post title';
+          if (prevDesc)  prevDesc.textContent  = post.meta_description || post.excerpt || 'Post description will appear here as you write it.';
+        }
         // Hero image input: live-update the preview thumb.
         if (el.dataset.k === 'hero_image') {
           const thumb = document.getElementById('heroThumb');
@@ -285,8 +569,11 @@ if (KANAAN_ADMIN.requireAuth()) (async function () {
         const status = document.getElementById('saveStatus');
         if (status) status.textContent = 'Unsaved changes';
         renderList();
+        if (scheduleSeoScore) scheduleSeoScore();
       });
     }
+    // Paint the SEO panel once on mount so the editor doesn't open with an empty score.
+    if (scheduleSeoScore) scheduleSeoScore();
 
     // === Raw HTML toggle ===
     const toggleRaw = document.getElementById('toggleRawHtml');
@@ -352,6 +639,29 @@ if (KANAAN_ADMIN.requireAuth()) (async function () {
       if (!post.title || !post.title.trim()) {
         alert('Title is required.');
         return;
+      }
+      // Guard against silently overwriting a different post that already uses
+      // this slug — the slug IS the primary key, so an upsert would clobber it.
+      const dupe = posts.find(p => p !== post && (p.id === post.id || p.slug === post.slug));
+      if (dupe) {
+        alert('Another post already uses the slug "' + post.slug + '" — "' + (dupe.title || dupe.id) + '".\n\nChoose a unique slug before saving, or you would overwrite that post.');
+        return;
+      }
+      // Surface the most common "I saved but it's not on the site" mistake:
+      // clicking Save & publish while Status is still Draft. Give the admin
+      // a clear choice instead of silently saving as a hidden draft.
+      if (post.active === false) {
+        const choice = confirm(
+          'This post is currently set to STATUS: DRAFT.\n\n' +
+          'Drafts are SAVED to Supabase but HIDDEN from /blog visitors.\n\n' +
+          'Click OK to publish it now (change status to Published and save).\n' +
+          'Click Cancel to keep it as a draft and save anyway.'
+        );
+        if (choice) {
+          post.active = true;
+          const sel = document.querySelector('[data-k="active"]');
+          if (sel) sel.value = 'true';
+        }
       }
       const btn = document.getElementById('save');
       btn.disabled = true; btn.textContent = '⏳ Saving…';

@@ -1,0 +1,21 @@
+# ai.txt — AI / generative-search crawler policy for kanaanspa.ae
+# https://kanaanspa.ae
+#
+# This site permits AI bots to crawl, index and cite our content.
+# Authoritative facts about Kanaan are summarised at /llms.txt.
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /thank-you
+Disallow: /ar/thank-you
+Disallow: /health.json
+Disallow: /og-preview.html
+
+# Preferred summary for LLM training & retrieval:
+Summary-URL: https://kanaanspa.ae/llms.txt
+
+# Sitemap for full URL inventory:
+Sitemap: https://kanaanspa.ae/sitemap.xml
+
+# Contact for AI / data-use questions: kanaansaloon@gmail.com

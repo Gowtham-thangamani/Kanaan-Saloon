@@ -6,6 +6,31 @@
   // Mark JS as ready so reveal animations can take over from the visible default
   document.documentElement.classList.add('js-ready');
 
+  // --- Language switcher: keep the user on the SAME page across EN ⇄ AR ---
+  // Many pages hard-code the mobile-nav switch to the language home ("ar/" or
+  // "../"), so switching language drops the user back to the homepage. This
+  // rewrites every `.lang-switch` href to the mirror of the current page.
+  // The three EN pages with no Arabic mirror fall back to the AR home.
+  (function normalizeLangSwitch() {
+    const switches = document.querySelectorAll('.lang-switch');
+    if (!switches.length) return;
+    const isAr = document.body.classList.contains('lang-ar') || /\/ar(\/|$)/.test(location.pathname);
+    const p = location.pathname;
+    const noArMirror = /\/(before-after|corporate|gift-voucher)(\.html)?$/;
+    let mirror;
+    if (isAr) {
+      // /ar/offers → /offers ; /ar/ → / ; /ar/branches/al-ain → /branches/al-ain
+      mirror = p.replace(/\/ar(\/|$)/, '/');
+      if (mirror.charAt(0) !== '/') mirror = '/' + mirror;
+    } else if (noArMirror.test(p)) {
+      mirror = '/ar/';
+    } else {
+      // /offers → /ar/offers ; / → /ar/ ; extension (if any) preserved
+      mirror = '/ar' + (p === '/' ? '/' : p);
+    }
+    switches.forEach(a => a.setAttribute('href', mirror));
+  })();
+
   // Header behaviour on scroll
   //   1. y > 40  → adds `.shrunk` (compresses height + makes background opaque)
   //   2. while scrolling DOWN past 200px → adds `.hidden-on-scroll` (slides off)
@@ -333,27 +358,40 @@
     // Mock fallback (only reached if Supabase + CRM both missing)
     return new Promise(resolve => {
       setTimeout(() => {
-        const all = ['10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00','20:30','21:00','21:30','22:00'];
+        const all = ['09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00','20:30','21:00','21:30','22:00'];
         const seed = (branch + date).split('').reduce((a, c) => a + c.charCodeAt(0), 0);
         resolve(all.filter((_, i) => (i + seed) % 3 !== 0));
       }, 350);
     });
   }
-  // AR branch labels mapped to their EN canonical (the same string used as the
-  // BRANCH_HOURS key and the DB `bookings.branch` value). Without this, the AR
-  // booking page posts Arabic names that match neither the hours map nor the
-  // availability RPC, so every AR user sees "No slots available".
+  // Branch-label normalization map → EN canonical (the same string used as the
+  // BRANCH_HOURS key and the DB `bookings.branch` value). Covers Arabic labels
+  // AND English display aliases that differ from the canonical key (e.g. the
+  // EN booking form shows "Muroor Barber" but the canonical key is "Muroor").
+  // Without this, those inputs match neither BRANCH_HOURS nor the availability
+  // RPC, so the user sees "No slots available". Multiple AR spellings are kept
+  // for the same canonical to absorb both legacy + current ar/book.html values.
   const BRANCH_AR_TO_EN = {
-    'العين':            'Al Ain',
-    'مدينة خليفة':       'Khalifa City',
-    'الخالدية':          'Khalidiya',
-    'بني ياس - سبا':     'Baniyas Spa',
-    'بني ياس - حلاقة':   'Baniyas Barber',
-    'الربدان':           'Rabdan',
-    'الشهامة القديمة':    'Old Shahamah',
-    'الشهامة الجديدة':    'New Shahamah',
-    'المرور':            'Muroor',
-    'المرور VIP':        'VIP Muroor'
+    'العين':              'Al Ain',
+    'مدينة خليفة':         'Khalifa City',
+    'الخالدية':            'Khalidiya',
+    // Baniyas Spa: form sends "بنياس سبا"; older copy was "بني ياس - سبا"
+    'بنياس سبا':           'Baniyas Spa',
+    'بني ياس - سبا':       'Baniyas Spa',
+    // Baniyas Barber: form sends "بنياس باربر"; older "بني ياس - حلاقة"
+    'بنياس باربر':         'Baniyas Barber',
+    'بني ياس - حلاقة':     'Baniyas Barber',
+    // Rabdan: form sends "ربدان"; older "الربدان"
+    'ربدان':               'Rabdan',
+    'الربدان':             'Rabdan',
+    'الشهامة القديمة':      'Old Shahamah',
+    'الشهامة الجديدة':      'New Shahamah',
+    'المرور':              'Muroor',
+    // VIP Muroor: form sends "VIP المرور"; older "المرور VIP"
+    'VIP المرور':          'VIP Muroor',
+    'المرور VIP':          'VIP Muroor',
+    // EN display-name → canonical key
+    'Muroor Barber':      'Muroor'
   };
   function normalizeBranchName(name) {
     if (!name) return name;
@@ -362,16 +400,16 @@
 
   // Branch hours map (mirrors content/branches.json — keep in sync)
   const BRANCH_HOURS = {
-    'Al Ain': {sun:'10:00-23:00',mon:'10:00-23:00',tue:'10:00-23:00',wed:'10:00-23:00',thu:'10:00-23:00',fri:'14:00-23:00',sat:'10:00-23:00'},
-    'Khalifa City': {sun:'10:00-23:00',mon:'10:00-23:00',tue:'10:00-23:00',wed:'10:00-23:00',thu:'10:00-23:00',fri:'14:00-23:00',sat:'10:00-23:00'},
-    'Khalidiya': {sun:'10:00-23:00',mon:'10:00-23:00',tue:'10:00-23:00',wed:'10:00-23:00',thu:'10:00-23:00',fri:'14:00-23:00',sat:'10:00-23:00'},
-    'Baniyas Spa': {sun:'10:00-23:00',mon:'10:00-23:00',tue:'10:00-23:00',wed:'10:00-23:00',thu:'10:00-23:00',fri:'14:00-23:00',sat:'10:00-23:00'},
-    'Baniyas Barber': {sun:'10:00-23:00',mon:'10:00-23:00',tue:'10:00-23:00',wed:'10:00-23:00',thu:'10:00-23:00',fri:'14:00-23:00',sat:'10:00-23:00'},
-    'Rabdan': {sun:'10:00-23:00',mon:'10:00-23:00',tue:'10:00-23:00',wed:'10:00-23:00',thu:'10:00-23:00',fri:'14:00-23:00',sat:'10:00-23:00'},
-    'Old Shahamah': {sun:'10:00-23:00',mon:'10:00-23:00',tue:'10:00-23:00',wed:'10:00-23:00',thu:'10:00-23:00',fri:'14:00-23:00',sat:'10:00-23:00'},
-    'New Shahamah': {sun:'10:00-23:00',mon:'10:00-23:00',tue:'10:00-23:00',wed:'10:00-23:00',thu:'10:00-23:00',fri:'14:00-23:00',sat:'10:00-23:00'},
-    'Muroor': {sun:'10:00-23:00',mon:'10:00-23:00',tue:'10:00-23:00',wed:'10:00-23:00',thu:'10:00-23:00',fri:'14:00-23:00',sat:'10:00-23:00'},
-    'VIP Muroor': {sun:'11:00-23:00',mon:'11:00-23:00',tue:'11:00-23:00',wed:'11:00-23:00',thu:'11:00-23:00',fri:'14:00-23:00',sat:'11:00-23:00'}
+    'Al Ain': {sun:'09:00-23:00',mon:'09:00-23:00',tue:'09:00-23:00',wed:'09:00-23:00',thu:'09:00-23:00',fri:'14:30-23:00',sat:'09:00-23:00'},
+    'Khalifa City': {sun:'11:30-23:00',mon:'11:30-23:00',tue:'11:30-23:00',wed:'11:30-23:00',thu:'11:30-23:00',fri:'14:30-23:00',sat:'11:30-23:00'},
+    'Khalidiya': {sun:'09:00-23:00',mon:'09:00-23:00',tue:'09:00-23:00',wed:'09:00-23:00',thu:'09:00-23:00',fri:'14:30-23:00',sat:'09:00-23:00'},
+    'Baniyas Spa': {sun:'11:30-23:00',mon:'11:30-23:00',tue:'11:30-23:00',wed:'11:30-23:00',thu:'11:30-23:00',fri:'14:30-23:00',sat:'11:30-23:00'},
+    'Baniyas Barber': {sun:'09:00-23:00',mon:'09:00-23:00',tue:'09:00-23:00',wed:'09:00-23:00',thu:'09:00-23:00',fri:'14:30-23:00',sat:'09:00-23:00'},
+    'Rabdan': {sun:'09:00-23:00',mon:'09:00-23:00',tue:'09:00-23:00',wed:'09:00-23:00',thu:'09:00-23:00',fri:'14:30-23:00',sat:'09:00-23:00'},
+    'Old Shahamah': {sun:'09:00-23:00',mon:'09:00-23:00',tue:'09:00-23:00',wed:'09:00-23:00',thu:'09:00-23:00',fri:'14:30-23:00',sat:'09:00-23:00'},
+    'New Shahamah': {sun:'09:00-23:00',mon:'09:00-23:00',tue:'09:00-23:00',wed:'09:00-23:00',thu:'09:00-23:00',fri:'14:30-23:00',sat:'09:00-23:00'},
+    'Muroor': {sun:'09:00-23:00',mon:'09:00-23:00',tue:'09:00-23:00',wed:'09:00-23:00',thu:'09:00-23:00',fri:'14:30-23:00',sat:'09:00-23:00'},
+    'VIP Muroor': {sun:'09:00-23:00',mon:'09:00-23:00',tue:'09:00-23:00',wed:'09:00-23:00',thu:'09:00-23:00',fri:'14:30-23:00',sat:'09:00-23:00'}
   };
   function generateSlots(branch, dateStr) {
     branch = normalizeBranchName(branch);
@@ -557,7 +595,40 @@
       // user landing from any service or branch page lands on the right radio
       // even when word-overlap is ambiguous (e.g. "grooming-packages" plural
       // vs. radio "8-Service Package" singular).
-      const SLUG_ALIASES = {
+      // Language-aware so a slug like ?service=hair-beard preselects the
+      // English radio ("Hair & Beard") on /book and the Arabic radio
+      // ("الشعر واللحية") on /ar/book. Without the AR branch the prefill
+      // silently failed for every Arabic visitor arriving from a service page.
+      const isArBooking = document.body.classList.contains('lang-ar') || /\/ar(\/|$)/.test(location.pathname);
+      const SLUG_ALIASES = isArBooking ? {
+        service: {
+          'hair-beard':          'الشعر واللحية',
+          'facial-skin-care':    'عناية بالبشرة',
+          'facial-skin':         'عناية بالبشرة',
+          'massage':             'مساج',
+          'moroccan-bath':       'حمّام مغربي',
+          'manicure-pedicure':   'عناية أظافر',
+          'mani-pedi':           'عناية أظافر',
+          'hair-treatment':      'علاج شعر',
+          'hair-removal':        'الشعر واللحية',
+          'body-treatments':     'مساج',
+          'grooming-packages':   'باقة ٦ خدمات',
+          'complete-grooming':   'باقة ٨ خدمات',
+          'premium-spa-8':       'باقة ٨ خدمات'
+        },
+        branch: {
+          'al-ain':         'العين',
+          'khalifa-city':   'مدينة خليفة',
+          'khalidiya':      'الخالدية',
+          'baniyas-spa':    'بنياس سبا',
+          'baniyas-barber': 'بنياس باربر',
+          'rabdan':         'ربدان',
+          'old-shahamah':   'الشهامة القديمة',
+          'new-shahamah':   'الشهامة الجديدة',
+          'muroor':         'المرور',
+          'vip-muroor':     'VIP المرور'
+        }
+      } : {
         service: {
           'hair-beard':          'Hair & Beard',
           'facial-skin-care':    'Facial & Skin',
@@ -920,8 +991,11 @@
       } catch (_) {}
       // Normalize phone to a stable shape for CRM dedup
       data.phone = normalizePhone(data.phone);
-      // Booking ID
-      const branchCode = (data.branch || 'kn').replace(/[^A-Za-z]/g, '').slice(0, 3).toUpperCase() || 'KNN';
+      // Booking ID — prefix derived from the *canonical EN* branch name so AR
+      // and EN bookings share an ID shape (KNN-BAN-… for Baniyas Spa from
+      // either language). Falls back to "KNN" if normalisation fails.
+      const branchEN = normalizeBranchName(data.branch) || data.branch || '';
+      const branchCode = branchEN.replace(/[^A-Za-z]/g, '').slice(0, 3).toUpperCase() || 'KNN';
       data.bookingId = `KNN-${branchCode}-${Date.now().toString(36).toUpperCase()}`;
 
       // Track conversion event
@@ -1531,22 +1605,57 @@
     });
   });
 
-  // Gallery lightbox (lightweight)
+  // Gallery lightbox (lightweight) — with prev/next navigation across all
+  // triggers on the page (keyboard ← → and on-screen arrows) plus Escape/click close.
   const lightbox = document.querySelector('[data-lightbox]');
   if (lightbox) {
     const img = lightbox.querySelector('img');
-    const close = () => { lightbox.classList.remove('is-open'); };
-    document.querySelectorAll('[data-lightbox-trigger]').forEach(t => {
-      t.addEventListener('click', e => {
-        e.preventDefault();
-        const src = t.getAttribute('href') || t.querySelector('img')?.src;
-        if (!src) return;
-        img.src = src;
-        lightbox.classList.add('is-open');
-      });
+    const triggers = Array.from(document.querySelectorAll('[data-lightbox-trigger]'));
+    const srcOf = t => t.getAttribute('href') || (t.querySelector('img') && t.querySelector('img').src);
+    let current = -1;
+    const show = i => {
+      if (i < 0 || i >= triggers.length) return;
+      const src = srcOf(triggers[i]);
+      if (!src) return;
+      current = i;
+      img.src = src;
+      const alt = triggers[i].querySelector('img') && triggers[i].querySelector('img').alt;
+      if (alt) img.alt = alt;
+      lightbox.classList.add('is-open');
+    };
+    const close = () => { lightbox.classList.remove('is-open'); current = -1; };
+    const step = dir => { if (current >= 0 && triggers.length > 1) show((current + dir + triggers.length) % triggers.length); };
+
+    triggers.forEach((t, i) => {
+      t.addEventListener('click', e => { e.preventDefault(); show(i); });
     });
-    lightbox.addEventListener('click', close);
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+
+    // Inject prev/next controls once (only useful when there's more than one image).
+    if (triggers.length > 1 && !lightbox.querySelector('[data-lb-next]')) {
+      const mk = (dir, label, glyph) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.setAttribute(dir > 0 ? 'data-lb-next' : 'data-lb-prev', '');
+        b.setAttribute('aria-label', label);
+        b.textContent = glyph;
+        b.style.cssText = 'position:absolute;top:50%;transform:translateY(-50%);' +
+          (dir > 0 ? 'right:16px;' : 'left:16px;') +
+          'z-index:2;background:rgba(0,0,0,0.4);color:#fff;border:1px solid rgba(255,255,255,0.4);' +
+          'width:48px;height:48px;font-size:24px;cursor:pointer;border-radius:50%;line-height:1;';
+        b.addEventListener('click', e => { e.stopPropagation(); step(dir); });
+        return b;
+      };
+      lightbox.appendChild(mk(-1, 'Previous image', '‹'));
+      lightbox.appendChild(mk(1, 'Next image', '›'));
+    }
+
+    lightbox.addEventListener('click', e => { if (e.target === lightbox || e.target === img) close(); });
+    document.addEventListener('keydown', e => {
+      if (!lightbox.classList.contains('is-open')) return;
+      if (e.key === 'Escape') close();
+      else if (e.key === 'ArrowRight') step(1);
+      else if (e.key === 'ArrowLeft') step(-1);
+    });
   }
 
   // === Branch-page service picker — multi-select services on a branch detail
@@ -1642,6 +1751,10 @@
         if (cells.length < 2) return;
         const serviceName = (cells[0].textContent || '').trim();
         if (!serviceName) return;
+        // Editorial-description row tucked beneath each service — include it in
+        // the highlight group so the gold "selected" wash spans both rows.
+        const nextRow = row.nextElementSibling;
+        const descCell = (nextRow && nextRow.querySelector('td[colspan]')) || null;
         if (isMultiCol) {
           // Each price cell = its own variant (e.g. Thai Massage 20 min vs 60 min).
           // The service-name cell acts as a shortcut for the FIRST (cheapest)
@@ -1654,11 +1767,12 @@
             // For the first price column, wire the name cell too — clicking the
             // service name toggles the cheapest variant. Highlights both cells.
             if (i === 1) {
+              const group = descCell ? [cells[0], cell, descCell] : [cells[0], cell];
               [cells[0], cell].forEach(t => {
-                attachToggle(t, [cells[0], cell], serviceName, variantLabel, price);
+                attachToggle(t, group, serviceName, variantLabel, price);
               });
             } else {
-              attachToggle(cell, [cell], serviceName, variantLabel, price);
+              attachToggle(cell, descCell ? [cell, descCell] : [cell], serviceName, variantLabel, price);
             }
           }
         } else {
@@ -1666,7 +1780,8 @@
           // both cells together so the whole row reads as selected.
           const price = priceFromCell(cells[1]);
           if (!price) return;
-          attachToggle(row, Array.from(cells), serviceName, '', price);
+          const group = descCell ? Array.from(cells).concat(descCell) : Array.from(cells);
+          attachToggle(row, group, serviceName, '', price);
         }
       });
     });

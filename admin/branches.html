@@ -36,19 +36,28 @@
     <div class="bar">
       <span class="spacer"></span>
       <span class="muted" id="saveStatus" style="margin-right: 12px; font-size: 12px;">All changes saved</span>
+      <button type="button" class="btn btn--ghost btn--sm" id="resetDefaults" title="Replace Supabase data with the content/branches.json defaults (use if the live site is showing stale or wrong values)">↺ Reset to JSON defaults</button>
       <button type="button" class="btn btn--ghost btn--sm" id="reload">Refresh from server</button>
       <button type="button" class="btn btn--ghost btn--sm" id="download">⬇ Export backup (JSON)</button>
       <button type="button" class="btn btn--sm" id="save">💾 Save &amp; publish</button>
     </div>
 
+    <div class="card" style="background: rgba(200,160,74,0.06); border-color: var(--gold); margin-bottom: 16px;">
+      <strong style="color: var(--gold); font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase;">Hours format</strong>
+      <p style="margin: 8px 0 0; font-size: 13px; color: var(--text);">
+        Store hours in <strong>24-hour format</strong>: <code>HH:MM-HH:MM</code> (e.g. <code>09:00-23:00</code>, <code>14:30-23:00</code>, or <code>closed</code>). The website automatically displays them as 12-hour with AM/PM. You can type loose input like <code>9am-11pm</code> or <code>2:30pm-11pm</code> — it will auto-normalize when you blur the field.
+      </p>
+    </div>
+
     <div id="list"></div>
 
     <p style="color: var(--muted); font-size: 12px; margin-top: 24px;">
-      Edits save to Supabase and appear on the live site immediately. The 10 branch detail HTML pages render their content live from the same data, so they update without re-generating.
+      Edits save to Supabase and appear on the live site immediately. The 10 branch detail HTML pages render their content live from the same data, so they update without re-generating. If the website still shows stale hours after saving, click <strong>Reset to JSON defaults</strong> to push the canonical values.
     </p>
   </main>
 </div>
 
+<script src="../assets/js/config.js?v=2"></script>
 <script src="admin.js"></script>
 <script>
 if (KANAAN_ADMIN.requireAuth()) (async function () {
@@ -57,6 +66,33 @@ if (KANAAN_ADMIN.requireAuth()) (async function () {
   const status = () => document.getElementById('saveStatus');
   function markDirty() { dirty = true; const s = status(); if (s) s.textContent = 'Unsaved changes'; }
   function markClean() { dirty = false; const s = status(); if (s) s.textContent = 'All changes saved'; }
+
+  /* Accept loose admin input ("9am-11pm", "2:30 PM - 11 PM", "09:00-23:00", "closed")
+     and normalise to the canonical 24h storage format "HH:MM-HH:MM" or "closed".
+     Keeps booking-slot math and JSON-LD schema correct regardless of how the
+     admin typed the value. Returns the original string if it can't be parsed. */
+  function normalizeHours(raw) {
+    if (raw == null) return '';
+    const s = String(raw).trim();
+    if (!s) return '';
+    if (/^closed$/i.test(s)) return 'closed';
+    const range = s.split(/\s*-\s*|\s+to\s+/i);
+    if (range.length !== 2) return s;
+    function parseSide(t) {
+      const m = String(t).trim().match(/^(\d{1,2})(?::(\d{2}))?\s*(am|pm|a\.m\.|p\.m\.)?$/i);
+      if (!m) return null;
+      let h = parseInt(m[1], 10);
+      const mm = m[2] || '00';
+      if (h > 23 || parseInt(mm, 10) > 59) return null;
+      const ampm = (m[3] || '').toLowerCase().replace(/\./g, '');
+      if (ampm === 'pm' && h < 12) h += 12;
+      else if (ampm === 'am' && h === 12) h = 0;
+      return String(h).padStart(2, '0') + ':' + mm;
+    }
+    const a = parseSide(range[0]), b = parseSide(range[1]);
+    if (!a || !b) return s;
+    return a + '-' + b;
+  }
 
   async function load() {
     const remote = await KANAAN_ADMIN.loadContentSection('branches');
@@ -95,7 +131,50 @@ if (KANAAN_ADMIN.requireAuth()) (async function () {
         <details style="margin-top: 16px;">
           <summary style="cursor: pointer; color: var(--gold); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;">Working hours</summary>
           <div class="row" style="margin-top: 12px;">
-            ${['sun','mon','tue','wed','thu','fri','sat'].map(d => `<div><label>${d.toUpperCase()}</label><input class="input" value="${(b.hours&&b.hours[d])||''}" placeholder="10:00-23:00 or closed" data-i="${i}" data-k="hours.${d}" /></div>`).join('')}
+            ${['sun','mon','tue','wed','thu','fri','sat'].map(d => `<div><label>${d.toUpperCase()}</label><input class="input" value="${(b.hours&&b.hours[d])||''}" placeholder="09:00-23:00 or closed" data-i="${i}" data-k="hours.${d}" /></div>`).join('')}
+          </div>
+        </details>
+        <details style="margin-top: 12px;" ${b.seo_meta_title || b.seo_meta_description || b.seo_focus_keyword ? 'open' : ''}>
+          <summary style="cursor: pointer; color: var(--gold); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;">SEO &amp; social</summary>
+          <p style="font-size: 12px; color: var(--muted); margin: 12px 0;">
+            Each field is optional — leave blank to fall back to the auto-generated branch defaults (title from "Kanaan ${'$'}{name}", description from the address, OG image from the hero).
+          </p>
+          <div class="row">
+            <div style="grid-column: 1/-1;">
+              <label>Meta title <span class="muted">(Google tab + result title)</span></label>
+              <input class="input" maxlength="70" value="${b.seo_meta_title||''}" data-i="${i}" data-k="seo_meta_title" placeholder="Kanaan ${b.name_en||''} | Men's salon &amp; spa in ${(b.area_en||'').split(',')[0]}" />
+            </div>
+            <div style="grid-column: 1/-1;">
+              <label>Meta description <span class="muted">(snippet under the result)</span></label>
+              <textarea class="input" maxlength="180" rows="2" data-i="${i}" data-k="seo_meta_description" placeholder="Defaults to the branch address. Keep to 120–155 characters.">${b.seo_meta_description||''}</textarea>
+            </div>
+            <div>
+              <label>Focus keyword <span class="muted">(internal)</span></label>
+              <input class="input" value="${b.seo_focus_keyword||''}" data-i="${i}" data-k="seo_focus_keyword" placeholder="e.g. men's salon ${(b.area_en||'').split(',')[0].toLowerCase()}" />
+            </div>
+            <div>
+              <label>Canonical URL <span class="muted">(rare)</span></label>
+              <input class="input" value="${b.seo_canonical||''}" data-i="${i}" data-k="seo_canonical" placeholder="https://kanaanspa.ae/branches/${b.id}" />
+            </div>
+            <div style="grid-column: 1/-1;">
+              <label>OG image URL <span class="muted">(Facebook / WhatsApp preview)</span></label>
+              <input class="input" value="${b.seo_og_image||''}" data-i="${i}" data-k="seo_og_image" placeholder="Defaults to the hero image. 1200×630 PNG/JPG/WebP works best." />
+            </div>
+            <div>
+              <label>OG title</label>
+              <input class="input" value="${b.seo_og_title||''}" data-i="${i}" data-k="seo_og_title" placeholder="Defaults to meta title" />
+            </div>
+            <div>
+              <label>OG description</label>
+              <input class="input" value="${b.seo_og_description||''}" data-i="${i}" data-k="seo_og_description" placeholder="Defaults to meta description" />
+            </div>
+            <div>
+              <label>Robots</label>
+              <select class="sel" data-i="${i}" data-k="seo_noindex">
+                <option value="false" ${!b.seo_noindex ? 'selected' : ''}>Index, follow (normal)</option>
+                <option value="true" ${b.seo_noindex ? 'selected' : ''}>Noindex, nofollow</option>
+              </select>
+            </div>
           </div>
         </details>
       </div>
@@ -104,15 +183,29 @@ if (KANAAN_ADMIN.requireAuth()) (async function () {
     list.querySelectorAll('[data-k]').forEach(el => {
       el.addEventListener('input', () => {
         const i = +el.dataset.i, k = el.dataset.k;
+        let v = el.value;
+        if (k === 'seo_noindex') v = (v === 'true');
         if (k.startsWith('hours.')) {
           const day = k.split('.')[1];
           data.branches[i].hours = data.branches[i].hours || {};
-          data.branches[i].hours[day] = el.value;
+          data.branches[i].hours[day] = v;
         } else {
-          data.branches[i][k] = el.value;
+          data.branches[i][k] = v;
         }
         markDirty();
       });
+      // Auto-normalise hours fields on blur: "9am-11pm" → "09:00-23:00".
+      if (el.dataset.k && el.dataset.k.startsWith('hours.')) {
+        el.addEventListener('blur', () => {
+          const i = +el.dataset.i, day = el.dataset.k.split('.')[1];
+          const normalized = normalizeHours(el.value);
+          if (normalized !== el.value) {
+            el.value = normalized;
+            data.branches[i].hours[day] = normalized;
+            markDirty();
+          }
+        });
+      }
     });
     list.querySelectorAll('[data-toggle]').forEach(b => b.addEventListener('click', () => {
       const i = +b.dataset.toggle; data.branches[i].active = !data.branches[i].active; markDirty(); render();
@@ -121,9 +214,14 @@ if (KANAAN_ADMIN.requireAuth()) (async function () {
   document.getElementById('save').addEventListener('click', async () => {
     const btn = document.getElementById('save');
     btn.disabled = true; btn.textContent = '⏳ Saving…';
+    // Normalise every hours field one more time before publishing in case a
+    // user pasted "9am-11pm" and saved without leaving the field.
+    data.branches.forEach(b => {
+      if (b.hours) for (const d of Object.keys(b.hours)) b.hours[d] = normalizeHours(b.hours[d]);
+    });
     const res = await KANAAN_ADMIN.saveContentSection('branches', data);
     btn.disabled = false; btn.textContent = '💾 Save & publish';
-    if (res.ok) { markClean(); KANAAN_ADMIN.toast('Branches published — live now'); }
+    if (res.ok) { markClean(); KANAAN_ADMIN.toast('Branches published — live now'); render(); }
     else        { KANAAN_ADMIN.toast('Save failed: ' + (res.error || 'unknown')); }
   });
   document.getElementById('download').addEventListener('click', () => KANAAN_ADMIN.download('branches.json', data));
@@ -132,10 +230,41 @@ if (KANAAN_ADMIN.requireAuth()) (async function () {
     load();
     KANAAN_ADMIN.toast('Refreshed from server');
   });
+
+  /* Reset to JSON defaults — loads content/branches.json from the deployed
+     site and pushes it back into Supabase, overwriting whatever stale or
+     half-edited data is currently there. Used when the live site is showing
+     wrong hours / addresses that don't match the canonical JSON file. */
+  document.getElementById('resetDefaults').addEventListener('click', async () => {
+    if (!confirm('This will overwrite the Supabase branches data with content/branches.json (the canonical defaults). Any unsaved edits in the form will be lost. Continue?')) return;
+    const btn = document.getElementById('resetDefaults');
+    btn.disabled = true; btn.textContent = '⏳ Loading defaults…';
+    try {
+      // Bypass localStorage cache + browser cache — go straight to the file.
+      const fileRes = await fetch('../content/branches.json?t=' + Date.now(), { cache: 'no-store' });
+      const defaults = fileRes.ok ? await fileRes.json() : null;
+      if (!defaults || !Array.isArray(defaults.branches)) {
+        KANAAN_ADMIN.toast('Could not load content/branches.json from server');
+        return;
+      }
+      btn.textContent = '⏳ Publishing…';
+      const res = await KANAAN_ADMIN.saveContentSection('branches', defaults);
+      if (res.ok) {
+        data = defaults;
+        markClean();
+        render();
+        KANAAN_ADMIN.toast('Reset complete — Supabase now matches branches.json. Hard-refresh the live site (Ctrl+F5) to see it.');
+      } else {
+        KANAAN_ADMIN.toast('Reset failed: ' + (res.error || 'unknown'));
+      }
+    } finally {
+      btn.disabled = false; btn.textContent = '↺ Reset to JSON defaults';
+    }
+  });
+
   load();
 })();
 </script>
-  <script src="../assets/js/config.js?v=2"></script>
   <script src="../assets/js/tracking.js"></script>
   <script src="../assets/js/consent.js" defer></script>
 </body>

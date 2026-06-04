@@ -149,7 +149,7 @@ const tpl = (b) => {
     "image": ${JSON.stringify(b.gallery || [b.image])},
     "telephone": "${b.phone}",
     "address": { "@type": "PostalAddress", "streetAddress": "${b.address_en}", "addressLocality": "${b.area_en.split(',')[0]}", "addressCountry": "AE" },
-    "geo": { "@type": "GeoCoordinates", "latitude": ${b.geo?.lat || 24.4}, "longitude": ${b.geo?.lng || 54.5} },
+    "geo": { "@type": "GeoCoordinates", "latitude": ${b.lat ?? b.geo?.lat ?? 24.4}, "longitude": ${b.lng ?? b.geo?.lng ?? 54.5} },
     "openingHoursSpecification": [
       ${Object.entries(b.hours || {}).filter(([_,v])=>v && v.includes('-')).map(([d,v])=>{
         const map={sun:'Sunday',mon:'Monday',tue:'Tuesday',wed:'Wednesday',thu:'Thursday',fri:'Friday',sat:'Saturday'};
@@ -369,7 +369,7 @@ const tpl = (b) => {
         <h2 class="section-head__title display-2">${b.area_en}.</h2>
       </div>
       <div style="aspect-ratio: 21/9; border: 1px solid var(--hairline); overflow: hidden;">
-        <iframe src="https://www.google.com/maps?q=${b.maps_query || encodeURIComponent(b.address_en)}&output=embed" width="100%" height="100%" style="border:0; filter: grayscale(0.4) contrast(1.05);" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Map to Kanaan ${b.name_en}"></iframe>
+        <iframe src="https://www.google.com/maps?q=${encodeURIComponent(b.maps_query || b.address_en || '')}&output=embed" width="100%" height="100%" style="border:0; filter: grayscale(0.4) contrast(1.05);" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Map to Kanaan ${b.name_en}"></iframe>
       </div>
     </div>
   </section>
@@ -404,7 +404,7 @@ const tpl = (b) => {
       <div class="section-head section-head--left">
         <span class="eyebrow">Next 14 Days</span>
         <h2 class="section-head__title display-2">Pick a day.</h2>
-        <p class="section-head__lede">Friday opens at 14:00 — all other days from 10:00${b.type === 'VIP' ? ' (VIP Muroor opens at 11:00)' : ''}.</p>
+        <p class="section-head__lede">Friday opens at ${(b.hours && b.hours.fri || '14:30-23:00').split('-')[0]} — all other days from ${(b.hours && b.hours.sat || '09:00-23:00').split('-')[0]}.</p>
       </div>
       <div class="calendar-strip" id="cal-${b.id}"></div>
       <script>
@@ -423,7 +423,7 @@ const tpl = (b) => {
                     '<span class="cal-day__dow">' + days[d.getDay()] + '</span>' +
                     '<span class="cal-day__num">' + d.getDate() + '</span>' +
                     '<span class="cal-day__mo">' + months[d.getMonth()] + '</span>' +
-                    '<span class="cal-day__hint">' + (isFri ? 'opens 14:00' : 'open') + '</span>' +
+                    '<span class="cal-day__hint">' + (isFri ? 'opens ${(b.hours && b.hours.fri || "14:30-23:00").split("-")[0]}' : 'open') + '</span>' +
                     '</a>';
           }
           box.innerHTML = html;

@@ -422,7 +422,7 @@
     async saveBlogPost(post) {
       const sb = supaCfg();
       if (!sb.url || !sb.anonKey) return { ok: false, error: 'Supabase not configured' };
-      if (!this.isLoggedIn()) return { ok: false, error: 'Not signed in' };
+      if (!this.isLoggedIn()) return { ok: false, error: 'Not signed in — sign back in and try again' };
       // Strip server-managed timestamps so PostgREST regenerates them.
       const { created_at, updated_at, ...payload } = post || {};
       try {
@@ -435,12 +435,28 @@
         });
         if (!r.ok) {
           const txt = await r.text().catch(() => '');
-          return { ok: false, error: 'HTTP ' + r.status + ' ' + txt };
+          // Translate the most common PostgREST failure modes into a plain message
+          // so the admin doesn't see a raw "HTTP 400 {..code..}" and panic.
+          let friendly = 'HTTP ' + r.status + ' ' + txt;
+          const missingCol = txt.match(/Could not find the '(\w+)' column/i);
+          if (missingCol) {
+            friendly = 'The database is missing the "' + missingCol[1] + '" column. ' +
+              'Apply the migration in supabase/migrations/20260525000000_blog_seo_fields.sql ' +
+              '(and 20260525010000_blog_seo_specialist.sql) via the Supabase SQL editor, then save again.';
+          } else if (r.status === 401) {
+            friendly = 'Session expired — sign out and back in, then save again.';
+          } else if (r.status === 403 || /row-level security/i.test(txt)) {
+            friendly = 'Blocked by Supabase RLS — your admin policy on blog_posts does not allow this write. ' +
+              'Check the "auth insert/update" policies in migration 20260518000000_blog_posts.sql.';
+          } else if (r.status === 409 || /duplicate key/i.test(txt)) {
+            friendly = 'A post with this slug already exists. Change the slug and try again.';
+          }
+          return { ok: false, error: friendly, rawStatus: r.status, rawBody: txt };
         }
         const rows = await r.json();
         return { ok: true, post: rows[0] };
       } catch (e) {
-        return { ok: false, error: e.message || String(e) };
+        return { ok: false, error: 'Network error — ' + (e.message || String(e)) };
       }
     },
 

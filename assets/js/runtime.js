@@ -202,6 +202,424 @@
     } catch (e) { /* fall through to hard-coded HTML */ }
   }
 
+  /* Per-post SEO + social + JSON-LD update for the blog single-post page.
+     Reads the CMS fields (meta_title, meta_description, focus_keyword,
+     canonical_url, og_*, schema_type, noindex) and falls back gracefully
+     to title / excerpt / hero_image / /blog/<slug> when a field is empty.
+     Creates missing <meta>/<link>/<script> tags so the static template
+     doesn't need to predeclare every one of them. */
+  function applyBlogPostSeo(post) {
+    if (!post) return;
+    const siteOrigin = 'https://kanaanspa.ae';
+    const slug = post.slug || post.id || '';
+    const url = post.canonical_url || (siteOrigin + '/blog/' + slug);
+    const title       = (post.meta_title || post.title || '').trim();
+    const description = (post.meta_description || post.excerpt || post.lede || '').replace(/\s+/g, ' ').trim().slice(0, 320);
+    const ogTitle     = (post.og_title || post.meta_title || post.title || '').trim();
+    const ogDesc      = (post.og_description || post.meta_description || post.excerpt || '').replace(/\s+/g, ' ').trim().slice(0, 320);
+    const ogImage     = post.og_image || post.hero_image || (siteOrigin + '/assets/img/og-default.svg');
+    const fullOgImage = /^https?:\/\//i.test(ogImage) ? ogImage : (siteOrigin + (ogImage.startsWith('/') ? '' : '/') + ogImage);
+    const ogImageAlt  = post.og_image_alt || post.hero_alt || title;
+    const schemaType  = post.schema_type || 'BlogPosting';
+    const tags        = Array.isArray(post.tags) ? post.tags
+                       : (post.tags ? String(post.tags).split(',').map(t => t.trim()).filter(Boolean) : []);
+    const keywords    = (tags.length ? tags.join(', ') : (post.focus_keyword || '')) || undefined;
+
+    if (title) document.title = title + (/\| Kanaan/i.test(title) ? '' : ' | Kanaan Blog');
+
+    function ensureMeta(attr, key, value) {
+      if (!value) return;
+      let m = document.querySelector('meta[' + attr + '="' + key + '"]');
+      if (!m) { m = document.createElement('meta'); m.setAttribute(attr, key); document.head.appendChild(m); }
+      m.setAttribute('content', value);
+    }
+    function ensureLink(rel, href, extraAttrs) {
+      if (!href) return;
+      let l = document.querySelector('link[rel="' + rel + '"]' + (extraAttrs && extraAttrs.hreflang ? '[hreflang="' + extraAttrs.hreflang + '"]' : ''));
+      if (!l) { l = document.createElement('link'); l.setAttribute('rel', rel); document.head.appendChild(l); }
+      l.setAttribute('href', href);
+      if (extraAttrs) Object.keys(extraAttrs).forEach(k => l.setAttribute(k, extraAttrs[k]));
+    }
+
+    ensureMeta('name', 'description', description);
+    ensureMeta('name', 'robots', post.noindex ? 'noindex,nofollow' : 'index,follow');
+    ensureLink('canonical', url);
+    // hreflang self-reference + x-default — gives Google the canonical language
+    ensureLink('alternate', url, { hreflang: 'en' });
+    ensureLink('alternate', url, { hreflang: 'x-default' });
+
+    ensureMeta('property', 'og:type',        'article');
+    ensureMeta('property', 'og:title',       ogTitle);
+    ensureMeta('property', 'og:description', ogDesc);
+    ensureMeta('property', 'og:url',         url);
+    ensureMeta('property', 'og:image',       fullOgImage);
+    ensureMeta('property', 'og:image:alt',   ogImageAlt);
+    if (post.og_image_width)  ensureMeta('property', 'og:image:width',  String(post.og_image_width));
+    if (post.og_image_height) ensureMeta('property', 'og:image:height', String(post.og_image_height));
+    ensureMeta('property', 'og:site_name',   'Kanaan Gents Salon & Spa');
+    if (post.publish_date) ensureMeta('property', 'article:published_time', post.publish_date);
+    if (post.updated_at)   ensureMeta('property', 'article:modified_time',  post.updated_at);
+    if (post.author)       ensureMeta('property', 'article:author',         post.author);
+    if (post.category)     ensureMeta('property', 'article:section',        post.category);
+    tags.forEach(t => {
+      const m = document.createElement('meta');
+      m.setAttribute('property', 'article:tag');
+      m.setAttribute('content', t);
+      document.head.appendChild(m);
+    });
+
+    ensureMeta('name', 'twitter:card',        'summary_large_image');
+    ensureMeta('name', 'twitter:title',       ogTitle);
+    ensureMeta('name', 'twitter:description', ogDesc);
+    ensureMeta('name', 'twitter:image',       fullOgImage);
+    ensureMeta('name', 'twitter:image:alt',   ogImageAlt);
+
+    // Compute word count + dynamic reading time from the rendered body so the
+    // Article schema declares an accurate wordCount even if the editor forgot it.
+    const bodyEl = document.querySelector('[data-blog-body]');
+    const bodyText = bodyEl ? (bodyEl.textContent || '') : '';
+    const words = (bodyText.match(/[A-Za-z؀-ۿ][A-Za-z0-9؀-ۿ'\-]*/g) || []).length;
+    const readingTime = post.read_minutes || (words ? Math.max(1, Math.round(words / 220)) : undefined);
+
+    // Build a full ImageObject so Google can verify the OG image dimensions.
+    const imageObj = {
+      '@type': 'ImageObject',
+      'url':   fullOgImage,
+      'contentUrl': fullOgImage
+    };
+    if (post.og_image_width)  imageObj.width  = Number(post.og_image_width);
+    if (post.og_image_height) imageObj.height = Number(post.og_image_height);
+    if (ogImageAlt) imageObj.caption = ogImageAlt;
+
+    // === JSON-LD #1 — Article ===
+    const articleLd = {
+      '@context': 'https://schema.org',
+      '@type': schemaType,
+      'headline': post.title || title,
+      'name': post.title || title,
+      'description': description,
+      'image': imageObj,
+      'author': { '@type': 'Person', 'name': post.author || 'Kanaan Editorial' },
+      'publisher': {
+        '@type': 'Organization',
+        'name': 'Kanaan Gents Salon & Spa',
+        'logo': { '@type': 'ImageObject', 'url': siteOrigin + '/assets/img/logo.svg' }
+      },
+      'datePublished': post.publish_date || null,
+      'dateModified':  post.updated_at  || post.publish_date || null,
+      'mainEntityOfPage': { '@type': 'WebPage', '@id': url },
+      'articleSection': post.category || undefined,
+      'keywords': keywords,
+      'inLanguage': 'en',
+      'wordCount': words || undefined,
+      'timeRequired': readingTime ? ('PT' + readingTime + 'M') : undefined
+    };
+    function setJsonLd(marker, payload) {
+      let el = document.querySelector('script[type="application/ld+json"][' + marker + ']');
+      if (!el) {
+        el = document.createElement('script');
+        el.type = 'application/ld+json';
+        el.setAttribute(marker, '');
+        document.head.appendChild(el);
+      }
+      el.textContent = JSON.stringify(payload, (_, v) => v == null ? undefined : v);
+    }
+    setJsonLd('data-blog-jsonld', articleLd);
+
+    // === JSON-LD #2 — Breadcrumb ===
+    setJsonLd('data-blog-breadcrumb', {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      'itemListElement': [
+        { '@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': siteOrigin + '/' },
+        { '@type': 'ListItem', 'position': 2, 'name': 'Blog', 'item': siteOrigin + '/blog' },
+        { '@type': 'ListItem', 'position': 3, 'name': post.title || title, 'item': url }
+      ]
+    });
+
+    // === JSON-LD #3 — Speakable (voice search / Siri / Alexa) ===
+    setJsonLd('data-blog-speakable', {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      'name': post.title || title,
+      'speakable': {
+        '@type': 'SpeakableSpecification',
+        'cssSelector': ['[data-blog-title]', '[data-blog-lede]', '[data-blog-tldr]']
+      }
+    });
+
+    // === Auto-IDs on H2/H3 + Table of Contents on long posts ===
+    if (bodyEl) {
+      const headings = bodyEl.querySelectorAll('h2, h3');
+      const seen = new Set();
+      function slugify(s) {
+        return (s || '').toLowerCase()
+          .replace(/[^\w\s\-؀-ۿ]/g, '')
+          .trim().replace(/\s+/g, '-').slice(0, 60);
+      }
+      const tocItems = [];
+      headings.forEach(h => {
+        if (!h.id) {
+          let base = slugify(h.textContent || h.innerText || 'section');
+          let cand = base, i = 1;
+          while (seen.has(cand) || document.getElementById(cand)) { cand = base + '-' + (++i); }
+          h.id = cand;
+        }
+        seen.add(h.id);
+        if (h.tagName === 'H2') tocItems.push({ id: h.id, text: (h.textContent || '').trim() });
+      });
+      // Inject a Table of Contents above the body when 3+ H2s exist.
+      if (tocItems.length >= 3 && !document.querySelector('[data-blog-toc]')) {
+        const toc = document.createElement('nav');
+        toc.setAttribute('aria-label', 'Table of contents');
+        toc.setAttribute('data-blog-toc', '');
+        toc.style.cssText = 'margin: 0 0 32px; padding: 20px 24px; background: rgba(200,160,74,0.06); border-left: 3px solid var(--c-gold, #C8A04A);';
+        toc.innerHTML = '<p style="margin:0 0 10px; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color: var(--c-stone, #6b6b6b);">In this post</p>'
+          + '<ol style="margin:0; padding-left: 18px; line-height:1.7; font-size:14px;">'
+          + tocItems.map(t => '<li><a href="#' + t.id + '" style="color: inherit; text-decoration: none; border-bottom: 1px solid transparent;">' + (t.text || 'Section') + '</a></li>').join('')
+          + '</ol>';
+        bodyEl.insertBefore(toc, bodyEl.firstChild);
+      }
+    }
+  }
+
+  /* Branch detail live-bind. Static HTML for each branch was generated at build
+     time from content/branches.json. Admin edits go to Supabase but were
+     never reaching these pages. This function bridges the gap by patching
+     phone, WhatsApp, working hours, maps, and JSON-LD on page load.
+     Safe to call on any page — short-circuits when not a branch detail page. */
+  function applyBranchDetail(branches) {
+    if (!branches || !Array.isArray(branches.branches)) return;
+    const m = location.pathname.match(/\/(?:ar\/)?branches\/([a-z0-9-]+?)(?:\.html)?\/?$/i);
+    const slug = m && m[1];
+    if (!slug) return;
+    const b = branches.branches.find(br => br.id === slug);
+    if (!b) return;
+
+    const tel     = b.phone || '';
+    const wa      = b.whatsapp || '';
+    const address = b['address_' + lang] || b.address_en || '';
+
+    /* Phone links — utility-bar + contact section. Update href universally.
+       Update visible text only if it's recognisably a phone string (preserves
+       icon prefixes like ☏). */
+    document.querySelectorAll('a[href^="tel:"]').forEach(a => {
+      if (tel) a.href = 'tel:' + tel;
+      const txt = (a.textContent || '').trim();
+      if (tel && (/^[+\d\s☇-]+$/.test(txt) || a.dataset.track === 'call_click')) {
+        const lead = txt.match(/^[^+\d]+/);
+        a.textContent = (lead ? lead[0] : '') + tel;
+      }
+    });
+
+    /* WhatsApp links. Skip pre-filled share links (wa.me/?text=...) — those
+       are "share this page" buttons, not the branch contact. */
+    document.querySelectorAll('a[href*="wa.me"]').forEach(a => {
+      if (!wa) return;
+      const href = a.getAttribute('href') || '';
+      if (href.includes('wa.me/?text=')) return;
+      a.href = 'https://wa.me/' + wa;
+    });
+
+    /* Status-pill data-hours JSON (drives the "Open now / Closed" badge).
+       main.js reads this attribute on the `branches:rendered` event. */
+    const pill = document.querySelector('.status-pill[data-hours]');
+    if (pill && b.hours) {
+      const hoursJson = Object.fromEntries(Object.entries(b.hours).map(([k, v]) => {
+        if (!v || String(v).toLowerCase() === 'closed') return [k, null];
+        const parts = String(v).split('-');
+        return [k, { open: (parts[0] || '').trim(), close: (parts[1] || '').trim() }];
+      }));
+      pill.setAttribute('data-hours', JSON.stringify(hoursJson));
+    }
+
+    /* Working hours table. The static HTML has an <h3>Working hours</h3>
+       followed by a <div> with seven day rows. We rewrite that div in place.
+       Stored format is 24h ("09:00-23:00"); we display 12h ("9:00 AM — 11:00 PM"
+       in EN, "٩:٠٠ ص — ١١:٠٠ م" in AR) regardless of how the admin saved it. */
+    if (b.hours) {
+      const dayLabels = isAr
+        ? { sat:'السبت', sun:'الأحد', mon:'الإثنين', tue:'الثلاثاء', wed:'الأربعاء', thu:'الخميس', fri:'الجمعة' }
+        : { sat:'Sat', sun:'Sun', mon:'Mon', tue:'Tue', wed:'Wed', thu:'Thu', fri:'Fri' };
+      const order = ['sat','sun','mon','tue','wed','thu','fri'];
+      const closedLabel = isAr ? 'مغلق' : 'Closed';
+      const arDigit = { '0':'٠','1':'١','2':'٢','3':'٣','4':'٤','5':'٥','6':'٦','7':'٧','8':'٨','9':'٩' };
+      function to12h(raw) {
+        if (!raw) return '';
+        const s = String(raw).trim();
+        // Already 12h? Normalise.
+        const m12 = s.match(/^\s*(\d{1,2})(?::(\d{2}))?\s*(am|pm|a\.m\.|p\.m\.)/i);
+        let h, mm, period;
+        if (m12) {
+          h = parseInt(m12[1], 10); mm = m12[2] || '00';
+          period = /p/i.test(m12[3]) ? 'PM' : 'AM';
+        } else {
+          const m24 = s.match(/^\s*(\d{1,2}):(\d{2})/);
+          if (!m24) return s;
+          h = parseInt(m24[1], 10); mm = m24[2];
+          period = h >= 12 ? 'PM' : 'AM';
+          h = h % 12; if (h === 0) h = 12;
+        }
+        let out = h + ':' + mm + ' ' + period;
+        if (isAr) {
+          out = out.replace(/AM/, 'ص').replace(/PM/, 'م').replace(/[0-9]/g, d => arDigit[d]);
+        }
+        return out;
+      }
+      const rowsHtml = order.map(d => {
+        const v = b.hours[d];
+        let display;
+        if (!v || String(v).toLowerCase() === 'closed') {
+          display = closedLabel;
+        } else {
+          const parts = String(v).split('-');
+          display = to12h(parts[0]) + ' — ' + to12h(parts[1] || '');
+        }
+        return '<div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--hairline); font-size:14px;">'
+             +   '<span class="muted">' + dayLabels[d] + '</span>'
+             +   '<span>' + display + '</span>'
+             + '</div>';
+      }).join('');
+      document.querySelectorAll('h3').forEach(h3 => {
+        if (/working hours|ساعات العمل/i.test(h3.textContent || '')) {
+          const next = h3.nextElementSibling;
+          if (next && next.tagName === 'DIV') next.innerHTML = rowsHtml;
+        }
+      });
+    }
+
+    /* Maps iframe — rebuild src from maps_query (coords or place query). */
+    if (b.maps_query) {
+      const q = encodeURIComponent(b.maps_query);
+      document.querySelectorAll('iframe[src*="google.com/maps"]').forEach(iframe => {
+        iframe.src = 'https://www.google.com/maps?q=' + q + '&output=embed';
+      });
+    }
+
+    /* JSON-LD updates: telephone, geo, address.streetAddress, openingHoursSpecification.
+       Only touch the LocalBusiness/HairSalon block — leave BreadcrumbList/FAQPage alone. */
+    const dayMapJsonld = { sun:'Sunday', mon:'Monday', tue:'Tuesday', wed:'Wednesday', thu:'Thursday', fri:'Friday', sat:'Saturday' };
+    document.querySelectorAll('script[type="application/ld+json"]').forEach(s => {
+      let data;
+      try { data = JSON.parse(s.textContent || '{}'); } catch (e) { return; }
+      if (!data || typeof data !== 'object') return;
+      const types = Array.isArray(data['@type']) ? data['@type'] : [data['@type']];
+      const isBusiness = types.some(t => t === 'LocalBusiness' || t === 'HairSalon' || t === 'BeautySalon');
+      if (!isBusiness) return;
+      if (tel) data.telephone = tel.startsWith('+') ? tel : ('+' + tel);
+      if (address) {
+        data.address = data.address || { '@type': 'PostalAddress' };
+        data.address.streetAddress = address;
+      }
+      if (b.lat != null && b.lng != null) {
+        data.geo = { '@type': 'GeoCoordinates', latitude: b.lat, longitude: b.lng };
+      }
+      if (b.hours) {
+        data.openingHoursSpecification = Object.entries(b.hours)
+          .filter(([_, v]) => v && String(v).toLowerCase() !== 'closed' && String(v).includes('-'))
+          .map(([d, v]) => {
+            const [opens, closes] = String(v).split('-').map(x => x.trim());
+            return { '@type': 'OpeningHoursSpecification', dayOfWeek: dayMapJsonld[d], opens, closes };
+          });
+      }
+      s.textContent = JSON.stringify(data, null, 2);
+    });
+
+    /* === Per-branch SEO + social + JSON-LD enrichment ===
+       Mirrors applyBlogPostSeo: the admin can override meta title / description /
+       canonical / OG image, set a noindex flag, and pin a focus keyword without
+       editing any HTML. Falls back to the static <title> / branch.image / built
+       canonical when fields are empty. Also injects a Breadcrumb + Speakable
+       JSON-LD per branch page. */
+    (function applyBranchSeo() {
+      const siteOrigin = 'https://kanaanspa.ae';
+      const isAr = (document.documentElement.lang || '').toLowerCase().startsWith('ar') ||
+                   document.body.classList.contains('lang-ar');
+      const langPrefix = isAr ? '/ar' : '';
+      const url = b.seo_canonical || (siteOrigin + langPrefix + '/branches/' + b.id);
+      const branchNameStr = (b['name_' + lang] || b.name_en || '').trim();
+      const branchAreaStr = (b['area_' + lang] || b.area_en || '').trim();
+      const defaultTitle = 'Kanaan ' + branchNameStr + (branchAreaStr ? ' | ' + branchAreaStr : '');
+      const title = (b.seo_meta_title || defaultTitle).trim();
+      const description = (b.seo_meta_description || b['address_' + lang] || b.address_en || '').replace(/\s+/g, ' ').trim().slice(0, 320);
+      const ogTitle = (b.seo_og_title || b.seo_meta_title || title).trim();
+      const ogDesc  = (b.seo_og_description || b.seo_meta_description || description).replace(/\s+/g, ' ').trim().slice(0, 320);
+      const ogImageRaw = b.seo_og_image || b.image || (siteOrigin + '/assets/img/og-default.svg');
+      const fullOg = /^https?:\/\//i.test(ogImageRaw) ? ogImageRaw
+                    : siteOrigin + (ogImageRaw.startsWith('/') ? '' : '/') + ogImageRaw;
+
+      function ensureMeta(attr, key, value) {
+        if (!value) return;
+        let m = document.querySelector('meta[' + attr + '="' + key + '"]');
+        if (!m) { m = document.createElement('meta'); m.setAttribute(attr, key); document.head.appendChild(m); }
+        m.setAttribute('content', value);
+      }
+      function ensureLink(rel, href, extraAttrs) {
+        if (!href) return;
+        let l = document.querySelector('link[rel="' + rel + '"]' + (extraAttrs && extraAttrs.hreflang ? '[hreflang="' + extraAttrs.hreflang + '"]' : ''));
+        if (!l) { l = document.createElement('link'); l.setAttribute('rel', rel); document.head.appendChild(l); }
+        l.setAttribute('href', href);
+        if (extraAttrs) Object.keys(extraAttrs).forEach(k => l.setAttribute(k, extraAttrs[k]));
+      }
+      function setJsonLd(marker, payload) {
+        let el = document.querySelector('script[type="application/ld+json"][' + marker + ']');
+        if (!el) {
+          el = document.createElement('script');
+          el.type = 'application/ld+json';
+          el.setAttribute(marker, '');
+          document.head.appendChild(el);
+        }
+        el.textContent = JSON.stringify(payload, (_, v) => v == null ? undefined : v);
+      }
+
+      if (title) document.title = title + (/\| Kanaan/i.test(title) ? '' : ' | Kanaan');
+      ensureMeta('name', 'description', description);
+      ensureMeta('name', 'robots', b.seo_noindex ? 'noindex,nofollow' : 'index,follow');
+      ensureLink('canonical', url);
+      // hreflang pair — link the English and Arabic mirrors for the same branch.
+      const otherUrl = siteOrigin + (isAr ? '' : '/ar') + '/branches/' + b.id;
+      ensureLink('alternate', url, { hreflang: isAr ? 'ar' : 'en' });
+      ensureLink('alternate', otherUrl, { hreflang: isAr ? 'en' : 'ar' });
+      ensureLink('alternate', siteOrigin + '/branches/' + b.id, { hreflang: 'x-default' });
+
+      ensureMeta('property', 'og:type',        'business.business');
+      ensureMeta('property', 'og:title',       ogTitle);
+      ensureMeta('property', 'og:description', ogDesc);
+      ensureMeta('property', 'og:url',         url);
+      ensureMeta('property', 'og:image',       fullOg);
+      ensureMeta('property', 'og:locale',      isAr ? 'ar_AE' : 'en_US');
+      ensureMeta('property', 'og:site_name',   'Kanaan Gents Salon & Spa');
+      ensureMeta('name', 'twitter:card',        'summary_large_image');
+      ensureMeta('name', 'twitter:title',       ogTitle);
+      ensureMeta('name', 'twitter:description', ogDesc);
+      ensureMeta('name', 'twitter:image',       fullOg);
+
+      // Breadcrumb JSON-LD per branch page.
+      setJsonLd('data-branch-breadcrumb', {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        'itemListElement': [
+          { '@type': 'ListItem', 'position': 1, 'name': isAr ? 'الرئيسية' : 'Home',     'item': siteOrigin + langPrefix + '/' },
+          { '@type': 'ListItem', 'position': 2, 'name': isAr ? 'الفروع'  : 'Branches', 'item': siteOrigin + langPrefix + '/branches' },
+          { '@type': 'ListItem', 'position': 3, 'name': 'Kanaan ' + branchNameStr,     'item': url }
+        ]
+      });
+      // Speakable for voice assistants.
+      setJsonLd('data-branch-speakable', {
+        '@context': 'https://schema.org',
+        '@type': 'WebPage',
+        'name': 'Kanaan ' + branchNameStr,
+        'speakable': {
+          '@type': 'SpeakableSpecification',
+          'cssSelector': ['.page-hero__title', '.lede', '[data-bind="address"]']
+        }
+      });
+    })();
+
+    /* Re-run the "Open now / Closed" pill check on the freshly-updated data-hours. */
+    document.dispatchEvent(new CustomEvent('branches:rendered'));
+  }
+
   // ============================================================
   // BOOTSTRAP — load all data, then bind page-specific blocks.
   // ============================================================
@@ -276,6 +694,13 @@
       document.dispatchEvent(new CustomEvent('branches:rendered'));
     }
 
+    // Branch detail page — when the URL is /branches/<slug>.html (EN) or
+    // /ar/branches/<slug>.html (AR), live-bind the branch's editable fields
+    // (phone, WhatsApp, working hours, maps, JSON-LD) from Supabase so that
+    // admin edits in /admin/branches reach the page without a redeploy.
+    // The branch HTML stays static — this function patches the DOM in place.
+    applyBranchDetail(branches);
+
     // Blog posts — /blog.html index lists every active post
     const postsList = document.querySelector('[data-bind-list="posts"]');
     if (postsList && blog && Array.isArray(blog.posts)) {
@@ -322,12 +747,10 @@
         document.querySelectorAll('[data-blog-tldr-wrap]').forEach(el => {
           el.hidden = !post.tldr;
         });
-        // Update document title + meta description so SEO + browser tab match
-        if (post.title && /\/blog\/_post/.test(location.pathname) === false) {
-          // Only override on a real post URL — leaves the static title intact
-          // on the generic template when it's loaded raw (no slug)
-        }
-        if (post.title) document.title = post.title + ' | Kanaan Blog';
+        // Update document title + every SEO/social/JSON-LD signal so an
+        // admin can fully control how the post appears in search results
+        // and social shares without anyone touching the HTML file.
+        applyBlogPostSeo(post);
       }
     }
 

@@ -13,20 +13,20 @@
       "type": "Standard",
       "active": true,
       "hours": {
-        "sun": "10:00-23:00",
-        "mon": "10:00-23:00",
-        "tue": "10:00-23:00",
-        "wed": "10:00-23:00",
-        "thu": "10:00-23:00",
-        "fri": "14:00-23:00",
-        "sat": "10:00-23:00"
+        "sun": "09:00-23:00",
+        "mon": "09:00-23:00",
+        "tue": "09:00-23:00",
+        "wed": "09:00-23:00",
+        "thu": "09:00-23:00",
+        "fri": "14:30-23:00",
+        "sat": "09:00-23:00"
       },
       "image": "/assets/img/branches/al-ain/al-ain-5-1600.webp",
-      "maps_query": "Kanaan+Gents+Saloon+Al+Jimi+Al+Ain",
+      "maps_query": "24.242199,55.740155",
       "google_business": "https://maps.app.goo.gl/FMZp2Ra5DjrgtGvD6",
       "geo": {
-        "lat": 24.207,
-        "lng": 55.745
+        "lat": 24.242199,
+        "lng": 55.740155
       },
       "gallery": [
         "/assets/img/photos/service-pedicure-station-1000.webp",
@@ -49,7 +49,7 @@
         },
         {
           "q": "What hours is Al Ain open?",
-          "a": "Saturday to Thursday 10:00–23:00, Friday 14:00–23:00."
+          "a": "Saturday to Thursday 9:00 AM–11:00 PM, Friday 2:30 PM–11:00 PM."
         }
       ],
       "amenities": [
@@ -71,7 +71,9 @@
           "n": "Hassan M."
         }
       ],
-      "facebook": ""
+      "facebook": "",
+      "lat": 24.242199,
+      "lng": 55.740155
     },
     {
       "id": "khalifa-city",
@@ -86,13 +88,13 @@
       "type": "Standard",
       "active": true,
       "hours": {
-        "sun": "10:00-23:00",
-        "mon": "10:00-23:00",
-        "tue": "10:00-23:00",
-        "wed": "10:00-23:00",
-        "thu": "10:00-23:00",
-        "fri": "14:00-23:00",
-        "sat": "10:00-23:00"
+        "sun": "11:30-23:00",
+        "mon": "11:30-23:00",
+        "tue": "11:30-23:00",
+        "wed": "11:30-23:00",
+        "thu": "11:30-23:00",
+        "fri": "14:30-23:00",
+        "sat": "11:30-23:00"
       },
       "image": "/assets/img/branches/khalifa-city/khalifa-city-1.webp",
       "maps_query": "24.3981095,54.5631248",
@@ -122,7 +124,7 @@
         },
         {
           "q": "Friday hours?",
-          "a": "Friday opens at 14:00 and closes 23:00."
+          "a": "Friday opens at 2:30 PM and closes 11:00 PM."
         }
       ],
       "amenities": [
@@ -144,7 +146,9 @@
           "n": "Hassan M."
         }
       ],
-      "facebook": ""
+      "facebook": "",
+      "lat": 24.3981095,
+      "lng": 54.5631248
     },
     {
       "id": "khalidiya",
@@ -159,13 +163,13 @@
       "type": "Standard",
       "active": true,
       "hours": {
-        "sun": "10:00-23:00",
-        "mon": "10:00-23:00",
-        "tue": "10:00-23:00",
-        "wed": "10:00-23:00",
-        "thu": "10:00-23:00",
-        "fri": "14:00-23:00",
-        "sat": "10:00-23:00"
+        "sun": "09:00-23:00",
+        "mon": "09:00-23:00",
+        "tue": "09:00-23:00",
+        "wed": "09:00-23:00",
+        "thu": "09:00-23:00",
+        "fri": "14:30-23:00",
+        "sat": "09:00-23:00"
       },
       "image": "/assets/img/branches/khalidiya/khalidiya-3-1600.webp",
       "maps_query": "24.4798416,54.3584076",
@@ -216,7 +220,9 @@
           "n": "Hassan M."
         }
       ],
-      "facebook": ""
+      "facebook": "",
+      "lat": 24.4798416,
+      "lng": 54.3584076
     },
     {
       "id": "baniyas-spa",
@@ -231,20 +237,20 @@
       "type": "Spa",
       "active": true,
       "hours": {
-        "sun": "10:00-23:00",
-        "mon": "10:00-23:00",
-        "tue": "10:00-23:00",
-        "wed": "10:00-23:00",
-        "thu": "10:00-23:00",
-        "fri": "14:00-23:00",
-        "sat": "10:00-23:00"
+        "sun": "11:30-23:00",
+        "mon": "11:30-23:00",
+        "tue": "11:30-23:00",
+        "wed": "11:30-23:00",
+        "thu": "11:30-23:00",
+        "fri": "14:30-23:00",
+        "sat": "11:30-23:00"
       },
       "image": "/assets/img/branches/baniyas-spa/baniyas-spa-2.webp",
-      "maps_query": "Kanaan+Saloon+Spa+Bani+Yas+Abu+Dhabi",
+      "maps_query": "24.296978,54.628567",
       "google_business": "https://maps.app.goo.gl/hVszshrQMCXiWgYS9",
       "geo": {
-        "lat": 24.318,
-        "lng": 54.628
+        "lat": 24.296978,
+        "lng": 54.628567
       },
       "gallery": [
         "/assets/img/photos/service-facial-candlelit-1000.webp",
@@ -287,7 +293,9 @@
           "n": "Hassan M."
         }
       ],
-      "facebook": ""
+      "facebook": "",
+      "lat": 24.296978,
+      "lng": 54.628567
     },
     {
       "id": "baniyas-barber",
@@ -302,13 +310,13 @@
       "type": "Barber",
       "active": true,
       "hours": {
-        "sun": "10:00-23:00",
-        "mon": "10:00-23:00",
-        "tue": "10:00-23:00",
-        "wed": "10:00-23:00",
-        "thu": "10:00-23:00",
-        "fri": "14:00-23:00",
-        "sat": "10:00-23:00"
+        "sun": "09:00-23:00",
+        "mon": "09:00-23:00",
+        "tue": "09:00-23:00",
+        "wed": "09:00-23:00",
+        "thu": "09:00-23:00",
+        "fri": "14:30-23:00",
+        "sat": "09:00-23:00"
       },
       "image": "/assets/img/photos/service-hair-barber-stations-1600.webp",
       "maps_query": "24.2969341,54.6287108",
@@ -359,7 +367,9 @@
           "n": "Hassan M."
         }
       ],
-      "facebook": ""
+      "facebook": "",
+      "lat": 24.2969341,
+      "lng": 54.6287108
     },
     {
       "id": "rabdan",
@@ -374,13 +384,13 @@
       "type": "Standard",
       "active": true,
       "hours": {
-        "sun": "10:00-23:00",
-        "mon": "10:00-23:00",
-        "tue": "10:00-23:00",
-        "wed": "10:00-23:00",
-        "thu": "10:00-23:00",
-        "fri": "14:00-23:00",
-        "sat": "10:00-23:00"
+        "sun": "09:00-23:00",
+        "mon": "09:00-23:00",
+        "tue": "09:00-23:00",
+        "wed": "09:00-23:00",
+        "thu": "09:00-23:00",
+        "fri": "14:30-23:00",
+        "sat": "09:00-23:00"
       },
       "image": "/assets/img/branches/rabdan/rabdan-4-1600.webp",
       "maps_query": "24.4172367,54.4957746",
@@ -433,7 +443,9 @@
           "n": "Hassan M."
         }
       ],
-      "facebook": ""
+      "facebook": "",
+      "lat": 24.4172367,
+      "lng": 54.4957746
     },
     {
       "id": "old-shahamah",
@@ -448,13 +460,13 @@
       "type": "Standard",
       "active": true,
       "hours": {
-        "sun": "10:00-23:00",
-        "mon": "10:00-23:00",
-        "tue": "10:00-23:00",
-        "wed": "10:00-23:00",
-        "thu": "10:00-23:00",
-        "fri": "14:00-23:00",
-        "sat": "10:00-23:00"
+        "sun": "09:00-23:00",
+        "mon": "09:00-23:00",
+        "tue": "09:00-23:00",
+        "wed": "09:00-23:00",
+        "thu": "09:00-23:00",
+        "fri": "14:30-23:00",
+        "sat": "09:00-23:00"
       },
       "image": "/assets/img/branches/old-shahamah/old-shahamah-5-1600.webp",
       "maps_query": "24.5522131,54.6940039",
@@ -502,7 +514,9 @@
           "n": "Hassan M."
         }
       ],
-      "facebook": ""
+      "facebook": "",
+      "lat": 24.5522131,
+      "lng": 54.6940039
     },
     {
       "id": "new-shahamah",
@@ -517,13 +531,13 @@
       "type": "Standard",
       "active": true,
       "hours": {
-        "sun": "10:00-23:00",
-        "mon": "10:00-23:00",
-        "tue": "10:00-23:00",
-        "wed": "10:00-23:00",
-        "thu": "10:00-23:00",
-        "fri": "14:00-23:00",
-        "sat": "10:00-23:00"
+        "sun": "09:00-23:00",
+        "mon": "09:00-23:00",
+        "tue": "09:00-23:00",
+        "wed": "09:00-23:00",
+        "thu": "09:00-23:00",
+        "fri": "14:30-23:00",
+        "sat": "09:00-23:00"
       },
       "image": "/assets/img/branches/new-shahamah/new-shahamah-3.webp",
       "maps_query": "24.5241819,54.6766356",
@@ -571,7 +585,9 @@
           "n": "Hassan M."
         }
       ],
-      "facebook": ""
+      "facebook": "",
+      "lat": 24.5241819,
+      "lng": 54.6766356
     },
     {
       "id": "muroor",
@@ -586,20 +602,20 @@
       "type": "Barber",
       "active": true,
       "hours": {
-        "sun": "10:00-23:00",
-        "mon": "10:00-23:00",
-        "tue": "10:00-23:00",
-        "wed": "10:00-23:00",
-        "thu": "10:00-23:00",
-        "fri": "14:00-23:00",
-        "sat": "10:00-23:00"
+        "sun": "09:00-23:00",
+        "mon": "09:00-23:00",
+        "tue": "09:00-23:00",
+        "wed": "09:00-23:00",
+        "thu": "09:00-23:00",
+        "fri": "14:30-23:00",
+        "sat": "09:00-23:00"
       },
       "image": "/assets/img/branches/vip-muroor/vip-muroor-1.webp",
-      "maps_query": "Kanaan+Gents+Saloon+Al+Saadah+Abu+Dhabi",
+      "maps_query": "24.4331,54.4375",
       "google_business": "https://maps.app.goo.gl/8E6t8TUt3onpKsfv8",
       "geo": {
-        "lat": 24.461,
-        "lng": 54.385
+        "lat": 24.4331,
+        "lng": 54.4375
       },
       "gallery": [
         "/assets/img/photos/service-hair-brand-wall-1000.webp",
@@ -645,7 +661,9 @@
           "n": "Hassan M."
         }
       ],
-      "facebook": ""
+      "facebook": "",
+      "lat": 24.4331,
+      "lng": 54.4375
     },
     {
       "id": "vip-muroor",
@@ -660,13 +678,13 @@
       "type": "VIP",
       "active": true,
       "hours": {
-        "sun": "11:00-23:00",
-        "mon": "11:00-23:00",
-        "tue": "11:00-23:00",
-        "wed": "11:00-23:00",
-        "thu": "11:00-23:00",
-        "fri": "14:00-23:00",
-        "sat": "11:00-23:00"
+        "sun": "09:00-23:00",
+        "mon": "09:00-23:00",
+        "tue": "09:00-23:00",
+        "wed": "09:00-23:00",
+        "thu": "09:00-23:00",
+        "fri": "14:30-23:00",
+        "sat": "09:00-23:00"
       },
       "image": "/assets/img/branches/vip-muroor/vip-muroor-3-1600.webp",
       "maps_query": "24.4400772,54.4122623",
@@ -719,7 +737,9 @@
           "n": "Hassan M."
         }
       ],
-      "facebook": ""
+      "facebook": "",
+      "lat": 24.4400772,
+      "lng": 54.4122623
     }
   ]
 }

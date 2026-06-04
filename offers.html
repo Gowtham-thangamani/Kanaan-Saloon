@@ -13,8 +13,8 @@
   <link rel="stylesheet" href="assets/css/style.css?v=3" />
   <link rel="stylesheet" href="assets/css/motion.css?v=19" />
   <script id="motion-pre-paint">(function(){if(!window.matchMedia||!window.matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.classList.add("motion-ready");}})();</script>
-  <link rel="preload" as="image" href="assets/img/photos/hero-exterior-night-1600.webp"
-        imagesrcset="assets/img/photos/hero-exterior-night-600.webp 600w, assets/img/photos/hero-exterior-night-1000.webp 1000w, assets/img/photos/hero-exterior-night-1600.webp 1600w"
+  <link rel="preload" as="image" href="assets/img/photos/hero-offers-banner-1600.jpg"
+        imagesrcset="assets/img/photos/hero-offers-banner-600.jpg 600w, assets/img/photos/hero-offers-banner-1000.jpg 1000w, assets/img/photos/hero-offers-banner-1600.jpg 1600w"
         imagesizes="100vw" fetchpriority="high" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Offers &amp; Packages | Kanaan" />
@@ -22,12 +22,6 @@
   <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg" />
   <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#0E0F11" />
-  <style>
-    .filter-bar { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: var(--s-7); }
-    .filter-chip { padding: 10px 20px; border: 1px solid var(--hairline); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; transition: all var(--t-fast); background: transparent; color: var(--text); }
-    .filter-chip:hover { border-color: var(--c-gold); color: var(--c-gold); }
-    .filter-chip.is-active { background: var(--c-gold); color: #0E0F11; border-color: var(--c-gold); }
-  </style>
 </head>
 <body>
   <a href="#main" class="skip-link">Skip to content</a>
@@ -75,7 +69,7 @@
   </header>
 
   <main id="main"><section class="page-hero">
-    <div class="page-hero__media" data-reveal="mask" data-parallax="bg" data-speed="0.50"><img src="assets/img/photos/brand-logo-wall-1600.webp" alt="Premium grooming detail" loading="eager" fetchpriority="high" decoding="async" width="1320" height="870" srcset="assets/img/photos/brand-logo-wall-600.webp 600w, assets/img/photos/brand-logo-wall-1000.webp 1000w, assets/img/photos/brand-logo-wall-1600.webp 1600w" sizes="100vw" /></div>
+    <div class="page-hero__media" data-reveal="mask" data-parallax="bg" data-speed="0.50"><img src="assets/img/photos/hero-offers-banner-1600.jpg" alt="Inside Kanaan Gents Salon &amp; Spa" loading="eager" fetchpriority="high" decoding="async" width="1584" height="672" srcset="assets/img/photos/hero-offers-banner-600.jpg 600w, assets/img/photos/hero-offers-banner-1000.jpg 1000w, assets/img/photos/hero-offers-banner-1600.jpg 1600w" sizes="100vw" /></div>
     <div class="container page-hero__content">
       <div class="breadcrumb"><a href="./">Home</a><span class="sep">/</span><span>Offers</span></div>
       <span class="eyebrow">Curated Packages</span>
@@ -87,13 +81,9 @@
 
   <section class="section">
     <div class="container">
-      <div class="filter-bar" data-filter=".js-offer">
-        <button type="button" class="filter-chip is-active" data-filter-chip="all">All offers</button>
-        <button type="button" class="filter-chip" data-filter-chip="signature">Signature</button>
-        <button type="button" class="filter-chip" data-filter-chip="limited">Limited time</button>
-        <button type="button" class="filter-chip" data-filter-chip="spa">Spa</button>
-      </div>
-
+      <p class="offers-tagline" data-reveal="up" style="text-align: center; font-family: var(--f-display, Georgia, serif); font-size: clamp(18px, 2.2vw, 22px); color: var(--c-stone, var(--muted)); letter-spacing: 0.01em; margin: 0 0 var(--s-7); font-style: italic;">
+        Two editor's picks — bookable at every Kanaan branch.
+      </p>
       <!-- Runtime-loaded from content/offers.json -->
       <div class="grid grid-3" data-reveal-stagger data-bind-list="offers">
         <a data-bind-template href="" class="offer-card js-offer" data-bind-attr-href="book_url" data-bind-attr-data-tags="tags_csv">
@@ -113,6 +103,79 @@
       </div>
     </div>
   </section>
+
+  <!-- Trust strip — what every offer/visit includes -->
+  <section class="section section--light section--tight">
+    <div class="container">
+      <div class="section-head" data-reveal="up">
+        <span class="eyebrow">The Kanaan standard</span>
+        <h2 class="section-head__title display-2">Every visit includes.</h2>
+      </div>
+      <div class="grid grid-4" data-reveal-stagger style="margin-top: var(--s-6);">
+        <div style="text-align: center;">
+          <div style="font-size: 28px; color: var(--c-gold);">✂︎</div>
+          <h3 style="font-size: 17px; margin: var(--s-3) 0 var(--s-2);">Spa-grade hygiene</h3>
+          <p class="muted" style="font-size: 14px;">Single-use blades and sterilised, sealed tools at every chair.</p>
+        </div>
+        <div style="text-align: center;">
+          <div style="font-size: 28px; color: var(--c-gold);">★</div>
+          <h3 style="font-size: 17px; margin: var(--s-3) 0 var(--s-2);">Master-trained</h3>
+          <p class="muted" style="font-size: 14px;">Master barbers and certified therapists — method, not improvisation.</p>
+        </div>
+        <div style="text-align: center;">
+          <div style="font-size: 28px; color: var(--c-gold);">عربي</div>
+          <h3 style="font-size: 17px; margin: var(--s-3) 0 var(--s-2);">English &amp; Arabic</h3>
+          <p class="muted" style="font-size: 14px;">Bilingual service across all ten branches.</p>
+        </div>
+        <div style="text-align: center;">
+          <div style="font-size: 28px; color: var(--c-gold);">✓</div>
+          <h3 style="font-size: 17px; margin: var(--s-3) 0 var(--s-2);">No upsell</h3>
+          <p class="muted" style="font-size: 14px;">The listed price is what you pay. VAT included, no booking fee.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Offers FAQ (FAQPage schema below) -->
+  <section class="section">
+    <div class="container" style="max-width: 880px;">
+      <div class="section-head section-head--left" data-reveal="up">
+        <span class="eyebrow">Frequently asked</span>
+        <h2 class="section-head__title display-2">About our offers.</h2>
+      </div>
+      <div class="faq">
+        <details class="faq__item" open>
+          <summary class="faq__q">Are these prices final?</summary>
+          <p class="faq__a">Yes — the listed price is exactly what you pay at the chair. VAT is included, there's no booking fee, and there's no upsell during your visit.</p>
+        </details>
+        <details class="faq__item">
+          <summary class="faq__q">Can I use an offer at any branch?</summary>
+          <p class="faq__a">The Complete Grooming Package is available at every Kanaan branch. The 8 Premium Spa Services package runs at our spa branches — Baniyas Spa, Khalifa City, Al Ain, Khalidiya, Old Shahamah and VIP Muroor.</p>
+        </details>
+        <details class="faq__item">
+          <summary class="faq__q">How do I cancel or reschedule?</summary>
+          <p class="faq__a">Free up to 2 hours before your appointment. Just reply to the WhatsApp confirmation, or use the Reschedule / Cancel link on your booking confirmation page.</p>
+        </details>
+        <details class="faq__item">
+          <summary class="faq__q">Do you accept walk-ins for these offers?</summary>
+          <p class="faq__a">Yes, where capacity allows. Booking online or by phone first guarantees a chair — especially on Friday evenings and weekends.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type":"Question","name":"Are Kanaan offer prices final?","acceptedAnswer":{"@type":"Answer","text":"Yes — the listed price is exactly what you pay at the chair. VAT is included, there is no booking fee, and there is no upsell during your visit."}},
+      {"@type":"Question","name":"Can I use a Kanaan offer at any branch?","acceptedAnswer":{"@type":"Answer","text":"The Complete Grooming Package is available at every Kanaan branch. The 8 Premium Spa Services package runs at our spa branches — Baniyas Spa, Khalifa City, Al Ain, Khalidiya, Old Shahamah and VIP Muroor."}},
+      {"@type":"Question","name":"How do I cancel or reschedule a Kanaan booking?","acceptedAnswer":{"@type":"Answer","text":"Free up to 2 hours before your appointment. Reply to the WhatsApp confirmation, or use the Reschedule / Cancel link on your booking confirmation page."}},
+      {"@type":"Question","name":"Do you accept walk-ins for offers?","acceptedAnswer":{"@type":"Answer","text":"Yes, where capacity allows. Booking online or by phone first guarantees a chair, especially on Friday evenings and weekends."}}
+    ]
+  }
+  </script>
 
   <section class="cta-band" data-reveal="up">
     <h2 class="cta-band__title" data-parallax="text" data-speed="0.35">Curate your own.</h2>
@@ -159,7 +222,7 @@
   <script src="assets/js/config.js"></script>
   <script src="assets/js/tracking.js"></script>
   <script src="assets/js/consent.js" defer></script>
-  <script src="assets/js/runtime.js?v=3"></script>
+  <script src="assets/js/runtime.js?v=4"></script>
   <script src="assets/js/main.js?v=30"></script>
   <script src="assets/js/nav-dropdown.js" defer></script>
   <script src="assets/js/motion.js?v=18" defer></script>

@@ -17,4 +17,50 @@ Disallow: /supabase/
 Disallow: /services.html
 Disallow: /ar/services.html
 
+# Explicit allowances for AI / generative-search crawlers (GEO/AEO).
+# These bots already follow the wildcard above, but listing them
+# explicitly removes ambiguity when the bots check for their own block.
+User-agent: GPTBot
+Allow: /
+Disallow: /admin/
+Disallow: /thank-you.html
+Disallow: /ar/thank-you.html
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /admin/
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: DuckAssistBot
+Allow: /
+
 Sitemap: https://kanaanspa.ae/sitemap.xml

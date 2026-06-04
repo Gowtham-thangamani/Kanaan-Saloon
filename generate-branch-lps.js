@@ -60,7 +60,7 @@ const tpl = (b) => `<!DOCTYPE html>
           <div class="divider"></div>
           <ul style="list-style: none; padding: 0; line-height: 2.2; font-size: 16px;">
             <li>· Located in ${b.area_en} — ${b.address_en}</li>
-            <li>· Open ${(b.hours && b.hours.sat) ? 'Sat–Thu ' + b.hours.sat.replace('-', '–') + ' · Fri ' + (b.hours.fri || '14:00–23:00').replace('-', '–') : 'daily'}</li>
+            <li>· Open ${(b.hours && b.hours.sat) ? 'Sat–Thu ' + b.hours.sat.replace('-', '–') + ' · Fri ' + (b.hours.fri || '14:30–23:00').replace('-', '–') : 'daily'}</li>
             <li>· Master barbers and trained spa therapists</li>
             <li>· Spa-grade hygiene · Single-use blades</li>
             <li>· English &amp; Arabic service</li>
@@ -169,7 +169,7 @@ const tpl = (b) => `<!DOCTYPE html>
     <div class="container">
       <h3 style="font-family: var(--f-display); font-size: 28px; margin-bottom: var(--s-4);">Find ${b.name_en}.</h3>
       <div style="aspect-ratio: 21/9; border: 1px solid var(--hairline); overflow: hidden;">
-        <iframe src="https://www.google.com/maps?q=${b.maps_query}&output=embed" width="100%" height="100%" style="border:0; filter: grayscale(0.4) contrast(1.05);" loading="lazy" title="Map to Kanaan ${b.name_en}"></iframe>
+        <iframe src="https://www.google.com/maps?q=${encodeURIComponent(b.maps_query || b.address_en || '')}&output=embed" width="100%" height="100%" style="border:0; filter: grayscale(0.4) contrast(1.05);" loading="lazy" title="Map to Kanaan ${b.name_en}"></iframe>
       </div>
     </div>
   </section>

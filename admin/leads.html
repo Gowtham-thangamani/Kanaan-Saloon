@@ -39,22 +39,28 @@
     .leads-cell-stack__secondary { color: var(--muted); font-size: 12px; font-family: monospace; }
     .leads-cell-stack__sub { color: var(--muted); font-size: 12px; }
     .leads-status-select {
-      width: 130px; height: 30px; padding: 0 8px; font-size: 12px;
+      width: 100%; max-width: 130px; height: 30px; padding: 0 8px; font-size: 12px;
       background: rgba(0,0,0,0.2); border: 1px solid currentColor;
+      box-sizing: border-box;
     }
     .leads-status-select.is-new       { color: var(--gold); }
     .leads-status-select.is-confirmed,
     .leads-status-select.is-completed { color: var(--sage, #708069); }
     .leads-status-select.is-no_show,
     .leads-status-select.is-cancelled { color: var(--rust); }
-    .leads-actions { display: flex; gap: 6px; justify-content: flex-end; }
+    .leads-actions {
+      display: flex; gap: 5px; justify-content: flex-end;
+      flex-wrap: wrap;            /* never overflow into the Status column */
+      align-items: center;
+    }
     .leads-actions a, .leads-actions button {
-      width: 32px; height: 32px; padding: 0; display: inline-flex;
+      width: 30px; height: 30px; padding: 0; display: inline-flex;
       align-items: center; justify-content: center;
       background: transparent; border: 1px solid var(--hairline);
       color: var(--muted); cursor: pointer;
       transition: color 120ms, border-color 120ms;
-      font-size: 14px; line-height: 1;
+      font-size: 13px; line-height: 1;
+      flex: 0 0 auto;
     }
     .leads-actions a:hover, .leads-actions button:hover {
       color: var(--gold); border-color: var(--gold);
@@ -63,6 +69,48 @@
       color: var(--rust); border-color: var(--rust);
     }
     .leads-source { font-size: 11px; letter-spacing: 0.04em; color: var(--muted); text-transform: uppercase; }
+
+    /* Date-range filter pills */
+    .leads-daterange { display: inline-flex; gap: 0; border: 1px solid var(--hairline); }
+    .leads-daterange__btn {
+      background: transparent; border: 0; border-right: 1px solid var(--hairline);
+      color: var(--muted); padding: 6px 12px; font-size: 12px;
+      cursor: pointer; transition: color 120ms, background-color 120ms;
+      letter-spacing: 0.04em;
+    }
+    .leads-daterange__btn:last-child { border-right: 0; }
+    .leads-daterange__btn:hover { color: var(--gold); }
+    .leads-daterange__btn.is-active { background: var(--gold); color: var(--c-ink, #0E0F11); }
+
+    /* Returning-customer star */
+    .leads-returning {
+      display: inline-block; color: var(--gold); margin-right: 4px;
+      font-size: 12px; vertical-align: 1px;
+    }
+
+    /* Internal note */
+    .leads-note {
+      display: block; margin-top: 4px;
+      font-size: 11px; font-style: italic; color: var(--gold);
+      line-height: 1.4; max-width: 100%;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .leads-action--note { color: var(--muted); }
+    .leads-action--note.has-note { color: var(--gold); border-color: var(--gold); }
+
+    /* Clickable booking ID — copies to clipboard */
+    .leads-id-copy {
+      cursor: pointer;
+      -webkit-user-select: all;
+      user-select: all;
+      transition: color 120ms;
+    }
+    .leads-id-copy:hover { color: var(--gold); }
+    .leads-id-copy::after {
+      content: ' 📋'; opacity: 0; font-size: 10px;
+      transition: opacity 120ms;
+    }
+    .leads-id-copy:hover::after { opacity: 0.6; }
   </style>
 </head>
 <body>
@@ -103,6 +151,12 @@
     </div>
 
     <div class="bar">
+      <div class="leads-daterange" role="group" aria-label="Filter by date range">
+        <button type="button" class="leads-daterange__btn is-active" data-range="all">All</button>
+        <button type="button" class="leads-daterange__btn" data-range="today">Today</button>
+        <button type="button" class="leads-daterange__btn" data-range="week">This week</button>
+        <button type="button" class="leads-daterange__btn" data-range="month">This month</button>
+      </div>
       <select class="sel" id="f-branch" aria-label="Filter by branch" title="Filter by branch" style="width: auto;"><option value="">All branches</option></select>
       <select class="sel" id="f-source" aria-label="Filter by source" title="Filter by source" style="width: auto;"><option value="">All sources</option></select>
       <select class="sel" id="f-state" aria-label="Filter by booking state" title="Filter by booking state" style="width: auto;">
@@ -129,13 +183,13 @@
       <div class="leads-table-wrap" style="overflow-x: auto;">
         <table class="leads-table">
           <colgroup>
-            <col style="width: 14%;" />
-            <col style="width: 14%;" />
-            <col style="width: 10%;" />
-            <col style="width: 26%;" />
-            <col style="width: 14%;" />
-            <col style="width: 10%;" />
-            <col style="width: 12%;" />
+            <col style="width: 12%;" />   <!-- When -->
+            <col style="width: 13%;" />   <!-- Customer -->
+            <col style="width: 9%;" />    <!-- Branch -->
+            <col style="width: 21%;" />   <!-- Service -->
+            <col style="width: 13%;" />   <!-- Booking -->
+            <col style="width: 12%;" />   <!-- Status (was 10%) -->
+            <col style="width: 20%;" />   <!-- Actions (was 12%) — fits up to 5 buttons -->
           </colgroup>
           <thead>
             <tr>
@@ -317,12 +371,51 @@
       render();
     }
 
+    /* Active date-range filter (set by the All / Today / Week / Month pills). */
+    let dateRange = 'all';
+    /* phone → number-of-bookings-with-this-phone. Drives the ★ Returning badge. */
+    let phoneCounts = new Map();
+    function rebuildPhoneCounts() {
+      phoneCounts = new Map();
+      allLeads.forEach(l => {
+        const p = (l.phone || l.Phone || '').replace(/\D/g, '');
+        if (!p) return;
+        phoneCounts.set(p, (phoneCounts.get(p) || 0) + 1);
+      });
+    }
+    /* Per-booking internal note (stored in localStorage; per-admin-browser, not synced).
+       For DB-synced notes later, swap these for a Supabase column. */
+    function getNote(id)         { return localStorage.getItem('kanaan_note_' + id) || ''; }
+    function setNote(id, value) {
+      if (value && value.trim()) localStorage.setItem('kanaan_note_' + id, value.trim());
+      else                       localStorage.removeItem('kanaan_note_' + id);
+    }
+    function inDateRange(l) {
+      if (dateRange === 'all') return true;
+      const d = (l.date || l.Date || '');
+      if (!d) return false;
+      const t = new Date(d).getTime();
+      if (isNaN(t)) return false;
+      const now = new Date(); now.setHours(0,0,0,0);
+      const today = now.getTime();
+      if (dateRange === 'today') return t === today;
+      if (dateRange === 'week')  return t >= today - 6 * 86400000 && t <= today + 7 * 86400000;
+      if (dateRange === 'month') {
+        const start = new Date(now.getFullYear(), now.getMonth(), 1).getTime();
+        const end   = new Date(now.getFullYear(), now.getMonth() + 1, 0).getTime();
+        return t >= start && t <= end;
+      }
+      return true;
+    }
+
     function render() {
+      rebuildPhoneCounts();
       const fb = document.getElementById('f-branch').value;
       const fs = document.getElementById('f-source').value;
       const fst = document.getElementById('f-state').value;
       const fq = document.getElementById('f-search').value.toLowerCase();
       const rows = allLeads.filter(l => {
+        if (!inDateRange(l)) return false;
         if (fb && (l.branch || l.Branch) !== fb) return false;
         if (fs && (l.utm_source || l.Source || l.source) !== fs) return false;
         if (fst && (l.status || 'new') !== fst) return false;
@@ -359,6 +452,10 @@
         const eId = esc(id);
         const eSource = esc(l.utm_source||l.Source||l.source||'direct');
         const eTs = esc((l.timestamp||l.createdAt||'').slice(0,16).replace('T',' '));
+        const phoneDigits = phone.replace(/\D/g, '');
+        const isReturning = phoneDigits && phoneCounts.get(phoneDigits) > 1;
+        const note = getNote(id);
+        const eNote = esc(note);
         return `<tr class="leads-row leads-row--${state}">
         <td>
           <div class="leads-cell-stack">
@@ -369,15 +466,16 @@
         </td>
         <td>
           <div class="leads-cell-stack">
-            <span class="leads-cell-stack__primary">${eName || '—'}</span>
+            <span class="leads-cell-stack__primary">${isReturning ? '<span class="leads-returning" title="Returning customer">★</span>' : ''}${eName || '—'}</span>
             ${ePhone ? `<a class="leads-cell-stack__sub" href="tel:${ePhone}">${ePhone}</a>` : ''}
+            ${note ? `<span class="leads-note" title="${eNote}">🗒️ ${eNote}</span>` : ''}
           </div>
         </td>
         <td>${eBranch || '—'}</td>
         <td class="leads-service">${eService || '—'}</td>
         <td>
           <div class="leads-cell-stack">
-            <span class="leads-cell-stack__secondary">${eId || '—'}</span>
+            <span class="leads-cell-stack__secondary leads-id-copy" data-copy-id="${eId}" title="Click to copy">${eId || '—'}</span>
             <span class="leads-source">${eSource}</span>
           </div>
         </td>
@@ -394,8 +492,10 @@
           <div class="leads-actions">
             ${state==='new' ? `<button type="button" class="btn btn--sm" data-approve="${eId}" title="Approve">✓</button>` : ''}
             ${state==='new' || state==='confirmed' ? `<button type="button" class="btn btn--ghost btn--sm leads-action--danger" data-reject="${eId}" title="Cancel">✗</button>` : ''}
+            ${ePhone ? `<a class="btn btn--ghost btn--sm" href="tel:${ePhone}" title="Call">☏</a>` : ''}
             ${wa ? `<a class="btn btn--ghost btn--sm" href="${esc(wa)}" target="_blank" rel="noopener" title="WhatsApp">WA</a>` : ''}
             ${ml ? `<a class="btn btn--ghost btn--sm" href="${esc(ml)}" title="Email">✉</a>` : ''}
+            <button type="button" class="btn btn--ghost btn--sm leads-action--note${note ? ' has-note' : ''}" data-note="${eId}" title="${note ? 'Edit note' : 'Add note'}">🗒️</button>
             <button type="button" class="btn btn--ghost btn--sm leads-action--danger" data-delete="${eId}" title="Delete">🗑</button>
           </div>
         </td>
@@ -413,12 +513,49 @@
       document.querySelectorAll('[data-delete]').forEach(b => {
         b.addEventListener('click', () => deleteRow(b.dataset.delete));
       });
+      document.querySelectorAll('[data-copy-id]').forEach(el => {
+        el.addEventListener('click', async (e) => {
+          e.preventDefault();
+          const id = el.dataset.copyId;
+          if (!id) return;
+          try {
+            await navigator.clipboard.writeText(id);
+            KANAAN_ADMIN.toast('Copied booking ID: ' + id);
+          } catch (err) {
+            // Fallback for non-secure contexts (e.g., raw IP without HTTPS)
+            const ta = document.createElement('textarea');
+            ta.value = id; document.body.appendChild(ta); ta.select();
+            try { document.execCommand('copy'); KANAAN_ADMIN.toast('Copied booking ID: ' + id); }
+            catch (_) { KANAAN_ADMIN.toast('Could not copy — select and Ctrl+C manually'); }
+            document.body.removeChild(ta);
+          }
+        });
+      });
+      document.querySelectorAll('[data-note]').forEach(b => {
+        b.addEventListener('click', () => {
+          const id = b.dataset.note;
+          const current = getNote(id);
+          const next = window.prompt('Internal note for ' + id + ' (visible only to admins in this browser):', current);
+          if (next === null) return; // cancelled
+          setNote(id, next);
+          KANAAN_ADMIN.toast(next.trim() ? 'Note saved' : 'Note cleared');
+          render();
+        });
+      });
       document.getElementById('count').textContent = `${rows.length} of ${allLeads.length} leads`;
     }
     document.getElementById('f-branch').addEventListener('change', render);
     document.getElementById('f-source').addEventListener('change', render);
     document.getElementById('f-state').addEventListener('change', render);
     document.getElementById('f-search').addEventListener('input', render);
+    document.querySelectorAll('.leads-daterange__btn').forEach(b => {
+      b.addEventListener('click', () => {
+        document.querySelectorAll('.leads-daterange__btn').forEach(x => x.classList.remove('is-active'));
+        b.classList.add('is-active');
+        dateRange = b.dataset.range;
+        render();
+      });
+    });
     document.getElementById('refresh').addEventListener('click', load);
     document.getElementById('export').addEventListener('click', () => {
       if (!allLeads.length) return;

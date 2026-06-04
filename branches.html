@@ -108,7 +108,7 @@
           <div class="branch-card__body">
             <span class="branch-card__area" data-bind="area"></span>
             <h3 class="branch-card__title">Kanaan <span data-bind="name"></span></h3>
-            <p class="branch-card__meta">Sat–Thu 10:00–23:00 · Fri 14:00–23:00</p>
+            <p class="branch-card__meta">Hours vary — see branch · Fri 14:30–23:00</p>
             <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
               <span class="status-pill" data-bind-attr-data-hours="hours_json">Checking…</span>
               <span class="availability-pill" data-availability-for data-bind-attr-data-availability-for="name" style="font-size: 11px; color: var(--c-stone); letter-spacing: 0.04em;"></span>
@@ -258,7 +258,7 @@
   <script src="assets/js/config.js"></script>
   <script src="assets/js/tracking.js"></script>
   <script src="assets/js/consent.js" defer></script>
-  <script src="assets/js/runtime.js?v=3"></script>
+  <script src="assets/js/runtime.js?v=4"></script>
   <script src="assets/js/main.js?v=30"></script>
   <script src="assets/js/nav-dropdown.js" defer></script>
   <script src="assets/js/motion.js?v=18" defer></script>
@@ -281,16 +281,16 @@
     }
     /* Branch open/close hours mirrored from main.js. Friday opens late. */
     const BRANCH_HOURS = {
-      'Al Ain':{sun:'10:00-23:00',mon:'10:00-23:00',tue:'10:00-23:00',wed:'10:00-23:00',thu:'10:00-23:00',fri:'14:00-23:00',sat:'10:00-23:00'},
-      'Khalifa City':{sun:'10:00-23:00',mon:'10:00-23:00',tue:'10:00-23:00',wed:'10:00-23:00',thu:'10:00-23:00',fri:'14:00-23:00',sat:'10:00-23:00'},
-      'Khalidiya':{sun:'10:00-23:00',mon:'10:00-23:00',tue:'10:00-23:00',wed:'10:00-23:00',thu:'10:00-23:00',fri:'14:00-23:00',sat:'10:00-23:00'},
-      'Baniyas Spa':{sun:'10:00-23:00',mon:'10:00-23:00',tue:'10:00-23:00',wed:'10:00-23:00',thu:'10:00-23:00',fri:'14:00-23:00',sat:'10:00-23:00'},
-      'Baniyas Barber':{sun:'10:00-23:00',mon:'10:00-23:00',tue:'10:00-23:00',wed:'10:00-23:00',thu:'10:00-23:00',fri:'14:00-23:00',sat:'10:00-23:00'},
-      'Rabdan':{sun:'10:00-23:00',mon:'10:00-23:00',tue:'10:00-23:00',wed:'10:00-23:00',thu:'10:00-23:00',fri:'14:00-23:00',sat:'10:00-23:00'},
-      'Old Shahamah':{sun:'10:00-23:00',mon:'10:00-23:00',tue:'10:00-23:00',wed:'10:00-23:00',thu:'10:00-23:00',fri:'14:00-23:00',sat:'10:00-23:00'},
-      'New Shahamah':{sun:'10:00-23:00',mon:'10:00-23:00',tue:'10:00-23:00',wed:'10:00-23:00',thu:'10:00-23:00',fri:'14:00-23:00',sat:'10:00-23:00'},
-      'Muroor':{sun:'10:00-23:00',mon:'10:00-23:00',tue:'10:00-23:00',wed:'10:00-23:00',thu:'10:00-23:00',fri:'14:00-23:00',sat:'10:00-23:00'},
-      'VIP Muroor':{sun:'11:00-23:00',mon:'11:00-23:00',tue:'11:00-23:00',wed:'11:00-23:00',thu:'11:00-23:00',fri:'14:00-23:00',sat:'11:00-23:00'}
+      'Al Ain':{sun:'09:00-23:00',mon:'09:00-23:00',tue:'09:00-23:00',wed:'09:00-23:00',thu:'09:00-23:00',fri:'14:30-23:00',sat:'09:00-23:00'},
+      'Khalifa City':{sun:'11:30-23:00',mon:'11:30-23:00',tue:'11:30-23:00',wed:'11:30-23:00',thu:'11:30-23:00',fri:'14:30-23:00',sat:'11:30-23:00'},
+      'Khalidiya':{sun:'09:00-23:00',mon:'09:00-23:00',tue:'09:00-23:00',wed:'09:00-23:00',thu:'09:00-23:00',fri:'14:30-23:00',sat:'09:00-23:00'},
+      'Baniyas Spa':{sun:'11:30-23:00',mon:'11:30-23:00',tue:'11:30-23:00',wed:'11:30-23:00',thu:'11:30-23:00',fri:'14:30-23:00',sat:'11:30-23:00'},
+      'Baniyas Barber':{sun:'09:00-23:00',mon:'09:00-23:00',tue:'09:00-23:00',wed:'09:00-23:00',thu:'09:00-23:00',fri:'14:30-23:00',sat:'09:00-23:00'},
+      'Rabdan':{sun:'09:00-23:00',mon:'09:00-23:00',tue:'09:00-23:00',wed:'09:00-23:00',thu:'09:00-23:00',fri:'14:30-23:00',sat:'09:00-23:00'},
+      'Old Shahamah':{sun:'09:00-23:00',mon:'09:00-23:00',tue:'09:00-23:00',wed:'09:00-23:00',thu:'09:00-23:00',fri:'14:30-23:00',sat:'09:00-23:00'},
+      'New Shahamah':{sun:'09:00-23:00',mon:'09:00-23:00',tue:'09:00-23:00',wed:'09:00-23:00',thu:'09:00-23:00',fri:'14:30-23:00',sat:'09:00-23:00'},
+      'Muroor':{sun:'09:00-23:00',mon:'09:00-23:00',tue:'09:00-23:00',wed:'09:00-23:00',thu:'09:00-23:00',fri:'14:30-23:00',sat:'09:00-23:00'},
+      'VIP Muroor':{sun:'09:00-23:00',mon:'09:00-23:00',tue:'09:00-23:00',wed:'09:00-23:00',thu:'09:00-23:00',fri:'14:30-23:00',sat:'09:00-23:00'}
     };
     function remainingSlotsForBranch(branch) {
       const hours = (BRANCH_HOURS[branch] || {})[['sun','mon','tue','wed','thu','fri','sat'][new Date().getDay()]];

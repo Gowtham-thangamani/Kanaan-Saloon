@@ -37,8 +37,8 @@
       <h3>Change password</h3>
       <p style="color: var(--muted); font-size: 13px; margin-bottom: 12px;">Updates the password on your Supabase admin account. To add or remove admins, use the Supabase dashboard → Authentication → Users.</p>
       <div class="row">
-        <div><label>New password</label><input type="password" class="input" id="pw1" autocomplete="new-password" /></div>
-        <div><label>Confirm</label><input type="password" class="input" id="pw2" autocomplete="new-password" /></div>
+        <div><label for="pw1">New password</label><input type="password" class="input" id="pw1" autocomplete="new-password" /></div>
+        <div><label for="pw2">Confirm</label><input type="password" class="input" id="pw2" autocomplete="new-password" /></div>
       </div>
       <ul style="font-size: 11px; color: var(--muted); margin: 12px 0 0; padding-left: 16px; line-height: 1.6;">
         <li id="rule-len">At least 8 characters</li>
@@ -53,7 +53,7 @@
     <div class="card">
       <h3>Google Sheet — leads CSV URL</h3>
       <p style="color: var(--muted); font-size: 13px; margin-bottom: 12px;">In Google Sheets: <strong>File → Share → Publish to web → CSV → Copy URL</strong>. Paste here.</p>
-      <input class="input" id="csvUrl" placeholder="https://docs.google.com/spreadsheets/d/.../pub?output=csv" />
+      <input class="input" id="csvUrl" aria-label="Google Sheet leads CSV URL" placeholder="https://docs.google.com/spreadsheets/d/.../pub?output=csv" />
       <div style="margin-top: 16px;"><button type="button" class="btn" id="saveCsv">Save URL</button></div>
     </div>
 
@@ -70,13 +70,21 @@
   </main>
 </div>
 
+<script src="../assets/js/config.js?v=2"></script>
 <script src="admin.js"></script>
 <script>
-if (KANAAN_ADMIN.requireAuth()) (function () {
+if (KANAAN_ADMIN.requireAuth()) (async function () {
   const email = KANAAN_ADMIN.currentUserEmail();
   if (email) document.getElementById('signedInAs').textContent = 'Signed in as ' + email + '.';
   const cfgCsv = (window.KANAAN_CONFIG && window.KANAAN_CONFIG.leadsSheet && window.KANAAN_CONFIG.leadsSheet.csvUrl) || '';
-  document.getElementById('csvUrl').value = localStorage.getItem('kanaan_leads_csv_url') || cfgCsv;
+  // Prefer the Supabase-synced value (shared across all admin devices), then
+  // the local cache, then the build-time config default.
+  let syncedCsv = '';
+  try {
+    const s = await KANAAN_ADMIN.loadContentSection('settings');
+    if (s && s.leads_csv_url) syncedCsv = s.leads_csv_url;
+  } catch (_) {}
+  document.getElementById('csvUrl').value = syncedCsv || localStorage.getItem('kanaan_leads_csv_url') || cfgCsv;
 
   /* Live rule indicators on the password fields */
   const pw1 = document.getElementById('pw1');
@@ -127,9 +135,18 @@ if (KANAAN_ADMIN.requireAuth()) (function () {
     // Reset rule indicators
     Object.values(ruleEls).forEach(el => paintRule(el, false));
   });
-  document.getElementById('saveCsv').addEventListener('click', () => {
-    localStorage.setItem('kanaan_leads_csv_url', document.getElementById('csvUrl').value.trim());
-    KANAAN_ADMIN.toast('Sheet URL saved');
+  document.getElementById('saveCsv').addEventListener('click', async () => {
+    const val = document.getElementById('csvUrl').value.trim();
+    localStorage.setItem('kanaan_leads_csv_url', val);
+    // Also persist to Supabase so the URL follows the admin across devices.
+    try {
+      const existing = (await KANAAN_ADMIN.loadContentSection('settings')) || {};
+      existing.leads_csv_url = val;
+      const res = await KANAAN_ADMIN.saveContentSection('settings', existing);
+      KANAAN_ADMIN.toast(res && res.ok ? 'Sheet URL saved (synced to all devices)' : 'Saved locally (cloud sync failed)');
+    } catch (_) {
+      KANAAN_ADMIN.toast('Sheet URL saved locally');
+    }
   });
 
   function clear(k, l) { localStorage.removeItem('kanaan_content_' + k); KANAAN_ADMIN.toast(l + ' cleared'); }
@@ -143,7 +160,6 @@ if (KANAAN_ADMIN.requireAuth()) (function () {
   });
 })();
 </script>
-  <script src="../assets/js/config.js?v=2"></script>
   <script src="../assets/js/tracking.js"></script>
   <script src="../assets/js/consent.js" defer></script>
 </body>
