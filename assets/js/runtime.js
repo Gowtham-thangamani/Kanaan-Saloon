@@ -684,7 +684,20 @@
           if (!v || v.toLowerCase() === 'closed') return [k, null];
           const [open, close] = v.split('-');
           return [k, { open, close }];
-        })))
+        }))),
+        // Human-readable hours summary for list cards (Sat–Thu + Friday), localized.
+        hours_summary: (function () {
+          const h = b.hours || {};
+          const wd = ['sat', 'sun', 'mon', 'tue', 'wed', 'thu'];
+          const to12 = (t) => { if (!t) return ''; const p = t.split(':'); const H = +p[0]; const M = p[1] || '00'; const mer = isAr ? (H < 12 ? 'ص' : 'م') : (H < 12 ? 'AM' : 'PM'); let hr = H % 12; if (hr === 0) hr = 12; const s = hr + ':' + M + ' ' + mer; return isAr ? toArDigits(s) : s; };
+          const fmt = (r) => { if (!r || String(r).toLowerCase() === 'closed') return isAr ? 'مغلق' : 'Closed'; const parts = r.split('-'); return to12(parts[0]) + ' – ' + to12(parts[1]); };
+          const same = wd.every(d => h[d] && h[d] === h[wd[0]]);
+          if (same && h[wd[0]]) {
+            const wL = isAr ? 'السبت – الخميس' : 'Sat – Thu', fL = isAr ? 'الجمعة' : 'Fri';
+            return wL + ': ' + fmt(h[wd[0]]) + (h.fri ? ' · ' + fL + ': ' + fmt(h.fri) : '');
+          }
+          return isAr ? 'الساعات تختلف — راجع البيت' : 'Hours vary — see branch';
+        })()
       }));
       renderList(branchesList, localized, 'branch');
       // Notify main.js so it can run the Open/Closed status check on the
