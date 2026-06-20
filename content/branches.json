@@ -227,11 +227,11 @@
     {
       "id": "baniyas-spa",
       "name_en": "Baniyas Spa",
-      "name_ar": "بنياس سبا",
+      "name_ar": "بني ياس سبا",
       "area_en": "Baniyas, Abu Dhabi",
-      "area_ar": "بنياس، أبوظبي",
+      "area_ar": "بني ياس، أبوظبي",
       "address_en": "Baniyas East, Abu Dhabi",
-      "address_ar": "بنياس الشرقية، أبوظبي",
+      "address_ar": "بني ياس الشرقية، أبوظبي",
       "phone": "+97124462027",
       "whatsapp": "971505556795",
       "type": "Spa",
@@ -300,11 +300,11 @@
     {
       "id": "baniyas-barber",
       "name_en": "Baniyas Barber",
-      "name_ar": "بنياس باربر",
+      "name_ar": "بني ياس باربر",
       "area_en": "Baniyas, Abu Dhabi",
-      "area_ar": "بنياس، أبوظبي",
+      "area_ar": "بني ياس، أبوظبي",
       "address_en": "Baniyas, Abu Dhabi",
-      "address_ar": "بنياس، أبوظبي",
+      "address_ar": "بني ياس، أبوظبي",
       "phone": "+97125823031",
       "whatsapp": "971505556795",
       "type": "Barber",
@@ -610,7 +610,7 @@
         "fri": "14:30-23:00",
         "sat": "09:00-23:00"
       },
-      "image": "/assets/img/branches/vip-muroor/vip-muroor-1.webp",
+      "image": "/assets/img/branches/muroor/muroor-1-1600.webp",
       "maps_query": "24.4331,54.4375",
       "google_business": "https://maps.app.goo.gl/8E6t8TUt3onpKsfv8",
       "geo": {

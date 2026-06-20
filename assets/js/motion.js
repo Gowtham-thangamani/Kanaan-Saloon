@@ -53,25 +53,30 @@
   // ---------- 2. Split heading lines ----------
   function splitLines(el) {
     if (el.dataset.splitDone === '1') return;
-    var raw = el.textContent.trim();
-    if (!raw) return;
-    var words = raw.split(/\s+/);
-    el.innerHTML = words.map(function (w) {
-      return '<span style="display:inline-block;">' + w + '</span>';
-    }).join(' ');
-    var spans = [].slice.call(el.querySelectorAll('span'));
-    var lines = [];
-    var current = null;
-    spans.forEach(function (s) {
-      var top = s.offsetTop;
-      if (!current || top !== current.top) {
-        current = { top: top, words: [] };
-        lines.push(current);
+    // One animated line per <br>-separated segment, preserving inline markup
+    // (coloured spans, translate="no", etc.). Reading textContent here would
+    // drop the <br> breaks and strip those spans, then re-deriving lines by
+    // offsetTop collapses RTL headings on top of each other — so instead we
+    // walk the child nodes and keep each segment's HTML intact.
+    var segments = [];
+    var cur = '';
+    [].slice.call(el.childNodes).forEach(function (node) {
+      if (node.nodeType === 1 && node.tagName === 'BR') {
+        segments.push(cur);
+        cur = '';
+      } else if (node.nodeType === 1) {
+        cur += node.outerHTML;
+      } else if (node.nodeType === 3) {
+        cur += node.textContent;
       }
-      current.words.push(s.textContent);
     });
-    el.innerHTML = lines.map(function (line) {
-      return '<span class="split-line"><span class="split-line__inner">' + line.words.join(' ') + '</span></span>';
+    segments.push(cur);
+    segments = segments
+      .map(function (s) { return s.trim(); })
+      .filter(function (s) { return s; });
+    if (!segments.length) return;
+    el.innerHTML = segments.map(function (seg) {
+      return '<span class="split-line"><span class="split-line__inner">' + seg + '</span></span>';
     }).join('');
     el.dataset.splitDone = '1';
     [].slice.call(el.querySelectorAll('.split-line__inner')).forEach(function (inner, i) {

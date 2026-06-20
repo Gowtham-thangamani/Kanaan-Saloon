@@ -693,10 +693,13 @@
           const fmt = (r) => { if (!r || String(r).toLowerCase() === 'closed') return isAr ? 'مغلق' : 'Closed'; const parts = r.split('-'); return to12(parts[0]) + ' – ' + to12(parts[1]); };
           const same = wd.every(d => h[d] && h[d] === h[wd[0]]);
           if (same && h[wd[0]]) {
-            const wL = isAr ? 'السبت – الخميس' : 'Sat – Thu', fL = isAr ? 'الجمعة' : 'Fri';
-            return wL + ': ' + fmt(h[wd[0]]) + (h.fri ? ' · ' + fL + ': ' + fmt(h.fri) : '');
+            // Arabic cards show times only (no day labels); English keeps the labels.
+            if (isAr) {
+              return fmt(h[wd[0]]) + (h.fri ? ' · ' + fmt(h.fri) : '');
+            }
+            return 'Sat – Thu: ' + fmt(h[wd[0]]) + (h.fri ? ' · Fri: ' + fmt(h.fri) : '');
           }
-          return isAr ? 'الساعات تختلف — راجع البيت' : 'Hours vary — see branch';
+          return isAr ? 'الساعات تختلف — راجع الفرع' : 'Hours vary — see branch';
         })()
       }));
       renderList(branchesList, localized, 'branch');

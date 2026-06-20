@@ -25,7 +25,7 @@
     '<h1 class="splash__brand">KANAAN<span>.</span></h1>' +
     '<div class="splash__rule"></div>' +
     '<p class="splash__tag' + (isAr ? ' splash__tag--ar' : '') + '">' +
-      (isAr ? 'عشرة بيوت · معيار واحد · أبوظبي' : 'Ten Houses · One Standard · Abu Dhabi') +
+      (isAr ? 'عشرة فروع · معيار واحد · أبوظبي' : 'Ten Houses · One Standard · Abu Dhabi') +
     '</p>' +
     '<div class="splash__progress"></div>';
   document.body.appendChild(splash);

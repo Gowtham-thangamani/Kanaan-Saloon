@@ -375,11 +375,11 @@
     'العين':              'Al Ain',
     'مدينة خليفة':         'Khalifa City',
     'الخالدية':            'Khalidiya',
-    // Baniyas Spa: form sends "بنياس سبا"; older copy was "بني ياس - سبا"
-    'بنياس سبا':           'Baniyas Spa',
+    // Baniyas Spa: form sends "بني ياس سبا"; older copy was "بني ياس - سبا"
+    'بني ياس سبا':           'Baniyas Spa',
     'بني ياس - سبا':       'Baniyas Spa',
-    // Baniyas Barber: form sends "بنياس باربر"; older "بني ياس - حلاقة"
-    'بنياس باربر':         'Baniyas Barber',
+    // Baniyas Barber: form sends "بني ياس باربر"; older "بني ياس - حلاقة"
+    'بني ياس باربر':         'Baniyas Barber',
     'بني ياس - حلاقة':     'Baniyas Barber',
     // Rabdan: form sends "ربدان"; older "الربدان"
     'ربدان':               'Rabdan',
@@ -620,8 +620,8 @@
           'al-ain':         'العين',
           'khalifa-city':   'مدينة خليفة',
           'khalidiya':      'الخالدية',
-          'baniyas-spa':    'بنياس سبا',
-          'baniyas-barber': 'بنياس باربر',
+          'baniyas-spa':    'بني ياس سبا',
+          'baniyas-barber': 'بني ياس باربر',
           'rabdan':         'ربدان',
           'old-shahamah':   'الشهامة القديمة',
           'new-shahamah':   'الشهامة الجديدة',
