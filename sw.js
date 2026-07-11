@@ -1,9 +1,10 @@
-/* Kanaan Service Worker — v2
+/* Kanaan Service Worker — v3
    - Cache-bust: bumping CACHE name nukes the old cache on next visit.
-   - JSON content is network-first (so site/branches/offers updates propagate instantly).
-   - HTML is network-first (always fresh).
-   - Fonts + photos are cache-first (rarely change). */
-const CACHE = 'kanaan-v23'; /* bump on every deploy to force-evict stale assets for returning visitors */
+   - HTML + JSON are network-first (always fresh).
+   - JS + CSS are network-first too, so code/behaviour updates propagate on the
+     next load without needing a CACHE bump (cache is only an offline fallback).
+   - Fonts + photos are cache-first (rarely change, and have versioned names). */
+const CACHE = 'kanaan-v24'; /* bump on every deploy to force-evict stale assets for returning visitors */
 const SHELL = [
   '/',
   '/index.html',
@@ -36,6 +37,7 @@ self.addEventListener('activate', e => {
 });
 
 function isJSON(url) { return /\.json($|\?)/.test(url.pathname); }
+function isCode(url) { return /\.(js|css)($|\?)/.test(url.pathname); }
 function isFont(url) { return /\.(woff2?|ttf|otf|eot)($|\?)/.test(url.pathname); }
 function isPhoto(url) { return /\/assets\/img\/photos\//.test(url.pathname); }
 
@@ -45,23 +47,26 @@ self.addEventListener('fetch', e => {
   const url = new URL(req.url);
   if (url.origin !== location.origin) return; // don't intercept cross-origin
 
-  // HTML & JSON: NETWORK-FIRST (always fresh, fall back to cache offline)
+  // HTML, JSON, and our own JS/CSS: NETWORK-FIRST (always fresh, fall back to
+  // cache only when offline). This is what stops returning visitors from being
+  // served a stale runtime.js after a deploy.
   if (
     req.mode === 'navigate' ||
     (req.headers.get('accept') || '').includes('text/html') ||
-    isJSON(url)
+    isJSON(url) ||
+    isCode(url)
   ) {
     e.respondWith(
       fetch(req).then(r => {
         const copy = r.clone();
         caches.open(CACHE).then(c => c.put(req, copy));
         return r;
-      }).catch(() => caches.match(req).then(m => m || caches.match('/index.html')))
+      }).catch(() => caches.match(req).then(m => m || (req.mode === 'navigate' ? caches.match('/index.html') : m)))
     );
     return;
   }
 
-  // Photos & fonts & css/js: CACHE-FIRST (these have versioned filenames/?v= cache busters)
+  // Photos & fonts: CACHE-FIRST (rarely change, versioned filenames)
   e.respondWith(
     caches.match(req).then(hit => hit || fetch(req).then(r => {
       if (r.ok) {
