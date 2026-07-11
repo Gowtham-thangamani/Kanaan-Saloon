@@ -765,6 +765,17 @@
             el.removeAttribute('sizes');
             el.src = bg;
             if (bgAlt) el.alt = bgAlt;
+            // On desktop the hero is a parallax CSS background: motion.js copies
+            // the <img> src onto the parent's background-image and hides the img.
+            // That runs on load — before this Supabase-driven swap — so it grabs
+            // the placeholder. Repoint the parent's background to the real image
+            // (now, and again once it loads, to beat any timing race).
+            const media = el.closest('[data-parallax="bg"]');
+            if (media) {
+              const applyBg = () => { media.style.backgroundImage = 'url("' + bg + '")'; };
+              applyBg();
+              el.addEventListener('load', applyBg, { once: true });
+            }
           }
         });
         // Reveal a hidden TL;DR block only if the post actually has one
