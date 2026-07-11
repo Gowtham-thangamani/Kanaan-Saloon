@@ -3,7 +3,7 @@
    - JSON content is network-first (so site/branches/offers updates propagate instantly).
    - HTML is network-first (always fresh).
    - Fonts + photos are cache-first (rarely change). */
-const CACHE = 'kanaan-v22'; /* bump on every deploy to force-evict stale assets for returning visitors */
+const CACHE = 'kanaan-v23'; /* bump on every deploy to force-evict stale assets for returning visitors */
 const SHELL = [
   '/',
   '/index.html',
