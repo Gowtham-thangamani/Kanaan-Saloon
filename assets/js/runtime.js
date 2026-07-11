@@ -755,6 +755,10 @@
         setHTML('[data-blog-body]', post.body_html);
         document.querySelectorAll('[data-blog-hero]').forEach(el => {
           if (el.tagName === 'IMG' && post.hero_image) {
+            // Clear the placeholder srcset/sizes first — browsers prefer srcset
+            // over src, so without this the admin's hero_image never shows.
+            el.removeAttribute('srcset');
+            el.removeAttribute('sizes');
             el.src = post.hero_image;
             if (post.hero_alt) el.alt = post.hero_alt;
           }
