@@ -1,84 +1,37 @@
-/* Kanaan Service Worker — v3
-   - Cache-bust: bumping CACHE name nukes the old cache on next visit.
-   - HTML + JSON are network-first (always fresh).
-   - JS + CSS are network-first too, so code/behaviour updates propagate on the
-     next load without needing a CACHE bump (cache is only an offline fallback).
-   - Fonts + photos are cache-first (rarely change, and have versioned names). */
-const CACHE = 'kanaan-v24'; /* bump on every deploy to force-evict stale assets for returning visitors */
-const SHELL = [
-  '/',
-  '/index.html',
-  '/assets/css/style.css',
-  '/assets/css/motion.css?v=18',
-  '/assets/css/fonts.css',
-  '/assets/js/main.js',
-  '/assets/js/runtime.js',
-  '/assets/js/motion.js?v=18',
-  '/assets/js/quickbook.js',
-  '/assets/js/calendar.js',
-  '/assets/js/config.js',
-  '/assets/img/favicon.svg',
-  '/assets/img/logo.svg',
-  '/manifest.json'
-];
+/* Kanaan Service Worker — v4 (no-op / cache-clearing)
 
-self.addEventListener('install', e => {
-  e.waitUntil(
-    caches.open(CACHE).then(c => c.addAll(SHELL).catch(() => {/* one missing file shouldn't kill install */}))
-  );
+   Earlier versions cached JS/CSS in the browser, which repeatedly served
+   returning visitors a STALE runtime.js after a deploy (the background image
+   / code changes wouldn't show until the SW cache was manually cleared).
+
+   This worker intentionally does the opposite:
+   - On activate it WIPES every cache it finds.
+   - It has NO 'fetch' handler, so the browser loads every request straight
+     from the network. Nothing is served from a service-worker cache, so
+     nothing can go stale. Hostinger's CDN + normal HTTP caching still handle
+     performance at the edge.
+
+   Bump CACHE only to force a fresh activate on returning visitors. */
+const CACHE = 'kanaan-v25';
+
+self.addEventListener('install', () => {
+  // Take over as soon as possible.
   self.skipWaiting();
 });
 
 self.addEventListener('activate', e => {
-  e.waitUntil(
-    caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k))))
-  );
-  self.clients.claim();
+  e.waitUntil((async () => {
+    // Delete ALL old caches (including the previous kanaan-v* shells that held
+    // stale JS). After this there is no SW cache left to serve.
+    const keys = await caches.keys();
+    await Promise.all(keys.map(k => caches.delete(k)));
+    await self.clients.claim();
+  })());
 });
 
-function isJSON(url) { return /\.json($|\?)/.test(url.pathname); }
-function isCode(url) { return /\.(js|css)($|\?)/.test(url.pathname); }
-function isFont(url) { return /\.(woff2?|ttf|otf|eot)($|\?)/.test(url.pathname); }
-function isPhoto(url) { return /\/assets\/img\/photos\//.test(url.pathname); }
+// Deliberately NO fetch listener — every request goes to the network directly,
+// so code and content updates always appear on the next load.
 
-self.addEventListener('fetch', e => {
-  const req = e.request;
-  if (req.method !== 'GET') return;
-  const url = new URL(req.url);
-  if (url.origin !== location.origin) return; // don't intercept cross-origin
-
-  // HTML, JSON, and our own JS/CSS: NETWORK-FIRST (always fresh, fall back to
-  // cache only when offline). This is what stops returning visitors from being
-  // served a stale runtime.js after a deploy.
-  if (
-    req.mode === 'navigate' ||
-    (req.headers.get('accept') || '').includes('text/html') ||
-    isJSON(url) ||
-    isCode(url)
-  ) {
-    e.respondWith(
-      fetch(req).then(r => {
-        const copy = r.clone();
-        caches.open(CACHE).then(c => c.put(req, copy));
-        return r;
-      }).catch(() => caches.match(req).then(m => m || (req.mode === 'navigate' ? caches.match('/index.html') : m)))
-    );
-    return;
-  }
-
-  // Photos & fonts: CACHE-FIRST (rarely change, versioned filenames)
-  e.respondWith(
-    caches.match(req).then(hit => hit || fetch(req).then(r => {
-      if (r.ok) {
-        const copy = r.clone();
-        caches.open(CACHE).then(c => c.put(req, copy));
-      }
-      return r;
-    }))
-  );
-});
-
-// Allow page to ask the worker to skipWaiting and activate immediately
 self.addEventListener('message', e => {
   if (e.data === 'skipWaiting') self.skipWaiting();
 });
