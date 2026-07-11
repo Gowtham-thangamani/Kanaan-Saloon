@@ -323,14 +323,22 @@ if (KANAAN_ADMIN.requireAuth()) (async function () {
           <div><label>Read time (minutes)</label><input class="input" type="number" data-k="read_minutes" value="${esc(post.read_minutes)}" /></div>
           <div><label>Publish date (YYYY-MM-DD)</label><input class="input" type="date" data-k="publish_date" value="${esc(post.publish_date)}" /></div>
           <div><label>Author</label><input class="input" data-k="author" value="${esc(post.author)}" /></div>
-          <div class="full"><label>Hero image</label>
+          <div class="full"><label>Card image (blog grid thumbnail &amp; social preview)</label>
             <div class="hero-upload-row">
               <input class="input" data-k="hero_image" id="heroImageInput" value="${esc(post.hero_image)}" placeholder="/assets/img/photos/your-image.webp or paste a URL" />
               <button type="button" class="btn btn--sm" id="heroUpload">⬆ Upload</button>
             </div>
-            ${post.hero_image ? `<img class="hero-thumb" id="heroThumb" src="${esc(post.hero_image)}" alt="hero preview" onerror="this.style.display='none'" />` : `<img class="hero-thumb" id="heroThumb" style="display:none" alt="hero preview" />`}
-            <p class="field-help">Click "Upload" to add a new image from your computer (saved to Supabase Storage), or paste a path like <code>/assets/img/photos/your-image.webp</code>.</p></div>
-          <div class="full"><label>Hero image alt text</label><input class="input" data-k="hero_alt" value="${esc(post.hero_alt)}" /></div>
+            ${post.hero_image ? `<img class="hero-thumb" id="heroThumb" src="${esc(post.hero_image)}" alt="card image preview" onerror="this.style.display='none'" />` : `<img class="hero-thumb" id="heroThumb" style="display:none" alt="card image preview" />`}
+            <p class="field-help">Shown as the <strong>card thumbnail</strong> on the blog grid and as the social-share preview. A designed graphic (with title baked in) works well here. Click "Upload" to add an image from your computer, or paste a path.</p></div>
+          <div class="full"><label>Card image alt text</label><input class="input" data-k="hero_alt" value="${esc(post.hero_alt)}" /></div>
+          <div class="full"><label>Background image (large banner on the post page)</label>
+            <div class="hero-upload-row">
+              <input class="input" data-k="background_image" id="bgImageInput" value="${esc(post.background_image)}" placeholder="Leave blank to reuse the card image, or upload a plain photo" />
+              <button type="button" class="btn btn--sm" id="bgUpload">⬆ Upload</button>
+            </div>
+            ${post.background_image ? `<img class="hero-thumb" id="bgThumb" src="${esc(post.background_image)}" alt="background image preview" onerror="this.style.display='none'" />` : `<img class="hero-thumb" id="bgThumb" style="display:none" alt="background image preview" />`}
+            <p class="field-help">The big <strong>background banner</strong> on the post page. Use a <strong>plain photo without text</strong> — the page adds the title on top. Leave blank to reuse the card image.</p></div>
+          <div class="full"><label>Background image alt text</label><input class="input" data-k="background_alt" value="${esc(post.background_alt)}" /></div>
           <div class="full"><label>TL;DR (optional summary above lede)</label>
             <textarea class="ta" data-k="tldr">${esc(post.tldr)}</textarea></div>
           <div class="full"><label>Lede paragraph</label>
@@ -493,9 +501,17 @@ if (KANAAN_ADMIN.requireAuth()) (async function () {
           if (prevTitle) prevTitle.textContent = post.meta_title || post.title || 'Post title';
           if (prevDesc)  prevDesc.textContent  = post.meta_description || post.excerpt || 'Post description will appear here as you write it.';
         }
-        // Hero image input: live-update the preview thumb.
+        // Hero/card image input: live-update the preview thumb.
         if (el.dataset.k === 'hero_image') {
           const thumb = document.getElementById('heroThumb');
+          if (thumb) {
+            if (v) { thumb.src = v; thumb.style.display = ''; }
+            else   { thumb.style.display = 'none'; }
+          }
+        }
+        // Background image input: live-update its preview thumb.
+        if (el.dataset.k === 'background_image') {
+          const thumb = document.getElementById('bgThumb');
           if (thumb) {
             if (v) { thumb.src = v; thumb.style.display = ''; }
             else   { thumb.style.display = 'none'; }
@@ -623,7 +639,39 @@ if (KANAAN_ADMIN.requireAuth()) (async function () {
           dirtyIds.add(post.id);
           document.getElementById('saveStatus').textContent = 'Unsaved changes';
           renderList();
-          KANAAN_ADMIN.toast('Hero image uploaded');
+          KANAAN_ADMIN.toast('Card image uploaded');
+        };
+        input.click();
+      });
+    }
+
+    // Background image upload — same flow as the card image, writes background_image.
+    const bgBtn = document.getElementById('bgUpload');
+    if (bgBtn) {
+      bgBtn.addEventListener('click', () => {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        input.onchange = async () => {
+          const file = input.files && input.files[0];
+          if (!file) return;
+          const orig = bgBtn.textContent;
+          bgBtn.disabled = true; bgBtn.textContent = '⏳ Uploading…';
+          const res = await KANAAN_ADMIN.uploadBlogImage(file);
+          bgBtn.disabled = false; bgBtn.textContent = orig;
+          if (!res.ok) {
+            KANAAN_ADMIN.toast('Upload failed: ' + (res.error || 'unknown'));
+            return;
+          }
+          const bgInput = document.getElementById('bgImageInput');
+          const thumb = document.getElementById('bgThumb');
+          bgInput.value = res.url;
+          post.background_image = res.url;
+          if (thumb) { thumb.src = res.url; thumb.style.display = ''; }
+          dirtyIds.add(post.id);
+          document.getElementById('saveStatus').textContent = 'Unsaved changes';
+          renderList();
+          KANAAN_ADMIN.toast('Background image uploaded');
         };
         input.click();
       });

@@ -754,13 +754,17 @@
           (post.category || '') + (post.read_minutes ? ' · ' + post.read_minutes + ' min read' : ''));
         setHTML('[data-blog-body]', post.body_html);
         document.querySelectorAll('[data-blog-hero]').forEach(el => {
-          if (el.tagName === 'IMG' && post.hero_image) {
+          // Post-page banner: prefer the dedicated background image, fall back
+          // to the card/hero image so posts without a background still show one.
+          const bg    = post.background_image || post.hero_image;
+          const bgAlt = post.background_alt   || post.hero_alt;
+          if (el.tagName === 'IMG' && bg) {
             // Clear the placeholder srcset/sizes first — browsers prefer srcset
-            // over src, so without this the admin's hero_image never shows.
+            // over src, so without this the admin's image never shows.
             el.removeAttribute('srcset');
             el.removeAttribute('sizes');
-            el.src = post.hero_image;
-            if (post.hero_alt) el.alt = post.hero_alt;
+            el.src = bg;
+            if (bgAlt) el.alt = bgAlt;
           }
         });
         // Reveal a hidden TL;DR block only if the post actually has one
