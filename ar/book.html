@@ -3,6 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <!-- Bookings moved to Salonist. Redirect straight to the branch's Salonist
+       page on arrival so customers never fill this form and then re-enter
+       everything in Salonist. ROLLBACK: remove this whole <script> block. -->
+  <script>
+  (function () {
+    var SAL = {
+      'al-ain':'https://kanaanalain.salonist.io/booking-online',
+      'baniyas-barber':'https://kanaanbaniyaseast.salonist.io/booking-online',
+      'baniyas-spa':'https://kanaanbaniyasspa.salonist.io/booking-online',
+      'khalidiya':'https://kanaankhalidiya.salonist.io/booking-online',
+      'khalifa-city':'https://kanaankhalifacity.salonist.io/booking-online',
+      'muroor':'https://kanaanmuroor.salonist.io/booking-online',
+      'muroor-barber':'https://kanaanmuroor.salonist.io/booking-online',
+      'new-shahamah':'https://kanaannewshahamah.salonist.io/booking-online',
+      'old-shahamah':'https://kanaanoldshahamah.salonist.io/booking-online',
+      'rabdan':'https://kanaanrabdan.salonist.io/booking-online',
+      'vip-muroor':'https://kanaanvipspa.salonist.io/booking-online',
+      'vip-spa-muroor':'https://kanaanvipspa.salonist.io/booking-online',
+      'vip-muroor-spa':'https://kanaanvipspa.salonist.io/booking-online'
+    };
+    try {
+      var raw = (new URLSearchParams(location.search).get('branch') || '').toLowerCase().trim();
+      var key = raw.replace(/\s+/g, '-').replace(/[^a-z-]/g, '');
+      location.replace(SAL[key] || '/ar/branches');
+    } catch (e) { location.replace('/ar/branches'); }
+  })();
+  </script>
   <title>احجز إلكترونياً | كنعان صالون وسبا للرجال</title>
   <meta name="description" content="احجز كرسيك في أيٍّ من فروع كنعان العشرة في أبوظبي. دقيقتان عبر الإنترنت — التأكيد من فرعك." />
   <link rel="stylesheet" href="../assets/css/fonts.css" />
