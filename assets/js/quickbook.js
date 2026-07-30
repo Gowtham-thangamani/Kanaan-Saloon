@@ -100,6 +100,9 @@
     );
     var url = 'https://wa.me/' + WA + '?text=' + encodeURIComponent(msg);
     if (window.gtag) window.gtag('event', 'quickbook_submit', { branch: fd.get('branch'), service: fd.get('service') });
+    // Work order Task 3: this pill opens WhatsApp via window.open (not an <a>),
+    // so fire the Meta Lead here too (the site-wide link listener can't see it).
+    if (window.fbq) fbq('track', 'Lead', { content_name: 'WhatsApp Click' });
     window.open(url, '_blank', 'noopener');
     close();
   });
