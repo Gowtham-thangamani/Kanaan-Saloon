@@ -55,6 +55,11 @@ window.KANAAN_CONFIG = {
        - (later) Salonist / Fresha / Zoho Bookings
      ============================================================ */
   booking: {
+    // Internal website booking form DISABLED per marketing Work Order —
+    // all bookings moved to Salonist. This only guards the form submit; the
+    // form code + backend handler are kept intact for a 2-week rollback.
+    // To restore the old form, set this back to false.
+    disabled: true,
     // Optional Make.com / Google Apps Script webhook (legacy fallback).
     // If supabase.url is set below, Supabase is used instead.
     webhookUrl: '',
