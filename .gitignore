@@ -42,3 +42,6 @@ desktop.ini
 
 # Generated deployment zip
 kanaanspa-site.zip
+
+# build artifacts — never commit deploy zips
+*.zip
