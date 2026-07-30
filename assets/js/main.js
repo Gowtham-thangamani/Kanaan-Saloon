@@ -946,7 +946,11 @@
           'new-shahamah': 'https://kanaannewshahamah.salonist.io/booking-online',
           'old-shahamah': 'https://kanaanoldshahamah.salonist.io/booking-online',
           'rabdan': 'https://kanaanrabdan.salonist.io/booking-online',
-          'vip-muroor': 'https://kanaanvipspa.salonist.io/booking-online'
+          'vip-muroor': 'https://kanaanvipspa.salonist.io/booking-online',
+          // Aliases for calendar/form display names that don't match the slug
+          'muroor-barber': 'https://kanaanmuroor.salonist.io/booking-online',
+          'vip-spa-muroor': 'https://kanaanvipspa.salonist.io/booking-online',
+          'vip-muroor-spa': 'https://kanaanvipspa.salonist.io/booking-online'
         };
         const raw = (new URLSearchParams(location.search).get('branch') || '').toLowerCase().trim();
         const key = raw.replace(/\s+/g, '-').replace(/[^a-z-]/g, '');
