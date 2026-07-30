@@ -288,62 +288,10 @@
   </section>
 
   <!-- QUICK BOOK at this branch -->
-  <section class="section section--light section--tight">
-    <div class="container">
-      <div class="quick-book">
-        <span class="eyebrow">Quick Book at Baniyas Barber</span>
-        <h2 class="quick-book__title">Book in two clicks.</h2>
-        <p class="quick-book__sub">Pre-filled for Baniyas Barber — pick your service and date.</p>
-        <form class="quick-book__row" onsubmit="event.preventDefault(); var qs=new URLSearchParams({branch:'Baniyas Barber'}); ['qb-service','qb-date','qb-time'].forEach(function(id){var el=document.getElementById(id); if(el && el.value) qs.set(id.replace('qb-',''), el.value);}); window.location.href='../book?'+qs.toString();">
-          <input type="hidden" value="Baniyas Barber" />
-          <select id="qb-service" required aria-label="Service">
-            <option value="">Service…</option>
-            <option>Hair &amp; Beard</option><option>Facial &amp; Skin</option><option>Massage</option>
-            
-            <option>Manicure &amp; Pedicure</option><option>Hair Treatment</option>
-            <option>8-Service Package</option>
-          </select>
-          <input type="date" id="qb-date" aria-label="Preferred date" />
-          <input type="tel" id="qb-time" placeholder="Time (optional)" aria-label="Preferred time" />
-          <button type="submit" class="btn" data-track="quick_book_click">Continue →</button>
-        </form>
-      </div>
-    </div>
-  </section>
+  
 
   <!-- 14-day availability preview (visual; real availability via CRM v2) -->
-  <section class="section">
-    <div class="container">
-      <div class="section-head section-head--left" data-reveal="up">
-        <span class="eyebrow" data-parallax="text" data-speed="0.10">Next 14 Days</span>
-        <h2 class="section-head__title display-2" data-parallax="text" data-speed="0.06">Pick a day.</h2>
-        <p class="section-head__lede">Friday opens at 2:30 PM — all other days from 9:00 AM.</p>
-      </div>
-      <div class="calendar-strip" id="cal-baniyas-barber"></div>
-      <script>
-        (function () {
-          var box = document.getElementById('cal-baniyas-barber');
-          if (!box) return;
-          var days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-          var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-          var today = new Date();
-          var html = '';
-          for (var i = 0; i < 14; i++) {
-            var d = new Date(today); d.setDate(today.getDate() + i);
-            var iso = d.toISOString().split('T')[0];
-            var isFri = d.getDay() === 5;
-            html += '<a class="cal-day' + (isFri ? ' cal-day--late' : '') + '" href="../book?branch=Baniyas Barber&date=' + iso + '" data-track="calendar_click">' +
-                    '<span class="cal-day__dow">' + days[d.getDay()] + '</span>' +
-                    '<span class="cal-day__num">' + d.getDate() + '</span>' +
-                    '<span class="cal-day__mo">' + months[d.getMonth()] + '</span>' +
-                    '<span class="cal-day__hint">' + (isFri ? 'opens 2:30 PM' : 'open') + '</span>' +
-                    '</a>';
-          }
-          box.innerHTML = html;
-        })();
-      </script>
-    </div>
-  </section>
+  
 
   <!-- Per-branch testimonials -->
   
