@@ -17,6 +17,15 @@ publish/unpublish, delete — full CRUD on `blog_posts` and the `blog-images`
 storage bucket) while being unable to read or write anything else — enforced at
 the database level, not just hidden in the UI.
 
+**Live-update requirement already satisfied by existing architecture:** the public
+blog pages (`blog.html`, `blog/_post.html` via `assets/js/runtime.js`) read the
+`blog_posts` table directly from Supabase, and `admin/blog.html`'s save/delete
+actions (`KANAAN_ADMIN.saveBlogPost` / `deleteBlogPost`) write straight to that
+same table. A save in the admin panel is live on the site immediately — no
+redeploy, no manual step. This is unrelated to the JSON-file/manual-redeploy
+pattern used elsewhere on the site; nothing in this spec needs to change that
+behavior, it just needs to keep working for her account too.
+
 ## Approach
 
 **Tag her user with an `app_metadata.role = 'editor'` claim, exclude that role from
