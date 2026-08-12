@@ -68,6 +68,16 @@
     try { localStorage.removeItem(SESSION_KEY); } catch (_) {}
   }
 
+  /* Returns 'editor' for a blog-only account, or null for a normal admin
+     (no role claim) or a signed-out visitor. Reads the role Supabase
+     embedded in the login response's user.app_metadata — same value the
+     server-side RLS policies check from the JWT, so this never grants
+     UI access the database would refuse. */
+  function editorRole() {
+    const s = readSession();
+    return (s && s.user && s.user.app_metadata && s.user.app_metadata.role) || null;
+  }
+
   /* Auth headers — uses access_token if logged in, otherwise anon key.
      INSERT calls (public booking form, contact form, etc.) should use the
      anon key. SELECT/UPDATE/DELETE in admin should use the access_token. */
@@ -239,6 +249,10 @@
     },
     requireAuth() {
       if (!this.isLoggedIn()) { location.href = 'index.html'; return false; }
+      if (editorRole() === 'editor') {
+        const page = (location.pathname.split('/').pop() || 'index').replace(/\.html$/, '');
+        if (page !== 'blog') { location.href = 'blog.html'; return false; }
+      }
       return true;
     },
     authHeaders: authHeaders,
