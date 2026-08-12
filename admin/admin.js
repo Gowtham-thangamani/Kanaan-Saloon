@@ -42,6 +42,14 @@
     sideUser.appendChild(btn);
   });
 
+  document.addEventListener('DOMContentLoaded', () => {
+    if (editorRole() !== 'editor') return;
+    document.querySelectorAll('.admin-side__nav a').forEach(a => {
+      const href = (a.getAttribute('href') || '').replace(/\.html$/, '');
+      if (href !== 'blog') a.remove();
+    });
+  });
+
   // === Supabase Auth ==================================================
   const SESSION_KEY = 'kanaan_admin_supa_session';
 
