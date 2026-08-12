@@ -21,6 +21,8 @@ Or paste the contents of these three files into the Supabase SQL Editor in order
 - `supabase/migrations/20260509000000_add_forms_tables.sql`
 - `supabase/migrations/20260511000000_availability.sql` — adds slot-availability logic so the booking page no longer shows mocked times.
 
+> **If the blog-only editor role has been set up** (see `supabase/EDITOR_ACCESS.md`), re-run `supabase/migrations/20260812000000_editor_role_exclusion.sql` afterward — the three migrations above recreate policies that would otherwise silently give the editor account full access again.
+
 After this, **anonymous users can only INSERT.** Reading/updating/deleting requires a Supabase Auth session. The availability check (third migration) exposes only a SECURITY DEFINER function — anon can call `get_taken_slots(branch, date)` to learn which times are taken, but cannot read the bookings table directly.
 
 ---

@@ -92,6 +92,8 @@ Open the Supabase dashboard → **SQL Editor → New query**. Paste the entire c
 You should see "Success. No rows returned." after each one.
 
 > **CLI alternative:** `npx supabase login && npx supabase link --project-ref ckqioeixkwuxrcybsoew && npx supabase db push`.
+>
+> **If the blog-only editor role has been set up** (see `supabase/EDITOR_ACCESS.md`), re-run `supabase/migrations/20260812000000_editor_role_exclusion.sql` afterward — the two migrations above recreate policies that would otherwise silently give the editor account full access again.
 
 ### 5.2 Create the admin user
 

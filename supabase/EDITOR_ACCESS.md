@@ -8,6 +8,16 @@ used for the SEO specialist: israhsaleh2000@gmail.com.
 must already be applied (Supabase Dashboard → SQL Editor → paste → Run).
 Without it, the account below would be a normal full admin.
 
+**Important — keep it last:** if anyone ever re-pastes an earlier
+migration (the ones named in `START_HERE.md` / `LAUNCH_CHECKLIST.md`) or
+re-runs `tools/apply-all-missing-migrations.sql` — for example while
+troubleshooting an unrelated problem — it will silently undo this editor
+restriction with no error and no visible change in the admin panel. The
+account will quietly become a full admin again. If that ever happens,
+immediately re-paste and re-run
+`supabase/migrations/20260812000000_editor_role_exclusion.sql` in the SQL
+Editor to restore the restriction.
+
 ## 1. Create her Auth user
 
 Supabase Dashboard → Authentication → Users → Add user → Create new user.

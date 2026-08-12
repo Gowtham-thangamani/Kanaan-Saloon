@@ -22,6 +22,17 @@
 -- `coalesce(auth.jwt() -> 'app_metadata' ->> 'role', '') <> 'editor'`
 -- condition used throughout this file.
 --
+-- MIGRATION ORDER: this file must always be the LAST migration applied
+-- to the project. 20260507000000_init_bookings.sql,
+-- 20260509000000_add_forms_tables.sql, 20260511000000_availability.sql,
+-- and tools/apply-all-missing-migrations.sql all drop-and-recreate
+-- policies under these exact same names with `to authenticated using
+-- (true)` and no editor exclusion. Re-running any of them AFTER this
+-- file clobbers this file's policies back to fully permissive — with
+-- no error and no visible change — silently restoring full access to
+-- a tagged editor account. If any earlier migration or that bundle is
+-- re-run for any reason, RE-RUN THIS FILE immediately afterward.
+--
 -- Apply: Supabase Dashboard -> SQL Editor -> New query -> paste this
 -- file -> Run. Re-runnable (drop-and-recreate).
 -- =================================================================
