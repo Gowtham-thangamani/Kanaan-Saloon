@@ -51,6 +51,17 @@
   Header set Permissions-Policy "geolocation=(self), camera=(), microphone=()"
 </IfModule>
 
+# Block internal/repo files from public access. The deploy zip is built from
+# the full git-tracked repo (DB migrations, setup docs, dev scripts), not just
+# the website — these rules stop any of it being served even if it lands in
+# public_html. Belt-and-suspenders alongside fixing what actually gets deployed.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^(supabase|docs|tools|\.claude|\.superpowers)(/|$) - [F,L]
+  RewriteRule ^(fetch-fonts|set-domain|generate-[a-z-]+)\.js$ - [F,L]
+  RewriteRule \.(md|sql|toml)$ - [F,L]
+</IfModule>
+
 # Basic auth on /admin/* — uncomment and create a .htpasswd in /admin/
 # <Directory /admin>
 #   AuthType Basic
