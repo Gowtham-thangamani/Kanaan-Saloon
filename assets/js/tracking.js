@@ -177,7 +177,8 @@
             book_now_click: 'InitiateCheckout',
             booking_submit: 'Schedule',
             form_submit: 'Lead',
-            whatsapp_click: 'Contact',
+            // whatsapp_click handled by assets/js/meta-pixel.js (fires 'Lead'
+            // sitewide per the marketing work order) — don't double-fire here.
             call_click: 'Contact'
           };
           var fb = fbMap[eventName];

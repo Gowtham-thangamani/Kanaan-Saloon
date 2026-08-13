@@ -5,5 +5,8 @@
       "Bash(node patch-self-host-fonts.js)",
       "Bash(node -e ' *)"
     ]
+  },
+  "worktree": {
+    "baseRef": "head"
   }
 }

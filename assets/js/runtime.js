@@ -684,7 +684,23 @@
           if (!v || v.toLowerCase() === 'closed') return [k, null];
           const [open, close] = v.split('-');
           return [k, { open, close }];
-        })))
+        }))),
+        // Human-readable hours summary for list cards (Sat–Thu + Friday), localized.
+        hours_summary: (function () {
+          const h = b.hours || {};
+          const wd = ['sat', 'sun', 'mon', 'tue', 'wed', 'thu'];
+          const to12 = (t) => { if (!t) return ''; const p = t.split(':'); const H = +p[0]; const M = p[1] || '00'; const mer = isAr ? (H < 12 ? 'ص' : 'م') : (H < 12 ? 'AM' : 'PM'); let hr = H % 12; if (hr === 0) hr = 12; const s = hr + ':' + M + ' ' + mer; return isAr ? toArDigits(s) : s; };
+          const fmt = (r) => { if (!r || String(r).toLowerCase() === 'closed') return isAr ? 'مغلق' : 'Closed'; const parts = r.split('-'); return to12(parts[0]) + ' – ' + to12(parts[1]); };
+          const same = wd.every(d => h[d] && h[d] === h[wd[0]]);
+          if (same && h[wd[0]]) {
+            // Arabic cards show times only (no day labels); English keeps the labels.
+            if (isAr) {
+              return fmt(h[wd[0]]) + (h.fri ? ' · ' + fmt(h.fri) : '');
+            }
+            return 'Sat – Thu: ' + fmt(h[wd[0]]) + (h.fri ? ' · Fri: ' + fmt(h.fri) : '');
+          }
+          return isAr ? 'الساعات تختلف — راجع الفرع' : 'Hours vary — see branch';
+        })()
       }));
       renderList(branchesList, localized, 'branch');
       // Notify main.js so it can run the Open/Closed status check on the
@@ -738,9 +754,28 @@
           (post.category || '') + (post.read_minutes ? ' · ' + post.read_minutes + ' min read' : ''));
         setHTML('[data-blog-body]', post.body_html);
         document.querySelectorAll('[data-blog-hero]').forEach(el => {
-          if (el.tagName === 'IMG' && post.hero_image) {
-            el.src = post.hero_image;
-            if (post.hero_alt) el.alt = post.hero_alt;
+          // Post-page banner: prefer the dedicated background image, fall back
+          // to the card/hero image so posts without a background still show one.
+          const bg    = post.background_image || post.hero_image;
+          const bgAlt = post.background_alt   || post.hero_alt;
+          if (el.tagName === 'IMG' && bg) {
+            // Clear the placeholder srcset/sizes first — browsers prefer srcset
+            // over src, so without this the admin's image never shows.
+            el.removeAttribute('srcset');
+            el.removeAttribute('sizes');
+            el.src = bg;
+            if (bgAlt) el.alt = bgAlt;
+            // On desktop the hero is a parallax CSS background: motion.js copies
+            // the <img> src onto the parent's background-image and hides the img.
+            // That runs on load — before this Supabase-driven swap — so it grabs
+            // the placeholder. Repoint the parent's background to the real image
+            // (now, and again once it loads, to beat any timing race).
+            const media = el.closest('[data-parallax="bg"]');
+            if (media) {
+              const applyBg = () => { media.style.backgroundImage = 'url("' + bg + '")'; };
+              applyBg();
+              el.addEventListener('load', applyBg, { once: true });
+            }
           }
         });
         // Reveal a hidden TL;DR block only if the post actually has one

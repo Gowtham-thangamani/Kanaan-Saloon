@@ -75,8 +75,8 @@
     { name_en: 'Al Ain', name_ar: 'العين' },
     { name_en: 'Khalifa City', name_ar: 'مدينة خليفة' },
     { name_en: 'Khalidiya', name_ar: 'الخالدية' },
-    { name_en: 'Baniyas Spa', name_ar: 'بنياس سبا' },
-    { name_en: 'Baniyas Barber', name_ar: 'بنياس باربر' },
+    { name_en: 'Baniyas Spa', name_ar: 'بني ياس سبا' },
+    { name_en: 'Baniyas Barber', name_ar: 'بني ياس باربر' },
     { name_en: 'Rabdan', name_ar: 'ربدان' },
     { name_en: 'Old Shahamah', name_ar: 'الشهامة القديمة' },
     { name_en: 'New Shahamah', name_ar: 'الشهامة الجديدة' },
@@ -100,6 +100,9 @@
     );
     var url = 'https://wa.me/' + WA + '?text=' + encodeURIComponent(msg);
     if (window.gtag) window.gtag('event', 'quickbook_submit', { branch: fd.get('branch'), service: fd.get('service') });
+    // Work order Task 3: this pill opens WhatsApp via window.open (not an <a>),
+    // so fire the Meta Lead here too (the site-wide link listener can't see it).
+    if (window.fbq) fbq('track', 'Lead', { content_name: 'WhatsApp Click' });
     window.open(url, '_blank', 'noopener');
     close();
   });

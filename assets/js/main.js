@@ -375,11 +375,11 @@
     'العين':              'Al Ain',
     'مدينة خليفة':         'Khalifa City',
     'الخالدية':            'Khalidiya',
-    // Baniyas Spa: form sends "بنياس سبا"; older copy was "بني ياس - سبا"
-    'بنياس سبا':           'Baniyas Spa',
+    // Baniyas Spa: form sends "بني ياس سبا"; older copy was "بني ياس - سبا"
+    'بني ياس سبا':           'Baniyas Spa',
     'بني ياس - سبا':       'Baniyas Spa',
-    // Baniyas Barber: form sends "بنياس باربر"; older "بني ياس - حلاقة"
-    'بنياس باربر':         'Baniyas Barber',
+    // Baniyas Barber: form sends "بني ياس باربر"; older "بني ياس - حلاقة"
+    'بني ياس باربر':         'Baniyas Barber',
     'بني ياس - حلاقة':     'Baniyas Barber',
     // Rabdan: form sends "ربدان"; older "الربدان"
     'ربدان':               'Rabdan',
@@ -620,8 +620,8 @@
           'al-ain':         'العين',
           'khalifa-city':   'مدينة خليفة',
           'khalidiya':      'الخالدية',
-          'baniyas-spa':    'بنياس سبا',
-          'baniyas-barber': 'بنياس باربر',
+          'baniyas-spa':    'بني ياس سبا',
+          'baniyas-barber': 'بني ياس باربر',
           'rabdan':         'ربدان',
           'old-shahamah':   'الشهامة القديمة',
           'new-shahamah':   'الشهامة الجديدة',
@@ -927,6 +927,49 @@
     form.addEventListener('submit', async e => {
       e.preventDefault();
       const isArSubmit = document.documentElement.lang === 'ar' || document.body.classList.contains('lang-ar');
+
+      // ── Internal booking form DISABLED per marketing Work Order ──────────
+      //    Bookings moved to Salonist. This guard blocks the old backend
+      //    submission (no phantom booking is created). ALL original code below
+      //    is kept intact for the 2-week rollback — flip
+      //    KANAAN_CONFIG.booking.disabled back to false to restore it.
+      const _bkCfg = (window.KANAAN_CONFIG && window.KANAAN_CONFIG.booking) || {};
+      if (_bkCfg.disabled) {
+        e.stopImmediatePropagation();
+        const SALONIST = {
+          'al-ain': 'https://kanaanalain.salonist.io/booking-online',
+          'baniyas-barber': 'https://kanaanbaniyaseast.salonist.io/booking-online',
+          'baniyas-spa': 'https://kanaanbaniyasspa.salonist.io/booking-online',
+          'khalidiya': 'https://kanaankhalidiya.salonist.io/booking-online',
+          'khalifa-city': 'https://kanaankhalifacity.salonist.io/booking-online',
+          'muroor': 'https://kanaanmuroor.salonist.io/booking-online',
+          'new-shahamah': 'https://kanaannewshahamah.salonist.io/booking-online',
+          'old-shahamah': 'https://kanaanoldshahamah.salonist.io/booking-online',
+          'rabdan': 'https://kanaanrabdan.salonist.io/booking-online',
+          'vip-muroor': 'https://kanaanvipspa.salonist.io/booking-online',
+          // Aliases for calendar/form display names that don't match the slug
+          'muroor-barber': 'https://kanaanmuroor.salonist.io/booking-online',
+          'vip-spa-muroor': 'https://kanaanvipspa.salonist.io/booking-online',
+          'vip-muroor-spa': 'https://kanaanvipspa.salonist.io/booking-online'
+        };
+        const raw = (new URLSearchParams(location.search).get('branch') || '').toLowerCase().trim();
+        const key = raw.replace(/\s+/g, '-').replace(/[^a-z-]/g, '');
+        if (SALONIST[key]) { window.location.href = SALONIST[key]; return; }
+        // Unknown/absent branch — point them at the branches page to pick one.
+        const old = form.querySelector('[data-booking-error]');
+        if (old) old.remove();
+        const note = document.createElement('div');
+        note.setAttribute('data-booking-error', '');
+        note.style.cssText = 'color:#0E0F11;background:rgba(200,160,74,0.14);border:1px solid #C8A04A;padding:14px 18px;margin:12px 0;border-radius:4px;font-size:15px;line-height:1.5;';
+        note.innerHTML = isArSubmit
+          ? 'انتقل الحجز الإلكتروني إلى نظامنا الجديد. يرجى اختيار فرعك من <a href="/ar/branches" style="color:#8A6D1E;text-decoration:underline;">صفحة الفروع</a> لإتمام الحجز.'
+          : 'Online booking has moved to our new system. Please choose your branch on the <a href="/branches" style="color:#8A6D1E;text-decoration:underline;">branches page</a> to book.';
+        form.insertBefore(note, form.firstChild);
+        note.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+      // ─────────────────────────────────────────────────────────────────────
+
       // Mandatory: name + phone
       const nameEl  = form.querySelector('input[name="name"]');
       const phoneEl = form.querySelector('input[name="phone"]');

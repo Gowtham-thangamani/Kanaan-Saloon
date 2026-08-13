@@ -28,6 +28,13 @@
   <FilesMatch "\.(?:css|svg|png|jpe?g|webp|avif|ico|woff2?)$">
     Header set Cache-Control "public, max-age=31536000, immutable"
   </FilesMatch>
+  # The service worker must never be cached, or browsers keep running an old
+  # copy and returning visitors get stale assets. Always revalidate sw.js.
+  <FilesMatch "^sw\.js$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+  </FilesMatch>
 </IfModule>
 
 # Compression
@@ -42,6 +49,17 @@
   Header set X-Frame-Options "SAMEORIGIN"
   Header set Referrer-Policy "strict-origin-when-cross-origin"
   Header set Permissions-Policy "geolocation=(self), camera=(), microphone=()"
+</IfModule>
+
+# Block internal/repo files from public access. The deploy zip is built from
+# the full git-tracked repo (DB migrations, setup docs, dev scripts), not just
+# the website — these rules stop any of it being served even if it lands in
+# public_html. Belt-and-suspenders alongside fixing what actually gets deployed.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^(supabase|docs|tools|\.claude|\.superpowers)(/|$) - [F,L]
+  RewriteRule ^(fetch-fonts|set-domain|generate-[a-z-]+)\.js$ - [F,L]
+  RewriteRule \.(md|sql|toml)$ - [F,L]
 </IfModule>
 
 # Basic auth on /admin/* — uncomment and create a .htpasswd in /admin/

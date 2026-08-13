@@ -158,11 +158,9 @@ const tpl = (b) => `<!DOCTYPE html>
     <div class="container">
       <div class="split">
         <div>
-          <span class="eyebrow">عن هذا البيت</span>
-          <h2 class="display-2">${b.type === 'VIP' ? 'بيت خاص بحجز مسبق.' : b.type === 'Spa' ? 'بيت سبا رئيسي.' : 'بيت كنعان في حيّك.'}</h2>
+          <h2 class="display-2">خصوصية كاملة… وراحة تستحقها</h2>
           <div class="divider"></div>
-          <p class="muted">${branchTypeBlurbAr[b.type] || branchTypeBlurbAr.Standard}</p>
-          <p class="muted">جميع بيوت كنعان تخضع لنفس البروتوكول — طاقم مدرّب، نظافة بمعايير السبا، ومنتجات احترافية.</p>
+          <p class="muted">استمتع بخدمات العناية الرجالية في أجواء هادئة وغرف خاصة تمنحك أعلى مستويات الراحة والخصوصية. من الحلاقة والعناية بالبشرة إلى المساج والحمام المغربي، كل التفاصيل مصممة لتمنحك تجربة راقية بعيداً عن الازدحام.</p>
         </div>
         <div class="split__media"><img src="${b.image}" alt="من داخل كنعان ${b.name_ar}" /></div>
       </div>

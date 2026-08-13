@@ -3,11 +3,38 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <!-- Bookings moved to Salonist. Redirect straight to the branch's Salonist
+       page on arrival so customers never fill this form and then re-enter
+       everything in Salonist. ROLLBACK: remove this whole <script> block. -->
+  <script>
+  (function () {
+    var SAL = {
+      'al-ain':'https://kanaanalain.salonist.io/booking-online',
+      'baniyas-barber':'https://kanaanbaniyaseast.salonist.io/booking-online',
+      'baniyas-spa':'https://kanaanbaniyasspa.salonist.io/booking-online',
+      'khalidiya':'https://kanaankhalidiya.salonist.io/booking-online',
+      'khalifa-city':'https://kanaankhalifacity.salonist.io/booking-online',
+      'muroor':'https://kanaanmuroor.salonist.io/booking-online',
+      'muroor-barber':'https://kanaanmuroor.salonist.io/booking-online',
+      'new-shahamah':'https://kanaannewshahamah.salonist.io/booking-online',
+      'old-shahamah':'https://kanaanoldshahamah.salonist.io/booking-online',
+      'rabdan':'https://kanaanrabdan.salonist.io/booking-online',
+      'vip-muroor':'https://kanaanvipspa.salonist.io/booking-online',
+      'vip-spa-muroor':'https://kanaanvipspa.salonist.io/booking-online',
+      'vip-muroor-spa':'https://kanaanvipspa.salonist.io/booking-online'
+    };
+    try {
+      var raw = (new URLSearchParams(location.search).get('branch') || '').toLowerCase().trim();
+      var key = raw.replace(/\s+/g, '-').replace(/[^a-z-]/g, '');
+      location.replace(SAL[key] || '/branches');
+    } catch (e) { location.replace('/branches'); }
+  })();
+  </script>
   <title>Book Online | Kanaan Gents Salon &amp; Spa</title>
   <meta name="description" content="Book your chair at any of the 10 Kanaan branches across Abu Dhabi. Two minutes online — confirmation by your branch." />
   <link rel="stylesheet" href="assets/css/fonts.css" />
   <link rel="stylesheet" href="assets/css/style.css?v=3" />
-  <link rel="stylesheet" href="assets/css/motion.css?v=19" />
+  <link rel="stylesheet" href="assets/css/motion.css?v=20" />
   <script id="motion-pre-paint">(function(){if(!window.matchMedia||!window.matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.classList.add("motion-ready");}})();</script>
   <link rel="preload" as="image" href="assets/img/photos/hero-exterior-night-1600.webp"
         imagesrcset="assets/img/photos/hero-exterior-night-600.webp 600w, assets/img/photos/hero-exterior-night-1000.webp 1000w, assets/img/photos/hero-exterior-night-1600.webp 1600w"
@@ -31,6 +58,10 @@
   <link rel="apple-touch-icon" href="assets/img/favicon.svg" />
   <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#0E0F11" />
+  <!-- Meta Pixel Code -->
+  <script src="/assets/js/meta-pixel.js"></script>
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1842915179738448&ev=PageView&noscript=1" /></noscript>
+  <!-- End Meta Pixel Code -->
 </head>
 <body>
   <a href="#main" class="skip-link">Skip to content</a>
@@ -73,7 +104,7 @@
       <a href="blog">Blog</a>
       <a href="contact">Contact</a>
       <a href="ar/" class="lang-switch">عربي</a>
-      <a href="book" class="btn btn--sm">Book Now</a>
+      <a href="/branches" class="btn btn--sm">Book Now</a>
     </nav>
   </header>
 
@@ -406,10 +437,10 @@
   <script src="assets/js/config.js"></script>
   <script src="assets/js/tracking.js"></script>
   <script src="assets/js/consent.js" defer></script>
-  <script src="assets/js/runtime.js?v=4"></script>
-  <script src="assets/js/main.js?v=30"></script>
+  <script src="assets/js/runtime.js?v=10"></script>
+  <script src="assets/js/main.js?v=31"></script>
   <script src="assets/js/nav-dropdown.js" defer></script>
-  <script src="assets/js/motion.js?v=18" defer></script>
+  <script src="assets/js/motion.js?v=19" defer></script>
   <script src="assets/js/quickbook.js" defer></script>
   <script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){});});}</script>
   <script src="assets/js/calendar.js" defer></script>

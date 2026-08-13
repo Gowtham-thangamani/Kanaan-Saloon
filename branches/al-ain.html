@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../assets/css/style.css?v=3" />
-  <link rel="stylesheet" href="../assets/css/motion.css?v=19" />
+  <link rel="stylesheet" href="../assets/css/motion.css?v=20" />
   <script id="motion-pre-paint">(function(){if(!window.matchMedia||!window.matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.classList.add("motion-ready");}})();</script>
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Kanaan Al Ain | Men's Salon &amp; Spa in Al Ain" />
@@ -92,6 +92,10 @@
     "speakable": {"@type":"SpeakableSpecification","cssSelector":[".page-hero__title",".lede",".faq__a"]}
   }
   </script>
+  <!-- Meta Pixel Code -->
+  <script src="/assets/js/meta-pixel.js"></script>
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1842915179738448&ev=PageView&noscript=1" /></noscript>
+  <!-- End Meta Pixel Code -->
 </head>
 <body>
 
@@ -119,7 +123,7 @@
       </nav>
       <div class="header-actions">
         <a href="../ar/branches/al-ain" class="lang-switch">عربي</a>
-        <a href="../book?branch=al-ain" class="btn btn--sm">Book Now</a>
+        <a href="https://kanaanalain.salonist.io/booking-online" target="_blank" rel="noopener" class="btn btn--sm">Book Now</a>
         <button class="menu-toggle" aria-label="Open menu"><span></span><span></span><span></span></button>
       </div>
     </div>
@@ -132,7 +136,7 @@
       <a href="../blog">Blog</a>
       <a href="../contact">Contact</a>
       <a href="../ar/" class="lang-switch">عربي</a>
-      <a href="../book?branch=al-ain" class="btn btn--sm">Book Now</a>
+      <a href="https://kanaanalain.salonist.io/booking-online" target="_blank" rel="noopener" class="btn btn--sm">Book Now</a>
     </nav>
   </header>
 
@@ -148,7 +152,7 @@
       <h1 class="page-hero__title" data-split="lines">Kanaan Al Ain.</h1>
       <p class="lede" data-reveal="up" style="color: var(--c-pearl); margin-top: var(--s-4);">Al Ain</p>
       <div class="hero__cta" style="margin-top: var(--s-5);">
-        <a href="../book?branch=al-ain" class="btn btn--lg" data-track="book_now_click">Book at Al Ain</a>
+        <a href="https://kanaanalain.salonist.io/booking-online" target="_blank" rel="noopener" class="btn btn--lg" data-track="book_now_click">Book at Al Ain</a>
         <a href="https://wa.me/971505556795" class="btn btn--ghost btn--lg" data-track="whatsapp_click">WhatsApp</a>
       </div>
     </div>
@@ -308,62 +312,10 @@
   </section>
 
   <!-- QUICK BOOK at this branch -->
-  <section class="section section--light section--tight">
-    <div class="container">
-      <div class="quick-book">
-        <span class="eyebrow">Quick Book at Al Ain</span>
-        <h2 class="quick-book__title">Book in two clicks.</h2>
-        <p class="quick-book__sub">Pre-filled for Al Ain — pick your service and date.</p>
-        <form class="quick-book__row" onsubmit="event.preventDefault(); var qs=new URLSearchParams({branch:'Al Ain'}); ['qb-service','qb-date','qb-time'].forEach(function(id){var el=document.getElementById(id); if(el && el.value) qs.set(id.replace('qb-',''), el.value);}); window.location.href='../book?'+qs.toString();">
-          <input type="hidden" value="Al Ain" />
-          <select id="qb-service" required aria-label="Service">
-            <option value="">Service…</option>
-            <option>Hair &amp; Beard</option><option>Facial &amp; Skin</option><option>Massage</option>
-            
-            <option>Manicure &amp; Pedicure</option><option>Hair Treatment</option>
-            <option>8-Service Package</option>
-          </select>
-          <input type="date" id="qb-date" aria-label="Preferred date" />
-          <input type="tel" id="qb-time" placeholder="Time (optional)" aria-label="Preferred time" />
-          <button type="submit" class="btn" data-track="quick_book_click">Continue →</button>
-        </form>
-      </div>
-    </div>
-  </section>
+  
 
   <!-- 14-day availability preview (visual; real availability via CRM v2) -->
-  <section class="section">
-    <div class="container">
-      <div class="section-head section-head--left" data-reveal="up">
-        <span class="eyebrow" data-parallax="text" data-speed="0.10">Next 14 Days</span>
-        <h2 class="section-head__title display-2" data-parallax="text" data-speed="0.06">Pick a day.</h2>
-        <p class="section-head__lede">Friday opens at 2:30 PM — all other days from 9:00 AM.</p>
-      </div>
-      <div class="calendar-strip" id="cal-al-ain"></div>
-      <script>
-        (function () {
-          var box = document.getElementById('cal-al-ain');
-          if (!box) return;
-          var days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-          var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-          var today = new Date();
-          var html = '';
-          for (var i = 0; i < 14; i++) {
-            var d = new Date(today); d.setDate(today.getDate() + i);
-            var iso = d.toISOString().split('T')[0];
-            var isFri = d.getDay() === 5;
-            html += '<a class="cal-day' + (isFri ? ' cal-day--late' : '') + '" href="../book?branch=Al Ain&date=' + iso + '" data-track="calendar_click">' +
-                    '<span class="cal-day__dow">' + days[d.getDay()] + '</span>' +
-                    '<span class="cal-day__num">' + d.getDate() + '</span>' +
-                    '<span class="cal-day__mo">' + months[d.getMonth()] + '</span>' +
-                    '<span class="cal-day__hint">' + (isFri ? 'opens 2:30 PM' : 'open') + '</span>' +
-                    '</a>';
-          }
-          box.innerHTML = html;
-        })();
-      </script>
-    </div>
-  </section>
+  
 
   <!-- Per-branch testimonials -->
   
@@ -434,7 +386,7 @@
     <h2 class="cta-band__title" data-parallax="text" data-speed="0.08">Book at Al Ain.</h2>
     <p class="cta-band__sub">Choose your service and time online — confirmation by Al Ain branch.</p>
     <div class="hero__cta" style="justify-content: center; display: flex; gap: var(--s-4); flex-wrap: wrap;">
-      <a href="../book?branch=al-ain" class="btn btn--lg" data-track="book_now_click">Book Now</a>
+      <a href="https://kanaanalain.salonist.io/booking-online" target="_blank" rel="noopener" class="btn btn--lg" data-track="book_now_click">Book Now</a>
       <a href="https://wa.me/971505556795" class="btn btn--ghost btn--lg" data-track="whatsapp_click">WhatsApp Branch</a>
     </div>
     <!-- Share -->
@@ -480,7 +432,7 @@
   </footer>
 
   <div class="mobile-cta">
-    <a href="../book?branch=al-ain" class="mobile-cta__book">Book at Al Ain</a>
+    <a href="https://kanaanalain.salonist.io/booking-online" target="_blank" rel="noopener" class="mobile-cta__book">Book at Al Ain</a>
     <a href="https://wa.me/971505556795" aria-label="WhatsApp"><svg class="icon" aria-hidden="true"><use href="../assets/img/icons.svg#i-whatsapp"/></svg></a>
     <a href="tel:+97137663555" aria-label="Call"><svg class="icon" aria-hidden="true"><use href="../assets/img/icons.svg#i-phone"/></svg></a>
   </div>
@@ -488,9 +440,9 @@
   <script src="../assets/js/config.js"></script>
   <script src="../assets/js/tracking.js"></script>
   <script src="../assets/js/consent.js" defer></script>
-  <script src="../assets/js/runtime.js?v=4"></script>
-  <script src="../assets/js/main.js?v=30"></script>
+  <script src="../assets/js/runtime.js?v=10"></script>
+  <script src="../assets/js/main.js?v=31"></script>
   <script src="../assets/js/nav-dropdown.js" defer></script>
-  <script src="../assets/js/motion.js?v=18" defer></script>
+  <script src="../assets/js/motion.js?v=19" defer></script>
 </body>
 </html>

@@ -3,11 +3,38 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <!-- Bookings moved to Salonist. Redirect straight to the branch's Salonist
+       page on arrival so customers never fill this form and then re-enter
+       everything in Salonist. ROLLBACK: remove this whole <script> block. -->
+  <script>
+  (function () {
+    var SAL = {
+      'al-ain':'https://kanaanalain.salonist.io/booking-online',
+      'baniyas-barber':'https://kanaanbaniyaseast.salonist.io/booking-online',
+      'baniyas-spa':'https://kanaanbaniyasspa.salonist.io/booking-online',
+      'khalidiya':'https://kanaankhalidiya.salonist.io/booking-online',
+      'khalifa-city':'https://kanaankhalifacity.salonist.io/booking-online',
+      'muroor':'https://kanaanmuroor.salonist.io/booking-online',
+      'muroor-barber':'https://kanaanmuroor.salonist.io/booking-online',
+      'new-shahamah':'https://kanaannewshahamah.salonist.io/booking-online',
+      'old-shahamah':'https://kanaanoldshahamah.salonist.io/booking-online',
+      'rabdan':'https://kanaanrabdan.salonist.io/booking-online',
+      'vip-muroor':'https://kanaanvipspa.salonist.io/booking-online',
+      'vip-spa-muroor':'https://kanaanvipspa.salonist.io/booking-online',
+      'vip-muroor-spa':'https://kanaanvipspa.salonist.io/booking-online'
+    };
+    try {
+      var raw = (new URLSearchParams(location.search).get('branch') || '').toLowerCase().trim();
+      var key = raw.replace(/\s+/g, '-').replace(/[^a-z-]/g, '');
+      location.replace(SAL[key] || '/ar/branches');
+    } catch (e) { location.replace('/ar/branches'); }
+  })();
+  </script>
   <title>احجز إلكترونياً | كنعان صالون وسبا للرجال</title>
   <meta name="description" content="احجز كرسيك في أيٍّ من فروع كنعان العشرة في أبوظبي. دقيقتان عبر الإنترنت — التأكيد من فرعك." />
   <link rel="stylesheet" href="../assets/css/fonts.css" />
   <link rel="stylesheet" href="../assets/css/style.css?v=3" />
-  <link rel="stylesheet" href="../assets/css/motion.css?v=19" />
+  <link rel="stylesheet" href="../assets/css/motion.css?v=20" />
   <script id="motion-pre-paint">(function(){if(!window.matchMedia||!window.matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.classList.add("motion-ready");}})();</script>
   <link rel="preload" as="image" href="../assets/img/photos/arch-corridor-marble-1600.webp"
         imagesrcset="../assets/img/photos/arch-corridor-marble-600.webp 600w, ../assets/img/photos/arch-corridor-marble-1000.webp 1000w, ../assets/img/photos/arch-corridor-marble-1600.webp 1600w"
@@ -31,6 +58,10 @@
   <link rel="apple-touch-icon" href="../assets/img/favicon.svg" />
   <link rel="manifest" href="../manifest.json" />
   <meta name="theme-color" content="#0E0F11" />
+  <!-- Meta Pixel Code -->
+  <script src="/assets/js/meta-pixel.js"></script>
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1842915179738448&ev=PageView&noscript=1" /></noscript>
+  <!-- End Meta Pixel Code -->
 </head>
 <body class="lang-ar">
   <a href="#main" class="skip-link">Skip to content</a>
@@ -39,7 +70,7 @@
   
   <div class="utility-bar">
     <div class="utility-bar__inner">
-      <span class="utility-bar__pitch">عشرة بيوت في أبوظبي · معيار واحد</span>
+      <span class="utility-bar__pitch">عشرة فروع في أبوظبي · معيار واحد</span>
       <div class="utility-bar__actions">
         <a href="tel:+971505556795" data-bind-attr-href="contact.tel_url" data-track="call_click">☏ <span data-bind="contact.centralPhone">+971 50 555 6795</span></a>
         <a href="https://wa.me/971505556795?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D9%83%D9%86%D8%B9%D8%A7%D9%86%D8%8C%20%D8%A3%D8%B1%D8%BA%D8%A8%20%D9%81%D9%8A%20%D8%A7%D9%84%D8%AD%D8%AC%D8%B2.%20%D8%A7%D9%84%D8%B1%D8%AC%D8%A7%D8%A1%20%D8%A5%D8%B9%D9%84%D8%A7%D9%85%D9%8A%20%D8%A8%D8%A3%D9%82%D8%B1%D8%A8%20%D9%81%D8%B1%D8%B9%20%D9%88%D8%A3%D9%88%D9%82%D8%A7%D8%AA%20%D9%85%D8%AA%D8%A7%D8%AD%D8%A9." data-bind-attr-href="contact.wa_url" data-track="whatsapp_click">✉ واتساب</a>
@@ -51,9 +82,9 @@
       <a href="./" class="logo" aria-label="كنعان — صالون وسبا للرجال"><img src="../assets/img/logo.svg" alt="كنعان صالون وسبا للرجال" class="logo-img" width="567" height="567" /></a>
       <nav class="main-nav" aria-label="Primary">
         <a href="./">الرئيسية</a>
-        <a href="about">عن كنعان</a>
+        <a href="about">عن <span translate="no">كنعان</span></a>
         <a href="offers">العروض</a>
-        <a href="branches">البيوت والخدمات</a>
+        <a href="branches">الفروع والخدمات</a>
         <a href="gallery">المعرض</a>
         <a href="blog">المقالات</a>
         <a href="contact">تواصل</a>
@@ -66,14 +97,14 @@
     </div>
     <nav class="mobile-nav" aria-label="Mobile">
       <a href="./">الرئيسية</a>
-      <a href="about">عن كنعان</a>
+      <a href="about">عن <span translate="no">كنعان</span></a>
       <a href="offers">العروض</a>
-      <a href="branches">البيوت والخدمات</a>
+      <a href="branches">الفروع والخدمات</a>
       <a href="gallery">المعرض</a>
       <a href="blog">المقالات</a>
       <a href="contact">تواصل</a>
       <a href="../" class="lang-switch">EN</a>
-      <a href="book" class="btn btn--sm">احجز الآن</a>
+      <a href="/ar/branches" class="btn btn--sm">احجز الآن</a>
     </nav>
   </header>
 
@@ -129,15 +160,15 @@
           <!-- STEP 2: BRANCH grouped by city -->
           <div data-step hidden>
             <h2 class="display-2" style="font-size: clamp(28px, 4vw, 40px); margin-bottom: var(--s-3);">اختر الفرع.</h2>
-            <p class="muted mb-7">حدّد فرع كنعان الأقرب لك. نقترح الأقرب إذا سمحت بالموقع.</p>
+            <p class="muted mb-7">حدّد فرع <span translate="no">كنعان</span> الأقرب لك. نقترح الأقرب إذا سمحت بالموقع.</p>
 
-            <h3 class="eyebrow" style="margin-top: var(--s-3);" data-branch-section="abu-dhabi">أبوظبي · <span data-branch-count="abu-dhabi">٩</span> بيوت</h3>
+            <h3 class="eyebrow" style="margin-top: var(--s-3);" data-branch-section="abu-dhabi">أبوظبي · <span data-branch-count="abu-dhabi">٩</span> فروع</h3>
             <p class="muted" id="offerBranchNotice" style="display:none; margin: var(--s-2) 0 var(--s-3); font-size: 13px;"></p>
             <div class="choice-grid" style="margin-top: var(--s-3);">
               <label class="choice" data-branch-id="khalifa-city"><input type="radio" name="branch" value="مدينة خليفة" hidden data-required /><div class="choice__title">مدينة خليفة</div><div class="choice__meta">حتى ٢٣:٠٠</div></label>
               <label class="choice" data-branch-id="khalidiya"><input type="radio" name="branch" value="الخالدية" hidden data-required /><div class="choice__title">الخالدية</div><div class="choice__meta">حتى ٢٣:٠٠</div></label>
-              <label class="choice" data-branch-id="baniyas-spa"><input type="radio" name="branch" value="بنياس سبا" hidden data-required /><div class="choice__title">بنياس سبا</div><div class="choice__meta">فرع السبا</div></label>
-              <label class="choice" data-branch-id="baniyas-barber"><input type="radio" name="branch" value="بنياس باربر" hidden data-required /><div class="choice__title">بنياس باربر</div><div class="choice__meta">حلاقة كلاسيكية</div></label>
+              <label class="choice" data-branch-id="baniyas-spa"><input type="radio" name="branch" value="بني ياس سبا" hidden data-required /><div class="choice__title">بني ياس سبا</div><div class="choice__meta">فرع السبا</div></label>
+              <label class="choice" data-branch-id="baniyas-barber"><input type="radio" name="branch" value="بني ياس باربر" hidden data-required /><div class="choice__title">بني ياس باربر</div><div class="choice__meta">حلاقة كلاسيكية</div></label>
               <label class="choice" data-branch-id="rabdan"><input type="radio" name="branch" value="ربدان" hidden data-required /><div class="choice__title">ربدان</div><div class="choice__meta">حتى ٢٣:٠٠</div></label>
               <label class="choice" data-branch-id="old-shahamah"><input type="radio" name="branch" value="الشهامة القديمة" hidden data-required /><div class="choice__title">الشهامة القديمة</div><div class="choice__meta">حتى ٢٣:٠٠</div></label>
               <label class="choice" data-branch-id="new-shahamah"><input type="radio" name="branch" value="الشهامة الجديدة" hidden data-required /><div class="choice__title">الشهامة الجديدة</div><div class="choice__meta">حتى ٢٣:٠٠</div></label>
@@ -145,7 +176,7 @@
               <label class="choice" data-branch-id="vip-muroor"><input type="radio" name="branch" value="VIP المرور" hidden data-required /><div class="choice__title">VIP المرور</div><div class="choice__meta">جناح خاص · بحجز مسبق</div></label>
             </div>
 
-            <h3 class="eyebrow" style="margin-top: var(--s-7);" data-branch-section="al-ain">العين · بيت واحد</h3>
+            <h3 class="eyebrow" style="margin-top: var(--s-7);" data-branch-section="al-ain">العين · فرع واحد</h3>
             <div class="choice-grid" style="margin-top: var(--s-3);" data-branch-section="al-ain">
               <label class="choice" data-branch-id="al-ain"><input type="radio" name="branch" value="العين" hidden data-required /><div class="choice__title">العين</div><div class="choice__meta">حتى ٢٣:٠٠</div></label>
             </div>
@@ -235,7 +266,7 @@
 
             <label style="display: flex; gap: 10px; align-items: flex-start; margin: var(--s-5) 0; font-size: 13px; color: var(--muted);">
               <input type="checkbox" required style="margin-top: 4px;" />
-              <span>أوافق على التواصل معي من قِبل كنعان لتأكيد الحجز. اطّلع على <a href="../privacy-policy" class="text-gold">سياسة الخصوصية</a>.</span>
+              <span>أوافق على التواصل معي من قِبل <span translate="no">كنعان</span> لتأكيد الحجز. اطّلع على <a href="../privacy-policy" class="text-gold">سياسة الخصوصية</a>.</span>
             </label>
 
             <ul class="booking-reassure" style="display:flex;flex-wrap:wrap;gap:var(--s-3);list-style:none;padding:var(--s-4) 0;margin:0 0 var(--s-4);border-top:1px solid var(--hairline);border-bottom:1px solid var(--hairline);font-size:12px;color:var(--muted);letter-spacing:0.04em;">
@@ -332,7 +363,7 @@
       <div class="footer-newsletter">
         <div>
           <h5>النشرة</h5>
-          <p>عروض ومستجدّات كنعان مرّة كل شهر — لا أكثر.</p>
+          <p>عروض ومستجدّات <span translate="no">كنعان</span> مرّة كل شهر — لا أكثر.</p>
         </div>
         <form data-newsletter-form>
           <input type="email" name="email" required placeholder="بريدك الإلكتروني" aria-label="البريد الإلكتروني" />
@@ -340,7 +371,7 @@
         </form>
       </div>
       <div class="footer-bottom">
-        <span>© ٢٠٢٦ كنعان صالون وسبا للرجال.</span>
+        <span>© ٢٠٢٦ <span translate="no">كنعان</span> صالون وسبا للرجال.</span>
         <div class="footer-bottom__links"><a href="../gift-voucher">Gift Vouchers</a><a href="../corporate">Corporate</a><a href="../privacy-policy">الخصوصية</a><a href="../terms">الشروط</a><a href="../book">EN</a></div>
       </div>
     </div>
@@ -350,10 +381,10 @@
   <script src="../assets/js/config.js"></script>
   <script src="../assets/js/tracking.js"></script>
   <script src="../assets/js/consent.js" defer></script>
-  <script src="../assets/js/runtime.js?v=4"></script>
-  <script src="../assets/js/main.js?v=30"></script>
+  <script src="../assets/js/runtime.js?v=10"></script>
+  <script src="../assets/js/main.js?v=31"></script>
   <script src="assets/js/nav-dropdown.js" defer></script>
-  <script src="../assets/js/motion.js?v=18" defer></script>
+  <script src="../assets/js/motion.js?v=19" defer></script>
   <script src="../assets/js/quickbook.js" defer></script>
   <script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("../sw.js").catch(function(){});});}</script>
   <script src="../assets/js/calendar.js" defer></script>
@@ -403,7 +434,7 @@
         const notice = document.getElementById('offerBranchNotice');
         if (notice) {
           const offerName = offer.name_ar || offer.name_en || 'هذا العرض';
-          notice.textContent = 'تُعرض فقط البيوت التي تقدّم "' + offerName + '". اختر عرضًا آخر أو تصفّح /branches لخيارات أخرى.';
+          notice.textContent = 'تُعرض فقط الفروع التي تقدّم "' + offerName + '". اختر عرضًا آخر أو تصفّح /branches لخيارات أخرى.';
           notice.style.display = '';
         }
       })

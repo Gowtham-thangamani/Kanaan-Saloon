@@ -2,6 +2,13 @@
 -- Combined Kanaan admin migrations
 -- Safe to run multiple times (IF NOT EXISTS / ON CONFLICT).
 -- Paste this whole file into Supabase Dashboard → SQL Editor → Run.
+--
+-- If the blog-only editor role is in use (see supabase/EDITOR_ACCESS.md),
+-- re-run supabase/migrations/20260812000000_editor_role_exclusion.sql
+-- AFTER this bundle. This file recreates the content_sections and pages
+-- write policies with "to authenticated using (true)" and no editor
+-- exclusion, which would otherwise silently restore full access to a
+-- tagged editor account.
 -- ==========================================================
 
 

@@ -600,6 +600,8 @@ input:checked + .option-card,
 }
 .section--light .muted,
 .section--light p.muted,
+.section--light .lede,
+.section--light .section-head__lede,
 form[style*="background: #fff"] .muted {
   color: rgba(14, 15, 17, 0.65) !important;
 }
