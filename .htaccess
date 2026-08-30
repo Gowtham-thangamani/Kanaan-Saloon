@@ -101,6 +101,29 @@ ErrorDocument 404 /404.html
   RewriteRule ^ar/blog/moroccan-bath-guide(?:\.html)?/?$ /ar/services/moroccan-bath [R=301,L,NE]
 </IfModule>
 
+# === Nested-path 404 guard — MUST stay above the clean-URL block ===
+# On this host, /<name>/<anything> returns 500 (not 404) whenever <name>.html
+# exists but no <name>/ directory does: /menu/x, /about/x, /ar/blog/x. That is
+# what put /ar/blog/moroccan-bath-guide in the Search Console "Server error
+# (5xx)" report, and it affects far more URLs than the two reported.
+#
+# The clean-URL rules below cannot fix it. Every one of them is gated on
+# %{REQUEST_FILENAME}, and the server fails while it is still resolving that
+# filename — so those RewriteConds are never evaluated. (Proof: rules matching
+# on the URL alone, like the .html redirect and the legacy 301 above, DO fire
+# on these same paths, while every REQUEST_FILENAME-gated rule silently does
+# not.) This guard therefore matches on the URL pattern alone and answers a
+# clean 404 before the server ever tries to resolve a filename.
+#
+# The lists are the directories that actually exist on disk. Anything with two
+# or more path segments whose first segment is not a real directory cannot be a
+# real page. Keep them in sync if a new top-level directory is ever added.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^(?!(?:admin|ar|assets|blog|branches|content|lp|pricelists|services|\.well-known)/)[^/]+/.+ - [R=404,L]
+  RewriteRule ^ar/(?!(?:branches|lp|services)/)[^/]+/.+ - [R=404,L]
+</IfModule>
+
 # === Clean URLs (added by tools/clean-urls.js) ===
 <IfModule mod_rewrite.c>
   RewriteEngine On
@@ -150,15 +173,5 @@ ErrorDocument 404 /404.html
   RewriteCond %{REQUEST_FILENAME}.html !-f
   RewriteCond %{DOCUMENT_ROOT}/blog/_post.html -f
   RewriteRule ^(?:ar/)?blog/([a-z0-9][a-z0-9-]*)/?$ /blog/_post.html [L]
-
-  # 6. Anything left unresolved that still has a parent path segment gets an
-  # explicit 404. Without this, /<name>/<anything> where <name>.html exists but
-  # no <name>/ directory does (/menu/x, /about/x, /ar/blog/x) returned a 500
-  # instead of a 404 — that is what put /ar/blog/moroccan-bath-guide in the
-  # Search Console "Server error (5xx)" report. Real files, real directories
-  # and the blog catch-all above are all matched earlier and never reach here.
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule ^.+/.+$ - [R=404,L]
 </IfModule>
 
