@@ -196,7 +196,22 @@
       if (slug === '_post') return;
       var post = slug && blog.posts.find(function (p) { return p.slug === slug || p.id === slug; });
       if (!post) {
-        if (slug) location.replace('/blog');
+        if (slug) {
+          // Unknown slug. The blog catch-all in .htaccess has already answered
+          // 200 for this URL, so redirecting on its own reads to Google as a
+          // soft 404. Mark the rendered page noindex before navigating, so the
+          // URL carries an explicit exclusion whichever state the crawler
+          // snapshots. (A real 404 would need the valid slug list server-side,
+          // which would break publishing posts from the admin panel alone.)
+          var rb = document.querySelector('meta[name="robots"]');
+          if (!rb) {
+            rb = document.createElement('meta');
+            rb.setAttribute('name', 'robots');
+            document.head.appendChild(rb);
+          }
+          rb.setAttribute('content', 'noindex, nofollow');
+          location.replace(location.pathname.indexOf('/ar/') === 0 ? '/ar/blog' : '/blog');
+        }
         return;
       }
 

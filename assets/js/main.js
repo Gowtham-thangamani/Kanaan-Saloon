@@ -1548,7 +1548,12 @@
         /\/admin\//.test(location.pathname)) return;
     const isAr = document.documentElement.lang === 'ar' || document.body.classList.contains('lang-ar');
     const fab = document.createElement('a');
-    fab.href = isAr ? '../book' : 'book';
+    // Root-relative, not document-relative: a bare 'book' resolved against a
+    // nested page (/branches/muroor, /services/hair-beard, /lp/*) produced
+    // /branches/book, /services/book and /lp/book — all 404s in Search Console.
+    // '../book' had the mirror-image bug on /ar/ itself, sending Arabic
+    // visitors to the English /book.
+    fab.href = isAr ? '/ar/book' : '/book';
     fab.className = 'fab-book';
     fab.setAttribute('data-track', 'fab_book_click');
     fab.textContent = isAr ? 'احجز' : 'Book';

@@ -39,10 +39,17 @@
   <link rel="preload" as="image" href="assets/img/photos/hero-exterior-night-1600.webp"
         imagesrcset="assets/img/photos/hero-exterior-night-600.webp 600w, assets/img/photos/hero-exterior-night-1000.webp 1000w, assets/img/photos/hero-exterior-night-1600.webp 1600w"
         imagesizes="100vw" fetchpriority="high" />
-  <link rel="canonical" href="https://kanaanspa.ae/book" />
-  <link rel="alternate" hreflang="en" href="https://kanaanspa.ae/book" />
-  <link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/book" />
-  <link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/book" />
+  <!-- Bookings moved to Salonist: this URL only bounces visitors on to the
+       branch's Salonist page (or /branches when no ?branch= is given). It has no
+       content of its own, so it self-excludes from the index and points its
+       canonical at the page it actually sends people to. That also stops
+       /book?branch=... parameter URLs canonicalising to a URL that redirects.
+       Same pattern already used by services.html. ROLLBACK: restore the
+       self-referential canonical and drop the robots meta. -->
+  <link rel="canonical" href="https://kanaanspa.ae/branches" />
+  <meta name="robots" content="noindex, follow" />
+  <!-- hreflang alternates removed: they pointed at these now-noindex
+       booking shims. The EN/AR pair is declared on /branches instead. -->
 
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Book Online | Kanaan Gents Salon &amp; Spa" />

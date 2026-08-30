@@ -212,7 +212,20 @@
     if (!post) return;
     const siteOrigin = 'https://kanaanspa.ae';
     const slug = post.slug || post.id || '';
-    const url = post.canonical_url || (siteOrigin + '/blog/' + slug);
+    // Only honour canonical_url when it actually points at this site. Four
+    // live posts carry values typed into the admin panel that point somewhere
+    // else entirely ('https://yoursite.com/...' left from a template, and a
+    // 'kanaanspa.ae.com' typo). Emitting those as rel=canonical tells Google
+    // the real page lives on a domain we do not own, which deindexes the post.
+    // A same-origin or root-relative value is respected; anything else falls
+    // back to the self-referential URL. Fix the underlying rows in
+    // /admin/blog.html — this guard only stops bad data reaching Google.
+    const selfUrl = siteOrigin + '/blog/' + slug;
+    const declared = (post.canonical_url || '').trim();
+    let url = selfUrl;
+    if (declared.startsWith('/')) url = siteOrigin + declared;
+    else if (declared === siteOrigin || declared.startsWith(siteOrigin + '/')) url = declared;
+    else if (declared) console.warn('[KANAAN blog] ignoring off-site canonical_url', declared, 'for', slug);
     const title       = (post.meta_title || post.title || '').trim();
     const description = (post.meta_description || post.excerpt || post.lede || '').replace(/\s+/g, ' ').trim().slice(0, 320);
     const ogTitle     = (post.og_title || post.meta_title || post.title || '').trim();
@@ -536,7 +549,14 @@
       const isAr = (document.documentElement.lang || '').toLowerCase().startsWith('ar') ||
                    document.body.classList.contains('lang-ar');
       const langPrefix = isAr ? '/ar' : '';
-      const url = b.seo_canonical || (siteOrigin + langPrefix + '/branches/' + b.id);
+      // Same off-site guard as applyBlogPostSeo — seo_canonical is a free-text
+      // admin field, so a stray domain here would deindex the branch page.
+      const selfUrl = siteOrigin + langPrefix + '/branches/' + b.id;
+      const declared = (b.seo_canonical || '').trim();
+      let url = selfUrl;
+      if (declared.startsWith('/')) url = siteOrigin + declared;
+      else if (declared === siteOrigin || declared.startsWith(siteOrigin + '/')) url = declared;
+      else if (declared) console.warn('[KANAAN branch] ignoring off-site seo_canonical', declared, 'for', b.id);
       const branchNameStr = (b['name_' + lang] || b.name_en || '').trim();
       const branchAreaStr = (b['area_' + lang] || b.area_en || '').trim();
       const defaultTitle = 'Kanaan ' + branchNameStr + (branchAreaStr ? ' | ' + branchAreaStr : '');

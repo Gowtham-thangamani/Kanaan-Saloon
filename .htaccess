@@ -76,11 +76,29 @@ Options -Indexes
 # Pretty 404
 ErrorDocument 404 /404.html
 
-# Force HTTPS
+# Force HTTPS + the non-www host.
+# Non-www is the preferred host: every canonical tag, the sitemap and the
+# robots.txt Sitemap directive already use https://kanaanspa.ae. www resolved
+# 200 with a non-www canonical, which is why Search Console filed the www URLs
+# as "Alternate page with proper canonical tag". The www rule is listed first
+# and rewrites straight to https:// so http://www never needs two hops.
 <IfModule mod_rewrite.c>
   RewriteEngine On
+
+  RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+  RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301,NE]
+
   RewriteCond %{HTTPS} !=on
   RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+# === Legacy URL redirects ===
+# /ar/blog/moroccan-bath-guide was linked from /ar/blog but the post has never
+# existed (no Arabic blog content, and the slug is absent from blog_posts).
+# Sent to the Arabic Moroccan Bath service page, its closest live equivalent.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^ar/blog/moroccan-bath-guide(?:\.html)?/?$ /ar/services/moroccan-bath [R=301,L,NE]
 </IfModule>
 
 # === Clean URLs (added by tools/clean-urls.js) ===
@@ -132,5 +150,15 @@ ErrorDocument 404 /404.html
   RewriteCond %{REQUEST_FILENAME}.html !-f
   RewriteCond %{DOCUMENT_ROOT}/blog/_post.html -f
   RewriteRule ^(?:ar/)?blog/([a-z0-9][a-z0-9-]*)/?$ /blog/_post.html [L]
+
+  # 6. Anything left unresolved that still has a parent path segment gets an
+  # explicit 404. Without this, /<name>/<anything> where <name>.html exists but
+  # no <name>/ directory does (/menu/x, /about/x, /ar/blog/x) returned a 500
+  # instead of a 404 — that is what put /ar/blog/moroccan-bath-guide in the
+  # Search Console "Server error (5xx)" report. Real files, real directories
+  # and the blog catch-all above are all matched earlier and never reach here.
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^.+/.+$ - [R=404,L]
 </IfModule>
 

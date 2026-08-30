@@ -161,7 +161,14 @@
       if (supa.url && supa.anonKey) {
         var id = 'GV-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).slice(2, 6).toUpperCase();
         try {
-          var res = await fetch(supa.url + '/rest/v1/vouchers', {
+          // Path assembled from parts on purpose. Spelled out as one literal,
+          // the Supabase REST path for this table was scraped straight out of
+          // this page's source by Googlebot and crawled as a same-origin URL,
+          // which 404s and showed up in Search Console. The real request only
+          // ever goes to the Supabase host in supa.url, and only on form
+          // submit, so that 404 was pure discovery noise. Keep it split.
+          var endpoint = supa.url + '/rest/' + 'v1' + '/' + 'vouchers';
+          var res = await fetch(endpoint, {
             method: 'POST',
             headers: {
               'apikey': supa.anonKey,

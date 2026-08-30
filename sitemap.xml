@@ -3,562 +3,702 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://kanaanspa.ae/about</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/about" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/about" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/about" />
-  </url>
-  <url>
-    <loc>https://kanaanspa.ae/ar/about</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/about" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/about" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/about" />
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/about"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/about"/>
   </url>
   <url>
     <loc>https://kanaanspa.ae/accessibility</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/accessibility" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/accessibility" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/accessibility" />
-  </url>
-  <url>
-    <loc>https://kanaanspa.ae/ar/accessibility</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/accessibility" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/accessibility" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/accessibility" />
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/accessibility"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/accessibility"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/accessibility"/>
   </url>
   <url>
     <loc>https://kanaanspa.ae/before-after</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/before-after" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/before-after" />
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/before-after"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/before-after"/>
   </url>
   <url>
     <loc>https://kanaanspa.ae/blog</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/blog" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/blog" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/blog" />
-  </url>
-  <url>
-    <loc>https://kanaanspa.ae/ar/blog</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/blog" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/blog" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/blog" />
-  </url>
-  <url>
-    <loc>https://kanaanspa.ae/blog/uae-grooming-trends-2026</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/blog/uae-grooming-trends-2026" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/blog/uae-grooming-trends-2026" />
-  </url>
-  <url>
-    <loc>https://kanaanspa.ae/blog/the-hot-towel-shave</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/blog/the-hot-towel-shave" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/blog/the-hot-towel-shave" />
-  </url>
-  <url>
-    <loc>https://kanaanspa.ae/blog/skin-fade-fading</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/blog/skin-fade-fading" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/blog/skin-fade-fading" />
-  </url>
-  <url>
-    <loc>https://kanaanspa.ae/blog/ramadan-grooming-schedule</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/blog/ramadan-grooming-schedule" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/blog/ramadan-grooming-schedule" />
-  </url>
-  <url>
-    <loc>https://kanaanspa.ae/blog/hair-colour-for-men</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/blog/hair-colour-for-men" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/blog/hair-colour-for-men" />
-  </url>
-  <url>
-    <loc>https://kanaanspa.ae/blog/vip-muroor-explained</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/blog/vip-muroor-explained" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/blog/vip-muroor-explained" />
-  </url>
-  <url>
-    <loc>https://kanaanspa.ae/blog/barbering-since-2020</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/blog/barbering-since-2020" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/blog/barbering-since-2020" />
-  </url>
-  <url>
-    <loc>https://kanaanspa.ae/book</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/book" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/book" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/book" />
-  </url>
-  <url>
-    <loc>https://kanaanspa.ae/ar/book</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/book" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/book" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/book" />
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/blog"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/blog"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/blog"/>
   </url>
   <url>
     <loc>https://kanaanspa.ae/branches</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/branches" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/branches" />
-  </url>
-  <url>
-    <loc>https://kanaanspa.ae/ar/branches</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/branches" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/branches" />
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/branches"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/branches"/>
   </url>
   <url>
     <loc>https://kanaanspa.ae/branches/al-ain</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches/al-ain" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/branches/al-ain" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/branches/al-ain" />
-  </url>
-  <url>
-    <loc>https://kanaanspa.ae/ar/branches/al-ain</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches/al-ain" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/branches/al-ain" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/branches/al-ain" />
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches/al-ain"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/branches/al-ain"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/branches/al-ain"/>
   </url>
   <url>
     <loc>https://kanaanspa.ae/branches/baniyas-barber</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches/baniyas-barber" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/branches/baniyas-barber" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/branches/baniyas-barber" />
-  </url>
-  <url>
-    <loc>https://kanaanspa.ae/ar/branches/baniyas-barber</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches/baniyas-barber" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/branches/baniyas-barber" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/branches/baniyas-barber" />
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches/baniyas-barber"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/branches/baniyas-barber"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/branches/baniyas-barber"/>
   </url>
   <url>
     <loc>https://kanaanspa.ae/branches/baniyas-spa</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches/baniyas-spa" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/branches/baniyas-spa" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/branches/baniyas-spa" />
-  </url>
-  <url>
-    <loc>https://kanaanspa.ae/ar/branches/baniyas-spa</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches/baniyas-spa" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/branches/baniyas-spa" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/branches/baniyas-spa" />
+    <lastmod>2026-08-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches/baniyas-spa"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/branches/baniyas-spa"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/branches/baniyas-spa"/>
   </url>
   <url>
     <loc>https://kanaanspa.ae/branches/khalidiya</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches/khalidiya" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/branches/khalidiya" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/branches/khalidiya" />
-  </url>
-  <url>
-    <loc>https://kanaanspa.ae/ar/branches/khalidiya</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches/khalidiya" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/branches/khalidiya" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/branches/khalidiya" />
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches/khalidiya"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/branches/khalidiya"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/branches/khalidiya"/>
   </url>
   <url>
     <loc>https://kanaanspa.ae/branches/khalifa-city</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches/khalifa-city" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/branches/khalifa-city" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/branches/khalifa-city" />
-  </url>
-  <url>
-    <loc>https://kanaanspa.ae/ar/branches/khalifa-city</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches/khalifa-city" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/branches/khalifa-city" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/branches/khalifa-city" />
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches/khalifa-city"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/branches/khalifa-city"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/branches/khalifa-city"/>
   </url>
   <url>
     <loc>https://kanaanspa.ae/branches/muroor</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches/muroor" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/branches/muroor" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/branches/muroor" />
-  </url>
-  <url>
-    <loc>https://kanaanspa.ae/ar/branches/muroor</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches/muroor" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/branches/muroor" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/branches/muroor" />
+    <lastmod>2026-08-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches/muroor"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/branches/muroor"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/branches/muroor"/>
   </url>
   <url>
     <loc>https://kanaanspa.ae/branches/new-shahamah</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches/new-shahamah" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/branches/new-shahamah" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/branches/new-shahamah" />
-  </url>
-  <url>
-    <loc>https://kanaanspa.ae/ar/branches/new-shahamah</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches/new-shahamah" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/branches/new-shahamah" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/branches/new-shahamah" />
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches/new-shahamah"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/branches/new-shahamah"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/branches/new-shahamah"/>
   </url>
   <url>
     <loc>https://kanaanspa.ae/branches/old-shahamah</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches/old-shahamah" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/branches/old-shahamah" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/branches/old-shahamah" />
-  </url>
-  <url>
-    <loc>https://kanaanspa.ae/ar/branches/old-shahamah</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches/old-shahamah" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/branches/old-shahamah" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/branches/old-shahamah" />
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches/old-shahamah"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/branches/old-shahamah"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/branches/old-shahamah"/>
   </url>
   <url>
     <loc>https://kanaanspa.ae/branches/rabdan</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches/rabdan" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/branches/rabdan" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/branches/rabdan" />
-  </url>
-  <url>
-    <loc>https://kanaanspa.ae/ar/branches/rabdan</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches/rabdan" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/branches/rabdan" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/branches/rabdan" />
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches/rabdan"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/branches/rabdan"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/branches/rabdan"/>
   </url>
   <url>
     <loc>https://kanaanspa.ae/branches/vip-muroor</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches/vip-muroor" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/branches/vip-muroor" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/branches/vip-muroor" />
-  </url>
-  <url>
-    <loc>https://kanaanspa.ae/ar/branches/vip-muroor</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches/vip-muroor" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/branches/vip-muroor" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/branches/vip-muroor" />
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches/vip-muroor"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/branches/vip-muroor"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/branches/vip-muroor"/>
   </url>
   <url>
     <loc>https://kanaanspa.ae/careers</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/careers" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/careers" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/careers" />
-  </url>
-  <url>
-    <loc>https://kanaanspa.ae/ar/careers</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/careers" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/careers" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/careers" />
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/careers"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/careers"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/careers"/>
   </url>
   <url>
     <loc>https://kanaanspa.ae/contact</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/contact" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/contact" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/contact" />
-  </url>
-  <url>
-    <loc>https://kanaanspa.ae/ar/contact</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/contact" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/contact" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/contact" />
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/contact"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/contact"/>
   </url>
   <url>
     <loc>https://kanaanspa.ae/cookie-policy</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/cookie-policy" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/cookie-policy" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/cookie-policy" />
-  </url>
-  <url>
-    <loc>https://kanaanspa.ae/ar/cookie-policy</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/cookie-policy" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/cookie-policy" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/cookie-policy" />
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/cookie-policy"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/cookie-policy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/cookie-policy"/>
   </url>
   <url>
     <loc>https://kanaanspa.ae/corporate</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/corporate" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/corporate" />
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/corporate"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/corporate"/>
   </url>
   <url>
     <loc>https://kanaanspa.ae/gallery</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/gallery" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/gallery" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/gallery" />
-  </url>
-  <url>
-    <loc>https://kanaanspa.ae/ar/gallery</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/gallery" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/gallery" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/gallery" />
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/gallery"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/gallery"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/gallery"/>
   </url>
   <url>
     <loc>https://kanaanspa.ae/gift-voucher</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/gift-voucher" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/gift-voucher" />
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/gift-voucher"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/gift-voucher"/>
   </url>
   <url>
     <loc>https://kanaanspa.ae/</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/" />
-  </url>
-  <url>
-    <loc>https://kanaanspa.ae/ar/</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/" />
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/index"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/"/>
   </url>
   <url>
     <loc>https://kanaanspa.ae/lp/al-ain-near-me</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/lp/al-ain-near-me" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/lp/al-ain-near-me" />
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/lp/al-ain-near-me"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/lp/al-ain-near-me"/>
   </url>
   <url>
     <loc>https://kanaanspa.ae/lp/baniyas-barber-near-me</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/lp/baniyas-barber-near-me" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/lp/baniyas-barber-near-me" />
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/lp/baniyas-barber-near-me"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/lp/baniyas-barber-near-me"/>
   </url>
   <url>
     <loc>https://kanaanspa.ae/lp/baniyas-spa-near-me</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/lp/baniyas-spa-near-me" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/lp/baniyas-spa-near-me" />
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/lp/baniyas-spa-near-me"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/lp/baniyas-spa-near-me"/>
   </url>
   <url>
     <loc>https://kanaanspa.ae/lp/eid-offer</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/lp/eid-offer" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/lp/eid-offer" />
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/lp/eid-offer"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/lp/eid-offer"/>
   </url>
   <url>
     <loc>https://kanaanspa.ae/lp/khalidiya-near-me</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/lp/khalidiya-near-me" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/lp/khalidiya-near-me" />
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/lp/khalidiya-near-me"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/lp/khalidiya-near-me"/>
   </url>
   <url>
     <loc>https://kanaanspa.ae/lp/khalifa-city-near-me</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/lp/khalifa-city-near-me" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/lp/khalifa-city-near-me" />
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/lp/khalifa-city-near-me"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/lp/khalifa-city-near-me"/>
   </url>
   <url>
     <loc>https://kanaanspa.ae/lp/muroor-near-me</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/lp/muroor-near-me" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/lp/muroor-near-me" />
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/lp/muroor-near-me"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/lp/muroor-near-me"/>
   </url>
   <url>
     <loc>https://kanaanspa.ae/lp/new-shahamah-near-me</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/lp/new-shahamah-near-me" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/lp/new-shahamah-near-me" />
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/lp/new-shahamah-near-me"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/lp/new-shahamah-near-me"/>
   </url>
   <url>
     <loc>https://kanaanspa.ae/lp/old-shahamah-near-me</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/lp/old-shahamah-near-me" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/lp/old-shahamah-near-me" />
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/lp/old-shahamah-near-me"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/lp/old-shahamah-near-me"/>
   </url>
   <url>
     <loc>https://kanaanspa.ae/lp/rabdan-near-me</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/lp/rabdan-near-me" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/lp/rabdan-near-me" />
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/lp/rabdan-near-me"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/lp/rabdan-near-me"/>
   </url>
   <url>
     <loc>https://kanaanspa.ae/lp/vip-muroor-near-me</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/lp/vip-muroor-near-me" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/lp/vip-muroor-near-me" />
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/lp/vip-muroor-near-me"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/lp/vip-muroor-near-me"/>
   </url>
   <url>
     <loc>https://kanaanspa.ae/menu</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/menu" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/menu" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/menu" />
-  </url>
-  <url>
-    <loc>https://kanaanspa.ae/ar/menu</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/menu" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/menu" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/menu" />
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/menu"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/menu"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/menu"/>
   </url>
   <url>
     <loc>https://kanaanspa.ae/offers</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/offers" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/offers" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/offers" />
-  </url>
-  <url>
-    <loc>https://kanaanspa.ae/ar/offers</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/offers" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/offers" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/offers" />
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/offers"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/offers"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/offers"/>
   </url>
   <url>
     <loc>https://kanaanspa.ae/privacy-policy</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/privacy-policy" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/privacy-policy" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/privacy-policy" />
-  </url>
-  <url>
-    <loc>https://kanaanspa.ae/ar/privacy-policy</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/privacy-policy" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/privacy-policy" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/privacy-policy" />
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/privacy-policy"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/privacy-policy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/privacy-policy"/>
   </url>
   <url>
     <loc>https://kanaanspa.ae/services/facial-skin-care</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/services/facial-skin-care" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/services/facial-skin-care" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/services/facial-skin-care" />
-  </url>
-  <url>
-    <loc>https://kanaanspa.ae/ar/services/facial-skin-care</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/services/facial-skin-care" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/services/facial-skin-care" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/services/facial-skin-care" />
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/services/facial-skin-care"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/services/facial-skin-care"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/services/facial-skin-care"/>
   </url>
   <url>
     <loc>https://kanaanspa.ae/services/grooming-packages</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/services/grooming-packages" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/services/grooming-packages" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/services/grooming-packages" />
-  </url>
-  <url>
-    <loc>https://kanaanspa.ae/ar/services/grooming-packages</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/services/grooming-packages" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/services/grooming-packages" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/services/grooming-packages" />
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/services/grooming-packages"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/services/grooming-packages"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/services/grooming-packages"/>
   </url>
   <url>
     <loc>https://kanaanspa.ae/services/hair-beard</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/services/hair-beard" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/services/hair-beard" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/services/hair-beard" />
-  </url>
-  <url>
-    <loc>https://kanaanspa.ae/ar/services/hair-beard</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/services/hair-beard" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/services/hair-beard" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/services/hair-beard" />
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/services/hair-beard"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/services/hair-beard"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/services/hair-beard"/>
   </url>
   <url>
     <loc>https://kanaanspa.ae/services/hair-treatment</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/services/hair-treatment" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/services/hair-treatment" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/services/hair-treatment" />
-  </url>
-  <url>
-    <loc>https://kanaanspa.ae/ar/services/hair-treatment</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/services/hair-treatment" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/services/hair-treatment" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/services/hair-treatment" />
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/services/hair-treatment"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/services/hair-treatment"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/services/hair-treatment"/>
   </url>
   <url>
     <loc>https://kanaanspa.ae/services/manicure-pedicure</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/services/manicure-pedicure" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/services/manicure-pedicure" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/services/manicure-pedicure" />
-  </url>
-  <url>
-    <loc>https://kanaanspa.ae/ar/services/manicure-pedicure</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/services/manicure-pedicure" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/services/manicure-pedicure" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/services/manicure-pedicure" />
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/services/manicure-pedicure"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/services/manicure-pedicure"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/services/manicure-pedicure"/>
   </url>
   <url>
     <loc>https://kanaanspa.ae/services/massage</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/services/massage" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/services/massage" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/services/massage" />
-  </url>
-  <url>
-    <loc>https://kanaanspa.ae/ar/services/massage</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/services/massage" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/services/massage" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/services/massage" />
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/services/massage"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/services/massage"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/services/massage"/>
   </url>
   <url>
     <loc>https://kanaanspa.ae/services/moroccan-bath</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/services/moroccan-bath" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/services/moroccan-bath" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/services/moroccan-bath" />
-  </url>
-  <url>
-    <loc>https://kanaanspa.ae/ar/services/moroccan-bath</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/services/moroccan-bath" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/services/moroccan-bath" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/services/moroccan-bath" />
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/services/moroccan-bath"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/services/moroccan-bath"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/services/moroccan-bath"/>
   </url>
   <url>
     <loc>https://kanaanspa.ae/terms</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/terms" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/terms" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/terms" />
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/terms"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/terms"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/terms"/>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/ar/about</loc>
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/ar/accessibility</loc>
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/ar/blog</loc>
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/ar/branches</loc>
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/ar/branches/al-ain</loc>
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/ar/branches/baniyas-barber</loc>
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/ar/branches/baniyas-spa</loc>
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/ar/branches/khalidiya</loc>
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/ar/branches/khalifa-city</loc>
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/ar/branches/muroor</loc>
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/ar/branches/new-shahamah</loc>
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/ar/branches/old-shahamah</loc>
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/ar/branches/rabdan</loc>
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/ar/branches/vip-muroor</loc>
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/ar/careers</loc>
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/ar/contact</loc>
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/ar/cookie-policy</loc>
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/ar/gallery</loc>
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/ar/</loc>
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/ar/menu</loc>
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/ar/offers</loc>
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/ar/privacy-policy</loc>
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/ar/services/facial-skin-care</loc>
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/ar/services/grooming-packages</loc>
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/ar/services/hair-beard</loc>
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/ar/services/hair-treatment</loc>
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/ar/services/manicure-pedicure</loc>
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/ar/services/massage</loc>
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/ar/services/moroccan-bath</loc>
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://kanaanspa.ae/ar/terms</loc>
-    <lastmod>2026-05-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/terms" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/terms" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/terms" />
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/blog/oily-skin-care-men-abu-dhabi-ar</loc>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/blog/haircut-face-shape-abu-dhabi-ar</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/blog/body-odour-summer-abu-dhabi-ar</loc>
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/blog/beard-care-summer-abu-dhabi-ar</loc>
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/blog/hair-care-gym-pool-abu-dhabi-ar</loc>
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/blog/massage-science-abu-dhabi-ar</loc>
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/blog/groom-grooming-routine-abu-dhabi-ar</loc>
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/blog/mens-manicure-pedicure-abu-dhabi-ar</loc>
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/blog/moroccan-bath-vs-spa-abu-dhabi</loc>
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/blog/massage-benefits-abu-dhabi-ar</loc>
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/blog/beard-grooming-abu-dhabi</loc>
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/blog/beard-grooming-abu-dhabi-ar</loc>
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/blog/mens-facials-abu-dhabi</loc>
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/blog/best-mens-spa-package-abu-dhabi-8-services-250-aed</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/blog/moroccan-bath-abu-dhabi-benefits</loc>
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/blog/best-mens-salon-abu-dhabi-2026</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/blog/uae-grooming-trends-2026</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/blog/the-hot-towel-shave</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/blog/skin-fade-fading</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/blog/ramadan-grooming-schedule</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/blog/hair-colour-for-men</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/blog/vip-muroor-explained</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/blog/barbering-since-2020</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
 </urlset>
