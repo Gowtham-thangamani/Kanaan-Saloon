@@ -143,6 +143,11 @@
     if (!tpl) return;
     const tplHTML = tpl.outerHTML.replace(/\s*data-bind-template(="[^"]*")?\s*/, ' ');
     tpl.remove();
+    // Drop any build-time pre-rendered cards before appending the live ones.
+    // generate-blog-posts.js writes real <a> cards into these lists so the
+    // article links exist in crawlable HTML; without this removal they would
+    // still be here and every item would appear twice.
+    rootEl.querySelectorAll('[data-prerendered]').forEach(el => el.remove());
     items.forEach(item => {
       const wrapper = document.createElement('div');
       wrapper.innerHTML = tplHTML;

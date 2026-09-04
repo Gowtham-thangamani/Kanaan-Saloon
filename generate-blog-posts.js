@@ -247,6 +247,55 @@ function render(template, post, warnings, allSlugs) {
   return h.replace(/^<!DOCTYPE html>/i, '<!DOCTYPE html>\n' + GEN_MARKER);
 }
 
+/* ---------------- blog index ---------------- */
+
+/* The /blog index built its entire card grid in JavaScript, so the crawlable
+   HTML contained zero links to any article — the 23 posts had no internal
+   links anywhere on the site and were reachable only through the sitemap.
+   This writes the same cards as real <a> elements at build time.
+
+   They carry data-prerendered; renderList() in runtime.js removes those before
+   appending its own, so the live list stays authoritative and nothing is ever
+   shown twice. The data-bind-template card is left untouched so runtime.js can
+   still clone it. */
+function renderIndex(posts) {
+  const file = path.join(root, 'blog.html');
+  let html = fs.readFileSync(file, 'utf8');
+
+  // Clear cards from a previous run so repeated builds stay identical. The
+  // card markup contains no nested <a>, so a non-greedy close match is exact.
+  html = html.replace(/\n[ \t]*<a data-prerendered[\s\S]*?<\/a>/g, '');
+
+  const ordered = posts.slice().sort((a, b) =>
+    String(b.publish_date || '').localeCompare(String(a.publish_date || '')));
+
+  const cards = ordered.map(p => {
+    const words = (stripTags(p.body_html).match(/[A-Za-z؀-ۿ][A-Za-z0-9؀-ۿ'-]*/g) || []).length;
+    const mins = p.read_minutes || (words ? Math.max(1, Math.round(words / 220)) : null);
+    const meta = (p.category || '') + (mins ? ' · ' + mins + ' min read' : '');
+    const img = p.hero_image || '/assets/img/og-default.svg';
+    return [
+      '        <a data-prerendered href="/blog/' + esc(p.slug) + '" class="branch-card">',
+      '          <div class="branch-card__media" data-hover-zoom><img src="' + esc(img) +
+        '" alt="' + esc(p.hero_alt || p.title || '') + '" loading="lazy" decoding="async" /></div>',
+      '          <div class="branch-card__body">',
+      '            <span class="branch-card__area">' + esc(meta) + '</span>',
+      '            <h3 class="branch-card__title" style="font-size: 24px;">' + esc(p.title || '') + '</h3>',
+      '            <p class="branch-card__meta">' + esc(p.excerpt || '') + '</p>',
+      '          </div>',
+      '        </a>'
+    ].join('\n');
+  }).join('\n');
+
+  // Insert immediately after the template card inside the posts list.
+  const anchor = /(<a data-bind-template[\s\S]*?<\/a>)/;
+  if (!anchor.test(html)) throw new Error('blog.html: data-bind-template card not found');
+  html = html.replace(anchor, '$1\n' + cards);
+
+  fs.writeFileSync(file, html);
+  return ordered.length;
+}
+
 /* ---------------- main ---------------- */
 
 (async () => {
@@ -287,7 +336,10 @@ function render(template, post, warnings, allSlugs) {
     }
   }
 
+  const indexed = renderIndex(posts);
+
   console.log(`Pre-rendered ${written.length} blog posts into /blog/.`);
+  console.log(`Wrote ${indexed} crawlable article links into blog.html.`);
   if (pruned) console.log(`Pruned ${pruned} stale file(s).`);
   if (warnings.length) {
     console.log(`\nWarnings (${warnings.length}):`);
