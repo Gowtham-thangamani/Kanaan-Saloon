@@ -51,6 +51,10 @@ const skipped = [];
 const pages = walk(root)
   .map(f => path.relative(root, f).replace(/\\/g, '/'))
   .filter(rel => !EXCLUDE.includes(rel))
+  // Blog posts are pre-rendered into /blog/ by generate-blog-posts.js, but they
+  // are added below from the same Supabase table that produced them — walking
+  // them here as well would list every post twice.
+  .filter(rel => !/^blog\//.test(rel))
   // Search-engine ownership-verification stubs are not pages.
   .filter(rel => !/^google[0-9a-f]+\.html$/i.test(rel)
                && !/^(BingSiteAuth|yandex_)[^/]*\.html$/i.test(rel))
