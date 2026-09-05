@@ -52,9 +52,16 @@ const stripTags = h => String(h || '')
 
 /* Replace the inner content of the element carrying `marker`.
    The template's marked elements never nest another element of the same tag,
-   so a non-greedy match to the next matching close tag is exact here. */
+   so a non-greedy match to the next matching close tag is exact here.
+
+   The trailing (?![-\w]) matters: several markers are prefixes of others, and
+   \b would not stop at a hyphen. With \b, "data-blog-tldr" also matched
+   "data-blog-tldr-wrap" and "data-blog-author" also matched
+   "data-blog-author-initials" — and because the longer-named element appears
+   first in the template, it won, wiping the TL;DR label and putting the full
+   author name inside the initials badge. */
 function fillMarker(html, marker, inner) {
-  const re = new RegExp('(<([a-z0-9]+)[^>]*\\b' + marker + '\\b[^>]*>)([\\s\\S]*?)(</\\2>)', 'i');
+  const re = new RegExp('(<([a-z0-9]+)[^>]*\\b' + marker + '(?![-\\w])[^>]*>)([\\s\\S]*?)(</\\2>)', 'i');
   if (!re.test(html)) throw new Error('marker not found in template: ' + marker);
   return html.replace(re, (_m, open, _tag, _old, close) => open + inner + close);
 }
