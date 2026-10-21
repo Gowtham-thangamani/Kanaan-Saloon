@@ -76,6 +76,84 @@
       "lng": 55.740155
     },
     {
+      "id": "al-ain-al-dhahir",
+      "name_en": "Al Ain (Al Dhahir)",
+      "name_ar": "العين (الظاهر)",
+      "area_en": "Al Dhahir, Al Ain",
+      "area_ar": "الظاهر، العين",
+      "address_en": "Al Dhahir, Al Ain, UAE",
+      "address_ar": "الظاهر، العين، الإمارات",
+      "phone": "+971505556795",
+      "whatsapp": "971505556795",
+      "type": "Standard",
+      "active": true,
+      "hours": {
+        "sun": "09:00-23:00",
+        "mon": "09:00-23:00",
+        "tue": "09:00-23:00",
+        "wed": "09:00-23:00",
+        "thu": "09:00-23:00",
+        "fri": "09:00-23:00",
+        "sat": "09:00-23:00"
+      },
+      "image": "/assets/img/branches/al-ain-al-dhahir/al-ain-al-dhahir-1-1600.webp",
+      "maps_query": "24.0844375,55.8291875",
+      "google_business": "https://maps.app.goo.gl/b8zNqWHYfonJDnBPA",
+      "geo": {
+        "lat": 24.0844375,
+        "lng": 55.8291875
+      },
+      "gallery": [
+        "/assets/img/branches/al-ain-al-dhahir/al-ain-al-dhahir-1.webp",
+        "/assets/img/branches/al-ain-al-dhahir/al-ain-al-dhahir-2.webp",
+        "/assets/img/branches/al-ain-al-dhahir/al-ain-al-dhahir-3.webp",
+        "/assets/img/branches/al-ain-al-dhahir/al-ain-al-dhahir-4.webp",
+        "/assets/img/branches/al-ain-al-dhahir/al-ain-al-dhahir-5.webp"
+      ],
+      "instagram": "",
+      "tiktok": "",
+      "faqs": [
+        {
+          "q": "Where exactly is Kanaan Al Ain (Al Dhahir)?",
+          "a": "In the Al Dhahir district of Al Ain. Tap the Google Maps link on this page for door-to-door directions — free parking is available nearby."
+        },
+        {
+          "q": "Do you accept walk-ins at Al Dhahir?",
+          "a": "Yes, walk-ins are welcome where availability allows. For guaranteed seating book online or via WhatsApp."
+        },
+        {
+          "q": "What hours is Al Dhahir open?",
+          "a": "Every day 9:00 AM–11:00 PM, including Friday."
+        },
+        {
+          "q": "What services does this branch offer?",
+          "a": "Custom cuts, children's cuts, hair colouring and full beard care — trims, conditioning and maintenance."
+        }
+      ],
+      "amenities": [
+        "Free parking",
+        "Walk-ins welcome",
+        "English & Arabic"
+      ],
+      "testimonials": [
+        {
+          "q": "Best haircut I've had in Abu Dhabi.",
+          "n": "Khalid A."
+        },
+        {
+          "q": "They take their time. Quality every visit.",
+          "n": "Ahmed R."
+        },
+        {
+          "q": "Discreet, immaculate, expert.",
+          "n": "Hassan M."
+        }
+      ],
+      "facebook": "",
+      "lat": 24.0844375,
+      "lng": 55.8291875
+    },
+    {
       "id": "khalifa-city",
       "name_en": "Khalifa City",
       "name_ar": "مدينة خليفة",

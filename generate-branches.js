@@ -200,7 +200,7 @@ const tpl = (b) => {
 
   <div class="utility-bar">
     <div class="utility-bar__inner">
-      <span class="utility-bar__pitch">Ten houses in Abu Dhabi · One standard</span>
+      <span class="utility-bar__pitch">Eleven branches in Abu Dhabi · One standard</span>
       <div class="utility-bar__actions">
         <a href="tel:${b.phone}" data-track="call_click">☏ ${b.phone}</a>
         <a href="https://wa.me/${b.whatsapp}" data-track="whatsapp_click">✉ WhatsApp ${b.name_en}</a>
@@ -286,7 +286,7 @@ const tpl = (b) => {
           <h2 class="display-2">${b.type === 'VIP' ? 'A private house, by appointment.' : b.type === 'Spa' ? 'A flagship spa house.' : b.type === 'Barber' ? 'A master barber room.' : 'Your neighbourhood Kanaan.'}</h2>
           <div class="divider"></div>
           <p class="lede">${typeBlurb[b.type] || typeBlurb.Standard}</p>
-          <p class="muted">All Kanaan houses are held to the same brief — master-trained staff, spa-grade hygiene, professional product lines, time taken without rush.</p>
+          <p class="muted">All Kanaan branches are held to the same brief — master-trained staff, spa-grade hygiene, professional product lines, time taken without rush.</p>
           <h3 style="font-size: 22px; margin-top: var(--s-6);">Working hours</h3>
           <div style="margin-top: var(--s-3);">${hoursList(b)}</div>
         </div>
@@ -505,7 +505,7 @@ const tpl = (b) => {
       <div class="footer-grid">
         <div class="footer-brand">
           <div class="logo">KANAAN<span>.</span></div>
-          <p style="margin-top: var(--s-4);">Ten houses across Abu Dhabi. One uncompromising standard.</p>
+          <p style="margin-top: var(--s-4);">Eleven branches across Abu Dhabi. One uncompromising standard.</p>
           <div class="footer-socials" aria-label="Social">
             <a href="#" data-bind-attr-href="social.instagram" aria-label="Instagram" target="_blank" rel="noopener"><svg class="icon"><use href="../assets/img/icons.svg#i-instagram"/></svg></a>
             <a href="#" data-bind-attr-href="social.tiktok" aria-label="TikTok" target="_blank" rel="noopener"><svg class="icon"><use href="../assets/img/icons.svg#i-tiktok"/></svg></a>

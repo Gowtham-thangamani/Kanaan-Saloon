@@ -3,7 +3,7 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://kanaanspa.ae/about</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/about"/>
@@ -12,7 +12,7 @@
   </url>
   <url>
     <loc>https://kanaanspa.ae/accessibility</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/accessibility"/>
@@ -21,7 +21,7 @@
   </url>
   <url>
     <loc>https://kanaanspa.ae/before-after</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/before-after"/>
@@ -29,7 +29,7 @@
   </url>
   <url>
     <loc>https://kanaanspa.ae/blog</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/blog"/>
@@ -38,7 +38,7 @@
   </url>
   <url>
     <loc>https://kanaanspa.ae/branches</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches"/>
@@ -46,8 +46,17 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/branches"/>
   </url>
   <url>
+    <loc>https://kanaanspa.ae/branches/al-ain-al-dhahir</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches/al-ain-al-dhahir"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://kanaanspa.ae/ar/branches/al-ain-al-dhahir"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/branches/al-ain-al-dhahir"/>
+  </url>
+  <url>
     <loc>https://kanaanspa.ae/branches/al-ain</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches/al-ain"/>
@@ -56,7 +65,7 @@
   </url>
   <url>
     <loc>https://kanaanspa.ae/branches/baniyas-barber</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches/baniyas-barber"/>
@@ -65,7 +74,7 @@
   </url>
   <url>
     <loc>https://kanaanspa.ae/branches/baniyas-spa</loc>
-    <lastmod>2026-08-17</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches/baniyas-spa"/>
@@ -74,7 +83,7 @@
   </url>
   <url>
     <loc>https://kanaanspa.ae/branches/khalidiya</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches/khalidiya"/>
@@ -83,7 +92,7 @@
   </url>
   <url>
     <loc>https://kanaanspa.ae/branches/khalifa-city</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches/khalifa-city"/>
@@ -92,7 +101,7 @@
   </url>
   <url>
     <loc>https://kanaanspa.ae/branches/muroor</loc>
-    <lastmod>2026-08-17</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches/muroor"/>
@@ -101,7 +110,7 @@
   </url>
   <url>
     <loc>https://kanaanspa.ae/branches/new-shahamah</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches/new-shahamah"/>
@@ -110,7 +119,7 @@
   </url>
   <url>
     <loc>https://kanaanspa.ae/branches/old-shahamah</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches/old-shahamah"/>
@@ -119,7 +128,7 @@
   </url>
   <url>
     <loc>https://kanaanspa.ae/branches/rabdan</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches/rabdan"/>
@@ -128,7 +137,7 @@
   </url>
   <url>
     <loc>https://kanaanspa.ae/branches/vip-muroor</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/branches/vip-muroor"/>
@@ -137,7 +146,7 @@
   </url>
   <url>
     <loc>https://kanaanspa.ae/careers</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/careers"/>
@@ -146,7 +155,7 @@
   </url>
   <url>
     <loc>https://kanaanspa.ae/contact</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/contact"/>
@@ -155,7 +164,7 @@
   </url>
   <url>
     <loc>https://kanaanspa.ae/cookie-policy</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/cookie-policy"/>
@@ -164,7 +173,7 @@
   </url>
   <url>
     <loc>https://kanaanspa.ae/corporate</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/corporate"/>
@@ -172,7 +181,7 @@
   </url>
   <url>
     <loc>https://kanaanspa.ae/gallery</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/gallery"/>
@@ -181,7 +190,7 @@
   </url>
   <url>
     <loc>https://kanaanspa.ae/gift-voucher</loc>
-    <lastmod>2026-08-30</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/gift-voucher"/>
@@ -189,7 +198,7 @@
   </url>
   <url>
     <loc>https://kanaanspa.ae/</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/"/>
@@ -197,8 +206,16 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/"/>
   </url>
   <url>
+    <loc>https://kanaanspa.ae/lp/al-ain-al-dhahir-near-me</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/lp/al-ain-al-dhahir-near-me"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kanaanspa.ae/lp/al-ain-al-dhahir-near-me"/>
+  </url>
+  <url>
     <loc>https://kanaanspa.ae/lp/al-ain-near-me</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/lp/al-ain-near-me"/>
@@ -206,7 +223,7 @@
   </url>
   <url>
     <loc>https://kanaanspa.ae/lp/baniyas-barber-near-me</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/lp/baniyas-barber-near-me"/>
@@ -214,7 +231,7 @@
   </url>
   <url>
     <loc>https://kanaanspa.ae/lp/baniyas-spa-near-me</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/lp/baniyas-spa-near-me"/>
@@ -222,7 +239,7 @@
   </url>
   <url>
     <loc>https://kanaanspa.ae/lp/eid-offer</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/lp/eid-offer"/>
@@ -230,7 +247,7 @@
   </url>
   <url>
     <loc>https://kanaanspa.ae/lp/khalidiya-near-me</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/lp/khalidiya-near-me"/>
@@ -238,7 +255,7 @@
   </url>
   <url>
     <loc>https://kanaanspa.ae/lp/khalifa-city-near-me</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/lp/khalifa-city-near-me"/>
@@ -246,7 +263,7 @@
   </url>
   <url>
     <loc>https://kanaanspa.ae/lp/muroor-near-me</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/lp/muroor-near-me"/>
@@ -254,7 +271,7 @@
   </url>
   <url>
     <loc>https://kanaanspa.ae/lp/new-shahamah-near-me</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/lp/new-shahamah-near-me"/>
@@ -262,7 +279,7 @@
   </url>
   <url>
     <loc>https://kanaanspa.ae/lp/old-shahamah-near-me</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/lp/old-shahamah-near-me"/>
@@ -270,7 +287,7 @@
   </url>
   <url>
     <loc>https://kanaanspa.ae/lp/rabdan-near-me</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/lp/rabdan-near-me"/>
@@ -278,7 +295,7 @@
   </url>
   <url>
     <loc>https://kanaanspa.ae/lp/vip-muroor-near-me</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/lp/vip-muroor-near-me"/>
@@ -286,7 +303,7 @@
   </url>
   <url>
     <loc>https://kanaanspa.ae/menu</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/menu"/>
@@ -295,7 +312,7 @@
   </url>
   <url>
     <loc>https://kanaanspa.ae/offers</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/offers"/>
@@ -304,7 +321,7 @@
   </url>
   <url>
     <loc>https://kanaanspa.ae/privacy-policy</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/privacy-policy"/>
@@ -313,7 +330,7 @@
   </url>
   <url>
     <loc>https://kanaanspa.ae/services/facial-skin-care</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/services/facial-skin-care"/>
@@ -322,7 +339,7 @@
   </url>
   <url>
     <loc>https://kanaanspa.ae/services/grooming-packages</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/services/grooming-packages"/>
@@ -331,7 +348,7 @@
   </url>
   <url>
     <loc>https://kanaanspa.ae/services/hair-beard</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/services/hair-beard"/>
@@ -340,7 +357,7 @@
   </url>
   <url>
     <loc>https://kanaanspa.ae/services/hair-treatment</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/services/hair-treatment"/>
@@ -349,7 +366,7 @@
   </url>
   <url>
     <loc>https://kanaanspa.ae/services/manicure-pedicure</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/services/manicure-pedicure"/>
@@ -358,7 +375,7 @@
   </url>
   <url>
     <loc>https://kanaanspa.ae/services/massage</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/services/massage"/>
@@ -367,7 +384,7 @@
   </url>
   <url>
     <loc>https://kanaanspa.ae/services/moroccan-bath</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/services/moroccan-bath"/>
@@ -376,7 +393,7 @@
   </url>
   <url>
     <loc>https://kanaanspa.ae/terms</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://kanaanspa.ae/terms"/>
@@ -385,183 +402,195 @@
   </url>
   <url>
     <loc>https://kanaanspa.ae/ar/about</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://kanaanspa.ae/ar/accessibility</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://kanaanspa.ae/ar/blog</loc>
-    <lastmod>2026-08-30</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://kanaanspa.ae/ar/branches</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/ar/branches/al-ain-al-dhahir</loc>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://kanaanspa.ae/ar/branches/al-ain</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://kanaanspa.ae/ar/branches/baniyas-barber</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://kanaanspa.ae/ar/branches/baniyas-spa</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://kanaanspa.ae/ar/branches/khalidiya</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://kanaanspa.ae/ar/branches/khalifa-city</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://kanaanspa.ae/ar/branches/muroor</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://kanaanspa.ae/ar/branches/new-shahamah</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://kanaanspa.ae/ar/branches/old-shahamah</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://kanaanspa.ae/ar/branches/rabdan</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://kanaanspa.ae/ar/branches/vip-muroor</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://kanaanspa.ae/ar/careers</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://kanaanspa.ae/ar/contact</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://kanaanspa.ae/ar/cookie-policy</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://kanaanspa.ae/ar/gallery</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://kanaanspa.ae/ar/</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://kanaanspa.ae/ar/menu</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://kanaanspa.ae/ar/offers</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://kanaanspa.ae/ar/privacy-policy</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://kanaanspa.ae/ar/services/facial-skin-care</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://kanaanspa.ae/ar/services/grooming-packages</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://kanaanspa.ae/ar/services/hair-beard</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://kanaanspa.ae/ar/services/hair-treatment</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://kanaanspa.ae/ar/services/manicure-pedicure</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://kanaanspa.ae/ar/services/massage</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://kanaanspa.ae/ar/services/moroccan-bath</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://kanaanspa.ae/ar/terms</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kanaanspa.ae/blog/choose-best-mens-salon-abu-dhabi-ar</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://kanaanspa.ae/blog/oily-skin-care-men-abu-dhabi-ar</loc>
