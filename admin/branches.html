@@ -39,6 +39,7 @@
       <button type="button" class="btn btn--ghost btn--sm" id="resetDefaults" title="Replace Supabase data with the content/branches.json defaults (use if the live site is showing stale or wrong values)">↺ Reset to JSON defaults</button>
       <button type="button" class="btn btn--ghost btn--sm" id="reload">Refresh from server</button>
       <button type="button" class="btn btn--ghost btn--sm" id="download">⬇ Export backup (JSON)</button>
+      <button type="button" class="btn btn--ghost btn--sm" id="addBranch">➕ Add branch</button>
       <button type="button" class="btn btn--sm" id="save">💾 Save &amp; publish</button>
     </div>
 
@@ -52,7 +53,7 @@
     <div id="list"></div>
 
     <p style="color: var(--muted); font-size: 12px; margin-top: 24px;">
-      Edits save to Supabase and appear on the live site immediately. The 10 branch detail HTML pages render their content live from the same data, so they update without re-generating. If the website still shows stale hours after saving, click <strong>Reset to JSON defaults</strong> to push the canonical values.
+      Edits save to Supabase and appear on the live site immediately. The branch detail HTML pages render their content live from the same data, so they update without re-generating. <strong>➕ Add branch</strong> creates a new branch as <strong>hidden</strong>: fill its details, Save &amp; publish, then ask IT to build and deploy its detail pages (English + Arabic + landing page, sitemap, footer links) — once the ⚠ 'no live page yet' tag disappears, press Show to put it on the site. If the website still shows stale hours after saving, click <strong>Reset to JSON defaults</strong> to push the canonical values.
     </p>
   </main>
 </div>
@@ -112,8 +113,10 @@ if (KANAAN_ADMIN.requireAuth()) (async function () {
           <span class="pill pill--gold">${b.id}</span>
           <span class="pill">${b.type}</span>
           ${b.active ? '<span class="pill pill--sage">active</span>' : '<span class="pill pill--rust">hidden</span>'}
+          <span class="pill pill--rust" data-pagecheck="${b.id}" style="display:none;" title="branches/${b.id}.html does not exist on the server — ask IT to build this branch's pages before showing it">⚠ no live page yet</span>
           <span class="spacer"></span>
           <button type="button" class="btn btn--ghost btn--sm" data-toggle="${i}">${b.active ? 'Hide' : 'Show'}</button>
+          <button type="button" class="btn btn--ghost btn--sm" data-remove="${i}" title="Remove this branch from the data">✕</button>
         </div>
         <div class="row">
           <div><label>Name (EN)</label><input class="input" value="${b.name_en||''}" data-i="${i}" data-k="name_en" /></div>
@@ -210,7 +213,43 @@ if (KANAAN_ADMIN.requireAuth()) (async function () {
     list.querySelectorAll('[data-toggle]').forEach(b => b.addEventListener('click', () => {
       const i = +b.dataset.toggle; data.branches[i].active = !data.branches[i].active; markDirty(); render();
     }));
+    list.querySelectorAll('[data-remove]').forEach(btn => btn.addEventListener('click', () => {
+      const i = +btn.dataset.remove; const b = data.branches[i];
+      if (!confirm('Remove "' + (b.name_en || b.id) + '" from the branches data? The live site stops showing it after the next Save & publish. Its HTML pages (if any) stay on the server.')) return;
+      data.branches.splice(i, 1); markDirty(); render();
+    }));
+    checkPages();
   }
+
+  /* Flag branches whose static detail page is missing on the server, so an
+     admin-added branch is not switched to active while its card would link
+     to a 404. The pages are generated and deployed by IT, not from here. */
+  async function checkPages() {
+    for (const b of data.branches) {
+      try {
+        const r = await fetch('../branches/' + b.id + '.html', { method: 'HEAD', cache: 'no-store' });
+        document.querySelectorAll('[data-pagecheck="' + b.id + '"]').forEach(el => { el.style.display = r.ok ? 'none' : ''; });
+      } catch (e) { /* offline — leave hidden */ }
+    }
+  }
+  document.getElementById('addBranch').addEventListener('click', () => {
+    const name = (prompt('New branch name (English), e.g. Al Ain (Al Dhahir):') || '').trim();
+    if (!name) return;
+    const id = name.toLowerCase().replace(/[()]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+    if (!id) { KANAAN_ADMIN.toast('Could not make a URL slug from that name'); return; }
+    if (data.branches.some(b => b.id === id)) { KANAAN_ADMIN.toast('A branch with slug "' + id + '" already exists'); return; }
+    data.branches.push({
+      id: id, name_en: name, name_ar: '', area_en: '', area_ar: '', address_en: '', address_ar: '',
+      phone: '', whatsapp: '971505556795', type: 'Standard', active: false,
+      hours: { sun: '09:00-23:00', mon: '09:00-23:00', tue: '09:00-23:00', wed: '09:00-23:00', thu: '09:00-23:00', fri: '14:30-23:00', sat: '09:00-23:00' },
+      image: '', maps_query: '', google_business: '', geo: null, gallery: [],
+      instagram: '', tiktok: '', faqs: [], amenities: [], testimonials: [], facebook: '', lat: null, lng: null
+    });
+    markDirty(); render();
+    KANAAN_ADMIN.toast('Added as HIDDEN (slug: ' + id + '). Fill the fields, Save & publish, then ask IT to build its pages before pressing Show.');
+    const cards = document.querySelectorAll('#list .card'); const last = cards[cards.length - 1]; if (last) last.scrollIntoView({ behavior: 'smooth' });
+  });
+
   document.getElementById('save').addEventListener('click', async () => {
     const btn = document.getElementById('save');
     btn.disabled = true; btn.textContent = '⏳ Saving…';
