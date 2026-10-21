@@ -21,10 +21,16 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftps
-          # Verify this matches where your FTP account actually lands —
-          # some Hostinger accounts land directly in public_html (use "./"),
-          # others need the explicit path.
-          server-dir: /public_html/
+          # kanaanspa.ae is served from the addon-domain root, NOT the account's
+          # /public_html/. Deploying to /public_html/ ran green for months while
+          # nothing reached the live site: every live file kept the same
+          # Last-Modified (the last manual zip extraction), and the sync-state
+          # file the action writes into its target dir 404s at the web root
+          # while /.htaccess correctly 403s — so that dir is not the docroot.
+          # If a run ever uploads but the site still does not change, re-check
+          # this path in hPanel (File Manager -> folder holding the live
+          # index.html) before assuming a caching problem.
+          server-dir: /domains/kanaanspa.ae/public_html/
           exclude: |
             .git*
             .git*/**
