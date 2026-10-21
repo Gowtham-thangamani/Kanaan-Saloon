@@ -52,6 +52,28 @@
 
     <div id="list"></div>
 
+    <!-- Add-branch modal -->
+    <div id="addModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.65); z-index:50; align-items:center; justify-content:center;">
+      <div class="card" style="width:min(560px, 92vw); max-height:88vh; overflow:auto; margin:0;">
+        <strong style="color:var(--gold); font-size:13px; letter-spacing:0.08em; text-transform:uppercase;">New branch</strong>
+        <p style="font-size:12px; color:var(--muted); margin:8px 0 14px;">Creates the branch as <strong>hidden</strong>. Fill the rest of its details (hours, images, SEO) on its card afterwards, then Save &amp; publish.</p>
+        <div class="row">
+          <div><label>Name (EN) *</label><input class="input" id="nbNameEn" placeholder="e.g. Mussafah" /></div>
+          <div><label>Name (AR)</label><input class="input" id="nbNameAr" dir="rtl" placeholder="مصفح" /></div>
+          <div><label>URL slug *</label><input class="input" id="nbSlug" placeholder="auto from name" spellcheck="false" /></div>
+          <div><label>Type</label><select class="sel" id="nbType"><option>Standard</option><option>Spa</option><option>Barber</option><option>VIP</option></select></div>
+          <div><label>Phone</label><input class="input" id="nbPhone" placeholder="+9712XXXXXXX" /></div>
+          <div><label>Location <span style="color:var(--muted);">(lat,lng or Maps link)</span></label><input class="input" id="nbMaps" placeholder="24.0844,55.8291 or https://maps.app.goo.gl/…" /></div>
+        </div>
+        <p id="nbError" style="display:none; color:#e07b5f; font-size:12px; margin:10px 0 0;"></p>
+        <div class="bar" style="margin-top:16px;">
+          <span class="spacer"></span>
+          <button type="button" class="btn btn--ghost btn--sm" id="nbCancel">Cancel</button>
+          <button type="button" class="btn btn--sm" id="nbCreate">➕ Create hidden branch</button>
+        </div>
+      </div>
+    </div>
+
     <p style="color: var(--muted); font-size: 12px; margin-top: 24px;">
       Edits save to Supabase and appear on the live site immediately. The branch detail HTML pages render their content live from the same data, so they update without re-generating. <strong>➕ Add branch</strong> creates a new branch as <strong>hidden</strong>: fill its details, Save &amp; publish, then ask IT to build and deploy its detail pages (English + Arabic + landing page, sitemap, footer links) — once the ⚠ 'no live page yet' tag disappears, press Show to put it on the site. If the website still shows stale hours after saving, click <strong>Reset to JSON defaults</strong> to push the canonical values.
     </p>
@@ -232,21 +254,58 @@ if (KANAAN_ADMIN.requireAuth()) (async function () {
       } catch (e) { /* offline — leave hidden */ }
     }
   }
-  document.getElementById('addBranch').addEventListener('click', () => {
-    const name = (prompt('New branch name (English), e.g. Al Ain (Al Dhahir):') || '').trim();
-    if (!name) return;
-    const id = name.toLowerCase().replace(/[()]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
-    if (!id) { KANAAN_ADMIN.toast('Could not make a URL slug from that name'); return; }
-    if (data.branches.some(b => b.id === id)) { KANAAN_ADMIN.toast('A branch with slug "' + id + '" already exists'); return; }
+  /* === Add-branch modal === */
+  const addModal = document.getElementById('addModal');
+  const nbErr = document.getElementById('nbError');
+  function nbShowError(msg) { nbErr.textContent = msg; nbErr.style.display = ''; }
+  function slugify(t) { return String(t).toLowerCase().replace(/[()]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''); }
+  /* Accept "24.08,55.82", a full Maps URL with @lat,lng / !3d..!4d.. / ?q=lat,lng,
+     or a short share link (no coords — stored as the Google Business link). */
+  function parseLatLng(t) {
+    const str = String(t || '').trim(); if (!str) return null;
+    let m = str.match(/^(-?\d{1,2}\.\d+)\s*,\s*(-?\d{1,3}\.\d+)$/);
+    if (!m) m = str.match(/@(-?\d{1,2}\.\d+),(-?\d{1,3}\.\d+)/);
+    if (!m) m = str.match(/!3d(-?\d{1,2}\.\d+)!4d(-?\d{1,3}\.\d+)/);
+    if (!m) m = str.match(/[?&]q=(-?\d{1,2}\.\d+)(?:%2C|,)(-?\d{1,3}\.\d+)/);
+    return m ? { lat: parseFloat(m[1]), lng: parseFloat(m[2]) } : null;
+  }
+  let nbSlugTouched = false;
+  document.getElementById('nbNameEn').addEventListener('input', e => { if (!nbSlugTouched) document.getElementById('nbSlug').value = slugify(e.target.value); });
+  document.getElementById('nbSlug').addEventListener('input', () => { nbSlugTouched = true; });
+  function openAddModal() {
+    nbSlugTouched = false;
+    ['nbNameEn', 'nbNameAr', 'nbSlug', 'nbPhone', 'nbMaps'].forEach(id => { document.getElementById(id).value = ''; });
+    nbErr.style.display = 'none';
+    addModal.style.display = 'flex';
+    document.getElementById('nbNameEn').focus();
+  }
+  function closeAddModal() { addModal.style.display = 'none'; }
+  document.getElementById('addBranch').addEventListener('click', openAddModal);
+  document.getElementById('nbCancel').addEventListener('click', closeAddModal);
+  addModal.addEventListener('click', e => { if (e.target === addModal) closeAddModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && addModal.style.display !== 'none') closeAddModal(); });
+  document.getElementById('nbCreate').addEventListener('click', () => {
+    const name = document.getElementById('nbNameEn').value.trim();
+    if (!name) return nbShowError('Branch name (EN) is required.');
+    const slug = slugify(document.getElementById('nbSlug').value.trim() || name);
+    if (!slug) return nbShowError('Could not make a URL slug — edit the slug field.');
+    if (data.branches.some(b => b.id === slug)) return nbShowError('A branch with slug "' + slug + '" already exists.');
+    const mapsRaw = document.getElementById('nbMaps').value.trim();
+    const ll = parseLatLng(mapsRaw);
+    const isUrl = /^https?:\/\//i.test(mapsRaw);
+    if (mapsRaw && !ll && !isUrl) return nbShowError('Location not understood — paste "lat,lng" coordinates or a Google Maps link.');
     data.branches.push({
-      id: id, name_en: name, name_ar: '', area_en: '', area_ar: '', address_en: '', address_ar: '',
-      phone: '', whatsapp: '971505556795', type: 'Standard', active: false,
+      id: slug, name_en: name, name_ar: document.getElementById('nbNameAr').value.trim(),
+      area_en: '', area_ar: '', address_en: '', address_ar: '',
+      phone: document.getElementById('nbPhone').value.trim(), whatsapp: '971505556795',
+      type: document.getElementById('nbType').value, active: false,
       hours: { sun: '09:00-23:00', mon: '09:00-23:00', tue: '09:00-23:00', wed: '09:00-23:00', thu: '09:00-23:00', fri: '14:30-23:00', sat: '09:00-23:00' },
-      image: '', maps_query: '', google_business: '', geo: null, gallery: [],
-      instagram: '', tiktok: '', faqs: [], amenities: [], testimonials: [], facebook: '', lat: null, lng: null
+      image: '', maps_query: ll ? (ll.lat + ',' + ll.lng) : '', google_business: isUrl ? mapsRaw : '',
+      geo: ll || null, gallery: [], instagram: '', tiktok: '', faqs: [], amenities: [], testimonials: [], facebook: '',
+      lat: ll ? ll.lat : null, lng: ll ? ll.lng : null
     });
-    markDirty(); render();
-    KANAAN_ADMIN.toast('Added as HIDDEN (slug: ' + id + '). Fill the fields, Save & publish, then ask IT to build its pages before pressing Show.');
+    closeAddModal(); markDirty(); render();
+    KANAAN_ADMIN.toast('Added as HIDDEN (slug: ' + slug + '). Fill the rest of its card, Save & publish, then ask IT to build its pages.');
     const cards = document.querySelectorAll('#list .card'); const last = cards[cards.length - 1]; if (last) last.scrollIntoView({ behavior: 'smooth' });
   });
 
