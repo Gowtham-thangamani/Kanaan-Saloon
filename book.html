@@ -27,8 +27,8 @@
     try {
       var raw = (new URLSearchParams(location.search).get('branch') || '').toLowerCase().trim();
       var key = raw.replace(/\s+/g, '-').replace(/[^a-z-]/g, '');
-      location.replace(SAL[key] || '/branches');
-    } catch (e) { location.replace('/branches'); }
+      if (SAL[key]) location.replace(SAL[key]);
+    } catch (e) { /* no branch chosen — stay and show the chooser */ }
   })();
   </script>
   <title>Book Online | Kanaan Gents Salon &amp; Spa</title>
@@ -112,7 +112,7 @@
       <a href="blog">Blog</a>
       <a href="contact">Contact</a>
       <a href="ar/" class="lang-switch">عربي</a>
-      <a href="/branches" class="btn btn--sm">Book Now</a>
+      <a href="#chooseBranch" class="btn btn--sm">Book Now</a>
     </nav>
   </header>
 
@@ -129,7 +129,38 @@
   </section>
   <div data-page-body>
 
-  <section class="section">
+  <!-- BRANCH CHOOSER — shown when /book is opened without ?branch=.
+       Each branch goes straight to its Salonist booking page. -->
+  <section class="section" id="chooseBranch">
+    <div class="container" style="max-width: 920px;">
+      <div class="stepper">
+        <div class="stepper__item is-active"><span class="stepper__num">1</span> Choose your branch</div>
+        <div class="stepper__item"><span class="stepper__num">2</span> Service, date &amp; time</div>
+      </div>
+      <h2 class="display-2" style="font-size: clamp(28px, 4vw, 40px); margin: var(--s-6) 0 var(--s-3);">Where will we see you?</h2>
+      <p class="muted mb-7">Pick your branch — you'll go straight to its booking page to choose service, date and time.</p>
+      <h3 class="eyebrow">Abu Dhabi</h3>
+      <div class="choice-grid" style="margin-top: var(--s-3);">
+        <a class="choice" href="https://kanaankhalifacity.salonist.io/booking-online" target="_blank" rel="noopener" data-track="book_now_click" style="text-decoration:none;"><div class="choice__title">Khalifa City</div><div class="choice__meta">Open until 23:00</div></a>
+        <a class="choice" href="https://kanaankhalidiya.salonist.io/booking-online" target="_blank" rel="noopener" data-track="book_now_click" style="text-decoration:none;"><div class="choice__title">Khalidiya</div><div class="choice__meta">Open until 23:00</div></a>
+        <a class="choice" href="https://kanaanbaniyasspa.salonist.io/booking-online" target="_blank" rel="noopener" data-track="book_now_click" style="text-decoration:none;"><div class="choice__title">Baniyas Spa</div><div class="choice__meta">Spa-led branch</div></a>
+        <a class="choice" href="https://kanaanbaniyaseast.salonist.io/booking-online" target="_blank" rel="noopener" data-track="book_now_click" style="text-decoration:none;"><div class="choice__title">Baniyas Barber</div><div class="choice__meta">Master barber</div></a>
+        <a class="choice" href="https://kanaanrabdan.salonist.io/booking-online" target="_blank" rel="noopener" data-track="book_now_click" style="text-decoration:none;"><div class="choice__title">Rabdan</div><div class="choice__meta">Open until 23:00</div></a>
+        <a class="choice" href="https://kanaanoldshahamah.salonist.io/booking-online" target="_blank" rel="noopener" data-track="book_now_click" style="text-decoration:none;"><div class="choice__title">Old Shahamah</div><div class="choice__meta">Open until 23:00</div></a>
+        <a class="choice" href="https://kanaannewshahamah.salonist.io/booking-online" target="_blank" rel="noopener" data-track="book_now_click" style="text-decoration:none;"><div class="choice__title">New Shahamah</div><div class="choice__meta">Open until 23:00</div></a>
+        <a class="choice" href="https://kanaanmuroor.salonist.io/booking-online" target="_blank" rel="noopener" data-track="book_now_click" style="text-decoration:none;"><div class="choice__title">Muroor Barber</div><div class="choice__meta">Master barber</div></a>
+        <a class="choice" href="https://kanaanvipspa.salonist.io/booking-online" target="_blank" rel="noopener" data-track="book_now_click" style="text-decoration:none;"><div class="choice__title">VIP Muroor</div><div class="choice__meta">Private suite · by appointment</div></a>
+      </div>
+      <h3 class="eyebrow" style="margin-top: var(--s-6);">Al Ain</h3>
+      <div class="choice-grid" style="margin-top: var(--s-3);">
+        <a class="choice" href="https://kanaanalain.salonist.io/booking-online" target="_blank" rel="noopener" data-track="book_now_click" style="text-decoration:none;"><div class="choice__title">Al Ain (Al Jimi)</div><div class="choice__meta">Open until 23:00</div></a>
+        <a class="choice" href="https://newalainbranch-kanaan.salonist.io/booking-online" target="_blank" rel="noopener" data-track="book_now_click" style="text-decoration:none;"><div class="choice__title">Al Ain (Al Dhahir)</div><div class="choice__meta">Open daily 9 AM – 11 PM</div></a>
+      </div>
+      <p class="muted" style="font-size: 13px; margin-top: var(--s-6);">Prefer to talk? <a href="https://wa.me/971505556795" data-track="whatsapp_click" style="color: var(--c-gold);">WhatsApp us</a> and we'll book you in.</p>
+    </div>
+  </section>
+
+  <section class="section" style="display:none;" data-legacy-booking-form>
     <div class="container" style="max-width: 920px;">
 
       <!-- STEPPER -->

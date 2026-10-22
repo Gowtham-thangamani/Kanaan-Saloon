@@ -27,8 +27,8 @@
     try {
       var raw = (new URLSearchParams(location.search).get('branch') || '').toLowerCase().trim();
       var key = raw.replace(/\s+/g, '-').replace(/[^a-z-]/g, '');
-      location.replace(SAL[key] || '/ar/branches');
-    } catch (e) { location.replace('/ar/branches'); }
+      if (SAL[key]) location.replace(SAL[key]);
+    } catch (e) { /* no branch chosen — stay and show the chooser */ }
   })();
   </script>
   <title>احجز إلكترونياً | كنعان صالون وسبا للرجال</title>
@@ -128,7 +128,37 @@
     </div>
   </section>
 
-  <section class="section">
+  <!-- BRANCH CHOOSER — shown when /ar/book is opened without ?branch=. -->
+  <section class="section" id="chooseBranch">
+    <div class="container" style="max-width: 920px;">
+      <div class="stepper">
+        <div class="stepper__item is-active"><span class="stepper__num">١</span> اختر فرعك</div>
+        <div class="stepper__item"><span class="stepper__num">٢</span> الخدمة والتاريخ والوقت</div>
+      </div>
+      <h2 class="display-2" style="font-size: clamp(28px, 4vw, 40px); margin: var(--s-6) 0 var(--s-3);">أين سنراك؟</h2>
+      <p class="muted mb-7">اختر فرعك — ستنتقل مباشرة إلى صفحة الحجز الخاصة به لاختيار الخدمة والتاريخ والوقت.</p>
+      <h3 class="eyebrow">أبوظبي</h3>
+      <div class="choice-grid" style="margin-top: var(--s-3);">
+        <a class="choice" href="https://kanaankhalifacity.salonist.io/booking-online" target="_blank" rel="noopener" data-track="book_now_click" style="text-decoration:none;"><div class="choice__title">مدينة خليفة</div><div class="choice__meta">حتى ٢٣:٠٠</div></a>
+        <a class="choice" href="https://kanaankhalidiya.salonist.io/booking-online" target="_blank" rel="noopener" data-track="book_now_click" style="text-decoration:none;"><div class="choice__title">الخالدية</div><div class="choice__meta">حتى ٢٣:٠٠</div></a>
+        <a class="choice" href="https://kanaanbaniyasspa.salonist.io/booking-online" target="_blank" rel="noopener" data-track="book_now_click" style="text-decoration:none;"><div class="choice__title">بني ياس سبا</div><div class="choice__meta">فرع السبا</div></a>
+        <a class="choice" href="https://kanaanbaniyaseast.salonist.io/booking-online" target="_blank" rel="noopener" data-track="book_now_click" style="text-decoration:none;"><div class="choice__title">بني ياس باربر</div><div class="choice__meta">حلاقة كلاسيكية</div></a>
+        <a class="choice" href="https://kanaanrabdan.salonist.io/booking-online" target="_blank" rel="noopener" data-track="book_now_click" style="text-decoration:none;"><div class="choice__title">ربدان</div><div class="choice__meta">حتى ٢٣:٠٠</div></a>
+        <a class="choice" href="https://kanaanoldshahamah.salonist.io/booking-online" target="_blank" rel="noopener" data-track="book_now_click" style="text-decoration:none;"><div class="choice__title">الشهامة القديمة</div><div class="choice__meta">حتى ٢٣:٠٠</div></a>
+        <a class="choice" href="https://kanaannewshahamah.salonist.io/booking-online" target="_blank" rel="noopener" data-track="book_now_click" style="text-decoration:none;"><div class="choice__title">الشهامة الجديدة</div><div class="choice__meta">حتى ٢٣:٠٠</div></a>
+        <a class="choice" href="https://kanaanmuroor.salonist.io/booking-online" target="_blank" rel="noopener" data-track="book_now_click" style="text-decoration:none;"><div class="choice__title">المرور باربر</div><div class="choice__meta">حلاقة كلاسيكية</div></a>
+        <a class="choice" href="https://kanaanvipspa.salonist.io/booking-online" target="_blank" rel="noopener" data-track="book_now_click" style="text-decoration:none;"><div class="choice__title">VIP المرور</div><div class="choice__meta">جناح خاص · بحجز مسبق</div></a>
+      </div>
+      <h3 class="eyebrow" style="margin-top: var(--s-6);">العين</h3>
+      <div class="choice-grid" style="margin-top: var(--s-3);">
+        <a class="choice" href="https://kanaanalain.salonist.io/booking-online" target="_blank" rel="noopener" data-track="book_now_click" style="text-decoration:none;"><div class="choice__title">العين (الجيمي)</div><div class="choice__meta">حتى ٢٣:٠٠</div></a>
+        <a class="choice" href="https://newalainbranch-kanaan.salonist.io/booking-online" target="_blank" rel="noopener" data-track="book_now_click" style="text-decoration:none;"><div class="choice__title">العين (الظاهر)</div><div class="choice__meta">يومياً ٩ ص – ١١ م</div></a>
+      </div>
+      <p class="muted" style="font-size: 13px; margin-top: var(--s-6);">تفضّل التواصل المباشر؟ <a href="https://wa.me/971505556795" style="color: var(--c-gold);">راسلنا على واتساب</a> ونحجز لك.</p>
+    </div>
+  </section>
+
+  <section class="section" style="display:none;" data-legacy-booking-form>
     <div class="container" style="max-width: 920px;">
 
       <div data-stepper>
