@@ -182,6 +182,8 @@
     if (p === '' || p === 'index') return 'index';
     return p;
   }
+  /* Values applied from the pages table; branch-derived SEO must not clobber them. */
+  const pageOverride = { title: null, desc: null };
   async function applyPageOverride() {
     const target = document.querySelector('[data-page-body]');
     if (!target) return;
@@ -198,8 +200,9 @@
       if (!rows || !rows[0]) return;
       const page = rows[0];
       if (page.body_html) target.innerHTML = page.body_html;
-      if (page.title) document.title = page.title;
+      if (page.title) { document.title = page.title; pageOverride.title = page.title; }
       if (page.meta_description) {
+        pageOverride.desc = page.meta_description;
         let m = document.querySelector('meta[name="description"]');
         if (!m) { m = document.createElement('meta'); m.name = 'description'; document.head.appendChild(m); }
         m.setAttribute('content', page.meta_description);
@@ -597,8 +600,9 @@
         el.textContent = JSON.stringify(payload, (_, v) => v == null ? undefined : v);
       }
 
-      if (title) document.title = title + (/\| Kanaan/i.test(title) ? '' : ' | Kanaan');
-      ensureMeta('name', 'description', description);
+      // Admin page override (public.pages) outranks branch-derived SEO.
+      if (title && !pageOverride.title) document.title = title + (/\| Kanaan/i.test(title) ? '' : ' | Kanaan');
+      if (!pageOverride.desc) ensureMeta('name', 'description', description);
       ensureMeta('name', 'robots', b.seo_noindex ? 'noindex,nofollow' : 'index,follow');
       ensureLink('canonical', url);
       // hreflang pair — link the English and Arabic mirrors for the same branch.
@@ -608,15 +612,15 @@
       ensureLink('alternate', siteOrigin + '/branches/' + b.id, { hreflang: 'x-default' });
 
       ensureMeta('property', 'og:type',        'business.business');
-      ensureMeta('property', 'og:title',       ogTitle);
-      ensureMeta('property', 'og:description', ogDesc);
+      ensureMeta('property', 'og:title',       pageOverride.title || ogTitle);
+      ensureMeta('property', 'og:description', pageOverride.desc || ogDesc);
       ensureMeta('property', 'og:url',         url);
       ensureMeta('property', 'og:image',       fullOg);
       ensureMeta('property', 'og:locale',      isAr ? 'ar_AE' : 'en_US');
       ensureMeta('property', 'og:site_name',   'Kanaan Gents Salon & Spa');
       ensureMeta('name', 'twitter:card',        'summary_large_image');
-      ensureMeta('name', 'twitter:title',       ogTitle);
-      ensureMeta('name', 'twitter:description', ogDesc);
+      ensureMeta('name', 'twitter:title',       pageOverride.title || ogTitle);
+      ensureMeta('name', 'twitter:description', pageOverride.desc || ogDesc);
       ensureMeta('name', 'twitter:image',       fullOg);
 
       // Breadcrumb JSON-LD per branch page.
