@@ -672,6 +672,15 @@
     // updates the stat tiles without an HTML edit.
     if (branches && Array.isArray(branches.branches)) {
       const liveBranchCount = String(branches.branches.filter(b => b.active !== false).length);
+      // Utility-bar pitch keeps its branch count in sync as well.
+      const nBranches = Number(liveBranchCount);
+      const enWords = { 9: 'Nine', 10: 'Ten', 11: 'Eleven', 12: 'Twelve', 13: 'Thirteen', 14: 'Fourteen', 15: 'Fifteen' };
+      const arChunk = { 9: 'تسعة فروع', 10: 'عشرة فروع', 11: 'أحد عشر فرعاً', 12: 'اثنا عشر فرعاً', 13: 'ثلاثة عشر فرعاً', 14: 'أربعة عشر فرعاً', 15: 'خمسة عشر فرعاً' };
+      document.querySelectorAll('.utility-bar__pitch').forEach(el => {
+        el.textContent = lang === 'ar'
+          ? ((arChunk[nBranches] || toArDigits(liveBranchCount) + ' فرعاً') + ' في أبوظبي · معيار واحد')
+          : ((enWords[nBranches] || liveBranchCount) + ' branches in Abu Dhabi · One standard');
+      });
       document.querySelectorAll('[data-branch-count="all"]').forEach(el => {
         if (el.hasAttribute('data-count-to')) {
           el.setAttribute('data-count-to', liveBranchCount);
