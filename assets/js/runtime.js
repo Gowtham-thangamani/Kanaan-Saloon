@@ -667,6 +667,23 @@
     // Stash on window for ad-hoc access
     window.KANAAN_DATA = { site, offers, branches, testimonials, blog };
 
+    // Live branch count — [data-branch-count="all"] elements show the number of
+    // active branches from the loaded data, so adding a branch in the admin
+    // updates the stat tiles without an HTML edit.
+    if (branches && Array.isArray(branches.branches)) {
+      const liveBranchCount = String(branches.branches.filter(b => b.active !== false).length);
+      document.querySelectorAll('[data-branch-count="all"]').forEach(el => {
+        if (el.hasAttribute('data-count-to')) {
+          el.setAttribute('data-count-to', liveBranchCount);
+          // If the scroll-triggered tween already ran with the old value, pin the final number.
+          const cur = (el.textContent || '').trim();
+          if (cur && cur !== '0' && cur !== '٠') el.textContent = liveBranchCount;
+        } else {
+          el.textContent = lang === 'ar' ? toArDigits(liveBranchCount) : liveBranchCount;
+        }
+      });
+    }
+
     // Site-wide bindings (footer, header, contact links etc.)
     if (site) applyBindings(document, site);
 
