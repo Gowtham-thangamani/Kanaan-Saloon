@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Page edits · Kanaan Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="admin.css" />
+  <style>
+    .pe-row { display: grid; grid-template-columns: 180px 1fr; gap: 12px; align-items: start; padding: 10px 0; border-bottom: 1px solid var(--line); }
+    .pe-row__label { font-size: 11px; color: var(--muted); letter-spacing: 0.05em; text-transform: uppercase; padding-top: 10px; word-break: break-word; }
+    .pe-row textarea { min-height: 44px; }
+    .pe-row.is-edited .pe-row__label::after { content: " · edited"; color: var(--gold); }
+    .pe-img { display: flex; gap: 12px; align-items: center; }
+    .pe-img img { height: 56px; width: 84px; object-fit: cover; border: 1px solid var(--line); border-radius: 4px; background: #222; }
+    @media (max-width: 700px) { .pe-row { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<div class="admin-shell">
+  <aside class="admin-side">
+    <div class="admin-side__brand"><img src="../assets/img/logo.svg" alt="Kanaan Gents Salon &amp; Spa" style="height:42px; width:auto; display:block; filter:brightness(0) invert(1);" /></div>
+    <nav class="admin-side__nav">
+      <a href="dashboard">Dashboard</a>
+      <a href="leads">Leads · CRM</a>
+      <a href="scan">Scan booking</a>
+      <a href="blocks">Blocked slots</a>
+      <a href="offers">Offers</a>
+      <a href="branches">Branches</a>
+      <a href="banners">Banners</a>
+      <a href="testimonials">Testimonials</a>
+      <a href="blog">Blog</a>
+      <a href="pages">Pages</a>
+      <a href="page-edits" class="active">Page edits</a>
+      <a href="integrations">Integrations</a>
+      <a href="settings">Settings</a>
+    </nav>
+    <div class="admin-side__user">Signed in as admin · <button type="button" onclick="KANAAN_ADMIN.logout()">Sign out</button></div>
+  </aside>
+
+  <main class="admin-main">
+    <h1 class="admin-h">Page edits</h1>
+    <p class="admin-sub">Change individual texts, headings and images on any page — English or Arabic — without touching the layout, code or SEO settings.</p>
+
+    <div class="card" style="background: rgba(200,160,74,0.06); border-color: var(--gold); margin-bottom: 16px;">
+      <p style="margin: 0; font-size: 13px; color: var(--text);">
+        Pick a page and load it — every text passage and image appears as its own field. Change what you need and <strong>Save &amp; publish</strong>; everything you leave alone stays exactly as it is. Clearing a field back to the original removes the edit. If the same short text appears several times on one page (e.g. a repeated button label), editing it changes every occurrence on that page. Blog articles are edited in the <a href="blog" style="color: var(--gold);">Blog panel</a> instead.
+      </p>
+    </div>
+
+    <div class="bar">
+      <select class="sel" id="pagePick" style="min-width: 280px;"><option value="">Loading page list…</option></select>
+      <button type="button" class="btn btn--sm" id="loadPage">Load page</button>
+      <a id="viewLive" class="btn btn--ghost btn--sm" target="_blank" rel="noopener" style="display:none;">↗ View live</a>
+      <span class="spacer"></span>
+      <span class="muted" id="saveStatus" style="margin-right: 12px; font-size: 12px;"></span>
+      <button type="button" class="btn btn--sm" id="save" style="display:none;">💾 Save &amp; publish</button>
+    </div>
+
+    <div id="editor"></div>
+  </main>
+</div>
+
+<script src="../assets/js/config.js?v=2"></script>
+<script src="admin.js"></script>
+<script>
+if (KANAAN_ADMIN.requireAuth()) (async function () {
+  const SKIP_SELECTOR = 'header, footer, nav, script, style, noscript, .utility-bar, .mobile-cta, .qb-widget, [data-bind-list], [data-bind], [data-bind-html]';
+  let currentPath = '';
+  let rows = [];        // { t:'text'|'img', find, value, el }
+  let dirty = false;
+  const status = () => document.getElementById('saveStatus');
+  function markDirty() { dirty = true; status().textContent = 'Unsaved changes'; }
+  function markClean(msg) { dirty = false; status().textContent = msg || 'All changes saved'; }
+
+  function inScope(node) {
+    for (let el = node.parentElement; el; el = el.parentElement) {
+      if (el.matches && el.matches(SKIP_SELECTOR)) return false;
+    }
+    return true;
+  }
+
+  // --- page list from the live sitemap ---
+  async function loadPageList() {
+    const pick = document.getElementById('pagePick');
+    try {
+      const xml = await fetch('../sitemap.xml', { cache: 'no-store' }).then(r => r.text());
+      const doc = new DOMParser().parseFromString(xml, 'application/xml');
+      const paths = [...doc.querySelectorAll('loc')]
+        .map(l => l.textContent.replace(/^https?:\/\/[^/]+\/?/, '').replace(/\/$/, ''))
+        .map(p => p === '' ? 'index' : p)
+        .filter(p => !/^blog\//.test(p) && p !== 'blog')
+        .sort((a, b) => (a.startsWith('ar/') - b.startsWith('ar/')) || a.localeCompare(b));
+      pick.innerHTML = '<option value="">— choose a page —</option>' +
+        paths.map(p => '<option value="' + p + '">' + (p.startsWith('ar/') ? '🇦🇪 ' : '') + p + '</option>').join('');
+    } catch (e) {
+      pick.innerHTML = '<option value="">Could not load sitemap — type a path below</option>';
+    }
+  }
+
+  // --- load a page and build the editor ---
+  async function loadPage(path) {
+    const editor = document.getElementById('editor');
+    editor.innerHTML = '<p class="muted">Loading ' + path + '…</p>';
+    const [html, saved] = await Promise.all([
+      fetch('../' + path + '.html', { cache: 'no-store' }).then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); }),
+      KANAAN_ADMIN.loadContentSection('pageedits:' + path)
+    ]);
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    const savedEdits = (saved && Array.isArray(saved.edits)) ? saved.edits : [];
+    const findSaved = (t, find) => savedEdits.find(e => e.t === t && e.find === find);
+
+    rows = [];
+    const seenText = new Set();
+    const walker = doc.createTreeWalker(doc.body, NodeFilter.SHOW_TEXT);
+    while (walker.nextNode()) {
+      const n = walker.currentNode;
+      const txt = (n.nodeValue || '').trim();
+      if (txt.length < 2 || !inScope(n) || seenText.has(txt)) continue;
+      seenText.add(txt);
+      const block = n.parentElement ? n.parentElement.closest('h1,h2,h3,h4,h5,p,li,blockquote,summary,figcaption,a,span,div') : null;
+      const tag = block ? block.tagName.toLowerCase() : 'text';
+      const ed = findSaved('text', txt);
+      rows.push({ t: 'text', find: txt, value: ed ? ed.replace : txt, label: tag });
+    }
+    const seenImg = new Set();
+    doc.body.querySelectorAll('img').forEach(img => {
+      const src = img.getAttribute('src') || '';
+      if (!src || seenImg.has(src) || !inScope(img)) return;
+      seenImg.add(src);
+      const ed = findSaved('img', src);
+      rows.push({ t: 'img', find: src, value: ed ? ed.replace : src, label: 'image' });
+    });
+    // Keep saved edits whose original no longer exists visible? They no longer apply — drop silently on next save.
+    currentPath = path;
+    render();
+    document.getElementById('save').style.display = '';
+    const live = document.getElementById('viewLive');
+    live.style.display = ''; live.href = '../' + path;
+    markClean(savedEdits.length ? savedEdits.length + ' saved edit(s) on this page' : 'No edits yet on this page');
+  }
+
+  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); }
+  function absUrl(src) { try { return new URL(src, location.origin + '/' + currentPath).href; } catch (e) { return src; } }
+
+  function render() {
+    const editor = document.getElementById('editor');
+    const texts = rows.filter(r => r.t === 'text');
+    const imgs = rows.filter(r => r.t === 'img');
+    editor.innerHTML =
+      '<div class="card"><strong style="color: var(--gold); font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase;">Texts &amp; headings (' + texts.length + ')</strong>' +
+      texts.map((r, i) => rowHtml(r, rows.indexOf(r))).join('') + '</div>' +
+      (imgs.length ? '<div class="card" style="margin-top: 16px;"><strong style="color: var(--gold); font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase;">Images (' + imgs.length + ')</strong>' +
+      imgs.map(r => imgRowHtml(r, rows.indexOf(r))).join('') + '</div>' : '');
+    editor.querySelectorAll('[data-row]').forEach(el => {
+      el.addEventListener('input', () => {
+        rows[+el.dataset.row].value = el.value;
+        el.closest('.pe-row').classList.toggle('is-edited', el.value.trim() !== rows[+el.dataset.row].find);
+        markDirty();
+      });
+    });
+    editor.querySelectorAll('[data-imgupload]').forEach(btn => btn.addEventListener('click', () => {
+      const i = +btn.dataset.imgupload;
+      const input = document.createElement('input');
+      input.type = 'file'; input.accept = 'image/*';
+      input.onchange = async () => {
+        const file = input.files && input.files[0];
+        if (!file) return;
+        const orig = btn.textContent;
+        btn.disabled = true; btn.textContent = '⏳';
+        const res = await KANAAN_ADMIN.uploadImage(file, 'pages');
+        btn.disabled = false; btn.textContent = orig;
+        if (!res.ok) { KANAAN_ADMIN.toast('Upload failed: ' + (res.error || 'unknown')); return; }
+        rows[i].value = res.url;
+        markDirty(); render(); markDirty();
+        KANAAN_ADMIN.toast('Image uploaded — remember 💾 Save & publish');
+      };
+      input.click();
+    }));
+  }
+  function rowHtml(r, i) {
+    const edited = r.value.trim() !== r.find;
+    return '<div class="pe-row' + (edited ? ' is-edited' : '') + '">' +
+      '<div class="pe-row__label">' + esc(r.label) + '</div>' +
+      '<textarea class="ta" dir="auto" data-row="' + i + '">' + esc(r.value) + '</textarea></div>';
+  }
+  function imgRowHtml(r, i) {
+    const edited = r.value.trim() !== r.find;
+    return '<div class="pe-row' + (edited ? ' is-edited' : '') + '">' +
+      '<div class="pe-row__label">image<br><span style="text-transform:none; letter-spacing:0;">' + esc(r.find.split('/').pop()) + '</span></div>' +
+      '<div class="pe-img"><img src="' + esc(absUrl(r.value || r.find)) + '" alt="" loading="lazy" onerror="this.style.opacity=.2" />' +
+      '<input class="input" style="flex:1;" data-row="' + i + '" value="' + esc(r.value) + '" />' +
+      '<button type="button" class="btn btn--ghost btn--sm" data-imgupload="' + i + '">⬆ Upload</button></div></div>';
+  }
+
+  document.getElementById('loadPage').addEventListener('click', () => {
+    const p = document.getElementById('pagePick').value;
+    if (!p) { KANAAN_ADMIN.toast('Choose a page first'); return; }
+    if (dirty && !confirm('Discard unsaved changes?')) return;
+    loadPage(p).catch(e => { document.getElementById('editor').innerHTML = '<p class="muted">Could not load that page: ' + esc(e.message) + '</p>'; });
+  });
+
+  document.getElementById('save').addEventListener('click', async () => {
+    if (!currentPath) return;
+    const edits = rows
+      .filter(r => r.value.trim() !== '' && r.value.trim() !== r.find)
+      .map(r => ({ t: r.t, find: r.find, replace: r.t === 'text' ? r.value.trim() : r.value.trim() }));
+    const btn = document.getElementById('save');
+    btn.disabled = true; btn.textContent = '⏳ Publishing…';
+    const res = await KANAAN_ADMIN.saveContentSection('pageedits:' + currentPath, { edits: edits });
+    btn.disabled = false; btn.textContent = '💾 Save & publish';
+    if (res.ok) {
+      markClean(edits.length + ' edit(s) live — hard-refresh the page (Ctrl+F5) to see them');
+      KANAAN_ADMIN.toast('Published — ' + edits.length + ' edit(s) now live on /' + currentPath);
+    } else {
+      KANAAN_ADMIN.toast('Save failed: ' + (res.error || 'unknown'));
+    }
+  });
+
+  loadPageList();
+})();
+</script>
+</body>
+</html>

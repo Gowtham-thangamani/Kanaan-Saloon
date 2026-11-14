@@ -182,14 +182,67 @@
     if (p === '' || p === 'index') return 'index';
     return p;
   }
+  /* Granular find→replace edits saved from admin → Page edits
+     (content_sections key "pageedits:<path>"). Text edits swap exactly-matching
+     text nodes; image edits swap exactly-matching img src values. Header/footer
+     chrome and runtime-rendered regions are out of scope so the panels that own
+     them stay authoritative. Layout and SEO tags are never touched. */
+  const EDIT_SKIP = 'header, footer, nav, script, style, noscript, .utility-bar, .mobile-cta, .qb-widget, [data-bind-list], [data-bind], [data-bind-html]';
+  function editInScope(node) {
+    let el = node.nodeType === 1 ? node : node.parentElement;
+    for (; el; el = el.parentElement) {
+      if (el.matches && el.matches(EDIT_SKIP)) return false;
+    }
+    return true;
+  }
+  function applyPageTextEdits(edits) {
+    const texts = edits.filter(e => e && e.t === 'text' && e.find && typeof e.replace === 'string');
+    const imgs  = edits.filter(e => e && e.t === 'img' && e.find && e.replace);
+    if (texts.length) {
+      const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+      const nodes = [];
+      while (walker.nextNode()) nodes.push(walker.currentNode);
+      nodes.forEach(n => {
+        const trimmed = (n.nodeValue || '').trim();
+        if (!trimmed || !editInScope(n)) return;
+        const hit = texts.find(e => e.find === trimmed);
+        if (hit) n.nodeValue = n.nodeValue.split(trimmed).join(hit.replace);
+      });
+      // Fallback for elements whose text nodes were re-structured before the
+      // edits arrived (e.g. data-split line animations).
+      texts.forEach(e => {
+        document.querySelectorAll('h1,h2,h3,h4,h5,p,li,blockquote,summary,figcaption').forEach(el => {
+          if (el.textContent.trim() === e.find && editInScope(el)) el.textContent = e.replace;
+        });
+      });
+    }
+    imgs.forEach(e => {
+      document.querySelectorAll('img').forEach(img => {
+        if (img.getAttribute('src') === e.find && editInScope(img)) {
+          img.setAttribute('src', e.replace);
+          img.removeAttribute('srcset');
+          img.removeAttribute('sizes');
+        }
+      });
+    });
+  }
+
   /* Values applied from the pages table; branch-derived SEO must not clobber them. */
   const pageOverride = { title: null, desc: null };
   async function applyPageOverride() {
-    const target = document.querySelector('[data-page-body]');
-    if (!target) return;
     const cfg = window.KANAAN_CONFIG && window.KANAAN_CONFIG.supabase;
     if (!cfg || !cfg.url || !cfg.anonKey) return;
     const path = currentPagePath();
+    // Granular admin text/image edits apply on every page, marker or not.
+    fetch(
+      cfg.url + '/rest/v1/content_sections?select=data&key=eq.' + encodeURIComponent('pageedits:' + path),
+      { headers: { apikey: cfg.anonKey, Authorization: 'Bearer ' + cfg.anonKey } }
+    ).then(r => r.ok ? r.json() : []).then(rows => {
+      const d = rows && rows[0] && rows[0].data;
+      if (d && Array.isArray(d.edits) && d.edits.length) applyPageTextEdits(d.edits);
+    }).catch(() => { /* static content stands */ });
+    const target = document.querySelector('[data-page-body]');
+    if (!target) return;
     try {
       const r = await fetch(
         cfg.url + '/rest/v1/pages?select=body_html,title,meta_description&path=eq.' + encodeURIComponent(path),
