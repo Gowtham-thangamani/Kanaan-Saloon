@@ -505,7 +505,7 @@
        Returns { ok, url, path, error }. The bucket is public, so the
        returned URL is directly usable as an <img src>. RLS only allows
        authenticated admins to write — see 20260519100000_blog_images_bucket.sql. */
-    async uploadBlogImage(file) {
+    async uploadImage(file, prefix) {
       const sb = supaCfg();
       if (!sb.url || !sb.anonKey) return { ok: false, error: 'Supabase not configured' };
       if (!this.isLoggedIn())     return { ok: false, error: 'Not signed in' };
@@ -526,7 +526,8 @@
       const time = now.toISOString().slice(11, 19).replace(/:/g, '');
       const baseName = file.name.replace(/\.[^.]+$/, '').toLowerCase()
         .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40) || 'image';
-      const path = `${date}/${time}-${baseName}.${ext}`;
+      const folder = prefix ? String(prefix).toLowerCase().replace(/[^a-z0-9/-]/g, '') + '/' : '';
+      const path = `${folder}${date}/${time}-${baseName}.${ext}`;
 
       try {
         const r = await fetch(sb.url + '/storage/v1/object/blog-images/' + path, {
@@ -549,6 +550,9 @@
         return { ok: false, error: e.message || String(e) };
       }
     },
+
+    /* Back-compat alias used by admin/blog.html. */
+    async uploadBlogImage(file) { return this.uploadImage(file, ''); },
 
     /* === Generic content sections (offers, testimonials, site, banners, etc.) ===
        One row per logical section, stored as JSONB in public.content_sections.

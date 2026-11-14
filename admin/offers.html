@@ -106,8 +106,12 @@ if (KANAAN_ADMIN.requireAuth()) (async function () {
             <input class="input" value="${o.badge_ar||''}" data-i="${i}" data-k="badge_ar" dir="rtl" />
           </div>
           <div>
-            <label>Image URL</label>
-            <input class="input" value="${o.image||''}" data-i="${i}" data-k="image" />
+            <label>Image</label>
+            <div style="display:flex; gap:8px;">
+              <input class="input" value="${o.image||''}" data-i="${i}" data-k="image" placeholder="Paste a URL or use Upload" style="flex:1;" />
+              <button type="button" class="btn btn--ghost btn--sm" data-upload="${i}">⬆ Upload</button>
+            </div>
+            ${o.image ? `<img src="${o.image}" alt="" style="margin-top:8px; height:64px; width:auto; max-width:160px; object-fit:cover; border:1px solid var(--line); border-radius:4px;" />` : ''}
           </div>
           <div>
             <label>Inclusions (English) — one per line</label>
@@ -158,6 +162,25 @@ if (KANAAN_ADMIN.requireAuth()) (async function () {
     }));
     list.querySelectorAll('[data-toggle]').forEach(b => b.addEventListener('click', () => {
       const i = +b.dataset.toggle; data.offers[i].active = !data.offers[i].active; markDirty(); render();
+    }));
+    list.querySelectorAll('[data-upload]').forEach(btn => btn.addEventListener('click', () => {
+      const i = +btn.dataset.upload;
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'image/*';
+      input.onchange = async () => {
+        const file = input.files && input.files[0];
+        if (!file) return;
+        const orig = btn.textContent;
+        btn.disabled = true; btn.textContent = '⏳ Uploading…';
+        const res = await KANAAN_ADMIN.uploadImage(file, 'offers');
+        btn.disabled = false; btn.textContent = orig;
+        if (!res.ok) { KANAAN_ADMIN.toast('Upload failed: ' + (res.error || 'unknown')); return; }
+        data.offers[i].image = res.url;
+        markDirty(); render();
+        KANAAN_ADMIN.toast('Image uploaded — remember 💾 Save & publish');
+      };
+      input.click();
     }));
   }
   document.getElementById('addOffer').addEventListener('click', () => {
