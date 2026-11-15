@@ -129,7 +129,7 @@ if (KANAAN_ADMIN.requireAuth()) (async function () {
       const src = img.getAttribute('src') || '';
       if (!src || seenImg.has(src) || !inScope(img)) return;
       // Skip tracking pixels (1x1 noscript images hoisted into the body by the parser).
-      if (img.getAttribute('width') === '1' || img.getAttribute('height') === '1' || /facebook.com/tr/.test(src)) return;
+      if (img.getAttribute('width') === '1' || img.getAttribute('height') === '1' || src.indexOf('facebook.com/tr') !== -1) return;
       seenImg.add(src);
       const ed = findSaved('img', src);
       rows.push({ t: 'img', find: src, value: ed ? ed.replace : src, label: 'image' });
