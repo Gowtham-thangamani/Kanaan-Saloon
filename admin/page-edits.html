@@ -63,7 +63,7 @@
 </div>
 
 <script src="../assets/js/config.js?v=2"></script>
-<script src="admin.js"></script>
+<script src="admin.js?v=2"></script>
 <script>
 if (KANAAN_ADMIN.requireAuth()) (async function () {
   const SKIP_SELECTOR = 'header, footer, nav, script, style, noscript, .utility-bar, .mobile-cta, .qb-widget, [data-bind-list], [data-bind], [data-bind-html]';
@@ -169,8 +169,10 @@ if (KANAAN_ADMIN.requireAuth()) (async function () {
         if (!file) return;
         const orig = btn.textContent;
         btn.disabled = true; btn.textContent = '⏳';
-        const res = await KANAAN_ADMIN.uploadImage(file, 'pages');
-        btn.disabled = false; btn.textContent = orig;
+        let res;
+        try { res = await KANAAN_ADMIN.uploadImage(file, 'pages'); }
+        catch (err) { res = { ok: false, error: err.message || String(err) }; }
+        finally { btn.disabled = false; btn.textContent = orig; }
         if (!res.ok) { KANAAN_ADMIN.toast('Upload failed: ' + (res.error || 'unknown')); return; }
         rows[i].value = res.url;
         markDirty(); render(); markDirty();

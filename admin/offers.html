@@ -52,7 +52,7 @@
 </div>
 
 <script src="../assets/js/config.js?v=2"></script>
-<script src="admin.js"></script>
+<script src="admin.js?v=2"></script>
 <script>
 if (KANAAN_ADMIN.requireAuth()) (async function () {
   let data;
@@ -174,8 +174,10 @@ if (KANAAN_ADMIN.requireAuth()) (async function () {
         if (!file) return;
         const orig = btn.textContent;
         btn.disabled = true; btn.textContent = '⏳ Uploading…';
-        const res = await KANAAN_ADMIN.uploadImage(file, 'offers');
-        btn.disabled = false; btn.textContent = orig;
+        let res;
+        try { res = await KANAAN_ADMIN.uploadImage(file, 'offers'); }
+        catch (err) { res = { ok: false, error: err.message || String(err) }; }
+        finally { btn.disabled = false; btn.textContent = orig; }
         if (!res.ok) { KANAAN_ADMIN.toast('Upload failed: ' + (res.error || 'unknown')); return; }
         data.offers[i].image = res.url;
         markDirty(); render();
