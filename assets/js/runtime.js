@@ -753,10 +753,19 @@
     const offersList = document.querySelector('[data-bind-list="offers"]');
     if (offersList && offers) {
       const params = new URLSearchParams(location.search);
-      const branchFilter = params.get('branch');
+      // Branch context: ?branch= on the offers page, or the path on branch
+      // detail pages (/branches/<id>), which carry no query string.
+      let branchFilter = params.get('branch');
+      if (!branchFilter) {
+        const bm = location.pathname.match(/\/(?:ar\/)?branches\/([a-z0-9-]+?)(?:\.html)?\/?$/i);
+        if (bm) branchFilter = bm[1];
+      }
       let visible = offers.offers.filter(offerIsActive);
       if (branchFilter) {
-        visible = visible.filter(o => (o.branches || []).includes('all') || (o.branches || []).includes(branchFilter));
+        visible = visible.filter(o => {
+          const list = Array.isArray(o.branches) ? o.branches : String(o.branches || '').split(',').map(x => x.trim()).filter(Boolean);
+          return !list.length || list.includes('all') || list.includes(branchFilter);
+        });
       }
       // Apply bilingual transform: replace _en / _ar fields with current-lang plain keys
       const localized = visible.map(o => ({
