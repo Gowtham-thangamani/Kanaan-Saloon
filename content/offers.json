@@ -2,24 +2,26 @@
   "offers": [
     {
       "id": "complete-grooming",
-      "name_en": "Complete Grooming Package",
-      "name_ar": "باقة العناية الشاملة",
-      "subtitle_en": "For the Modern Man",
-      "subtitle_ar": "للرجل العصري",
-      "price": 120,
-      "was_price": 200,
-      "currency": "AED",
-      "badge_en": "Save 40%",
-      "badge_ar": "خصم ٤٠٪",
-      "image": "/assets/img/photos/offer-grooming-package-1000.jpg",
-      "inclusions_en": [
-        "Beard trimming / beard shave",
-        "Haircut",
-        "Facial / deep cleansing facial",
-        "Hair treatment / deep conditioning",
-        "Nose strip / blackhead removal",
-        "Head massage with oil"
+      "tags": [
+        "signature"
       ],
+      "image": "/assets/img/photos/offer-grooming-package-1000.jpg",
+      "price": 120,
+      "active": true,
+      "name_ar": "باقة العناية الشاملة",
+      "name_en": "Complete Grooming Package",
+      "badge_ar": "خصم ٤٠٪",
+      "badge_en": "Save 40%",
+      "branches": [
+        "all"
+      ],
+      "currency": "AED",
+      "valid_to": "",
+      "was_price": 200,
+      "valid_from": "",
+      "subtitle_ar": "للرجل العصري",
+      "subtitle_en": "For the Modern Man",
+      "limited_time": false,
       "inclusions_ar": [
         "تشذيب أو حلاقة اللحية",
         "قصّة شعر",
@@ -28,38 +30,42 @@
         "إزالة الرؤوس السوداء",
         "مساج الرأس بالزيت"
       ],
-      "branches": [
-        "all"
-      ],
-      "limited_time": false,
-      "valid_from": "",
-      "valid_to": "",
-      "tags": [
-        "signature"
-      ],
-      "active": true
+      "inclusions_en": [
+        "Beard trimming / beard shave",
+        "Haircut",
+        "Facial / deep cleansing facial",
+        "Hair treatment / deep conditioning",
+        "Nose strip / blackhead removal",
+        "Head massage with oil"
+      ]
     },
     {
       "id": "premium-spa-8",
-      "name_en": "8 Premium Spa Services",
-      "name_ar": "٨ خدمات سبا فاخرة",
-      "subtitle_en": "Limited Time Offer",
-      "subtitle_ar": "عرض لفترة محدودة",
-      "price": 250,
-      "currency": "AED",
-      "badge_en": "60% OFF",
-      "badge_ar": "خصم ٦٠٪",
-      "image": "/assets/img/photos/offer-premium-spa-1000.jpg",
-      "inclusions_en": [
-        "Moroccan bath with Oud & Amber",
-        "Hair oil treatment",
-        "Full body scrub",
-        "Classic manicure",
-        "Deep skin cleansing cream",
-        "Pedicure",
-        "Blackhead removal (nose)",
-        "30-minute relaxing massage"
+      "tags": [
+        "limited",
+        "spa"
       ],
+      "image": "/assets/img/photos/offer-premium-spa-1000.jpg",
+      "price": 250,
+      "active": false,
+      "name_ar": "٨ خدمات سبا فاخرة",
+      "name_en": "8 Premium Spa Services",
+      "badge_ar": "خصم ٦٠٪",
+      "badge_en": "60% OFF",
+      "branches": [
+        "baniyas-spa",
+        "khalifa-city",
+        "al-ain",
+        "khalidiya",
+        "old-shahamah",
+        "vip-muroor"
+      ],
+      "currency": "AED",
+      "valid_to": "",
+      "valid_from": "",
+      "subtitle_ar": "عرض لفترة محدودة",
+      "subtitle_en": "Limited Time Offer",
+      "limited_time": true,
       "inclusions_ar": [
         "حمّام مغربي بالعود والعنبر",
         "علاج زيت الشعر",
@@ -70,22 +76,62 @@
         "إزالة الرؤوس السوداء (الأنف)",
         "مساج استرخاء ٣٠ دقيقة"
       ],
+      "inclusions_en": [
+        "Moroccan bath with Oud & Amber",
+        "Hair oil treatment",
+        "Full body scrub",
+        "Classic manicure",
+        "Deep skin cleansing cream",
+        "Pedicure",
+        "Blackhead removal (nose)",
+        "30-minute relaxing massage"
+      ]
+    },
+    {
+      "id": "new-offer-mwm6errj",
+      "tags": [],
+      "image": "https://ckqioeixkwuxrcybsoew.supabase.co/storage/v1/object/public/blog-images/offers/2026-11-18/140842-kanaan-spa-luxury-bilingual-promotion.png",
+      "price": 300,
+      "active": true,
+      "name_ar": "باقة 9 خدمات سبا متكاملة",
+      "name_en": "9 Premium Spa Services",
+      "badge_ar": "باقة سبا جديدة",
+      "badge_en": "New Spa Package",
       "branches": [
         "baniyas-spa",
         "khalifa-city",
         "al-ain",
         "khalidiya",
         "old-shahamah",
-        "vip-muroor"
+        "vip-muroor",
+        "al-ain-al-dhahir"
       ],
-      "limited_time": true,
-      "valid_from": "",
+      "currency": "AED",
       "valid_to": "",
-      "tags": [
-        "limited",
-        "spa"
+      "valid_from": "",
+      "limited_time": false,
+      "inclusions_ar": [
+        "حمام مغربي بالعود والعنبر",
+        "تقشير كامل للجسم",
+        "تنظيف الوجه بالكريم",
+        "إزالة الرؤوس السوداء من الأنف",
+        "حمام زيت للشعر",
+        "مانيكير كلاسيكي",
+        "باديكير",
+        "مساج استرخائي لمدة 30 دقيقة",
+        "فوت سبا"
       ],
-      "active": true
+      "inclusions_en": [
+        "Moroccan Bath with Oud & Amber",
+        "Full Body Scrub",
+        "Facial Cleansing with Cream",
+        "Nose Blackhead Removal",
+        "Hair Oil Treatment",
+        "Classic Manicure",
+        "Pedicure",
+        "Relaxation Massage (30 minutes)",
+        "Foot Spa"
+      ]
     }
   ]
 }
