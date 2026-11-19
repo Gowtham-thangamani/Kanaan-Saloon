@@ -255,46 +255,17 @@
         <p class="section-head__lede" data-scroll-text>باقات مختارة من فروعنا. أسعار صريحة، خدمات كاملة، بدون إضافات مفاجئة.</p>
       </div>
 
-      <div class="grid grid-2" data-reveal-stagger>
-        <a href="book?offer=complete-grooming" class="offer-card">
+      <div class="grid grid-2" data-reveal-stagger data-bind-list="offers">
+        <a data-bind-template href="" class="offer-card" data-bind-attr-href="book_url">
           <div class="offer-card__media" data-hover-zoom>
-            <span class="offer-card__badge">خصم ٤٠٪</span>
-            <img src="../assets/img/photos/offer-grooming-package-1000.jpg" alt="باقة العناية الشاملة — تشذيب اللحية في كنعان" loading="lazy" decoding="async" width="1000" height="545" />
+            <span class="offer-card__badge" data-bind="badge"></span>
+            <img data-bind-attr-src="image" alt="عروض كنعان" loading="lazy" decoding="async" />
           </div>
           <div class="offer-card__body">
-            <h3 class="offer-card__title">باقة العناية الشاملة</h3>
-            <ul class="offer-card__list">
-              <li>تشذيب أو حلاقة اللحية</li>
-              <li>قصّة شعر</li>
-              <li>تنظيف عميق للوجه</li>
-              <li>علاج وترطيب الشعر</li>
-              <li>إزالة الرؤوس السوداء</li>
-              <li>مساج الرأس بالزيت</li>
-            </ul>
+            <h3 class="offer-card__title" data-bind="name"></h3>
+            <ul class="offer-card__list" data-bind-html="inclusions_html"></ul>
             <div class="offer-card__price-row">
-              <div class="offer-card__price">١٢٠ <small>درهم</small></div>
-              <span class="text-link">احجز ←</span>
-            </div>
-          </div>
-        </a>
-
-        <a href="book?offer=premium-spa-8" class="offer-card">
-          <div class="offer-card__media" data-hover-zoom>
-            <span class="offer-card__badge">خصم ٦٠٪</span>
-            <img src="../assets/img/photos/offer-premium-spa-1000.jpg" alt="٨ خدمات سبا فاخرة — حمّام مغربي في كنعان" loading="lazy" decoding="async" width="1000" height="545" />
-          </div>
-          <div class="offer-card__body">
-            <h3 class="offer-card__title">٨ خدمات سبا فاخرة</h3>
-            <ul class="offer-card__list">
-              <li>حمّام مغربي بالعود والعنبر</li>
-              <li>علاج زيت الشعر وتقشير كامل</li>
-              <li>منيكير وباديكير كلاسيك</li>
-              <li>كريم تنظيف عميق للبشرة</li>
-              <li>إزالة الرؤوس السوداء</li>
-              <li>مساج استرخاء ٣٠ دقيقة</li>
-            </ul>
-            <div class="offer-card__price-row">
-              <div class="offer-card__price">٢٥٠ <small>درهم</small></div>
+              <div class="offer-card__price"><span data-bind="price"></span> <small data-bind="currency"></small></div>
               <span class="text-link">احجز ←</span>
             </div>
           </div>
@@ -321,8 +292,8 @@
           <div class="branch-card__body">
             <span class="branch-card__area">مدينة خليفة</span>
             <h3 class="branch-card__title"><span translate="no">كنعان</span> مدينة خليفة</h3>
-            <p class="branch-card__meta">السبت–الخميس ١١:٣٠ — ٢٣:٠٠ · الجمعة ١٤:٣٠ — ٢٣:٠٠</p>
-            <span class="status-pill" data-hours='{"sun":{"open":"11:30","close":"23:00"},"mon":{"open":"11:30","close":"23:00"},"tue":{"open":"11:30","close":"23:00"},"wed":{"open":"11:30","close":"23:00"},"thu":{"open":"11:30","close":"23:00"},"fri":{"open":"14:30","close":"23:00"},"sat":{"open":"11:30","close":"23:00"}}'>...</span>
+            <p class="branch-card__meta">السبت–الخميس ١١:٠٠ — ٢٣:٠٠ · الجمعة ١٤:٣٠ — ٢٣:٠٠</p>
+            <span class="status-pill" data-hours='{"sun":{"open":"11:00","close":"23:00"},"mon":{"open":"11:00","close":"23:00"},"tue":{"open":"11:00","close":"23:00"},"wed":{"open":"11:00","close":"23:00"},"thu":{"open":"11:00","close":"23:00"},"fri":{"open":"14:30","close":"23:00"},"sat":{"open":"11:00","close":"23:00"}}'>...</span>
             <div class="branch-card__actions"><span class="btn btn--sm branch-card__view">عرض الفرع</span></div>
           </div>
         </a>

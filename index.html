@@ -73,7 +73,7 @@
       {"@type":"Question","name":"What are Kanaan's prices?","acceptedAnswer":{"@type":"Answer","text":"Each branch has its own menu. Cuts start at 25 AED at Baniyas Barber and 30–50 AED at most other branches. VAT included. See the Menu & Prices page to browse by branch."}},
       {"@type":"Question","name":"Can I cancel or reschedule my booking?","acceptedAnswer":{"@type":"Answer","text":"Yes — free up to 2 hours before your appointment. Reply to the WhatsApp confirmation, or use the Reschedule / Cancel button on your booking confirmation page."}},
       {"@type":"Question","name":"Does Kanaan take walk-ins?","acceptedAnswer":{"@type":"Answer","text":"Yes — but Friday evenings, weekends, and the last hour before close fill up fast. Booking online or by phone first guarantees a chair."}},
-      {"@type":"Question","name":"What time does Kanaan close?","acceptedAnswer":{"@type":"Answer","text":"All branches close at 23:00 daily. Last bookings accepted approximately 60 minutes before close for shorter services. Most branches open at 9:00 AM; Baniyas Spa and Khalifa City open at 11:30 AM. Friday hours start at 2:30 PM across the chain."}}
+      {"@type":"Question","name":"What time does Kanaan close?","acceptedAnswer":{"@type":"Answer","text":"All branches close at 23:00 daily. Last bookings accepted approximately 60 minutes before close for shorter services. Most branches open at 9:00 AM; Baniyas Spa opens at 11:30 AM and Khalifa City at 11:00 AM. Friday hours start at 2:30 PM across the chain, except Al Ain (Al Dhahir) which opens at 9:00 AM."}}
     ]
   }
   </script>
@@ -394,46 +394,17 @@
         <p class="section-head__lede" data-scroll-text>Editor-picked packages from our branches across Abu Dhabi. Honest pricing, full inclusions, no upselling.</p>
       </div>
 
-      <div class="grid grid-2 reveal">
-        <a href="book?offer=complete-grooming" class="offer-card">
+      <div class="grid grid-2 reveal" data-bind-list="offers">
+        <a data-bind-template href="" class="offer-card" data-bind-attr-href="book_url">
           <div class="offer-card__media" data-hover-zoom>
-            <span class="offer-card__badge">Save 40%</span>
-            <img src="assets/img/photos/offer-grooming-package-1000.jpg" alt="Complete Grooming Package — barber giving a beard trim at Kanaan" width="1000" height="545" loading="lazy" decoding="async" />
+            <span class="offer-card__badge" data-bind="badge"></span>
+            <img data-bind-attr-src="image" alt="Kanaan signature offer" loading="lazy" decoding="async" />
           </div>
           <div class="offer-card__body">
-            <h3 class="offer-card__title">Complete Grooming Package</h3>
-            <ul class="offer-card__list">
-              <li>Beard trimming / shave</li>
-              <li>Haircut</li>
-              <li>Deep cleansing facial</li>
-              <li>Hair treatment</li>
-              <li>Blackhead removal</li>
-              <li>Oil head massage</li>
-            </ul>
+            <h3 class="offer-card__title" data-bind="name"></h3>
+            <ul class="offer-card__list" data-bind-html="inclusions_html"></ul>
             <div class="offer-card__price-row">
-              <div class="offer-card__price">120 <small>AED</small></div>
-              <span class="text-link">Book →</span>
-            </div>
-          </div>
-        </a>
-
-        <a href="book?offer=premium-spa-8" class="offer-card">
-          <div class="offer-card__media" data-hover-zoom>
-            <span class="offer-card__badge">60% OFF</span>
-            <img src="assets/img/photos/offer-premium-spa-1000.jpg" alt="8 Premium Spa Services — Moroccan hammam massage at Kanaan" width="1000" height="545" loading="lazy" decoding="async" />
-          </div>
-          <div class="offer-card__body">
-            <h3 class="offer-card__title">8 Premium Spa Services</h3>
-            <ul class="offer-card__list">
-              <li>Moroccan bath with Oud &amp; Amber</li>
-              <li>Hair oil treatment &amp; full body scrub</li>
-              <li>Classic manicure &amp; pedicure</li>
-              <li>Deep skin cleansing cream</li>
-              <li>Blackhead removal (nose)</li>
-              <li>30-minute relaxing massage</li>
-            </ul>
-            <div class="offer-card__price-row">
-              <div class="offer-card__price">250 <small>AED</small></div>
+              <div class="offer-card__price"><span data-bind="price"></span> <small data-bind="currency"></small></div>
               <span class="text-link">Book →</span>
             </div>
           </div>
@@ -462,8 +433,8 @@
           <div class="branch-card__body">
             <span class="branch-card__area">Khalifa City</span>
             <h3 class="branch-card__title">Kanaan Khalifa City</h3>
-            <p class="branch-card__meta">Sat–Thu 11:30 — 23:00 · Fri 14:30 — 23:00</p>
-            <span class="status-pill" data-hours='{"sun":{"open":"11:30","close":"23:00"},"mon":{"open":"11:30","close":"23:00"},"tue":{"open":"11:30","close":"23:00"},"wed":{"open":"11:30","close":"23:00"},"thu":{"open":"11:30","close":"23:00"},"fri":{"open":"14:30","close":"23:00"},"sat":{"open":"11:30","close":"23:00"}}'>Checking…</span>
+            <p class="branch-card__meta">Sat–Thu 11:00 — 23:00 · Fri 14:30 — 23:00</p>
+            <span class="status-pill" data-hours='{"sun":{"open":"11:00","close":"23:00"},"mon":{"open":"11:00","close":"23:00"},"tue":{"open":"11:00","close":"23:00"},"wed":{"open":"11:00","close":"23:00"},"thu":{"open":"11:00","close":"23:00"},"fri":{"open":"14:30","close":"23:00"},"sat":{"open":"11:00","close":"23:00"}}'>Checking…</span>
             <div class="branch-card__actions">
               <span class="btn btn--sm branch-card__view">View Branch</span>
             </div>
@@ -583,7 +554,7 @@
         </details>
         <details class="faq" style="border: 1px solid var(--c-hairline-light); padding: var(--s-4) var(--s-5); background: #fff;">
           <summary style="cursor: pointer; font-family: var(--f-display); font-size: 18px; color: var(--c-ink);">What time do you close?</summary>
-          <p class="muted" style="margin: var(--s-3) 0 0;">All branches close at <strong>23:00</strong> daily. Last bookings accepted ~60 minutes before close for shorter services. Most branches open at 9:00 AM; Baniyas Spa and Khalifa City open at 11:30 AM. Friday hours start at 2:30 PM across the chain.</p>
+          <p class="muted" style="margin: var(--s-3) 0 0;">All branches close at <strong>23:00</strong> daily. Last bookings accepted ~60 minutes before close for shorter services. Most branches open at 9:00 AM; Baniyas Spa opens at 11:30 AM and Khalifa City at 11:00 AM. Friday hours start at 2:30 PM across the chain, except Al Ain (Al Dhahir) which opens at 9:00 AM.</p>
         </details>
       </div>
       <p style="text-align: center; margin-top: var(--s-5); font-size: 13px;">More questions? <a href="contact" class="text-gold">Visit the contact page</a> or <a href="https://wa.me/971505556795" class="text-gold">message us on WhatsApp</a>.</p>
